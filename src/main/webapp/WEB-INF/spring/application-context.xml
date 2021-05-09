@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:property-placeholder location="classpath:data-source.properties"/>
+	
+	<!-- Datasource -->
+	<bean class="org.apache.commons.dbcp.BasicDataSource"
+	      id="realDataSource"
+	      destroy-method="close">
+	      
+		<property name="driverClassName" value="${datasource.driver}" />
+		<property name="url" value="${datasource.url}" />
+		<property name="username" value="${datasource.username}" />
+		<property name="password" value="${datasource.password}" />
+	
+	<!-- log4jdbc-remix -->
+	</bean>
+	
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		
+		<constructor-arg ref="realDataSource"/>
+			
+		<property name="logFormatter">
+			
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+		
+			<property name="loggingType" value="MULTI_LINE" />
+            <property name="sqlPrefix" value="[SQL] " />
+            
+            </bean>
+            
+		</property>	
+		
+	</bean>
+	
+	<!-- SqlSessionFactory -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		
+	</bean>
+	
+	<!-- TransactionManager -->
+	<bean id="transactionManager"
+	      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	      
+		<property name="dataSource" ref="dataSource"/>
+		
+	</bean>
+	
+	<!-- 선언적 트랜잭션 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		
+		<tx:attributes>
+		
+			<tx:method name="select*" rollback-for="Exception" read-only="true"/>
+			<tx:method name="insert*" rollback-for="Exception"/>
+			<tx:method name="update*" rollback-for="Exception"/>
+			<tx:method name="delete*" rollback-for="Exception"/>
+		
+		</tx:attributes>
+	
+	</tx:advice>
+	
+	<!-- 선언적 트랜잭션 aop 설정 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceMethod"  expression="execution(* com.kh.spring..*ServiceImpl.*(..)))" />
+		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
+	</aop:config>
+	
+	
+</beans>
