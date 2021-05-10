@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+#container{
+    width: 1280px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.mainHeader{
+    display:flex;
+    padding: 0px;
+    background-color: rgb(255, 255, 255);
+
+    /* border: 1px solid lightgray; */
+}
+
+section{
+    width: 1020px;
+    padding: 5px 25px 25px 25px;
+    float: right;
+}
+
+/* https://www.colorion.co/palette/87389 */
+aside{
+    width: 259px;
+    min-height: 900px;
+    padding: 15px 25px 25px 25px;
+    background-color: #664EEF;
+    float: left;
+}
+
+footer {
+    clear: both;
+    padding: 10px;
+    /* border: 1px solid lightgray; */
+}
+
+i{
+    vertical-align: middle;
+    padding-right: 10px;
+    font-size: 1.5rem;
+    color: #fff;
+}
+.nav-link{
+    color: #fff;
+}
+
+/* https://www.colorion.co/palette/87389 */
+.nav-link:hover{
+    color: #fff;
+    background-color: #A596F4;
+}
+
+.badge-pill{
+    margin-left: 5px;
+}
+
+
+
