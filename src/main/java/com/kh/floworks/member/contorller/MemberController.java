@@ -11,4 +11,10 @@ public class MemberController {
 	@GetMapping("/login")
 	public void login() {}
 	
+	@GetMapping(value={"/mypage","/mypage/update"})
+	public String mypage() {
+		
+		return "/member/memberUpdate";
+	}
+	
 }

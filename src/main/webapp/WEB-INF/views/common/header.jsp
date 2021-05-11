@@ -55,7 +55,7 @@
 							<ul class="dropdown-menu" role="menu"
 								aria-labelledby="dropdownMenu1">
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">마이페이지</a></li>
+									href="${pageContext.request.contextPath }/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#">로그아웃</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
