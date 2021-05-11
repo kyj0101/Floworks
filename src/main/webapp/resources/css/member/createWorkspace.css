@@ -1,0 +1,23 @@
+@charset "UTF-8";
+.box {
+    width: 200px;
+    height: 200px; 
+    border-radius: 70%;
+    overflow: hidden;
+    margin: 40px auto 40px auto;
+
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "";
+}
+
+#create-btn{
+    font-size: 18px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
