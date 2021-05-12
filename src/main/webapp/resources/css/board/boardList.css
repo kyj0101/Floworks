@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.table-num {
+    width: 7%;
+}
+.table-dept {
+    width: 7%;
+}
+.table-title {
+    width: 40%;
+}
+.table-name {
+    width: 12%;
+}
+.table-file {
+    width: 10%;
+}
+.table-count {
+    width: 7%;
+}

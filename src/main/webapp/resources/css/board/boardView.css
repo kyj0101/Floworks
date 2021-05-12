@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+#postName {
+    top: -7px;
+    left: 10px;
+    position: relative;
+}
+#postDate {
+    top: -38px;
+    left: 60px;
+    position: relative;
+}
+#postCount {
+    top: -38px;
+    left: 100px;
+    position: relative;
+}
+#moveGroup {
+    top: -38px;
+    position: relative;
+    left: -10px;
+}
+.postWriter {
+    position: relative;
+    height: 50px;
+    top: -15px;
+}
+.postWriter hr{
+    margin: 0;
+    position: relative;
+    top: -30px;
+}
+#postText {
+    position: relative;
+    top: -35px;
+}
+#fileButton {
+    position: relative;
+    top: -50px;
+}
+h3 {
+    position: relative;
+    left: 5px;
+}
+#postProfile {
+    width: 45px;
+    height: 45px;
+    margin: 15px auto; 
+    border-radius: 50%;
+    left: 5px;
+    position: relative;
+}
+table#tb-comment tr.level2 td:first-of-type{
+    padding-left:50px;
+}
+#comment-btn{
+    position: relative;
+    height: 50px;
+}
+#comment-area{
+    position: relative;
+    width: 907px;
+}
+.btn {
+    margin: 2px;
+}
+a {
+    color: #000;
+}
+#comment-list {
+    position: relative;
+    top: -40px;
+}
+#view-btn{
+    position: relative;
+    display: inline-block;
+    top: -50px;
+}
