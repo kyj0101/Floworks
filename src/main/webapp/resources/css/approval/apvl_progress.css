@@ -1,0 +1,85 @@
+.jumbotron {
+    margin-bottom: 1rem !important;
+    padding: 2rem !important;
+}
+
+/* ap-info-head, middle */
+.ap-info {
+    display: table;
+    width: 100%;
+}
+
+.ap-doc {
+    display: table-row;
+}
+
+.ap-info-head {
+    width: 45%;
+    display: table-cell;
+}
+
+.ap-info-head a {
+    color: black;
+}
+
+.ap-info-head a:hover {
+    color: rgb(65, 65, 65);
+    text-decoration: none;
+}
+
+.ap-info-middle {
+    width: 20%;
+    display: table-cell;
+}
+
+.ap-info-end {
+    width: 35%;
+    display: table-cell;
+}
+
+.ap-info-title, .ap-info-date {
+    margin-left: 10px;
+}
+
+.ap-info-title, .ap-writer-name {
+    margin-bottom: 15px;
+}
+
+.ap-info-date, .ap-writer-team {
+    color: lightslategray;
+    margin-bottom: 0;
+}
+
+/* ap-info-end progress 표시 구역 */
+.ap-info-end {
+    text-align: center;
+    /* vertical-align: middle; */
+}
+
+.ap-info-end > i {
+    margin: 20px;
+}
+
+.process-circle {
+    margin: 20px;
+    margin-bottom: 30px;
+}
+
+.process-circle1 {
+    /* green : #27ce79 */
+    /* red : #fa2626 */
+    /* yellow : #efc719 */
+    color: #27ce79;
+}
+
+.process-circle2 {
+    color: #27ce79;
+}
+
+.process-circle3 {
+    color: #efc719;
+}
+
+.process-circle4 {
+    color: #fa2626;
+}
