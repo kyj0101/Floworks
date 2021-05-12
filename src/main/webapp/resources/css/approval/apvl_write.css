@@ -1,0 +1,64 @@
+/* 상단 "문서설정" h5, "기안하기" button */
+.ap-write-h5, .ap-write-h5 > h5, .ap-write-btn {
+    display: inline-block;
+}
+
+.ap-write-top {
+    width: 970px;
+}
+
+.ap-write-h5 > h5 {
+    margin-right: 780px;
+}
+
+/* 결재문서 작성 폼 */
+.ap-write-setting {
+    margin-top: 20px;
+}
+
+.ap-write-setting > h5 {
+    display: inline-block;
+}
+
+.ap-category-select {
+    display: inline-block !important;
+    width: 200px !important;
+}
+
+.ap-category-select, .ap-add-line, .ap-write-title, .ap-write-textarea, .ap-write-filesection {
+    margin-left: 10px;
+}
+
+.ap-write-form td {
+    padding: 10px;
+}
+
+/* 결재선 설정 모달창 */
+.modal-dialog {
+    overflow-y: initial !important;
+}
+
+.modal-body{
+    height: 70vh;
+    overflow-y: auto;
+}
+/* 결재선 설정 모달창 */
+
+.ap-line-selected {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.ap-line-selected > li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.ap-write-title {
+    width: 600px !important;
+}
+
+.ap-write-textarea {
+    resize: none;
+}
+
