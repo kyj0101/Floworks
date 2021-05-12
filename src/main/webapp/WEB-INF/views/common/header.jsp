@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
+<!--tablib-->
+
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -49,6 +57,8 @@
 						<!-- 로그아웃 & 마이페이지 -->
 						<!-- 로그인 전/ 후 달라져야함  -->
 						<div class="mainHeader dropdown mr-2">
+							<form:form type="hidden" method="post" action="${pageContext.request.contextPath }/member/logout" id="logout-form"></form:form>
+							
 							<button class="btn btn-default dropdown-toggle" type="button"
 								id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 								메뉴 <span class="caret"></span>
@@ -58,7 +68,7 @@
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="${pageContext.request.contextPath }/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">로그아웃</a></li>
+									href="#" id="logout-a">로그아웃</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#">Something else here</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
@@ -167,7 +177,7 @@
 							<!-- 로그인한 사용자의 프로필 -->
 							<img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle"
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
-							<p style="margin: 30px 5px; width: 50px;">홍길동</p>
+							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
 					</div>
 				</div>
@@ -175,3 +185,10 @@
 			</nav>
 
 		</header>
+<script>
+$(function(){
+	$("#logout-a").click(function(){
+		$("#logout-form").submit();
+	});
+});
+</script>
