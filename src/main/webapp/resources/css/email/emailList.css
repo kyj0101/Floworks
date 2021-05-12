@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+section{
+    padding-left: 0;
+    padding-top: 0;
+    overflow: hidden;
+}
+
+.search-div {
+    background-color: rgb(226, 213, 255);
+    width: 100%;
+}
+
+.email-table{
+    border-bottom: 1px solid rgb(222, 226, 230);
+    overflow:hidden; 
+}
+
+.email-table tr td:nth-child(4){
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
+    cursor: pointer;
+}
+
+.pagination{
+    margin-top: 35px;
+}
+
+.fa-star{
+    color: gold;
+    font-size: 18px;
+}
