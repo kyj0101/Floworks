@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
+<!--tablib-->
+
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     
@@ -48,6 +57,8 @@
 						<!-- 로그아웃 & 마이페이지 -->
 						<!-- 로그인 전/ 후 달라져야함  -->
 						<div class="mainHeader dropdown mr-2">
+							<form:form type="hidden" method="post" action="${pageContext.request.contextPath }/member/logout" id="logout-form"></form:form>
+							
 							<button class="btn btn-default dropdown-toggle" type="button"
 								id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 								메뉴 <span class="caret"></span>
@@ -57,7 +68,7 @@
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="${pageContext.request.contextPath }/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">로그아웃</a></li>
+									href="#" id="logout-a">로그아웃</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#">Something else here</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
@@ -166,7 +177,7 @@
 							<!-- 로그인한 사용자의 프로필 -->
 							<img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle"
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
-							<p style="margin: 30px 5px; width: 50px;">홍길동</p>
+							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
 					</div>
 				</div>
@@ -174,3 +185,10 @@
 			</nav>
 
 		</header>
+<script>
+$(function(){
+	$("#logout-a").click(function(){
+		$("#logout-form").submit();
+	});
+});
+</script>
