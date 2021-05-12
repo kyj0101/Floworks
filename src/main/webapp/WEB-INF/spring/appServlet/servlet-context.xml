@@ -53,6 +53,7 @@
 	
 	<!-- component-scan -->
 	<context:component-scan base-package="com.kh.floworks" />
+	<context:component-scan base-package="com.kh.floworks.member" />
 	
 	<!-- aop -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
