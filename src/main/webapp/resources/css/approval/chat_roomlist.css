@@ -8,12 +8,11 @@
 }
 
 .chrm-member-info {
-    /* border: 1px solid tomato; */
     color: #664EEF;
     display: inline-block;
     margin-left: 15px;
     vertical-align: middle;
-    width: 650px;
+    width: 550px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -25,8 +24,5 @@
 
 .chat-alert-circle {
     color: #fa2626;
-    margin-left: 100px;
-    /* text-align: right; */
-    /* float: right; */
-    /* vertical-align: middle; */
+    margin-left: 150px;
 }
