@@ -16,7 +16,8 @@
 }
 
 section{
-    width: 1020px;
+	/* 커밋했는데 반영이 안돼서 쓰는 주석코드 */
+    width: 1080px;
     padding: 5px 25px 25px 25px;
     float: right;
 }
