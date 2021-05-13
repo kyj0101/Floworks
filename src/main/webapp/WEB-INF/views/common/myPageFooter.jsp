@@ -19,13 +19,13 @@
 				</li>
 
 				<li class="nav-item">
-					<hr class="line-hr" style="border-bottom-width: 0px;"> <a
-					class="nav-link " href="#"> 비밀 번호 수정 </a>
+					<hr class="line-hr" style="border-bottom-width: 0px;"> 
+					<a href="${pageContext.request.contextPath}/member/updatePwd" class="nav-link"> 비밀 번호 수정 </a>
 					<hr class="line-hr" style="border-bottom-width: 0px;">
 				</li>
 
 				<li class="nav-item">
-					<hr class="line-hr"> <a class="nav-link " href="#"> 회원 탈퇴
+					<hr class="line-hr"> <a href="${pageContext.request.contextPath}/member/delete" class="nav-link " > 회원 탈퇴
 				</a>
 					<hr class="line-hr">
 				</li>

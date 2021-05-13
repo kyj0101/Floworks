@@ -225,6 +225,26 @@
 	        <artifactId>jackson-databind</artifactId>
 	        <version>2.9.5</version>
 	    </dependency>
+	    
+	    <!-- Spring mail -->
+	     <dependency> 
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-context-support</artifactId>
+	    	<version>${org.springframework-version}</version>
+	    </dependency>
+	    
+	    <!-- java mail MIME 형식의 메일을 보내기 위해 의존성 추가 -->
+	    <dependency> 
+	    	<groupId>com.sun.mail</groupId> 
+	    	<artifactId>javax.mail</artifactId> 
+	    	<version>1.5.6</version> 
+	    </dependency>
+
+	   
+		
+		
+		
+
 		     
 	</dependencies>
     <build>
