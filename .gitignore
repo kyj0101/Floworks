@@ -16,6 +16,7 @@ local.properties
 
 # ignore properties file
 data-source.properties
+email-source.properties
 
 # External tool builders
 .externalToolBuilders/
