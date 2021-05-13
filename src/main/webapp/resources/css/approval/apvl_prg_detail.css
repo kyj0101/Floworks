@@ -1,0 +1,59 @@
+.ap-doc-table {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    margin: auto;
+    width: 80%;
+}
+
+.ap-doc-table th {
+    border-right: 1px solid black;
+    text-align: center;
+    width: 15%;
+}
+
+tr, td, th {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+/* ap-doc-footer */
+.ap-doc-footer {
+    text-align: center;
+}
+
+.back-to-list, .approval-btn {
+    margin: 20px 10px;
+    width: 100px !important;
+}
+
+.back-to-list, .ap-history-btn {
+    margin: 20px 10px;
+}
+
+.ap-txn {
+    /* border: 1px solid tomato; */
+    text-align: center;
+}
+
+.ap-txn-category {
+    margin: 0 60px !important;
+}
+
+.approval-radio, .reject-radio {
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.ap-txn-category label, .ap-comment label {
+    font-size: 1.1em;
+    margin-left: 5px;
+}
+
+.ap-comment {
+    margin-top: 20px;
+}
+
+.ap-comment-txtarea {
+    resize: none;
+}

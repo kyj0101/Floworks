@@ -41,11 +41,8 @@
 			<div class="collapse hide" id="sidebarCommu"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							공지사항 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 게시판 1
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList" class="nav-link active"> 공지사항 </a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 게시판 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAtten"
@@ -81,8 +78,7 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴1 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress" class="nav-link">진행중인 결재</a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>

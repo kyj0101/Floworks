@@ -64,6 +64,26 @@
 		
 	</bean>
 	
+	<!-- mail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587" />
+		<property name="username" value="kb1029573@gmail.com"/>
+		<property name="password" value="cpdfqwtvmdiftsuk"/>
+		<property name="javaMailProperties">
+	
+			<props>
+	
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+	
+			</props>
+	
+		</property>
+		
+	</bean>
+	
 	<!-- 선언적 트랜잭션 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		
@@ -83,6 +103,5 @@
 		<aop:pointcut id="serviceMethod"  expression="execution(* com.kh.spring..*ServiceImpl.*(..)))" />
 		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 	</aop:config>
-	
 	
 </beans>
