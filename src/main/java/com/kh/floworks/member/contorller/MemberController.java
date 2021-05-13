@@ -35,5 +35,16 @@ public class MemberController {
 		
 		return "/member/memberUpdate";
 	}
+
+	@GetMapping("/delete")
+	public String memberDelete() {
+		
+		return "/member/memberDelete";
+	}
 	
+	@GetMapping("/updatePwd")
+	public String updatePassword() {
+		
+		return "/member/updatePassword";
+	}
 }
