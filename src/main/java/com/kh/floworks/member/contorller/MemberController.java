@@ -16,6 +16,11 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	@GetMapping("/mainPage")
+	public String indexPage() {
+		return "/member/mainPage";
+	}
 
 	@GetMapping("/login")
 	public String login() {

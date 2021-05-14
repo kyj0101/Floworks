@@ -3,6 +3,7 @@
 #container{
     width: 1350px;
     margin: 0 auto;
+    overflow: hidden;
     position: relative;
     min-height: 700px;
     /* overflow: visible; */
@@ -25,12 +26,10 @@ section{
 /* https://www.colorion.co/palette/87389 */
 aside{
     width: 259px;
-    /* min-height: 900px; */
+    min-height: 900px;
     padding: 15px 25px 25px 25px;
     background-color: #664EEF;
     float: left;
-    height: 100%;
-    position: absolute;
 }
 
 footer {
