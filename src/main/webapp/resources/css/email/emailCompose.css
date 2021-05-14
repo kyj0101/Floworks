@@ -1,0 +1,117 @@
+@charset "UTF-8";
+section{
+    padding:0;
+}
+
+.email-input-div{
+    width: 95%;
+    height: 380px;
+    display: inline-block;
+}
+
+.email-input-div div{
+    margin: 15px;
+    margin-right: 0;
+}
+
+.email-input-div .input-group-text{
+    width:120px;
+    z-index: 100;
+}
+
+.email-input-div .form-control{
+    border-left-width: 0px;
+    right: 2px;
+}
+
+.email-btn-div{
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.email-btn-div button{
+    margin-top: 15px;
+    color: gray;
+}
+
+.fa-share {
+    color: gray;
+    margin-left: 10px;
+}
+
+.btn:hover .fa-share{
+    color: white;
+}
+
+.cc-div{
+    display: none;
+}
+
+.bcc-div{
+    display: none;
+}
+
+.email-compose-div{
+    width: 100%;
+    height: 800px;
+    padding: 50px 10px 10px 10px;
+    
+}
+
+.email-compose-div .btn-div{
+    
+    display: flex;
+    justify-content: center;
+    
+}
+
+.email-compose-div .btn-div button{
+    margin: 15px;
+    width: 150px;
+}
+
+.btn-primary{
+    background-color: #664EEF;
+    border: solid #664EEF;
+}
+
+.btn-primary:hover{
+    background-color: #4a38b4;
+    border: solid #4a38b4;
+}
+
+.email-input-div span{
+	margin-left: 20px;
+	font-style: italic;
+	color: gray;
+}
+
+.fa-times-circle{
+	color: gray;
+    font-size: 18px;
+    padding: 8px;
+    cursor:pointer;
+}
+
+.custom-file-label::after {
+    left: 0;
+    right: auto;
+    width:120px;
+    border-left-width: 0;
+    border-right: inherit;
+    content:"파일첨부";
+}
+
+.custom-file-label{
+	padding-left: 130px;
+	cursor:pointer;
+}
+
+.custom-file-input {
+    display:none;
+}
+    
+

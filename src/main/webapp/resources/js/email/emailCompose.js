@@ -1,9 +1,9 @@
 window.onload = ()=>{
-    CKEDITOR.replace('editor1', {
+    CKEDITOR.replace('emailContent', {
         height: 500
     });
           
-    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace( 'emailContent' );
 };
     
   
@@ -18,4 +18,5 @@ $(()=>{
     $bccBtn.click(function(){
         $("#bcc").toggleClass("bcc-div");
     })
+    
 });
