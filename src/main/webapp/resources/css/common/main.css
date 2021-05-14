@@ -59,5 +59,19 @@ i{
     margin-left: 5px;
 }
 
-
+/* 통합 검색창 부분 */
+#select-search, #select-search-menu {
+    height: calc(1.5em + .75rem + 2px);
+}
+.dropdown-menu {
+    top: 90% !important;
+    min-width: 7.5rem !important;
+}
+.dropdown-item {
+    text-align: center !important;
+}
+#input-search {
+    width: 450px;
+    text-align: inherit;
+}
 
