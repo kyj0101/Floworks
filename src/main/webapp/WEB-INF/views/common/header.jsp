@@ -42,17 +42,29 @@
 							</a>
 						</nav>
 						<!-- 검색바 -->
-						<!-- mr : margin right -->
-						<div class="mainHeader mr-5">
-							<nav class="navbar navbar-expand-mg">
-								<form action="#" class="form-inline">
-									<input type="text" class="form-control" style="width: 550px;"
-										placeholder="검색어를 입력해주세요.">
-									<button class="btn btn-outline-secondary" type="submit">Search</button>
-								</form>
-								<p style="margin: 5px auto; padding-left: 30px;"></p>
-							</nav>
-						</div>
+                        <!-- mr : margin right -->
+                        <div class="mainHeader mr-5">
+                            <nav class="navbar navbar-expand-mg">
+                                <form action="#" class="form-inline">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <button type="button" class="btn btn-outline-secondary" id="select-search">검색태그</button>
+                                          <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="select-search-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          </button>
+                                          <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">커뮤니티</a>
+                                            <a class="dropdown-item" href="#">이메일</a>
+                                            <a class="dropdown-item" href="#">주소록</a>
+                                            <a class="dropdown-item" href="#">채팅</a>
+                                          </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="input-search" aria-label="Text input with segmented dropdown button" placeholder="검색어를 입력하세요.">
+                                    </div>
+                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                </form>
+                                <p style="margin: 5px auto; padding-left: 30px;"></p>
+                            </nav>
+                        </div>
 
 						<!-- 로그아웃 & 마이페이지 -->
 						<!-- 로그인 전/ 후 달라져야함  -->
