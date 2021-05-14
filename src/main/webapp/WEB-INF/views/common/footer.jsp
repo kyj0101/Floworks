@@ -21,19 +21,18 @@
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
 			</div></li>
-		<li class="nav-item"><a class="nav-link" href="#sidebarSche"
-			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarSche"> <i class="bi bi-calendar-check"></i>일정
-		</a>
-			<div class="collapse hide" id="sidebarSche"
-				style="padding-left: 35px;">
-				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴1 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
-				</ul>
-			</div></li>
+		<li class="nav-item">
+			<a class="nav-link" href="#sidebarCal"
+				data-toggle="collapse" role="button" aria-expanded="true"
+				aria-controls="sidebarCal"> <i class="bi bi-calendar-check"></i>일정
+			</a>
+				<div class="collapse hide" id="sidebarCal" style="padding-left: 35px;">
+					<ul class="nav nav-sm flex-column">
+						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">메뉴1 </a></li>
+						<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+					</ul>
+				</div>
+		</li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarCommu"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarCommu"> <i class="bi bi-megaphone"></i>커뮤니티
@@ -78,9 +77,9 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite" class="nav-link ">결재 문서 작성</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress" class="nav-link">진행중인 결재</a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox" class="nav-link ">결재 완료함</a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
