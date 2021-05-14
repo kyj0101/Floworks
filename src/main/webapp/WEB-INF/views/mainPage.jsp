@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     
     <!-- css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/mainPage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/mainPage.css">
 	
 	<!-- font --> 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -27,14 +27,19 @@
 
 	<script>
 	function goLogin(){
-		location.href="${pageContext.request.contextPath}/member/login.do";
+		location.href="${pageContext.request.contextPath}/login.do";
 	}
 	function goRegister(){
-		location.href="${pageContext.request.contextPath}/member/register.do";
+		location.href="${pageContext.request.contextPath}/register";
 	}
 	function goWorksapace(){
-		location.href="${pageContext.request.contextPath}/member/createWorkspace.do";
+		location.href="${pageContext.request.contextPath}/createWorkspace";
 	}
+	function goHome(){
+		location.href="${pageContext.request.contextPath}/home";
+	}
+	
+	
 	</script>
 </head>
 
@@ -44,12 +49,26 @@
 			<span>Floworks</span>
 		</div>
 	    <div class="set">
-		    <div class="menu">
-		        <!-- Indicates caution should be taken with this action -->
-				<button type="button" id="menu" class="btn btn-warning" onclick="goLogin();">로그인</button>
-				<button type="button" id="menu" class="btn btn-warning" onclick="goRegister();">회원가입</button>
-				<button type="button" id="menu" class="btn btn-warning" onclick="goWorksapace();">워크스페이스 추가</button>
-		    </div>
+	    
+	    	<sec:authorize access="isAuthenticated()">
+	    		
+	    		<button type="button" id="menu" class="btn btn-warning" onClick="goHome();" style="width: 200px;">워크스페이스로 이동</button>
+					
+			</sec:authorize>
+			
+			<sec:authorize access="isAnonymous()">
+			
+				<div class="menu">
+			        
+			        <!-- Indicates caution should be taken with this action -->
+					<button type="button" id="menu" class="btn btn-warning" onclick="goLogin();">로그인</button>
+					<button type="button" id="menu" class="btn btn-warning" onclick="goRegister();">회원가입</button>
+					<button type="button" id="menu" class="btn btn-warning" onclick="goWorksapace();" style="width: 160px;">워크스페이스 추가</button>
+		    	
+		    	</div>
+			
+			</sec:authorize>
+		    
 	    </div>
 	</div>
 </body>

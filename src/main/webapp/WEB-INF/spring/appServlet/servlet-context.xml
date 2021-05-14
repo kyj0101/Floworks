@@ -42,7 +42,7 @@
 	
 	<!-- FileUpload -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
-		
+
 		<beans:property name="maxUploadSize" value="20971520" />
 		<beans:property name="maxUploadSizePerFile" value="10485760" />
 		<beans:property name="maxInMemorySize" value="10240" /> 
@@ -54,7 +54,6 @@
 	
 	<!-- component-scan -->
 	<context:component-scan base-package="com.kh.floworks" />
-	<context:component-scan base-package="com.kh.floworks.member" />
 	
 	<!-- aop -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>

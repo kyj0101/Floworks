@@ -69,7 +69,7 @@
 						<!-- 로그아웃 & 마이페이지 -->
 						<!-- 로그인 전/ 후 달라져야함  -->
 						<div class="mainHeader dropdown mr-2">
-							<form:form type="hidden" method="post" action="${pageContext.request.contextPath }/member/logout" id="logout-form"></form:form>
+							<form:form type="hidden" method="post" action="${pageContext.request.contextPath }/logout" id="logout-form"></form:form>
 							
 							<button class="btn btn-default dropdown-toggle" type="button"
 								id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
