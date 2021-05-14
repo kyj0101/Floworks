@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="email">
+
+	<select id="selectRecipientList" resultType="string">
+		select
+    		*
+		from
+    		floworks_user
+		where
+    		id like '%' || #{searchKeyword} || '%'
+	</select> 
+	
+	<insert id="insertEmailFile">
+		insert into
+			email_file
+		values(
+			seq_email_file_no.nextval,			
+			#{originalName1},
+			#{reNamed1},			
+			#{originalName2},
+			#{reNamed2},			
+			#{originalName3},
+			#{reNamed3}
+		)
+		
+		<selectKey resultType="_int" keyProperty="no" order="AFTER">
+			select
+				seq_email_file_no.currval
+			from
+				dual				
+		</selectKey>
+		
+	</insert>
+	
+	<insert id="insertEmail">
+	
+		insert into
+			email
+		values(
+			seq_email_no.nextval,			
+			#{id},
+			#{recipient},			
+			#{externalRecipient},
+			#{emailCC},			
+			#{emailBCC},
+
+			<choose>
+				<when test="subject != null">
+					#{subject},	
+				</when>
+				<otherwise>
+					default,
+				</otherwise>
+			</choose>
+
+			#{emailContent},
+			#{fileNo}
+		)
+		
+		<selectKey resultType="_int" keyProperty="emailNo" order="AFTER">
+			select
+				seq_email_no.currval
+			from
+				dual				
+		</selectKey>
+		
+	</insert>
+	
+	<insert id="insertSent">
+		insert into
+			email_sent
+		values(
+			#{emailNo},		
+			default, 
+			default
+		)
+	</insert>
+	
+	<insert id="insertIndox">
+		insert into
+			email_inbox
+		values(
+			#{recipient},
+			#{emailNo},		
+			default, 
+			default,
+			default
+		)
+	</insert>
+	
+
+
+</mapper>
