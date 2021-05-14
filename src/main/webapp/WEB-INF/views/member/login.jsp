@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +46,7 @@
                     <h3 class="login-heading mb-4">안녕하세요!</h3>
                     
                     <form:form method="POST" action="${pageContext.request.contextPath }/member/login">            
-                    	
+           	
                     	<div class="form-label-group">
                       
                         	<input type="text" id="inputEmail" name="username" class="form-control"  placeholder="ID"  required>                        
