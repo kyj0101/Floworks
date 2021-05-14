@@ -7,7 +7,7 @@ body {
 
 .contain{
 	width: 100%;
-	min-height: 800px;
+	min-height: 900px;
     background-image: url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80");
     background-position: center center;
     background-repeat: no-repeat;
@@ -15,7 +15,7 @@ body {
     text-align: center;
 }
 .logotext{ 
-	padding-top: 245px;
+	padding-top: 345px;
 }
 
 span {
