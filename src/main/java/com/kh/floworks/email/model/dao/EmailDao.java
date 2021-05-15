@@ -17,6 +17,12 @@ public interface EmailDao {
 
 	int insertIndox(Map<String, Object> param);
 
+	List<Email> selectSentList(String id);
+
+	Email selectOneEmail(int emailNo);
+
+	Map<String, String> selectOneFile(int fileNo);
+
 
 
 }

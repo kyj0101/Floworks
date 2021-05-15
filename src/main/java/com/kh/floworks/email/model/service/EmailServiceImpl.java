@@ -24,24 +24,22 @@ public class EmailServiceImpl implements EmailService{
 	public List<String> selectRecipientList(String searchKeyword) {
 		return emailDao.selectRecipientList(searchKeyword);
 	}
+	
+	@Override
+	public int insertFile(Map<String, String> fileMap) {
+		emailDao.insertEmailFiles(fileMap);
+		
+		return 0;
+	}
+
+
 
 	@Override
-	public int insertEmail(Map<String, String> fileMap, Email email) {
-
-		//insertFile
-		if(fileMap.size() > 0) {
-			emailDao.insertEmailFiles(fileMap);
-		}
+	public int insertEmail(Email email) {
 		
-		String strNo = String.valueOf(fileMap.get("no"));
-		int no = Integer.valueOf(strNo);
-		email.setFileNo(no);
-		
-		//insertEmail
 		emailDao.insertEmail(email);
+		
 		int emailNo = email.getEmailNo();
-		
-		
 		String allRecipient = email.getRecipient()
 				            + ", "
 				            + email.getEmailCC()
@@ -63,6 +61,22 @@ public class EmailServiceImpl implements EmailService{
 
 		return 1;
 	}
+
+	@Override
+	public List<Email> selectSentList(String id) {
+		return emailDao.selectSentList(id);
+	}
+
+	@Override
+	public Email selectOneEmail(int emailNo) {
+		return emailDao.selectOneEmail(emailNo);
+	}
+
+	@Override
+	public Map<String, String> selectFile(int fileNo) {
+		return emailDao.selectOneFile(fileNo);
+	}
+
 
 
 

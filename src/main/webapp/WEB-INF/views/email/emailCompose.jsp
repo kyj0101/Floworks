@@ -14,8 +14,6 @@
 <!-- ckeditor-->
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 
-<!-- css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
 
 <!-- jquery autoComplete -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -24,12 +22,14 @@
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/email/emailCompose.js"></script>
 
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
 
 <section>
 	<div class="input-div">
 		<div class="email-input-div">
 		
-			<form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" name="upFile" enctype="multipart/form-data">
+			<form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" enctype="multipart/form-data">
 				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				
@@ -43,26 +43,17 @@
 					<button type="button" class="btn btn-outline-secondary" id="btn-bcc">
 						숨은 참조
 					</button>
-	
-					<button class="btn btn-outline-secondary dropdown-toggle"
-						type="button" id="dropdownMenu2" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">파일 삭제
-						
-					</button>
-						
-					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 					
-						<button class="dropdown-item file1" type="button">파일1</button>
-						<button class="dropdown-item file2" type="button">파일2</button>
-						<button class="dropdown-item file3" type="button">파일3</button>
-						
-					</div>
-	
-					<button type="button" class="btn btn-outline-secondary"
-						>
+					<button type="button" class="btn btn-outline-secondary">
 						<i class="fas fa-share"></i>
 					</button>
-				
+					
+					<div class="btn-group" role="group" aria-label="Basic example">
+					  <button type="button" class="btn btn-secondary file-del-btn file1">파일1삭제</button>
+					  <button type="button" class="btn btn-secondary file-del-btn file2">파일2삭제</button>
+					  <button type="button" class="btn btn-secondary file-del-btn file3">파일3삭제</button>
+					</div>	
+
 				</div>
 	
 				<div class="input-group">
@@ -126,13 +117,15 @@
 					<hr />
 					
 				</div>
-			
+				
+				<input type="hidden" name="fileNo"  />
+				
 			</form>
 
 		</div>
 
 	</div>
-
+	
 	<div class="email-compose-div">
 		<textarea name="emailContent" class="textarea"></textarea>
 		<div class="btn-div">
@@ -145,6 +138,11 @@
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <script>
+
+const maxSize = "20971520";
+let file1 = null;
+let file2 = null;
+let file3 = null;
 
 $(".recipient-input").keyup(function(){
 	
@@ -175,8 +173,8 @@ $(".recipient-input").autocomplete({
 				response($.map(data, (item) =>{
 	
 					return {
-						label : item,
-						value : item
+						label:item,
+						value:item
 					}
 				})	  
 			  );
@@ -240,27 +238,36 @@ function uploadFiles(e){
 	
 	e.stopPropagation();
 	e.preventDefault();
-	e.dataTransfer = e.originalEvent.dataTransfer; //2
+	e.dataTransfer = e.originalEvent.dataTransfer; 
 	
 	dragOver(e);
     
 	const files = e.target.files || e.dataTransfer.files;
-
-    $($(this).children()[0]).text(files[0].name);
-
-    if (files.length > 1) {
- 
+	const file = files[0];
+	
+	if (files.length > 1) {
+		 
     	alert('한번에 하나씩 올리실 수 있습니다');
     	
         return;
+        
+    }else if(isItMaximum(file.size)){
+    	return;
     }
+	
+	const className = $(e.target).attr("class").substring("18");
+	fileNumberComparison(className, file)
+
+    $($(this).children()[0]).text(files[0].name);
+   
 }
 
-$(".dropdown-item").click(function(e){
+$(".file-del-btn").click(function(e){
 	
 	const $this = $(this);
-	const className = $this.attr("class").substring(14);
+	const className = $this.attr("class").substring(31);
 	const $labels = $(".custom-file-label");
+
 	
 	for(let label of $labels){
 		
@@ -269,7 +276,7 @@ $(".dropdown-item").click(function(e){
 		if($label.hasClass(className)){
 			
 			$label.text("파일을 첨부하세요.");
-			$($label.prev()).val("");
+			fileNumberComparison(className, null);
 			
 			break;
 		}
@@ -277,28 +284,27 @@ $(".dropdown-item").click(function(e){
 
 });
 
-function isItFive(recipientInput){
-	console.log(recipientInput);
+$(".custom-file-input").change(function(){
+    
+	const $this = $(this);
 
-	let index = recipientInput.indexOf(",");
-	let count = 0;
-	
-	while (index !== -1) {
-		  count++;
-		  
-		  if(count >= 5){
-			  return index;
-		  }
-			  
-		  index = recipientInput.indexOf(",", index + 1); 
+	if(isItMaximum($this[0].files[0].size)){
+		
+		$this.val("");
+
+		return false;
 	}
 	
-	console.log(count);
- 
-	return -1;
+	const fileId = $this.attr("id")
+	const file = $this[0].files[0];
 	
-}
+	fileNumberComparison(fileId, file)
 	
+    const fileOriginalName = $this.val().replace('C:\\fakepath\\', " ");
+    
+    $($this.prev()).text(fileOriginalName);
+});
+
 $("#send-btn").click(function(){
 	
 	const $recipientInputs = $(".required-recipient-input");
@@ -311,16 +317,49 @@ $("#send-btn").click(function(){
 		return false;
 	}
 	
-	$("#send-form").submit();
+	if(file1 === null && file2 === null && file3 === null){
+		$("#send-form").submit();
+	}
+
+	//드래그 앤 드랍 기능 때문에 파일을 먼저 ajax로 전송함.
+	
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	const $fileInput = $("input[name='fileNo']");
+	const formData = new FormData();
+	const files = [file1, file2, file3];
+	
+	for(file of files){
+		formData.append("uploadFile", file);
+	}
+	
+	$.ajax({
+		type:"post",
+		url:"${pageContext.request.contextPath}/email/saveFile",
+		processData:false,
+		contentType:false,
+		data:formData,
+		beforeSend(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		
+		success(no){
+			console.log("no is" +no);
+			$fileInput.val(no);
+		},
+		
+		error(xhr,status,error){
+			alert("파일 전송 중 에러가 발생했습니다.");
+		},
+		
+		complete(data,textStatus){
+			$("#send-form").submit();
+		}
+	})//end of ajax
+	
 });
 
-$(".custom-file-input").change(function(){
-    
-	const $this = $(this);
-    const fileOriginalName = $this.val().replace('C:\\fakepath\\', " ");
-	console.log($(this)[0].files);
-    $($this.prev()).text(fileOriginalName);
-});
+
 
 
 </script>

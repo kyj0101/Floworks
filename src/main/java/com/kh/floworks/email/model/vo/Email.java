@@ -1,5 +1,9 @@
 package com.kh.floworks.email.model.vo;
 
+
+
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -14,5 +18,7 @@ public class Email {
 	private String subject;
 	private String emailContent;
 	private int fileNo;
+	private String emailStarred;
+	private Date time;
 	
 }

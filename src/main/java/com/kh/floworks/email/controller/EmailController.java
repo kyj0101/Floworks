@@ -2,24 +2,31 @@ package com.kh.floworks.email.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.email.model.service.EmailService;
 import com.kh.floworks.email.model.vo.Email;
@@ -32,8 +39,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmailController {
 	
+	private final String directory = "/resources/upload/email";
+	
+	@Autowired
+	private ServletContext servletContext;
+	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private ResourceLoader resourceLoader;
 	
 	@RequestMapping("/list")
 	public String emailList(){
@@ -43,6 +58,39 @@ public class EmailController {
 	@GetMapping("/compose")
 	public String emailCompose() {
 		return "/email/emailCompose";
+	}
+	
+	@GetMapping("/sent")
+	public String emailSentList(@RequestParam String id, Model model) {
+		
+		List<Email> emailList = emailService.selectSentList(id);
+		
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("listType", "sent");
+		
+		return "/email/emailList";
+	}
+	
+	/**
+	 * 
+	 * @param emailNo
+	 * @param model
+	 * @param listType : 이메일 리스트의 유형. 보낸이메일|받은이메일|임시저장이메일
+	 * @return
+	 */
+	@GetMapping("/detail")
+	public String emailDetail(int emailNo, Model model, String listType){
+		
+		Email email = emailService.selectOneEmail(emailNo);
+		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
+		
+		model.addAttribute("email", email);
+		model.addAttribute("listType", listType);
+		model.addAttribute("fileMap", fileMap);
+		
+		log.info("fileMap={}", fileMap);
+		
+		return "/email/emailDetail";
 	}
 	
 	@GetMapping("/getRecipientList")
@@ -55,63 +103,70 @@ public class EmailController {
 				             .body(recipientList);
 	}
 	
-	@PostMapping("/send")
-	public String sendEmail(@RequestParam(value="uploadFile", required = false)
-							MultipartFile[] uploadFile,
-							Email email,
-							HttpServletRequest request) {
+	@PostMapping("/saveFile")
+	public ResponseEntity<Integer> saveFile(@RequestParam(value="uploadFile")
+							MultipartFile[] uploadFile) throws IOException {
 		try {
 			
-			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/email");
-			Map<String, String> fileMap = new HashMap<>();
-			File dir = new File(saveDirectory);
+			String saveDirectory = servletContext.getRealPath(directory); 
+			Map<String, String> fileMap = FileUtils.getFileMap(uploadFile, saveDirectory);
 			
-			if(!dir.exists()) {
-				dir.mkdirs();
-			}
+			emailService.insertFile(fileMap);
 			
-			for(int i = 0; i < uploadFile.length; i++) {
-				
-				MultipartFile upFile = uploadFile[i];
-				
-				if(upFile.isEmpty()) {
-					continue;
-				}
-				
-				File renameFile = FileUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
-				
-				upFile.transferTo(renameFile);
-				
-				fileMap.put("originalName" + (i + 1), upFile.getOriginalFilename());
-				fileMap.put("reNamed" + (i + 1), renameFile.getName());
-				
-				log.info("fileMap = {}", fileMap);;
-			}
-			try {
-				int fileSaveResult = emailService.insertEmail(fileMap, email);
-				log.info("fileINsertResult = {}", fileSaveResult);
-				
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			 
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			String strNo = String.valueOf(fileMap.get("no"));
+			int no = Integer.parseInt(strNo);
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	
-		
-		
-
-			
-		
-
-		log.info("email = {}", email);
-		
-		return "redirect:/email/list";
+			return ResponseEntity.ok()
+					             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+					             .body(no);
+		} catch (IOException e) {
+			throw e;
+		}
 	}
+	
+	@PostMapping("/send")
+	public String sendEmail(Email email) throws IOException {
+		try {
+
+			log.info("email={}",email);
+		int result = emailService.insertEmail(email);
+			
+			log.info("INsertResult = {}", result);
+			
+			return "redirect:/email/list";
+			
+		} catch (IllegalStateException e) {
+			throw e;
+		}
+	}
+	
+	@GetMapping("/download")
+	public ResponseEntity<Resource> fileDownload(String fileReName, String fileOriName) throws UnsupportedEncodingException{
+		
+		try {
+			
+			String saveDirectory = servletContext.getRealPath(directory);
+			File downloadFile = new File(saveDirectory, fileReName);
+			Resource resource = resourceLoader.getResource("file:" + downloadFile);
+			
+			String encodingOriName = "attachment;fileName=\"" 
+			                       + URLEncoder.encode(fileOriName, "UTF-8")
+			                       + "\"";
+			
+			return ResponseEntity.ok()
+					             .contentType(MediaType.APPLICATION_OCTET_STREAM)
+					             .header(HttpHeaders.CONTENT_DISPOSITION, encodingOriName)
+					             .body(resource);
+		
+		} catch (UnsupportedEncodingException e) {
+			throw e;
+			
+		} catch (NullPointerException | IllegalArgumentException e) {
+			throw e;
+		}
+	}
+	
 	
 	
 	

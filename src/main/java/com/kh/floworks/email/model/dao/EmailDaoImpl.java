@@ -31,7 +31,6 @@ public class EmailDaoImpl implements EmailDao{
 		
 	}
 
-
 	@Override
 	public int insertSent(int emailNo) {
 		return session.insert("email.insertSent", emailNo);
@@ -41,6 +40,21 @@ public class EmailDaoImpl implements EmailDao{
 	@Override
 	public int insertIndox(Map<String, Object> param) {
 		return session.insert("email.insertIndox", param);
+	}
+
+	@Override
+	public List<Email> selectSentList(String id) {
+		return session.selectList("email.selectSentList", id);
+	}
+
+	@Override
+	public Email selectOneEmail(int emailNo) {
+		return session.selectOne("email.selectOneEmail", emailNo);
+	}
+
+	@Override
+	public Map<String, String> selectOneFile(int fileNo) {
+		return session.selectOne("email.selectOneFile", fileNo);
 	}
 
 

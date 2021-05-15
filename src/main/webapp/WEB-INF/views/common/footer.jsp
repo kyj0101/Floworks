@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
 <aside>
 	<!-- 아이콘 -->
 	<!-- https://icons.getbootstrap.kr/#%EC%95%84%EC%9D%B4%EC%BD%98 -->
@@ -17,8 +19,8 @@
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/compose" class="nav-link active"> 이메일 작성 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/list" class="nav-link "> 받은 메일 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/sent" class="nav-link "> 보낸 이메일 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/list?id=<sec:authentication property="principal.id"/>" class="nav-link "> 받은 메일 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/sent?id=<sec:authentication property="principal.id"/>" class="nav-link "> 보낸 이메일 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item">

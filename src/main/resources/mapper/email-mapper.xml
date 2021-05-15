@@ -46,7 +46,7 @@
 			#{externalRecipient},
 			#{emailCC},			
 			#{emailBCC},
-
+			
 			<choose>
 				<when test="subject != null">
 					#{subject},	
@@ -57,7 +57,8 @@
 			</choose>
 
 			#{emailContent},
-			#{fileNo}
+			#{fileNo},
+			default
 		)
 		
 		<selectKey resultType="_int" keyProperty="emailNo" order="AFTER">
@@ -90,6 +91,48 @@
 			default
 		)
 	</insert>
+	
+	<select id="selectSentList" resultType="email">
+		select 
+			* 
+		from 
+			email e join email_sent s
+    		on e.email_no = s.email_no
+		where 
+			id = #{id}
+			and s.del_yn = 'N'
+	</select>
+	
+	<select id="selectOneEmail" resultType="email">
+		select
+			*
+		from
+			email
+		where
+			email_no = #{emailNo}
+	</select>
+	
+	<select id="selectOneFile" resultMap="fileMap">
+		select
+    		*
+		from
+    		email_file
+		where
+			file_no = #{fileNo}
+	</select>
+	
+	<resultMap type="map" id="fileMap">
+	
+		<id column="file_no" property="fileNo" />
+		
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_originalname1" property="fileOriginalname1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_originalname2" property="fileOriginalname2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+		<result column="file_originalname3" property="fileOriginalname3" />
+	
+	</resultMap>
 	
 
 
