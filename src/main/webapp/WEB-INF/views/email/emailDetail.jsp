@@ -66,6 +66,7 @@
 		<c:if test="${email.emailContent == null}">
 			<p>내용 없음</p>
 		</c:if>
+		${email.emailContent}
 	</div>
 
 	<ul class="file-list">

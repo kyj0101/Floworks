@@ -44,6 +44,7 @@ section{
     min-height:500px;
     background-color: rgb(243, 243, 243);
     margin-left: 0px;
+    padding: 30px;
 }
 
 .box {

@@ -26,119 +26,136 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
 
 <section>
-	<div class="input-div">
-		<div class="email-input-div">
-		
-			<form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" enctype="multipart/form-data">
-				
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				
-				<span>','로 수신자를 여러명 선택할 수 있습니다. (최대 5명)</span>
+<form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" enctype="multipart/form-data">
+		<div class="input-div">
+			<div class="email-input-div">
+
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> <span>','로 수신자를 여러명 선택할 수 있습니다.
+					(최대 5명)</span>
 
 				<div class="email-btn-div">
-	
+
 					<button type="button" class="btn btn-outline-secondary" id="btn-cc">
 						참조</button>
-	
-					<button type="button" class="btn btn-outline-secondary" id="btn-bcc">
-						숨은 참조
-					</button>
-					
+
+					<button type="button" class="btn btn-outline-secondary"
+						id="btn-bcc">숨은 참조</button>
+
 					<button type="button" class="btn btn-outline-secondary">
 						<i class="fas fa-share"></i>
 					</button>
-					
+
 					<div class="btn-group" role="group" aria-label="Basic example">
-					  <button type="button" class="btn btn-secondary file-del-btn file1">파일1삭제</button>
-					  <button type="button" class="btn btn-secondary file-del-btn file2">파일2삭제</button>
-					  <button type="button" class="btn btn-secondary file-del-btn file3">파일3삭제</button>
-					</div>	
+						<button type="button" class="btn btn-secondary file-del-btn file1">파일1삭제</button>
+						<button type="button" class="btn btn-secondary file-del-btn file2">파일2삭제</button>
+						<button type="button" class="btn btn-secondary file-del-btn file3">파일3삭제</button>
+					</div>
 
 				</div>
-	
+
 				<div class="input-group">
 					<p class="input-group-text">작성자</p>
 					<input type="text" class="form-control" name="id"
 						aria-describedby="addon-wrapping"
 						value="<sec:authentication property="principal.id"/>" readOnly>
 				</div>
-	
+
 				<div class="input-group">
 					<p class="input-group-text">수신자</p>
-					<input type="search" class="form-control recipient-input required-recipient-input"
+					<input type="search"
+						class="form-control recipient-input required-recipient-input"
 						name="recipient" aria-describedby="addon-wrapping">
 				</div>
-	
+
 				<div class="input-group cc-div" id="cc">
 					<p class="input-group-text">참조</p>
-					<input type="search" class="form-control recipient-input" name="emailCC"
-						aria-label="Username" aria-describedby="addon-wrapping">
-				</div>
-	
-				<div class="input-group bcc-div" id="bcc">
-					<p class="input-group-text">숨은 참조</p>
-					<input type="search" class="form-control recipient-input " name="emailBCC"
-						aria-label="Username" aria-describedby="addon-wrapping">
-				</div>
-	
-				<div class="input-group">
-					<p class="input-group-text">외부 이메일</p>
-					<input type="text" class="form-control required-recipient-input" aria-label="Username" name="externalRecipient"
+					<input type="search" class="form-control recipient-input"
+						name="emailCC" aria-label="Username"
 						aria-describedby="addon-wrapping">
 				</div>
-	
+
+				<div class="input-group bcc-div" id="bcc">
+					<p class="input-group-text">숨은 참조</p>
+					<input type="search" class="form-control recipient-input "
+						name="emailBCC" aria-label="Username"
+						aria-describedby="addon-wrapping">
+				</div>
+
+				<div class="input-group">
+					<p class="input-group-text">외부 이메일</p>
+					<input type="text" class="form-control required-recipient-input"
+						aria-label="Username" name="externalRecipient"
+						aria-describedby="addon-wrapping">
+				</div>
+
 				<div class="input-group">
 					<p class="input-group-text">제목</p>
-					<input type="text" class="form-control" placeholder="제목 없음" name="subject"
-						aria-label="Username" aria-describedby="addon-wrapping">
+					<input type="text" class="form-control"
+						name="subject" aria-label="Username" value="제목 없음"
+						aria-describedby="addon-wrapping">
 				</div>
-	
-	
+
+
 				<div class="input-group file-div">
-	
-					<label class="custom-file-label file1" for="file1">파일을 첨부하세요.</label>
-					<input type="file" class="custom-file-input file-input" id="file1" name="uploadFile"> 
+
+					<label class="custom-file-label file1" for="file1">파일을
+						첨부하세요.</label> <input type="file" class="custom-file-input file-input"
+						id="file1" name="uploadFile">
 					<hr />
-					
+
 				</div>
-	
+
 				<div class="input-group file-div">
-	
-					<label class="custom-file-label file2" for="file2">파일을 첨부하세요.</label>
-					<input type="file" class="custom-file-input file-input" id="file2" name="uploadFile"> 
+
+					<label class="custom-file-label file2" for="file2">파일을
+						첨부하세요.</label> <input type="file" class="custom-file-input file-input"
+						id="file2" name="uploadFile">
 					<hr />
-					
+
 				</div>
-				
+
 				<div class="input-group file-div">
-	
-					<label class="custom-file-label file3" for="file3">파일을 첨부하세요.</label>
-					<input type="file" class="custom-file-input file-input" id="file3" name="uploadFile"> 
+
+					<label class="custom-file-label file3" for="file3">파일을
+						첨부하세요.</label> <input type="file" class="custom-file-input file-input"
+						id="file3" name="uploadFile">
 					<hr />
-					
+
 				</div>
-				
-				<input type="hidden" name="fileNo"  />
-				
-			</form>
+
+				<input type="hidden" name="fileNo" value="0" />
+
+			</div>
 
 		</div>
 
-	</div>
-	
-	<div class="email-compose-div">
-		<textarea name="emailContent" class="textarea"></textarea>
-		<div class="btn-div">
-			<button type="button" class="btn btn-secondary btn-lg" onclick="history.back();">취소</button>
-			<button type="button" class="btn btn-primary btn-lg" id="send-btn">보내기</button>
-		</div>
+		<div class="email-compose-div">
+			<textarea name="emailContent" class="textarea"></textarea>
+			<div class="btn-div">
+				<button type="button" class="btn btn-secondary btn-lg"
+					onclick="history.back();">취소</button>
+				<button type="button" class="btn btn-primary btn-lg" id="send-btn">보내기</button>
+			</div>
 
-	</div>
+		</div>
+	</form>
 </section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <script>
+window.onload = ()=>{
+    CKEDITOR.replace('emailContent', {
+        height: 500,
+        filebrowserUploadUrl:"<c:url value='/email/ckupload'/>?${_csrf.parameterName}=${_csrf.token}",
 
+    });
+   
+};
+
+CKEDITOR.editorConfig = function( config ) {
+    config.filebrowserUploadMethod = "form";
+};
 const maxSize = "20971520";
 let file1 = null;
 let file2 = null;
@@ -306,8 +323,9 @@ $(".custom-file-input").change(function(){
 });
 
 $("#send-btn").click(function(){
-	
+
 	const $recipientInputs = $(".required-recipient-input");
+	const content = $('textarea[name="emailContent"]').val();
 	const isBlankRecipient = $($recipientInputs[0]).val().length < 1;
 	const isBlankExternal = $($recipientInputs[1]).val().length < 1;
 
@@ -317,46 +335,51 @@ $("#send-btn").click(function(){
 		return false;
 	}
 	
+	$('textarea[name="emailContent"]').val(CKEDITOR.instances["emailContent"].getData())
+
 	if(file1 === null && file2 === null && file3 === null){
+		
 		$("#send-form").submit();
+	
+	}else{
+		
+		//드래그 앤 드랍 기능 때문에 파일을 먼저 ajax로 전송함.
+		
+		const csrfHeaderName = "${_csrf.headerName}";
+		const csrfTokenValue = "${_csrf.token}";
+		const $fileInput = $("input[name='fileNo']");
+		const formData = new FormData();
+		const files = [file1, file2, file3];
+		
+		for(file of files){
+			formData.append("uploadFile", file);
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"${pageContext.request.contextPath}/email/saveFile",
+			processData:false,
+			contentType:false,
+			data:formData,
+			beforeSend(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			
+			success(no){
+				console.log("no is" +no);
+				$fileInput.val(no);
+			},
+			
+			error(xhr,status,error){
+				alert("파일 전송 중 에러가 발생했습니다.");
+			},
+			
+			complete(data,textStatus){
+				$("#send-form").submit();
+			}
+		})//end of ajax 
 	}
 
-	//드래그 앤 드랍 기능 때문에 파일을 먼저 ajax로 전송함.
-	
-	const csrfHeaderName = "${_csrf.headerName}";
-	const csrfTokenValue = "${_csrf.token}";
-	const $fileInput = $("input[name='fileNo']");
-	const formData = new FormData();
-	const files = [file1, file2, file3];
-	
-	for(file of files){
-		formData.append("uploadFile", file);
-	}
-	
-	$.ajax({
-		type:"post",
-		url:"${pageContext.request.contextPath}/email/saveFile",
-		processData:false,
-		contentType:false,
-		data:formData,
-		beforeSend(xhr){
-			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		},
-		
-		success(no){
-			console.log("no is" +no);
-			$fileInput.val(no);
-		},
-		
-		error(xhr,status,error){
-			alert("파일 전송 중 에러가 발생했습니다.");
-		},
-		
-		complete(data,textStatus){
-			$("#send-form").submit();
-		}
-	})//end of ajax
-	
 });
 
 

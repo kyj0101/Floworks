@@ -46,19 +46,19 @@
 			#{externalRecipient},
 			#{emailCC},			
 			#{emailBCC},
+			#{subject},	
 			
 			<choose>
-				<when test="subject != null">
-					#{subject},	
+				<when test="fileNo != 0">
+					#{fileNo},	
 				</when>
 				<otherwise>
-					default,
+					null,
 				</otherwise>
 			</choose>
-
-			#{emailContent},
-			#{fileNo},
-			default
+			
+			default,
+			#{emailContent}
 		)
 		
 		<selectKey resultType="_int" keyProperty="emailNo" order="AFTER">
@@ -101,6 +101,8 @@
 		where 
 			id = #{id}
 			and s.del_yn = 'N'
+		order by
+            time desc
 	</select>
 	
 	<select id="selectOneEmail" resultType="email">

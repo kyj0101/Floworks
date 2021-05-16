@@ -1,12 +1,3 @@
-window.onload = ()=>{
-    CKEDITOR.replace('emailContent', {
-        height: 500
-    });
-          
-    CKEDITOR.replace( 'emailContent' );
-};
-    
-  
 $(()=>{
     const $ccBtn = $("#btn-cc");
     const $bccBtn = $("#btn-bcc");

@@ -4,29 +4,35 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.email.model.service.EmailService;
 import com.kh.floworks.email.model.vo.Email;
@@ -128,9 +134,11 @@ public class EmailController {
 	@PostMapping("/send")
 	public String sendEmail(Email email) throws IOException {
 		try {
-
+			if(email.getSubject().trim().equals("")) {
+				email.setSubject("제목 없음");
+			}
+			int result = emailService.insertEmail(email);
 			log.info("email={}",email);
-		int result = emailService.insertEmail(email);
 			
 			log.info("INsertResult = {}", result);
 			
@@ -140,6 +148,8 @@ public class EmailController {
 			throw e;
 		}
 	}
+	
+
 	
 	@GetMapping("/download")
 	public ResponseEntity<Resource> fileDownload(String fileReName, String fileOriName) throws UnsupportedEncodingException{
@@ -167,7 +177,32 @@ public class EmailController {
 		}
 	}
 	
-	
-	
-	
+
+	@RequestMapping("/ckupload")
+	@ResponseBody
+	public String imageUpload(HttpServletRequest request,
+							HttpServletResponse response,
+							MultipartHttpServletRequest multiFile,
+                            @RequestParam MultipartFile upload) throws Exception{
+		
+		MultipartFile[] m = {upload};
+		
+		String saveDirectory = servletContext.getRealPath("/resources/upload/editorEmailFile");
+        Map<String, String> fileMap = FileUtils.getFileMap(m, saveDirectory);
+        String urlDirectory =  request.getContextPath() + "/resources/upload/editorEmailFile/" + fileMap.get("reNamed1");
+
+
+        response.setContentType("text/html");
+        JsonObject json = new JsonObject();
+        
+        json.addProperty("uploaded", 1);
+        json.addProperty("fileName", fileMap.get("reNamed1"));
+        json.addProperty("url", urlDirectory );
+
+        log.info("{}",json);
+        
+        new Gson().toJson(json,response.getWriter());
+        
+        return null;
+    }
 }
