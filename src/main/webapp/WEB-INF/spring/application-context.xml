@@ -103,7 +103,7 @@
 	
 	<!-- 선언적 트랜잭션 aop 설정 -->
 	<aop:config proxy-target-class="true">
-	
+
 		<aop:pointcut id="serviceMethod"  expression="execution(* com.kh.floworks..*ServiceImpl.*(..)))" />
 		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 	
