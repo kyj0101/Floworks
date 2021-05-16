@@ -27,6 +27,7 @@
 		<security:intercept-url pattern="/member/**" access="isAuthenticated()"/>		
 		<security:intercept-url pattern="/board/**" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/approval/**" access="isAuthenticated()"/>
+
 		
 		<security:form-login login-page="/login"
 		                     login-processing-url="/login"
