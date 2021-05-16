@@ -12,16 +12,24 @@ import com.kh.floworks.email.model.vo.Email;
 
 public interface EmailService {
 	
-	List<String> selectRecipientList(String searchKeyword);
-
 	int insertEmail(Email email);
 
 	List<Email> selectSentList(String id);
 
 	Email selectOneEmail(int emailNo);
 	
+	List<Email> selectInboxList(String id);
+	
 	Map<String, String> selectFile(int fileNo);
 
 	int insertFile(Map<String, String> fileMap);
+
+	List<String> selectRecipientList(Map<String, String> param);
+
+	int insertDraftEmail(Email email);
+
+	List<Email> selectDraftList(String id);
+
+	Email selectOneDraftEmail(int emailNo);
 
 }

@@ -23,23 +23,68 @@
 			<tbody>
 				<c:forEach items="${emailList}" var="email">
 					<tr>
-						<td><input type="checkbox" name="" id=""></td>
+						<td>
+							<input type="checkbox" name="" id="">
+						</td>
+												
+						<c:if  test="${listType != 'drafts'}">
 						
-						<c:if test="${email.emailStarred == 'Y'}">
+							<c:if test="${email.emailStarred == 'Y'}">						
+								<td>
+									<i class="fas fa-star"></i>
+								</td>						
+							</c:if>
 						
-							<td><i class="fas fa-star"></i></td>
-						
-						</c:if>
-						
-						<c:if test="${email.emailStarred == 'N'}">
-						
-							<td><i class="fas fa-star"></i></td>
+							<c:if test="${email.emailStarred == 'N'}">
+								<td>
+									<i class="fas fa-star"></i>
+								</td>
+							</c:if>
 							
+							<c:if test="${email.recipient != null}">
+								<th>
+									To:${email.recipient}
+								</th>
+							</c:if>
+							
+							<c:if test="${email.recipient == null}">
+								<th>
+									To:${email.externalRecipient}
+								</th>
+							</c:if>
+						
+							<td>
+								<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}">${email.subject}</a>
+							</td>
+							
+							<td>
+								<fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/>
+							</td>
 						</c:if>
-	
-						<th>To:${email.recipient}</th>
-						<td><a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}">${email.subject}</a></td>
-						<td><fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/></td>
+						
+						<c:if  test="${listType == 'drafts'}">
+						
+							<th></th>
+							<th></th>
+							
+							<c:if test="${email.recipient != null}">
+								<th>
+									To:${email.recipient}
+								</th>
+							</c:if>
+							
+							<c:if test="${email.recipient == null}">
+								<th>
+									To:임시이메일
+								</th>
+							</c:if>
+						
+							<td>
+								<a href="${pageContext.request.contextPath}/email/draftDetail?emailNo=${email.emailNo}">${email.subject}</a>
+							</td>
+
+						</c:if>
+						
 					</tr>
 				</c:forEach>
 			</tbody>

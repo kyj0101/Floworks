@@ -7,8 +7,6 @@ import com.kh.floworks.email.model.vo.Email;
 
 public interface EmailDao {
 
-	List<String> selectRecipientList(String searchKeyword);
-
 	int insertEmailFiles(Map<String, String> fileMap);
 
 	int insertEmail(Email email);
@@ -23,6 +21,14 @@ public interface EmailDao {
 
 	Map<String, String> selectOneFile(int fileNo);
 
+	List<Email> selectInboxList(String id);
 
+	List<String> selectRecipientList(Map<String, String> param);
+
+	int insertDraftEmail(Email email);
+
+	List<Email> selectDraftList(String id);
+
+	Email selectOneDraftEmail(int emailNo);
 
 }

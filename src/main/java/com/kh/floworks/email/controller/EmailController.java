@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.SQLSyntaxErrorException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.io.Resource;
@@ -77,6 +80,29 @@ public class EmailController {
 		return "/email/emailList";
 	}
 	
+	@GetMapping("/inbox")
+	public String emailIndoxList(@RequestParam String id, Model model) {
+	
+		List<Email> emailList = emailService.selectDraftList(id);
+		
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("listType", "indox");
+		
+		return "/email/emailList";
+	}
+	
+	
+	@GetMapping("/drafts")
+	public String emailDraftList(@RequestParam String id, Model model) {
+		
+		List<Email> emailList = emailService.selectDraftList(id);
+		
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("listType", "drafts");
+		
+		return "/email/emailList";
+	}
+	
 	/**
 	 * 
 	 * @param emailNo
@@ -99,10 +125,35 @@ public class EmailController {
 		return "/email/emailDetail";
 	}
 	
-	@GetMapping("/getRecipientList")
-	public ResponseEntity<List<String>> getRecipientList(String searchKeyword){
+	@GetMapping("/draftDetail")
+	public String draftEmailDetail(int emailNo, Model model) {
 		
-		List<String> recipientList = emailService.selectRecipientList(searchKeyword);
+		Email email = emailService.selectOneDraftEmail(emailNo);
+		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
+		
+		log.info("{}",email);
+		model.addAttribute("email", email);
+		model.addAttribute("fileMap", fileMap);
+		
+		return "/email/emailDraft";
+	}
+	
+	@PostMapping("/draftUpdate")
+	public String draftEmailUpdate(Email email) {
+		log.info("email={}",email);
+		return "/email/drafts?id=" + email.getId();
+	}
+
+	
+	@GetMapping("/getRecipientList")
+	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId){
+		
+		Map<String, String> param = new HashMap<>();
+		
+		param.put("searchKeyword", searchKeyword);
+		param.put("workspaceId", workspaceId);
+		
+		List<String> recipientList = emailService.selectRecipientList(param);
 		
 		return ResponseEntity.ok()
 				             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -134,13 +185,15 @@ public class EmailController {
 	@PostMapping("/send")
 	public String sendEmail(Email email) throws IOException {
 		try {
+			
 			if(email.getSubject().trim().equals("")) {
 				email.setSubject("제목 없음");
 			}
-			int result = emailService.insertEmail(email);
-			log.info("email={}",email);
 			
-			log.info("INsertResult = {}", result);
+			int result = emailService.insertEmail(email);
+			
+			log.info("email={}",email);
+			log.info("InsertResult = {}", result);
 			
 			return "redirect:/email/list";
 			
@@ -150,7 +203,6 @@ public class EmailController {
 	}
 	
 
-	
 	@GetMapping("/download")
 	public ResponseEntity<Resource> fileDownload(String fileReName, String fileOriName) throws UnsupportedEncodingException{
 		
@@ -205,4 +257,19 @@ public class EmailController {
         
         return null;
     }
+	
+	@PostMapping("/save")
+	public String saveEmail(Email email) {
+		
+		try {
+			
+			int result = emailService.insertDraftEmail(email);
+			
+			return "/email/drafts?id=" + email.getId();
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
+	}
 }

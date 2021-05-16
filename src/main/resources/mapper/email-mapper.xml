@@ -4,6 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="email">
 
+	<resultMap type="map" id="fileMap">
+	
+		<id column="file_no" property="fileNo" />
+		
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_originalname1" property="fileOriginalname1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_originalname2" property="fileOriginalname2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+		<result column="file_originalname3" property="fileOriginalname3" />
+	
+	</resultMap>
+
 	<select id="selectRecipientList" resultType="string">
 		select
     		*
@@ -11,6 +24,8 @@
     		floworks_user
 		where
     		id like '%' || #{searchKeyword} || '%'
+    		and workspace_id = #{workspaceId}
+    		
 	</select> 
 	
 	<insert id="insertEmailFile">
@@ -123,18 +138,63 @@
 			file_no = #{fileNo}
 	</select>
 	
-	<resultMap type="map" id="fileMap">
+	<select id="selectInboxList" resultType="email">
+		select 
+    		* 
+		from 
+    		email e join email_inbox s
+    		on e.email_no = s.email_no
+		where 
+			recipient_id = #{id}
+			and s.del_yn = 'N'
+		order by
+     		time desc
+	</select>
 	
-		<id column="file_no" property="fileNo" />
-		
-		<result column="file_renamed1" property="fileRenamed1" />
-		<result column="file_originalname1" property="fileOriginalname1" />
-		<result column="file_renamed2" property="fileRenamed2" />
-		<result column="file_originalname2" property="fileOriginalname2" />
-		<result column="file_renamed3" property="fileRenamed3" />
-		<result column="file_originalname3" property="fileOriginalname3" />
+	<insert id="insertDraftEmail">
+		insert into
+			email_drafts
+		values(
+			seq_email_no.nextval,			
+			#{id},
+			#{recipient},			
+			#{externalRecipient},
+			#{emailCC},			
+			#{emailBCC},
+			#{subject},	
+			#{emailContent},
+			
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			
+			default
+		)
+	</insert>
 	
-	</resultMap>
+	<select id="selectDraftList" resultType="email">
+		select
+    		*
+		from
+			email_drafts
+		where
+    		id = #{id}
+    		and del_yn = 'N'
+	</select>
+	
+	<select id="selectDraftEmail" resultType="email">
+		select
+			*
+		from
+			email_drafts
+		where
+			email_no = #{emailNo}
+	</select>
 	
 
 

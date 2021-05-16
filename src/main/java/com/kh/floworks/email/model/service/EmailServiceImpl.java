@@ -19,20 +19,19 @@ public class EmailServiceImpl implements EmailService{
 	
 	@Autowired
 	private EmailDao emailDao;
-
-	@Override
-	public List<String> selectRecipientList(String searchKeyword) {
-		return emailDao.selectRecipientList(searchKeyword);
-	}
 	
 	@Override
-	public int insertFile(Map<String, String> fileMap) {
-		emailDao.insertEmailFiles(fileMap);
-		
-		return 0;
+	public List<String> selectRecipientList(Map<String, String> param) {
+		return emailDao.selectRecipientList(param);
 	}
 
-
+	@Override
+	public int insertFile(Map<String, String> fileMap) {
+		
+		emailDao.insertEmailFiles(fileMap);
+		
+		return 1;
+	}
 
 	@Override
 	public int insertEmail(Email email) {
@@ -61,6 +60,12 @@ public class EmailServiceImpl implements EmailService{
 
 		return 1;
 	}
+	
+
+	@Override
+	public int insertDraftEmail(Email email) {
+		return emailDao.insertDraftEmail(email);
+	}
 
 	@Override
 	public List<Email> selectSentList(String id) {
@@ -77,9 +82,19 @@ public class EmailServiceImpl implements EmailService{
 		return emailDao.selectOneFile(fileNo);
 	}
 
+	@Override
+	public List<Email> selectInboxList(String id) {
+		return emailDao.selectInboxList(id);
+	}
 
+	@Override
+	public List<Email> selectDraftList(String id) {
+		return emailDao.selectDraftList(id);
+	}
 
+	@Override
+	public Email selectOneDraftEmail(int emailNo) {
+		return emailDao.selectOneDraftEmail(emailNo);
+	}
 
-	
-	
 }
