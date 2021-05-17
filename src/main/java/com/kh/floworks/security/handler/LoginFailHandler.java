@@ -22,7 +22,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
 		
 		request.setAttribute("msg", msg);
 		
-		request.getRequestDispatcher("/member/login").forward(request, response);
+		request.getRequestDispatcher("/login").forward(request, response);
 		
 	}
 

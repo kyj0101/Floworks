@@ -4,11 +4,13 @@ section{
     padding-left: 0;
     padding-top: 0;
     overflow: hidden;
+    display: inline-block;
+    
 }
 
 .search-div {
     background-color: rgb(226, 213, 255);
-    width: 100%;
+    width: 1070px;
 }
 
 .email-table{

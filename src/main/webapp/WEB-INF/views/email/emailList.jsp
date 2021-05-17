@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
     
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
@@ -16,111 +21,72 @@
 	<div>
 		<table class="table email-table">
 			<tbody>
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
+				<c:forEach items="${emailList}" var="email">
+					<tr>
+						<td>
+							<input type="checkbox" name="" id="">
+						</td>
+												
+						<c:if  test="${listType != 'drafts'}">
+						
+							<c:if test="${email.emailStarred == 'Y'}">						
+								<td>
+									<i class="fas fa-star"></i>
+								</td>						
+							</c:if>
+						
+							<c:if test="${email.emailStarred == 'N'}">
+								<td>
+									<i class="fas fa-star"></i>
+								</td>
+							</c:if>
+							
+							<c:if test="${email.recipient != null}">
+								<th>
+									To:${email.recipient}
+								</th>
+							</c:if>
+							
+							<c:if test="${email.recipient == null}">
+								<th>
+									To:${email.externalRecipient}
+								</th>
+							</c:if>
+						
+							<td>
+								<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}">${email.subject}</a>
+							</td>
+							
+							<td>
+								<fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/>
+							</td>
+						</c:if>
+						
+						<c:if  test="${listType == 'drafts'}">
+						
+							<th></th>
+							<th></th>
+							
+							<c:if test="${email.recipient != null}">
+								<th>
+									To:${email.recipient}
+								</th>
+							</c:if>
+							
+							<c:if test="${email.recipient == null}">
+								<th>
+									To:임시이메일
+								</th>
+							</c:if>
+						
+							<td>
+								<a href="${pageContext.request.contextPath}/email/draftDetail?emailNo=${email.emailNo}">${email.subject}</a>
+							</td>
 
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star" style="color: gold;"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-
-				<tr scope="row">
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-				<tr scope="row">
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
-				<tr scope="row">
-					<td><input type="checkbox" name="" id=""></td>
-					<td><i class="fas fa-star"></i></td>
-					<th>Sender</th>
-					<td>The Overflow #72: From personal trainer to frontend mentor
-					</td>
-					<td>01/01/01</td>
-				</tr>
+						</c:if>
+						
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

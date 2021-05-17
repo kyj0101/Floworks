@@ -25,6 +25,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     
+    <!--특정 아이콘 추가 : https://fontawesome.com/icons?d=gallery&p=2 메일박스, 메시지-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    
     
 </head>
 <body>
@@ -102,88 +105,228 @@
 						</div>
 
 						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div
-								class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">에러 알림</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<h5>오류를 확인해보세요.</h5>
-										<p>
-											This <a href="#" role="button"
-												class="btn btn-secondary popover-test" title="Popover title"
-												data-content="Popover body content is set in this attribute.">button</a>
-											triggers a popover on click.
-										</p>
-										<hr>
-										<h5>창이 작아지면 스크롤 생김</h5>
-										<p>
-											<a href="#" class="tooltip-test" title="Tooltip">This
-												link</a> and <a href="#" class="tooltip-test" title="Tooltip">that
-												link</a> have tooltips on hover.
-										</p>
-										<hr>
-										<h5>Popover in a modal</h5>
-										<p>
-											This <a href="#" role="button"
-												class="btn btn-secondary popover-test" title="Popover title"
-												data-content="Popover body content is set in this attribute.">button</a>
-											triggers a popover on click.
-										</p>
-										<hr>
-										<h5>Popover in a modal</h5>
-										<p>
-											This <a href="#" role="button"
-												class="btn btn-secondary popover-test" title="Popover title"
-												data-content="Popover body content is set in this attribute.">button</a>
-											triggers a popover on click.
-										</p>
-										<hr>
-										<h5>Popover in a modal</h5>
-										<p>
-											This <a href="#" role="button"
-												class="btn btn-secondary popover-test" title="Popover title"
-												data-content="Popover body content is set in this attribute.">button</a>
-											triggers a popover on click.
-										</p>
-										<hr>
-										<h5>Popover in a modal</h5>
-										<p>
-											This <a href="#" role="button"
-												class="btn btn-secondary popover-test" title="Popover title"
-												data-content="Popover body content is set in this attribute.">button</a>
-											triggers a popover on click.
-										</p>
-										<hr>
-										<h5>Tooltips in a modal</h5>
-										<p>
-											<a href="#" class="tooltip-test" title="Tooltip">This
-												link</a> and <a href="#" class="tooltip-test" title="Tooltip">that
-												link</a> have tooltips on hover.
-										</p>
-										<hr>
-										<h5>Tooltips in a modal</h5>
-										<p>
-											<a href="#" class="tooltip-test" title="Tooltip">This
-												link</a> and <a href="#" class="tooltip-test" title="Tooltip">that
-												link</a> have tooltips on hover.
-										</p>
+                        <!--버튼을 클릭했을 때, 공지, 메일만을 분류할 수 있는 기능 script로 추가 구현하기-->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                        
+                                        <h5 class="modal-title col-md-7" id="exampleModalLabel">Notification</h5>
+                                        
+                                        <div class="d-grid gap-2 d-md-block col-md-4">
+                                            <div class="row">
+                                                <i class="fas fa-clipboard-list col-md-3" style="color: #000;"></i>
+                                               
+                                                <button class="btn btn-outline-secondary col-md-3" type="button">
+                                                    공지
+                                                </button>
+                                                
+                                                <i class="fas fa-mail-bulk col-md-3" style="color: #000;"></i>
+                                               
+                                                <button class="btn btn-outline-secondary col-md-3" type="button">                                                
+                                                    메일
+                                                </button>
+                                            </div>
 
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
-						</div>
+                                        </div>
+                                        <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <!--Modal Body : -->
+                                    <div class="modal-body">
+                                        <div class="d-flex flex-column align-items-stretch bg-white">
+                                            <div class="list-group list-group-flush border-bottom scrollarea">
+                                                <!--나중에 script함수로 class속성에 active 추가-->
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                              </a>
+                                        
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>  </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>  </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>  </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                              </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div> 
+                                            </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                              <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <i class="fas fa-user-circle" style="color: pink;"></i>
+                                                    </div>
+                                                
+                                                    <div class="col-md-11">
+                                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                                        <strong class="mb-1">List group item heading</strong>
+                                                        <small>Wed</small>
+                                                        </div>
+                                                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            </div>
+                                          </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 						<div class="mainHeader">
 							<!-- 로그인한 사용자의 프로필 -->

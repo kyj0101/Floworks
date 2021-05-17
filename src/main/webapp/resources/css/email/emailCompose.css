@@ -113,5 +113,11 @@ section{
 .custom-file-input {
     display:none;
 }
-    
 
+.btn-group .file-del-btn{
+	color:white;
+}
+
+aside{
+	height: 1300px;
+}

@@ -1,5 +1,6 @@
 package com.kh.floworks.email.model.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -19,34 +20,34 @@ public class EmailServiceImpl implements EmailService{
 	
 	@Autowired
 	private EmailDao emailDao;
-
+	
 	@Override
-	public List<String> selectRecipientList(String searchKeyword) {
-		return emailDao.selectRecipientList(searchKeyword);
+	public List<String> selectRecipientList(Map<String, String> param) {
+		return emailDao.selectRecipientList(param);
 	}
 
 	@Override
-	public int insertEmail(Map<String, String> fileMap, Email email) {
+	public int insertFile(Map<String, String> fileMap) {
+		
+		emailDao.insertEmailFiles(fileMap);
+		
+		return 1;
+	}
 
-		//insertFile
-		if(fileMap.size() > 0) {
-			emailDao.insertEmailFiles(fileMap);
-		}
+	@Override
+	public int insertEmail(Email email) {
 		
-		String strNo = String.valueOf(fileMap.get("no"));
-		int no = Integer.valueOf(strNo);
-		email.setFileNo(no);
-		
-		//insertEmail
 		emailDao.insertEmail(email);
+		
 		int emailNo = email.getEmailNo();
-		
-		
 		String allRecipient = email.getRecipient()
 				            + ", "
 				            + email.getEmailCC()
-				            + ", "
+				            + email.getRecipient() != null ? ", " : ""
 				            + email.getEmailBCC();
+		
+		log.info(allRecipient);
+
 		List<String> allRecipientList = Arrays.asList(allRecipient.split(", "));
 		Map<String, Object> paramMap = new HashMap<>();
 		
@@ -63,9 +64,66 @@ public class EmailServiceImpl implements EmailService{
 
 		return 1;
 	}
-
-
-
 	
-	
+
+	@Override
+	public int insertDraftEmail(Email email) {
+		return emailDao.insertDraftEmail(email);
+	}
+
+	@Override
+	public List<Email> selectSentList(String id) {
+		return emailDao.selectSentList(id);
+	}
+
+	@Override
+	public Email selectOneEmail(int emailNo) {
+		return emailDao.selectOneEmail(emailNo);
+	}
+
+	@Override
+	public Map<String, String> selectFile(int fileNo) {
+		return emailDao.selectOneFile(fileNo);
+	}
+
+	@Override
+	public List<Email> selectInboxList(String id) {
+		return emailDao.selectInboxList(id);
+	}
+
+	@Override
+	public List<Email> selectDraftList(String id) {
+		return emailDao.selectDraftList(id);
+	}
+
+	@Override
+	public Email selectOneDraftEmail(int emailNo) {
+		return emailDao.selectOneDraftEmail(emailNo);
+	}
+
+	@Override
+	public int updateDraftFile(Map<String, Object> param) {
+		return emailDao.updateDraftFile(param);
+	}
+
+	@Override
+	public int deleteFile(int fileNo) {
+		return emailDao.deleteFile(fileNo);
+	}
+
+	@Override
+	public int updateDraft(Email email) {
+		return emailDao.updateDraft(email);
+	}
+
+	@Override
+	public List<Map<String, String>> selectFileList() {
+		return emailDao.selectFileList();
+	}
+
+	@Override
+	public int deleteDraft(int emailNo) {
+		return emailDao.deleteDraft(emailNo);
+	}
+
 }
