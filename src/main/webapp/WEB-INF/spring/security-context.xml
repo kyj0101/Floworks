@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 	
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
+	
 	<bean id="securtiyDaoBean" class="com.kh.floworks.security.dao.SecurityDao">
 		<property name="session" ref="sqlSession"></property>
 	</bean>
@@ -14,22 +14,33 @@
 	<bean id="securityService" class="com.kh.floworks.security.service.SecurityService">
 		<property name="securityDao" ref="securtiyDaoBean"></property>	
 	</bean>
-
+	
+	
 	<bean id="deniedHandler" class="com.kh.floworks.security.handler.LoginFailHandler"></bean>
 	
 	<security:http auto-config="true" use-expressions="true">
 		
-		<security:intercept-url pattern="/" access="isAuthenticated()"/>
 		
-		<security:form-login login-page="/member/login"
-		                     login-processing-url="/member/login"
+		<security:intercept-url pattern="/" access="permitAll"/>		
+		<security:intercept-url pattern="/home/**" access="isAuthenticated()"/>		
+		<security:intercept-url pattern="/email/**" access="isAuthenticated()"/>		
+		<security:intercept-url pattern="/member/**" access="isAuthenticated()"/>		
+		<security:intercept-url pattern="/board/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/approval/**" access="isAuthenticated()"/>
+
+		
+		<security:form-login login-page="/login"
+		                     login-processing-url="/login"
+		                     default-target-url="/home"
 		                     username-parameter="username"
 		                     password-parameter="password"
 		                     authentication-failure-handler-ref="deniedHandler"/>
 	
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
 		
-		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remember-me, JSESSION_ID"/>
+		<security:logout logout-url="/logout" 
+		                 invalidate-session="true" 
+		                 delete-cookies="remember-me, JSESSION_ID"/>
 
 	</security:http>
 	

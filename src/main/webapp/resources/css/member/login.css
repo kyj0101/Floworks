@@ -17,7 +17,7 @@ body {
 	overflow: hidden;
 }
 
-.header-div span {
+.header-div a {
 	position: relative;
 	bottom: 150px;
 	color: white;
@@ -26,6 +26,11 @@ body {
 	font-size: 35px;
 	padding: 20px;
 }
+
+.header-div a:hover {
+	text-decoration: none;
+}
+
 
 .header-div img {
 	object-fit: cover;
