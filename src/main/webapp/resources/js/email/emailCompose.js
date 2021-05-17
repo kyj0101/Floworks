@@ -117,6 +117,17 @@ function uploadFiles(e){
    
 }
 
+function fileAllNullCheck(){
+	
+	if(file1 === null && file2 === null && file3 === null){
+		
+		return true;
+	}
+	
+	return false;
+}
+
+
 $(function(){
 	
     const $ccBtn = $("#btn-cc");

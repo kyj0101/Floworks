@@ -25,8 +25,9 @@
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
 
+
 <section>
-<form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/email/draft/send" method="POST" id="send-form" enctype="multipart/form-data">
 		<div class="input-div">
 			<div class="email-input-div">
 
@@ -46,7 +47,7 @@
 					</button>
 
 					<button type="button" class="btn btn-outline-secondary" id="btn-draft-update">
-						임시 저장 이메일 수정
+						임시 이메일 수정
 					</button>
 
 					<div class="btn-group" role="group" aria-label="Basic example">
@@ -123,11 +124,11 @@
 				<div class="input-group file-div">
 					
 					<c:if test="${fileMap.fileOriginalname2 != null}">
-						<label class="custom-file-label file1" for="file1">${fileMap.fileOriginalname2}</label>
+						<label class="custom-file-label file2" for="file2">${fileMap.fileOriginalname2}</label>
 					</c:if>
 					
 					<c:if test="${fileMap.fileOriginalname2 == null}">
-						<label class="custom-file-label file1" for="file1">파일을 첨부하세요.</label>
+						<label class="custom-file-label file2" for="file2">파일을 첨부하세요.</label>
 					</c:if>
 					
 					<input type="file" class="custom-file-input file-input" id="file2" name="uploadFile">
@@ -138,11 +139,11 @@
 				<div class="input-group file-div">
 					
 					<c:if test="${fileMap.fileOriginalname3 != null}">
-						<label class="custom-file-label file1" for="file1">${fileMap.fileOriginalname3}</label>
+						<label class="custom-file-label file3" for="file3">${fileMap.fileOriginalname3}</label>
 					</c:if>
 					
 					<c:if test="${fileMap.fileOriginalname3 == null}">
-						<label class="custom-file-label file1" for="file1">파일을 첨부하세요.</label>
+						<label class="custom-file-label file3" for="file3">파일을 첨부하세요.</label>
 					</c:if>
 					
 					<input type="file" class="custom-file-input file-input" id="file3" name="uploadFile">
@@ -176,19 +177,184 @@
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
-<jsp:include page="/WEB-INF/views/email/emailCommonScript.jsp"></jsp:include>
-
 <script>
 
-CKEDITOR.instances[emailContent].setData("${email.emailContent}") ;
+let fileReName1 = "${fileMap.fileRenamed1}" == "" ? null : "${fileMap.fileRenamed1}";
+let fileReName2 = "${fileMap.fileRenamed2}" == "" ? null : "${fileMap.fileRenamed2}";
+let fileReName3 = "${fileMap.fileRenamed3}" == "" ? null : "${fileMap.fileRenamed3}";
+
+let fileOriName1 = "${fileMap.fileOriginalname1}" == "" ? null : "${fileMap.fileOriginalname1}";
+let fileOriName2 = "${fileMap.fileOriginalname2}" == "" ? null : "${fileMap.fileOriginalname2}"; 
+let fileOriName3 = "${fileMap.fileOriginalname3}" == "" ? null : "${fileMap.fileOriginalname3}";
+
+
+window.onload = ()=>{
+    CKEDITOR.replace('emailContent', {
+        height: 500,
+        filebrowserUploadUrl:"<c:url value='/email/ckupload'/>?${_csrf.parameterName}=${_csrf.token}",
+
+    });   
+	
+	CKEDITOR.instances['emailContent'].setData("${email.emailContent}");
+};
+
+"${email.emailCC}" != "" && $("#cc").toggleClass("cc-div");
+"${email.emailBCC}" != "" && $("#bcc").toggleClass("bcc-div");
+
 
 $("#btn-draft-update").click(function(){
 	
 	$("#send-form").attr("action","${pageContext.request.contextPath}/email/draftUpdate");
-	$("#send-form").submit();
 	
+	fileSave();
 });
 
-//파일 수정값 처리 
+
+$("#send-btn").click(function(){
+
+	fileSave();
+});
+
+function fileSave(){
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	
+	const formData = new FormData();
+	const files = [file1, file2, file3];
+	const fileReNames = [fileReName1, fileReName2, fileReName3];
+	const fileOriNames = [fileOriName1, fileOriName2, fileOriName3];
+	
+	const fileNo = $("input[name='fileNo']").val();
+	const $fileNoInput = $("input[name='fileNo']");
+	
+	for(file of files){
+		formData.append("uploadFile", file);
+	}
+	
+	for(fileReName of fileReNames){
+		fileReName != null && formData.append("uploadFileReName", fileReName);
+	}
+	
+	for(fileOriName of fileOriNames){
+		fileOriName != null && formData.append("uploadFileOriName", fileOriName);
+	}
+	
+	console.log($("#send-form").attr("action"));
+	formData.append("fileNo", fileNo);
+	
+	$.ajax({
+		type:"post",
+		url:"${pageContext.request.contextPath}/email/draftFile/update",
+		processData:false,
+		contentType:false,
+		data:formData,
+		beforeSend(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		
+		success(no){
+			$fileNoInput.val(no);
+			console.log(no);
+		},
+		
+		error(xhr,status,error){
+			alert("파일 전송 중 에러가 발생했습니다.");
+		},
+		
+		complete(data,textStatus){
+			$("#send-form").submit();
+		}
+	})//end of ajax 
+}
+
+$(".file-del-btn").click(function(e){
+	
+	const $this = $(this);
+	const className = $this.attr("class").substring(31);
+	const $labels = $(".custom-file-label");
+	
+	//파일 이름값 초기화
+	if(className === "file1"){
+		fileReName1 = null;
+		fileOriName1 = null;
+
+	}else if(className === "file2"){
+		
+		fileReName2 = null;
+		fileOriName2 = null;
+
+	}else if(className === "file3"){
+		
+		fileReName3 = null;
+		fileOriName3 = null;
+	}
+	
+	for(let label of $labels){
+		
+		let $label = $(label);
+
+		if($label.hasClass(className)){
+			
+			$label.text("파일을 첨부하세요.");
+	
+			break;
+		}
+	}
+});
+
+$(".recipient-input").autocomplete({
+	
+	source: function(request, response){
+		
+		const workspaceId = '<sec:authentication property="principal.workspaceId"/>'
+		const keyword = request.term;
+		const subKeyword = keyword.substring(keyword.lastIndexOf(",") + 1).trim();
+		
+		$.ajax({
+			
+			url:"${pageContext.request.contextPath}/email/getRecipientList",
+			data:{ 'searchKeyword':subKeyword, 'workspaceId':workspaceId},
+			
+			success(data){
+				response($.map(data, (item) =>{
+	
+					return {
+						label:item,
+						value:item
+					}
+				})	  
+			  );
+
+			},
+			
+			error(xhr, status, err){
+				console.log(xhr, status, err);
+			}
+			
+		});//end of ajax
+	},//end of source
+	
+	focus:function(e, focus){
+		return false;
+	},
+	
+	select:function(e, select){
+		
+		const recipientVal = $(this).val();
+		const selectVal = select.item.value;
+		const index = recipientVal.lastIndexOf(",") ;
+		
+		if(index === -1){
+			return true;
+		}
+
+		const subrecipientVal = recipientVal.substring(0, index); 
+		
+		$(this).val(subrecipientVal + ", " + selectVal);
+		
+		return false;
+	}
+});
+
 
 </script>
