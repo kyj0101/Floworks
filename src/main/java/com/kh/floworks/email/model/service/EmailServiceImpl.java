@@ -1,5 +1,6 @@
 package com.kh.floworks.email.model.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -42,8 +43,11 @@ public class EmailServiceImpl implements EmailService{
 		String allRecipient = email.getRecipient()
 				            + ", "
 				            + email.getEmailCC()
-				            + ", "
+				            + email.getRecipient() != null ? ", " : ""
 				            + email.getEmailBCC();
+		
+		log.info(allRecipient);
+
 		List<String> allRecipientList = Arrays.asList(allRecipient.split(", "));
 		Map<String, Object> paramMap = new HashMap<>();
 		
@@ -95,6 +99,31 @@ public class EmailServiceImpl implements EmailService{
 	@Override
 	public Email selectOneDraftEmail(int emailNo) {
 		return emailDao.selectOneDraftEmail(emailNo);
+	}
+
+	@Override
+	public int updateDraftFile(Map<String, Object> param) {
+		return emailDao.updateDraftFile(param);
+	}
+
+	@Override
+	public int deleteFile(int fileNo) {
+		return emailDao.deleteFile(fileNo);
+	}
+
+	@Override
+	public int updateDraft(Email email) {
+		return emailDao.updateDraft(email);
+	}
+
+	@Override
+	public List<Map<String, String>> selectFileList() {
+		return emailDao.selectFileList();
+	}
+
+	@Override
+	public int deleteDraft(int emailNo) {
+		return emailDao.deleteDraft(emailNo);
 	}
 
 }

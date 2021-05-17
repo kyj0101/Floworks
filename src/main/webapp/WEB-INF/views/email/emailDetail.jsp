@@ -42,7 +42,8 @@
 			<div class="card card-body">
 				참조인 : ${email.emailCC}
 				<br> 
-				<c:if test="${listType == 'sent'}">
+				<c:out value = "${id}"/> 
+				<c:if test="${listType == 'sent'}" >
 				숨은 참조인 : ${email.emailBCC}
 				<br>
 				</c:if>

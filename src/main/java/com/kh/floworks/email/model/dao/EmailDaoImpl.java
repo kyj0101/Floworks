@@ -1,5 +1,6 @@
 package com.kh.floworks.email.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,5 +78,31 @@ public class EmailDaoImpl implements EmailDao{
 		return session.selectOne("email.selectDraftEmail", emailNo);
 	}
 
+	@Override
+	public int updateDraftFile(Map<String, Object> param) {
+		return session.update("email.updateDraftFile", param);
+	}
+
+	@Override
+	public int deleteFile(int fileNo) {
+		return session.delete("email.deleteFile", fileNo);
+	}
+
+	@Override
+	public int updateDraft(Email email) {
+		return session.update("email.updateDraft", email);
+	}
+
+	@Override
+	public List<Map<String, String>> selectFileList() {
+		return session.selectList("email.selectFileList");
+	}
+
+	@Override
+	public int deleteDraft(int emailNo) {
+		return session.delete("email.deleteDraft", emailNo);
+	}
+
+	
 
 }

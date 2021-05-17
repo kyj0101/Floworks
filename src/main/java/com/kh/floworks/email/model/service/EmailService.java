@@ -1,5 +1,6 @@
 package com.kh.floworks.email.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,15 @@ public interface EmailService {
 	List<Email> selectDraftList(String id);
 
 	Email selectOneDraftEmail(int emailNo);
+
+	int updateDraftFile(Map<String, Object> param);
+
+	int deleteFile(int fileNo);
+
+	int updateDraft(Email email);
+
+	List<Map<String, String>> selectFileList();
+
+	int deleteDraft(int emailNo);
 
 }

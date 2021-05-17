@@ -173,6 +173,7 @@
 				</otherwise>
 			</choose>
 			
+			default,
 			default
 		)
 	</insert>
@@ -185,6 +186,8 @@
 		where
     		id = #{id}
     		and del_yn = 'N'
+    	order by
+            time desc
 	</select>
 	
 	<select id="selectDraftEmail" resultType="email">
@@ -195,7 +198,73 @@
 		where
 			email_no = #{emailNo}
 	</select>
+
+	<update id="updateDraftFile">
+		update
+			email_file
+		set
+			file_originalname1 = #{fileMap.originalName1},
+			file_renamed1 = #{fileMap.reNamed1},
+			file_originalname2 = #{fileMap.originalName2},
+			file_renamed2 = #{fileMap.reNamed2},
+			file_originalname3 = #{fileMap.originalName3},
+			file_renamed3 = #{fileMap.reNamed3}
+		where
+			file_no = #{fileNo}
+	</update>
 	
+	<select id="selectFileList" resultMap="renameList">
+		select 
+		    file_renamed1,
+		    file_renamed2,
+		    file_renamed3
+		from 
+    		email_file
+	</select>
+	
+	<resultMap type="map" id="renameList">
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+	</resultMap>
+	
+	<delete id="deleteFile">
+		delete from
+			email_file
+		where
+			file_no = #{fileNo}
+	</delete>
+	
+	<update id="updateDraft">
+		update
+			email_drafts
+		set 
+			recipient = #{recipient},
+			external_recipient = #{externalRecipient},
+			email_cc = #{emailCC},	
+			email_bcc = #{emailBCC},
+			subject = #{subject},
+			email_content = #{emailContent},
+			file_no =
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			time = default
+		where
+			email_no = #{emailNo}
+	</update>
+	
+	<delete id="deleteDraft">
+		delete from
+			email_drafts
+		where
+			email_no = #{emailNo}
+	</delete>
 
 
 </mapper>
