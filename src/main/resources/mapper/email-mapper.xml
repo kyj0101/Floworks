@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="email">
+
+	<resultMap type="map" id="fileMap">
+	
+		<id column="file_no" property="fileNo" />
+		
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_originalname1" property="fileOriginalname1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_originalname2" property="fileOriginalname2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+		<result column="file_originalname3" property="fileOriginalname3" />
+	
+	</resultMap>
+
+	<select id="selectRecipientList" resultType="string">
+		select
+    		*
+		from
+    		floworks_user
+		where
+    		id like '%' || #{searchKeyword} || '%'
+    		and workspace_id = #{workspaceId}
+    		
+	</select> 
+	
+	<insert id="insertEmailFile">
+		insert into
+			email_file
+		values(
+			seq_email_file_no.nextval,			
+			#{originalName1},
+			#{reNamed1},			
+			#{originalName2},
+			#{reNamed2},			
+			#{originalName3},
+			#{reNamed3}
+		)
+		
+		<selectKey resultType="_int" keyProperty="no" order="AFTER">
+			select
+				seq_email_file_no.currval
+			from
+				dual				
+		</selectKey>
+		
+	</insert>
+	
+	<insert id="insertEmail">
+	
+		insert into
+			email
+		values(
+			seq_email_no.nextval,			
+			#{id},
+			#{recipient},			
+			#{externalRecipient},
+			#{emailCC},			
+			#{emailBCC},
+			#{subject},	
+			
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			
+			default,
+			#{emailContent}
+		)
+		
+		<selectKey resultType="_int" keyProperty="emailNo" order="AFTER">
+			select
+				seq_email_no.currval
+			from
+				dual				
+		</selectKey>
+		
+	</insert>
+	
+	<insert id="insertSent">
+		insert into
+			email_sent
+		values(
+			#{emailNo},		
+			default, 
+			default
+		)
+	</insert>
+	
+	<insert id="insertIndox">
+		insert into
+			email_inbox
+		values(
+			#{recipient},
+			#{emailNo},		
+			default, 
+			default,
+			default
+		)
+	</insert>
+	
+	<select id="selectSentList" resultType="email">
+		select 
+			* 
+		from 
+			email e join email_sent s
+    		on e.email_no = s.email_no
+		where 
+			id = #{id}
+			and s.del_yn = 'N'
+		order by
+            time desc
+	</select>
+	
+	<select id="selectOneEmail" resultType="email">
+		select
+			*
+		from
+			email
+		where
+			email_no = #{emailNo}
+	</select>
+	
+	<select id="selectOneFile" resultMap="fileMap">
+		select
+    		*
+		from
+    		email_file
+		where
+			file_no = #{fileNo}
+	</select>
+	
+	<select id="selectInboxList" resultType="email">
+		select 
+    		* 
+		from 
+    		email e join email_inbox s
+    		on e.email_no = s.email_no
+		where 
+			recipient_id = #{id}
+			and s.del_yn = 'N'
+		order by
+     		time desc
+	</select>
+	
+	<insert id="insertDraftEmail">
+		insert into
+			email_drafts
+		values(
+			seq_email_no.nextval,			
+			#{id},
+			#{recipient},			
+			#{externalRecipient},
+			#{emailCC},			
+			#{emailBCC},
+			#{subject},	
+			#{emailContent},
+			
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			
+			default,
+			default
+		)
+	</insert>
+	
+	<select id="selectDraftList" resultType="email">
+		select
+    		*
+		from
+			email_drafts
+		where
+    		id = #{id}
+    		and del_yn = 'N'
+    	order by
+            time desc
+	</select>
+	
+	<select id="selectDraftEmail" resultType="email">
+		select
+			*
+		from
+			email_drafts
+		where
+			email_no = #{emailNo}
+	</select>
+
+	<update id="updateDraftFile">
+		update
+			email_file
+		set
+			file_originalname1 = #{fileMap.originalName1},
+			file_renamed1 = #{fileMap.reNamed1},
+			file_originalname2 = #{fileMap.originalName2},
+			file_renamed2 = #{fileMap.reNamed2},
+			file_originalname3 = #{fileMap.originalName3},
+			file_renamed3 = #{fileMap.reNamed3}
+		where
+			file_no = #{fileNo}
+	</update>
+	
+	<select id="selectFileList" resultMap="renameList">
+		select 
+		    file_renamed1,
+		    file_renamed2,
+		    file_renamed3
+		from 
+    		email_file
+	</select>
+	
+	<resultMap type="map" id="renameList">
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+	</resultMap>
+	
+	<delete id="deleteFile">
+		delete from
+			email_file
+		where
+			file_no = #{fileNo}
+	</delete>
+	
+	<update id="updateDraft">
+		update
+			email_drafts
+		set 
+			recipient = #{recipient},
+			external_recipient = #{externalRecipient},
+			email_cc = #{emailCC},	
+			email_bcc = #{emailBCC},
+			subject = #{subject},
+			email_content = #{emailContent},
+			file_no =
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			time = default
+		where
+			email_no = #{emailNo}
+	</update>
+	
+	<delete id="deleteDraft">
+		delete from
+			email_drafts
+		where
+			email_no = #{emailNo}
+	</delete>
+
+
+</mapper>

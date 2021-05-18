@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
 <aside>
 	<!-- 아이콘 -->
 	<!-- https://icons.getbootstrap.kr/#%EC%95%84%EC%9D%B4%EC%BD%98 -->
@@ -11,14 +13,15 @@
 		<li class="nav-item"><a class="nav-link " href="#sidebarEmail"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarDashboards"> <i class="bi bi-envelope"></i>이메일<span
-				class="badge badge-pill badge-danger">999</span>
+				class="badge badge-pill badge-danger">0</span>
 		</a>
 			<div class="collapse hide" id="sidebarEmail"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/compose" class="nav-link active"> 이메일 작성 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/list" class="nav-link "> 받은 메일 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/inbox?id=<sec:authentication property="principal.id"/>" class="nav-link "> 받은 메일 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/sent?id=<sec:authentication property="principal.id"/>" class="nav-link "> 보낸 이메일 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/drafts?id=<sec:authentication property="principal.id"/>" class="nav-link "> 임시 보관함 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item">

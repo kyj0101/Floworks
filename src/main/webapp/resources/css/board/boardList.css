@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .table-num {
-    width: 7%;
+    width: 5%;
 }
 .table-dept {
     width: 7%;
@@ -13,8 +13,11 @@
     width: 12%;
 }
 .table-file {
-    width: 10%;
+    width: 8%;
 }
 .table-count {
     width: 7%;
+}
+.table-date {
+	width: 10%
 }

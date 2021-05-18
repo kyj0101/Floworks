@@ -22,18 +22,6 @@ public class MemberController {
 		return "/member/mainPage";
 	}
 
-	@GetMapping("/login")
-	public String login() {
-		
-		return "/member/login";
-	}
-	
-	
-	@PostMapping("/login") //로그인 처리 X  | 로그인 실패 후 POST 요청 처리 O 
-	public String loginFail() {
-		
-		return "/member/login";
-	}
 	
 	@GetMapping(value={"/mypage","/mypage/update"})
 	public String mypage() {
