@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<select id="selectPostList" resultMap="postMap">
+		select 
+			(select count(*) from post_file where post_no = k.post_no) file_count,
+	        (select count(*) from post_comment where post_no = k.post_no) comment_count,
+	        k.*
+		from 
+			(select p.* ,d.department_name, f.name
+	        from post p 
+	            left join floworks_user f
+	                on p.id = f.id
+	            left join member m
+	                on f.id = m.id
+	            left join department d
+	                on m.department_code = d.department_code) k
+	    where 
+	    	board_no = 1
+		order 
+			by post_no desc
+	</select>
+	
+	<resultMap type="hashmap" id="postMap">
+		<id column="post_no" property="postNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="id" property="id"/>
+		<result column="post_title" property="postTitle"/>
+		<result column="post_content" property="postContent"/>
+		<result column="post_date" property="postDate"/>
+		<result column="post_read_count" property="postReadCount"/>
+		<result column="post_del" property="postDel" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="name" property="name"/>
+		<result column="file_count" property="fileCount"/>
+		<result column="comment_count" property="commentCount"/>	
+	</resultMap>
+
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from 
+			(select p.* ,d.department_name, f.name
+	        from post p 
+	            left join floworks_user f
+	                on p.id = f.id
+	            left join member m
+	                on f.id = m.id
+	            left join department d
+	                on m.department_code = d.department_code) 
+	    where board_no=1
+	</select>
+	
+	<insert id="insertPost">
+		insert into
+			post (post_no, board_no, id, post_title, post_content)
+		values(
+			seq_post_post_no.nextval,
+			'1',
+			'aaa123',
+			#{postTitle},
+			#{postContent}
+		)
+	<!--
+	 방금 insert된 board객체의 no컬럼(pk)값을  board.no에 대입 -->
+	<selectKey resultType="_int" keyProperty="postNo" order="AFTER">
+		select
+			seq_post_post_no.currval
+		from
+			dual
+	</selectKey>
+	</insert>
+
+	<insert id="insertFile">
+		insert into
+			post_file
+		values(
+			seq_post_file_post_file.nextval,
+			#{postNo},
+			#{postOriginalFileName},
+			#{postRenamedFileName}
+		)
+	</insert>
+	
+	
+	<!-- 
+	<select id="selectOnePostCollection" resultMap="postCollectionMap">
+
+	</select>
+	 -->
+	
+
+</mapper>
