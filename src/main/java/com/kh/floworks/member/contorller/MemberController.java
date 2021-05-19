@@ -13,6 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 @Slf4j
 public class MemberController {
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	@GetMapping("/mainPage")
+	public String indexPage() {
+		return "/member/mainPage";
+	}
 
 	
 	@GetMapping(value={"/mypage","/mypage/update"})
