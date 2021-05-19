@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,6 +87,41 @@ public class FileUtils {
 			}
 		}
 	}
-	
 
-}
+	public static Map<String, File> getAttachFiles(Map<String, String> fileNameMap, String saveDirectory) {
+		
+		if(fileNameMap == null) {
+			return null;
+		}
+		
+		Map<String, File> attachFiles = new HashMap<>();
+
+		for(int i = 0; i < ((fileNameMap.size()-1) / 2); i++) {
+			
+			String originalName = fileNameMap.get("fileOriginalname" + (i+1));
+			File file = new File(saveDirectory + "\\" + fileNameMap.get("fileRenamed" + (i+1)));
+
+			attachFiles.put(originalName, file);
+		}
+		
+		return attachFiles;
+	}
+	
+	public static Map<String, File> getAttachFiles(List<String> fileNameList, String saveDirectory) {
+			
+			if(fileNameList == null || fileNameList.size() == 0) {
+				return null;
+			}
+			
+			Map<String, File> attachFiles = new HashMap<>();
+	
+			for(String fileName : fileNameList) {
+				
+				File file = new File(saveDirectory + "\\" + fileName);
+				
+				attachFiles.put(fileName, file);
+			}
+			
+			return attachFiles;
+		}
+	}
