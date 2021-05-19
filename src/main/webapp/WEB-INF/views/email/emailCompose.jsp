@@ -29,7 +29,7 @@
 <form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" enctype="multipart/form-data">
 		<div class="input-div">
 			<div class="email-input-div">
-
+	
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 					<span>','로 수신자를 여러명 선택할 수 있습니다.(최대 5명)</span>
 
