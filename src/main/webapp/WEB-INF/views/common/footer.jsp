@@ -31,7 +31,7 @@
 			</a>
 				<div class="collapse hide" id="sidebarCal" style="padding-left: 35px;">
 					<ul class="nav nav-sm flex-column">
-						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">일정관리 </a></li>
+						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">메뉴1 </a></li>
 						<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
 					</ul>
 				</div>
