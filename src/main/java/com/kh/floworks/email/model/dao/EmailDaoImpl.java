@@ -35,7 +35,13 @@ public class EmailDaoImpl implements EmailDao{
 
 	@Override
 	public int insertIndox(Map<String, Object> param) {
-		return session.insert("email.insertIndox", param);
+		
+		try {
+			return session.insert("email.insertIndox", param);
+			
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@Override

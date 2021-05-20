@@ -216,9 +216,9 @@ $(".recipient-input").autocomplete({
 
 $("#btn-save").click(function(){
 
-	$("#send-form").attr("action","${pageContext.request.contextPath}/email/save");
+	$("#send-form").attr("action","${pageContext.request.contextPath}/email/draftSave");
 	
-	if(file1 === null && file2 === null && file3 === null){
+	if(fileAllNullCheck()){
 		$("#send-form").submit();
 	
 	}else{

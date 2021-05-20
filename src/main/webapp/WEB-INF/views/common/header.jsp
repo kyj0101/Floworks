@@ -345,5 +345,9 @@ $(function(){
 	$("#logout-a").click(function(){
 		$("#logout-form").submit();
 	});
+	
+	if("${msg}" != ""){
+		alert("${msg}");
+	}
 });
 </script>
