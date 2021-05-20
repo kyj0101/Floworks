@@ -79,7 +79,8 @@ public class EmailController {
 	public String emailSentList(@RequestParam String id, Model model) {
 
 		List<Email> emailList = emailService.selectSentList(id);
-
+		for(Email e : emailList)
+			log.info("{}", e);
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "sent");
 
@@ -92,7 +93,7 @@ public class EmailController {
 		List<Email> emailList = emailService.selectInboxList(id);
 
 		model.addAttribute("emailList", emailList);
-		model.addAttribute("listType", "indox");
+		model.addAttribute("listType", "inbox");
 
 		return "/email/emailList";
 	}
@@ -116,15 +117,21 @@ public class EmailController {
 	 * @return
 	 */
 	@GetMapping("/detail")
-	public String emailDetail(int emailNo, Model model, String listType) {
+	public String emailDetail(int emailNo, Model model, String listType, String id) {
+		
+		Map<String, Object> param = new HashMap<>();
 
-		Email email = emailService.selectOneEmail(emailNo);
+		param.put("emailNo", emailNo);
+		param.put("id", id);
+		
+		Email email = listType.equals("inbox") ? emailService.selectOneEmailInbox(param) : emailService.selectOneEmailSent(emailNo);
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 
 		model.addAttribute("email", email);
 		model.addAttribute("listType", listType);
 		model.addAttribute("fileMap", fileMap);
-
+		model.addAttribute("id", id);
+		
 		log.info("fileMap={}", fileMap);
 
 		return "/email/emailDetail";
@@ -442,9 +449,37 @@ public class EmailController {
 				
 				mailSender.send(message); 
 
-			} catch (MessagingException e) {
-				throw e;
-			}
+		} catch (MessagingException e) {
+			throw e;
 		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateStarred")
+	public void updateStarredEmail(int emailNo, String type, String id, String value) {
+		
+		try {
+			
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("emailNo", emailNo);
+			param.put("id", id);
+			param.put("value", value);
+
+			switch (type) {
+			case "inbox":
+				int i = emailService.updateStarredEmailInbox(param);
+				log.info("result ={}",i);
+				break;
+				
+			case "sent":
+				emailService.updateStarredEmailSent(param);
+				break;
+			}
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 

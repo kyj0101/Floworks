@@ -109,6 +109,23 @@ public class EmailDaoImpl implements EmailDao{
 		return session.delete("email.deleteDraft", emailNo);
 	}
 
-	
+	@Override
+	public Email selectOneEmailInbox(Map<String, Object> param) {
+		return session.selectOne("email.selectOneEmailInbox", param);
+	}
 
+	@Override
+	public Email selectOneEmailSent(int emailNo) {
+		return session.selectOne("email.selectOneEmailSent", emailNo);
+	}
+
+	@Override
+	public int updateStarredEmailInbox(Map<String, Object> param) {
+		return session.update("email.updateStarredEmailInbox", param);
+	}
+
+	@Override
+	public int updateStarredEmailSent(Map<String, Object> param) {
+		return session.update("email.updateStarredEmailSent", param);
+	}
 }

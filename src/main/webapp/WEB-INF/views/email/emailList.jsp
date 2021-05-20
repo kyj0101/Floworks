@@ -29,32 +29,38 @@
 												
 						<c:if  test="${listType != 'drafts'}">
 						
-							<c:if test="${email.emailStarred == 'Y'}">						
+							<c:if test="${email.emailStarred}">						
 								<td>
-									<i class="fas fa-star"></i>
+									<i class="fas fa-star on"></i>
 								</td>						
 							</c:if>
 						
-							<c:if test="${email.emailStarred == 'N'}">
+							<c:if test="${!email.emailStarred}">
 								<td>
 									<i class="fas fa-star"></i>
 								</td>
 							</c:if>
-							
-							<c:if test="${email.recipient != null}">
+						
+							<c:if test="${listType == 'inbox'}">
 								<th>
-									To:${email.recipient}
+									from : ${email.id}
 								</th>
 							</c:if>
 							
-							<c:if test="${email.recipient == null}">
+							<c:if test="${listType == 'sent' && email.recipient != null}">
 								<th>
-									To:${email.externalRecipient}
+									To : ${email.recipient}
+								</th>
+							</c:if>
+							
+							<c:if test="${listType == 'sent' && email.recipient == null}">
+								<th>
+									To : ${email.externalRecipient}
 								</th>
 							</c:if>
 						
 							<td>
-								<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}">${email.subject}</a>
+								<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}&id=<sec:authentication property="principal.id"/>">${email.subject}</a>
 							</td>
 							
 							<td>
@@ -69,13 +75,13 @@
 							
 							<c:if test="${email.recipient != null}">
 								<th>
-									To:${email.recipient}
+									To : ${email.recipient}
 								</th>
 							</c:if>
 							
 							<c:if test="${email.recipient == null}">
 								<th>
-									To:임시이메일
+									To : 임시이메일
 								</th>
 							</c:if>
 						
