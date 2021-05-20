@@ -92,7 +92,7 @@ public class EmailController {
 		List<Email> emailList = emailService.selectInboxList(id);
 
 		model.addAttribute("emailList", emailList);
-		model.addAttribute("listType", "indox");
+		model.addAttribute("listType", "inbox");
 
 		return "/email/emailList";
 	}

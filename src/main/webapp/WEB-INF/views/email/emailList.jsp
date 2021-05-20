@@ -41,15 +41,24 @@
 								</td>
 							</c:if>
 							
-							<c:if test="${email.recipient != null}">
+							<!-- INBOX : 받은 내역 -> 누구로부터 왔는지 -> from -->
+							<!-- sent : 보낸 내역 -> 누구에게 보냈는지 -> to -->
+							
+							<c:if test="${listType == 'inbox'}">
 								<th>
-									To:${email.recipient}
+									from : ${email.id}
 								</th>
 							</c:if>
 							
-							<c:if test="${email.recipient == null}">
+							<c:if test="${listType == 'sent' && email.recipient != null}">
 								<th>
-									To:${email.externalRecipient}
+									To : ${email.recipient}
+								</th>
+							</c:if>
+							
+							<c:if test="${listType == 'sent' && email.recipient == null}">
+								<th>
+									To : ${email.externalRecipient}
 								</th>
 							</c:if>
 						
@@ -69,13 +78,13 @@
 							
 							<c:if test="${email.recipient != null}">
 								<th>
-									To:${email.recipient}
+									To : ${email.recipient}
 								</th>
 							</c:if>
 							
 							<c:if test="${email.recipient == null}">
 								<th>
-									To:임시이메일
+									To : 임시이메일
 								</th>
 							</c:if>
 						
