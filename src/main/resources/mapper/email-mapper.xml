@@ -17,17 +17,6 @@
 	
 	</resultMap>
 
-	<select id="selectRecipientList" resultType="string">
-		select
-    		*
-		from
-    		floworks_user
-		where
-    		id like '%' || #{searchKeyword} || '%'
-    		and workspace_id = #{workspaceId}
-    		
-	</select> 
-	
 	<insert id="insertEmailFile">
 		insert into
 			email_file
@@ -107,6 +96,29 @@
 		)
 	</insert>
 	
+	<select id="selectRecipientList" resultType="string">
+		select
+    		*
+		from
+    		floworks_user
+		where
+    		id like '%' || #{searchKeyword} || '%'
+    		and workspace_id = #{workspaceId}
+	</select> 
+	
+	<select id="selectInboxList" resultType="email">
+		select 
+    		* 
+		from 
+    		email e join email_inbox s
+    		on e.email_no = s.email_no
+		where 
+			recipient_id = #{id}
+			and s.del_yn = 'N'
+		order by
+     		time desc
+	</select>
+	
 	<select id="selectSentList" resultType="email">
 		select 
 			* 
@@ -138,17 +150,25 @@
 			file_no = #{fileNo}
 	</select>
 	
-	<select id="selectInboxList" resultType="email">
-		select 
-    		* 
-		from 
-    		email e join email_inbox s
-    		on e.email_no = s.email_no
-		where 
-			recipient_id = #{id}
-			and s.del_yn = 'N'
-		order by
-     		time desc
+	<select id="selectOneEmailInbox" resultType="email">
+		select
+		    *
+		from
+		    email e join email_inbox i
+		    on e.email_no = i.email_no
+		where
+		    e.email_no = #{emailNo}
+		    and recipient_id = #{id}
+	</select>
+	
+	<select id="selectOneEmailSent" resultType="email">
+		select
+		    *
+		from
+		    email e join email_sent i
+		    on e.email_no = i.email_no
+		where
+		    e.email_no = #{emailNo}
 	</select>
 	
 	<insert id="insertDraftEmail">
@@ -173,6 +193,7 @@
 				</otherwise>
 			</choose>
 			
+			default,
 			default
 		)
 	</insert>
@@ -185,6 +206,8 @@
 		where
     		id = #{id}
     		and del_yn = 'N'
+    	order by
+            time desc
 	</select>
 	
 	<select id="selectDraftEmail" resultType="email">
@@ -195,7 +218,92 @@
 		where
 			email_no = #{emailNo}
 	</select>
-	
 
+	<update id="updateDraftFile">
+		update
+			email_file
+		set
+			file_originalname1 = #{fileMap.originalName1},
+			file_renamed1 = #{fileMap.reNamed1},
+			file_originalname2 = #{fileMap.originalName2},
+			file_renamed2 = #{fileMap.reNamed2},
+			file_originalname3 = #{fileMap.originalName3},
+			file_renamed3 = #{fileMap.reNamed3}
+		where
+			file_no = #{fileNo}
+	</update>
+	
+	<select id="selectFileList" resultMap="renameList">
+		select 
+		    file_renamed1,
+		    file_renamed2,
+		    file_renamed3
+		from 
+    		email_file
+	</select>
+	
+	<resultMap type="map" id="renameList">
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+	</resultMap>
+	
+	<delete id="deleteFile">
+		delete from
+			email_file
+		where
+			file_no = #{fileNo}
+	</delete>
+	
+	<update id="updateDraft">
+		update
+			email_drafts
+		set 
+			recipient = #{recipient},
+			external_recipient = #{externalRecipient},
+			email_cc = #{emailCC},	
+			email_bcc = #{emailBCC},
+			subject = #{subject},
+			email_content = #{emailContent},
+			file_no =
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			time = default
+		where
+			email_no = #{emailNo}
+	</update>
+	
+	<delete id="deleteDraft">
+		delete from
+			email_drafts
+		where
+			email_no = #{emailNo}
+	</delete>
+	
+	<update id="updateStarredEmailInbox">
+		update
+		    email_inbox
+		set 
+		    email_starred = #{value}
+		where
+		    email_no = #{emailNo}
+		    and recipient_id = #{id}
+	</update>
+	
+	<update id="updateStarredEmailSent">
+		update
+		    email_sent
+		set 
+		    email_starred = #{value}
+		where
+		    email_no = #{emailNo}
+	</update>
+	
 
 </mapper>

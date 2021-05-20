@@ -1,5 +1,6 @@
 package com.kh.floworks.email.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,13 @@ public class EmailDaoImpl implements EmailDao{
 
 	@Override
 	public int insertIndox(Map<String, Object> param) {
-		return session.insert("email.insertIndox", param);
+		
+		try {
+			return session.insert("email.insertIndox", param);
+			
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@Override
@@ -77,5 +84,48 @@ public class EmailDaoImpl implements EmailDao{
 		return session.selectOne("email.selectDraftEmail", emailNo);
 	}
 
+	@Override
+	public int updateDraftFile(Map<String, Object> param) {
+		return session.update("email.updateDraftFile", param);
+	}
 
+	@Override
+	public int deleteFile(int fileNo) {
+		return session.delete("email.deleteFile", fileNo);
+	}
+
+	@Override
+	public int updateDraft(Email email) {
+		return session.update("email.updateDraft", email);
+	}
+
+	@Override
+	public List<Map<String, String>> selectFileList() {
+		return session.selectList("email.selectFileList");
+	}
+
+	@Override
+	public int deleteDraft(int emailNo) {
+		return session.delete("email.deleteDraft", emailNo);
+	}
+
+	@Override
+	public Email selectOneEmailInbox(Map<String, Object> param) {
+		return session.selectOne("email.selectOneEmailInbox", param);
+	}
+
+	@Override
+	public Email selectOneEmailSent(int emailNo) {
+		return session.selectOne("email.selectOneEmailSent", emailNo);
+	}
+
+	@Override
+	public int updateStarredEmailInbox(Map<String, Object> param) {
+		return session.update("email.updateStarredEmailInbox", param);
+	}
+
+	@Override
+	public int updateStarredEmailSent(Map<String, Object> param) {
+		return session.update("email.updateStarredEmailSent", param);
+	}
 }

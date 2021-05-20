@@ -117,6 +117,26 @@ function uploadFiles(e){
    
 }
 
+function fileAllNullCheck(){
+	
+	if(file1 === null && file2 === null && file3 === null){
+		
+		return true;
+	}
+	
+	return false;
+}
+
+function titleNullCheck(title){
+	
+	if(title.trim() === ""){
+		return "제목 없음";
+	}
+	
+	return title;
+}
+
+
 $(function(){
 	
     const $ccBtn = $("#btn-cc");
@@ -195,10 +215,13 @@ $(function(){
 			return false;
 		}
 		
-		const content = $('textarea[name="emailContent"]');
-		content.val(CKEDITOR.instances["emailContent"].getData())
-	
-		if(file1 === null && file2 === null && file3 === null){
+		const $titleInput = $("input[name=subject]");
+		const $content = $('textarea[name="emailContent"]');
+		
+		$titleInput.val(titleNullCheck($titleInput.val()));
+		$content.val(CKEDITOR.instances["emailContent"].getData());
+		
+		if(fileAllNullCheck()){
 			$("#send-form").submit();
 		
 		}else{

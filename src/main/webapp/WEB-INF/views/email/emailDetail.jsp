@@ -41,10 +41,10 @@
 		<div class="collapse" id="collapseExample">
 			<div class="card card-body">
 				참조인 : ${email.emailCC}
-				<br> 
-				<c:if test="${listType == 'sent'}">
-				숨은 참조인 : ${email.emailBCC}
-				<br>
+				<br>  
+				<c:if test="${listType == 'sent' || id == email.emailBCC}" >
+					숨은 참조인 : ${email.emailBCC}
+					<br>
 				</c:if>
 				외부 수신인 : ${email.externalRecipient}
 			</div>
@@ -95,16 +95,57 @@
 <script>
 $(() => {
     $("#bookmark-btn").click((e) => {
-        console.log($(".fa-star"))
-        $(".fa-star").toggleClass('on');
+        const $star = $(".fa-star");
+        
+        $star.toggleClass('on');
+        
+        if($star.hasClass('on')){
+        	updateStarredEmail("Y");
+        }
+        
+        if(!$star.hasClass('on')){
+        	updateStarredEmail("N");
+        }
+        
     })
+    
+    
+    if("${email.emailStarred}" == 'true'){
+    	$(".fa-star").addClass('on');
+    }
+    	
 }); 
 
 $(".file-a").click(function(){
-	
 	const renamedFile = $(this).attr("href");
-	
-	
 });
+
+function updateStarredEmail(value){
+	
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	const type = "${listType}";
+	const id = "${id}";
+	const emailNo = "${email.emailNo}";
+	
+	$.ajax({
+		type:"post",
+		url:"${pageContext.request.contextPath}/email/updateStarred",
+		data:{"type":type, "id":id, "emailNo":emailNo, "value":value},
+		
+		beforeSend(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		
+		success(){
+		},
+		
+		error(xhr,status,error){
+			console.log(xhr);
+		},
+		
+	});
+}
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

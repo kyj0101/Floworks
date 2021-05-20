@@ -30,6 +30,10 @@ section{
 }
 
 .fa-star{
-    color: gold;
+	color: rgb(185, 185, 185);
     font-size: 18px;
+}
+
+.on{
+	color: gold;
 }
