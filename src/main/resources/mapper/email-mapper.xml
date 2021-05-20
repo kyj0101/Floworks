@@ -340,8 +340,36 @@
 				#{item}
 			</foreach>
 	</update>
-
 	
+	<select id="getTotalInboxEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email_inbox
+		where
+		    recipient_id = #{id}
+		    and del_yn = 'N'
+	</select>
 	
+	<select id="getTotalSentEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email e join email_sent s
+            on e.email_no = s.email_no
+		where
+		    id = #{id}
+            and del_yn = 'N'
+	</select>
+	
+	<select id="getTotalDraftsEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email_drafts
+		where
+		    id = #{id}
+            and del_yn = 'N'
+	</select>
 
 </mapper>

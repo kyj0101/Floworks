@@ -8,6 +8,10 @@ section{
     
 }
 
+a{
+	color: black;
+}
+
 .search-div {
  /*    background-color: rgb(226, 213, 255); */
     width: 1070px;

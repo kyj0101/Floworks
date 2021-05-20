@@ -43,6 +43,7 @@ import com.google.gson.JsonObject;
 import com.kh.floworks.common.Exception.NoMemberException;
 import com.kh.floworks.common.utils.EmailUtils;
 import com.kh.floworks.common.utils.FileUtils;
+import com.kh.floworks.common.utils.PageBarUtils;
 import com.kh.floworks.email.model.service.EmailService;
 import com.kh.floworks.email.model.vo.Email;
 
@@ -54,7 +55,8 @@ import lombok.extern.slf4j.Slf4j;
 public class EmailController {
 
 	private final String directory = "/resources/upload/email";
-
+	private final int numPerPage = 15;
+	
 	@Autowired
 	private ServletContext servletContext;
 
@@ -78,9 +80,22 @@ public class EmailController {
 	}
 
 	@RequestMapping("/sent")
-	public String emailSentList(@RequestParam String id, Model model) {
-
-		List<Email> emailList = emailService.selectSentList(id);
+	public String emailSentList(String id,
+								@RequestParam(defaultValue = "1") int cPage,
+								Model model,
+								HttpServletRequest request) {
+		
+		int totalContents = emailService.getTotalSentEmail(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("id", id);
+		
+		List<Email> emailList = emailService.selectSentList(param);
 		
 		for(Email email : emailList) {
 			
@@ -95,28 +110,57 @@ public class EmailController {
 		
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "sent");
+		model.addAttribute("pageBar", pageBar);
 
 		return "/email/emailList";
 	}
 
 	@RequestMapping("/inbox")
-	public String emailIndoxList(@RequestParam String id, Model model) {
+	public String emailIndoxList(String id,
+								@RequestParam(defaultValue = "1") int cPage,
+								Model model,
+								HttpServletRequest request) {
+		
+		int totalContents = emailService.getTotalInboxEmail(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 
-		List<Email> emailList = emailService.selectInboxList(id);
+		Map<String, Object> param = new HashMap<>();
+
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("id", id);
+		
+		List<Email> emailList = emailService.selectInboxList(param);
 
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "inbox");
-
+		model.addAttribute("pageBar", pageBar);
+		
 		return "/email/emailList";
 	}
 
 	@RequestMapping("/drafts")
-	public String emailDraftList(@RequestParam String id, Model model) {
-
-		List<Email> emailList = emailService.selectDraftList(id);
+	public String emailDraftList(String id,
+								@RequestParam(defaultValue = "1") int cPage,
+								Model model,
+								HttpServletRequest request) {
+		
+		int totalContents = emailService.getTotalDraftsEmail(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("id", id);
+		
+		List<Email> emailList = emailService.selectDraftList(param);
 
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "drafts");
+		model.addAttribute("pageBar", pageBar);
 
 		return "/email/emailList";
 	}

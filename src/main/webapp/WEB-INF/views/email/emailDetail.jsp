@@ -13,7 +13,7 @@
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
-    
+
 <section>
 	<div class="email-header">
 		<h5><strong>${email.subject}</strong></h5>
