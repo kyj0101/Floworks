@@ -11,10 +11,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:property-placeholder location="classpath:data-source.properties"/>
-	<!-- mail 
-	<context:property-placeholder location="classpath:email-source.properties"/>
-	-->
-	
+
 	<!-- Datasource -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource"
 	      id="realDataSource"
@@ -67,13 +64,13 @@
 		
 	</bean>
 	
-	<!-- mail 
+
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		
-		<property name="host" value="${datasource.host}"/>
-		<property name="port" value="${datasource.port}" />
-		<property name="username" value="${datasource.username}"/>
-		<property name="password" value="${datasource.password}"/>
+		<property name="host" value="${email.host}"/>
+		<property name="port" value="${email.port}" />
+		<property name="username" value="${email.username}"/>
+		<property name="password" value="${email.password}"/>
 		<property name="javaMailProperties">
 	
 			<props>
@@ -85,7 +82,7 @@
 	
 		</property>
 		
-	</bean>-->
+	</bean>
 	
 	<!-- 선언적 트랜잭션 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">

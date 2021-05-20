@@ -35,7 +35,13 @@ public class EmailDaoImpl implements EmailDao{
 
 	@Override
 	public int insertIndox(Map<String, Object> param) {
-		return session.insert("email.insertIndox", param);
+		
+		try {
+			return session.insert("email.insertIndox", param);
+			
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@Override
@@ -103,6 +109,23 @@ public class EmailDaoImpl implements EmailDao{
 		return session.delete("email.deleteDraft", emailNo);
 	}
 
-	
+	@Override
+	public Email selectOneEmailInbox(Map<String, Object> param) {
+		return session.selectOne("email.selectOneEmailInbox", param);
+	}
 
+	@Override
+	public Email selectOneEmailSent(int emailNo) {
+		return session.selectOne("email.selectOneEmailSent", emailNo);
+	}
+
+	@Override
+	public int updateStarredEmailInbox(Map<String, Object> param) {
+		return session.update("email.updateStarredEmailInbox", param);
+	}
+
+	@Override
+	public int updateStarredEmailSent(Map<String, Object> param) {
+		return session.update("email.updateStarredEmailSent", param);
+	}
 }

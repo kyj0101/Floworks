@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.mail.BodyPart;
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +25,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +34,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kh.floworks.common.Exception.NoMemberException;
 import com.kh.floworks.common.utils.EmailUtils;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.email.model.service.EmailService;
@@ -64,8 +62,8 @@ public class EmailController {
 	@Autowired
 	private ResourceLoader resourceLoader;
 	
-	//@Autowired 
-	//private JavaMailSenderImpl mailSender;
+	@Autowired 
+	private JavaMailSenderImpl mailSender;
 
 	@RequestMapping("/list")
 	public String emailList() {
@@ -81,7 +79,8 @@ public class EmailController {
 	public String emailSentList(@RequestParam String id, Model model) {
 
 		List<Email> emailList = emailService.selectSentList(id);
-
+		for(Email e : emailList)
+			log.info("{}", e);
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "sent");
 
@@ -94,12 +93,12 @@ public class EmailController {
 		List<Email> emailList = emailService.selectInboxList(id);
 
 		model.addAttribute("emailList", emailList);
-		model.addAttribute("listType", "indox");
+		model.addAttribute("listType", "inbox");
 
 		return "/email/emailList";
 	}
 
-	@GetMapping("/drafts")
+	@RequestMapping("/drafts")
 	public String emailDraftList(@RequestParam String id, Model model) {
 
 		List<Email> emailList = emailService.selectDraftList(id);
@@ -118,15 +117,21 @@ public class EmailController {
 	 * @return
 	 */
 	@GetMapping("/detail")
-	public String emailDetail(int emailNo, Model model, String listType) {
+	public String emailDetail(int emailNo, Model model, String listType, String id) {
+		
+		Map<String, Object> param = new HashMap<>();
 
-		Email email = emailService.selectOneEmail(emailNo);
+		param.put("emailNo", emailNo);
+		param.put("id", id);
+		
+		Email email = listType.equals("inbox") ? emailService.selectOneEmailInbox(param) : emailService.selectOneEmailSent(emailNo);
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 
 		model.addAttribute("email", email);
 		model.addAttribute("listType", listType);
 		model.addAttribute("fileMap", fileMap);
-
+		model.addAttribute("id", id);
+		
 		log.info("fileMap={}", fileMap);
 
 		return "/email/emailDetail";
@@ -162,12 +167,12 @@ public class EmailController {
 	}
 	
 	@PostMapping("/draft/send")
-	public String draftEmailSend(Email email) throws MessagingException {
+	public String draftEmailSend(Email email, RedirectAttributes redirectAttr) throws MessagingException {
 
 		try {
 			log.info("{}",email);
 			emailService.deleteDraft(email.getEmailNo());
-			return sendEmail(email);
+			return sendEmail(email, redirectAttr);
 
 		} catch(MessagingException e){
 			throw e;
@@ -212,14 +217,12 @@ public class EmailController {
 		}
 	}
 	
-//	if (email.getSubject().trim().equals("")) {
-//		email.setSubject("제목 없음");
-//	}
+
 	@PostMapping("/send")
-	public String sendEmail(Email email) throws MessagingException  {
+	public String sendEmail(Email email, RedirectAttributes redirectAttr) throws MessagingException  {
 		try {
 
-			if(email.getExternalRecipient() != null) {
+			if(email.getExternalRecipient() != null && !email.getExternalRecipient().equals("")) {
 				
 				String attachDirectory = servletContext.getRealPath(directory);
 				String ckDirectory = servletContext.getRealPath("/resources/upload/editorEmailFile");
@@ -229,7 +232,7 @@ public class EmailController {
 				Map<String, File> attachFiles = FileUtils.getAttachFiles(fileMap,  attachDirectory);
 				Map<String, File> ckFiles = FileUtils.getAttachFiles(EmailUtils.getFileNames(email.getEmailContent()), ckDirectory);
 			
-				//sendMail(email, ckFiles, attachFiles);
+				sendMail(email, ckFiles, attachFiles);
 			}
 			
 			
@@ -243,10 +246,14 @@ public class EmailController {
 		} catch (IllegalStateException e) {
 			throw e;
 		
-		} 
-		//catch(MessagingException e){
-//			throw e;
-//		}
+		} catch(MessagingException e){
+			throw e;
+			
+		}catch (NoMemberException e) {
+			redirectAttr.addFlashAttribute("msg", "수신자[" + e.getMessage() + "]가 존재하지 않습니다. 이메일을 임시보관합니다.");
+			saveDraft(email);
+			return "redirect:/email/drafts?id=" + email.getId();
+		}
 	}
 
 	@GetMapping("/download")
@@ -297,8 +304,8 @@ public class EmailController {
 		return null;
 	}
 
-	@PostMapping("/save")
-	public String saveEmail(Email email) {
+	@PostMapping("/draftSave")
+	public String saveDraft(Email email) {
 
 		try {
 
@@ -397,55 +404,82 @@ public class EmailController {
 	}
 	
 	//백신프로그램때문에 오류날수도있음.
-	//이메일 관련 설정파일이 없기 때문에 주석처리함.
-//	public void sendMail(Email email, Map<String, File> ckFiles, Map<String, File> attachFiles) throws MessagingException { 
-//		
-//		MimeMessage message = mailSender.createMimeMessage();
-//	
-//			try {
-//				MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-//				String[] recipientArr = email.getExternalRecipient().split(", ");
-//
-//				helper.setFrom(email.getId() + "[Floworks] <floworks@gmail.com>"); 
-//				helper.setTo(recipientArr);
-//				helper.setSubject(email.getSubject());
-//								
-//				if(attachFiles != null) {
-//					
-//					Set<String> attachKeySet = attachFiles.keySet();
-//					
-//					for(String key : attachKeySet) {
-//						helper.addAttachment(key, attachFiles.get(key));
-//					}					
-//				}
-//
-//				if(ckFiles != null) {
-//	
-//					Set<String> ckKeySet = ckFiles.keySet();
-//					List<String> cidList = new ArrayList<>();
-//					
-//					for(String key : ckKeySet) {
-//						cidList.add(key);
-//					}
-//					
-//					String content = StringEscapeUtils.unescapeJava(EmailUtils.addCidToTag(email.getEmailContent(), cidList)
-//																		.replace("\"", "'"));
-//					helper.setText(content, true);
-//					
-//					//setText에 cid값을 추가한 후 addInline을 해야한다.
-//					for(String key : ckKeySet) {
-//						helper.addInline(key, ckFiles.get(key));
-//					}
-//					
-//				}else {
-//					helper.setText(email.getEmailContent(), true);
-//				}
-//				
-//				mailSender.send(message); 
-//
-//			} catch (MessagingException e) {
-//				throw e;
-//			}
-//		}
+	public void sendMail(Email email, Map<String, File> ckFiles, Map<String, File> attachFiles) throws MessagingException { 
+		
+		MimeMessage message = mailSender.createMimeMessage();
+	
+			try {
+				MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+				String[] recipientArr = email.getExternalRecipient().split(", ");
+
+				helper.setFrom(email.getId() + "[Floworks] <floworks@gmail.com>"); 
+				helper.setTo(recipientArr);
+				helper.setSubject(email.getSubject());
+								
+				if(attachFiles != null) {
+					
+					Set<String> attachKeySet = attachFiles.keySet();
+					
+					for(String key : attachKeySet) {
+						helper.addAttachment(key, attachFiles.get(key));
+					}					
+				}
+
+				if(ckFiles != null) {
+	
+					Set<String> ckKeySet = ckFiles.keySet();
+					List<String> cidList = new ArrayList<>();
+					
+					for(String key : ckKeySet) {
+						cidList.add(key);
+					}
+					
+					String content = StringEscapeUtils.unescapeJava(EmailUtils.addCidToTag(email.getEmailContent(), cidList)
+																		.replace("\"", "'"));
+					helper.setText(content, true);
+					
+					//setText에 cid값을 추가한 후 addInline을 해야한다.
+					for(String key : ckKeySet) {
+						helper.addInline(key, ckFiles.get(key));
+					}
+					
+				}else {
+					helper.setText(email.getEmailContent(), true);
+				}
+				
+				mailSender.send(message); 
+
+		} catch (MessagingException e) {
+			throw e;
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateStarred")
+	public void updateStarredEmail(int emailNo, String type, String id, String value) {
+		
+		try {
+			
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("emailNo", emailNo);
+			param.put("id", id);
+			param.put("value", value);
+
+			switch (type) {
+			case "inbox":
+				int i = emailService.updateStarredEmailInbox(param);
+				log.info("result ={}",i);
+				break;
+				
+			case "sent":
+				emailService.updateStarredEmailSent(param);
+				break;
+			}
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 

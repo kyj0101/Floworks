@@ -211,7 +211,11 @@ $("#btn-draft-update").click(function(){
 
 
 $("#send-btn").click(function(){
-
+	
+	const $titleInput = $("input[name=subject]");
+	
+	$titleInput.val(titleNullCheck($titleInput.val()));
+	
 	fileSave();
 });
 

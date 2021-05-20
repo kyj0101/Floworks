@@ -18,7 +18,7 @@ public class Email {
 	private String subject;
 	private String emailContent;
 	private int fileNo;
-	private String emailStarred;
+	private boolean emailStarred;
 	private Date time;
 	
 }
