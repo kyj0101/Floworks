@@ -29,21 +29,18 @@
 												
 						<c:if  test="${listType != 'drafts'}">
 						
-							<c:if test="${email.emailStarred == 'Y'}">						
+							<c:if test="${email.emailStarred}">						
 								<td>
-									<i class="fas fa-star"></i>
+									<i class="fas fa-star on"></i>
 								</td>						
 							</c:if>
 						
-							<c:if test="${email.emailStarred == 'N'}">
+							<c:if test="${!email.emailStarred}">
 								<td>
 									<i class="fas fa-star"></i>
 								</td>
 							</c:if>
-							
-							<!-- INBOX : 받은 내역 -> 누구로부터 왔는지 -> from -->
-							<!-- sent : 보낸 내역 -> 누구에게 보냈는지 -> to -->
-							
+						
 							<c:if test="${listType == 'inbox'}">
 								<th>
 									from : ${email.id}
@@ -63,7 +60,7 @@
 							</c:if>
 						
 							<td>
-								<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}">${email.subject}</a>
+								<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=${listType}&id=<sec:authentication property="principal.id"/>">${email.subject}</a>
 							</td>
 							
 							<td>

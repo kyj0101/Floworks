@@ -42,4 +42,13 @@ public interface EmailDao {
 	List<Map<String, String>> selectFileList();
 
 	int deleteDraft(int emailNo);
+
+	Email selectOneEmailInbox(Map<String, Object> param);
+
+	Email selectOneEmailSent(int emailNo);
+
+	int updateStarredEmailInbox(Map<String, Object> param);
+
+	int updateStarredEmailSent(Map<String, Object> param);
+
 }

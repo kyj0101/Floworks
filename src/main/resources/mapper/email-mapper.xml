@@ -17,17 +17,6 @@
 	
 	</resultMap>
 
-	<select id="selectRecipientList" resultType="string">
-		select
-    		*
-		from
-    		floworks_user
-		where
-    		id like '%' || #{searchKeyword} || '%'
-    		and workspace_id = #{workspaceId}
-    		
-	</select> 
-	
 	<insert id="insertEmailFile">
 		insert into
 			email_file
@@ -107,6 +96,29 @@
 		)
 	</insert>
 	
+	<select id="selectRecipientList" resultType="string">
+		select
+    		*
+		from
+    		floworks_user
+		where
+    		id like '%' || #{searchKeyword} || '%'
+    		and workspace_id = #{workspaceId}
+	</select> 
+	
+	<select id="selectInboxList" resultType="email">
+		select 
+    		* 
+		from 
+    		email e join email_inbox s
+    		on e.email_no = s.email_no
+		where 
+			recipient_id = #{id}
+			and s.del_yn = 'N'
+		order by
+     		time desc
+	</select>
+	
 	<select id="selectSentList" resultType="email">
 		select 
 			* 
@@ -138,17 +150,25 @@
 			file_no = #{fileNo}
 	</select>
 	
-	<select id="selectInboxList" resultType="email">
-		select 
-    		* 
-		from 
-    		email e join email_inbox s
-    		on e.email_no = s.email_no
-		where 
-			recipient_id = #{id}
-			and s.del_yn = 'N'
-		order by
-     		time desc
+	<select id="selectOneEmailInbox" resultType="email">
+		select
+		    *
+		from
+		    email e join email_inbox i
+		    on e.email_no = i.email_no
+		where
+		    e.email_no = #{emailNo}
+		    and recipient_id = #{id}
+	</select>
+	
+	<select id="selectOneEmailSent" resultType="email">
+		select
+		    *
+		from
+		    email e join email_sent i
+		    on e.email_no = i.email_no
+		where
+		    e.email_no = #{emailNo}
 	</select>
 	
 	<insert id="insertDraftEmail">
@@ -265,6 +285,25 @@
 		where
 			email_no = #{emailNo}
 	</delete>
-
+	
+	<update id="updateStarredEmailInbox">
+		update
+		    email_inbox
+		set 
+		    email_starred = #{value}
+		where
+		    email_no = #{emailNo}
+		    and recipient_id = #{id}
+	</update>
+	
+	<update id="updateStarredEmailSent">
+		update
+		    email_sent
+		set 
+		    email_starred = #{value}
+		where
+		    email_no = #{emailNo}
+	</update>
+	
 
 </mapper>

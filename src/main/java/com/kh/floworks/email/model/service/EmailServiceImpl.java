@@ -139,4 +139,23 @@ public class EmailServiceImpl implements EmailService{
 		return emailDao.deleteDraft(emailNo);
 	}
 
+	@Override
+	public Email selectOneEmailInbox(Map<String, Object> param) {
+		return emailDao.selectOneEmailInbox(param);
+	}
+	
+	@Override
+	public Email selectOneEmailSent(int emailNo) {
+		return emailDao.selectOneEmailSent(emailNo);
+	}
+
+	@Override
+	public int updateStarredEmailInbox(Map<String, Object> param) {
+		return emailDao.updateStarredEmailInbox(param);
+	}
+
+	@Override
+	public int updateStarredEmailSent(Map<String, Object> param) {
+		return emailDao.updateStarredEmailSent(param);
+	}
 }
