@@ -52,14 +52,21 @@
 	</div>
 
 	<div class="email-btn">
-		<p>2021/05/10 12:40:00</p>
+		<p><fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/></p>
 		<button id="bookmark-btn">
 			<i class="fas fa-star"></i>
 		</button>
-
-		<button id="delete-btn">
-			<i class="fas fa-trash"></i>
-		</button>
+		
+		<form action="${pageContext.request.contextPath}/email/delete?type=${listType}&id=${id}" method="POST">
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+			<input type="hidden" name="deleteCheck" value="${email.emailNo}"/>
+			
+			<button id="delete-btn" type="submit">
+				<i class="fas fa-trash"></i>
+			</button>
+		</form>
+		
 	</div>
 
 	<div class="email-content">
@@ -106,13 +113,12 @@ $(() => {
         if(!$star.hasClass('on')){
         	updateStarredEmail("N");
         }
-        
-    })
-    
+    });
     
     if("${email.emailStarred}" == 'true'){
     	$(".fa-star").addClass('on');
     }
+    
     	
 }); 
 
@@ -146,6 +152,8 @@ function updateStarredEmail(value){
 		
 	});
 }
+
+
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

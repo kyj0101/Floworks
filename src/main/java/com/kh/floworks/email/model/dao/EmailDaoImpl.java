@@ -128,4 +128,19 @@ public class EmailDaoImpl implements EmailDao{
 	public int updateStarredEmailSent(Map<String, Object> param) {
 		return session.update("email.updateStarredEmailSent", param);
 	}
+
+	@Override
+	public int deleteEmailInbox(Map<String, Object> param) {
+		return session.update("email.deleteEmailInbox", param);
+	}
+
+	@Override
+	public int deleteEmailSent(Map<String, Object> param) {
+		return session.update("email.deleteEmailSent", param);
+	}
+
+	@Override
+	public int deleteEmailDrafts(Map<String, Object> param) {
+		return session.update("email.deleteEmailDrafts", param);
+	}
 }

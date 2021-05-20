@@ -59,7 +59,7 @@ public class EmailServiceImpl implements EmailService{
 
 		for(String recipient : allRecipientList) {
 			
-			if(recipient.equals(", ")) {
+			if(recipient.equals(", ") || recipient.equals("")) {
 				continue;
 			}
 			
@@ -157,5 +157,20 @@ public class EmailServiceImpl implements EmailService{
 	@Override
 	public int updateStarredEmailSent(Map<String, Object> param) {
 		return emailDao.updateStarredEmailSent(param);
+	}
+
+	@Override
+	public int deleteEmailInbox(Map<String, Object> param) {
+		return emailDao.deleteEmailInbox(param);
+	}
+
+	@Override
+	public int deleteEmailSent(Map<String, Object> param) {
+		return emailDao.deleteEmailSent(param);
+	}
+
+	@Override
+	public int deleteEmailDrafts(Map<String, Object> param) {
+		return emailDao.deleteEmailDrafts(param);
 	}
 }

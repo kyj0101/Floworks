@@ -304,6 +304,44 @@
 		where
 		    email_no = #{emailNo}
 	</update>
+
+	<update id="deleteEmailInbox">	
+		update
+			email_inbox
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+		
+	<update id="deleteEmailSent">	
+		update
+			email_sent
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+
+	<update id="deleteEmailDrafts">	
+		update
+			email_drafts
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+
+	
 	
 
 </mapper>

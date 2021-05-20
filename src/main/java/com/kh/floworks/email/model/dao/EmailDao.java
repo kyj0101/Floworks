@@ -51,4 +51,10 @@ public interface EmailDao {
 
 	int updateStarredEmailSent(Map<String, Object> param);
 
+	int deleteEmailInbox(Map<String, Object> param);
+
+	int deleteEmailSent(Map<String, Object> param);
+
+	int deleteEmailDrafts(Map<String, Object> param);
+
 }
