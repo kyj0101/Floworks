@@ -304,6 +304,72 @@
 		where
 		    email_no = #{emailNo}
 	</update>
+
+	<update id="deleteEmailInbox">	
+		update
+			email_inbox
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+		
+	<update id="deleteEmailSent">	
+		update
+			email_sent
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+
+	<update id="deleteEmailDrafts">	
+		update
+			email_drafts
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
 	
+	<select id="getTotalInboxEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email_inbox
+		where
+		    recipient_id = #{id}
+		    and del_yn = 'N'
+	</select>
+	
+	<select id="getTotalSentEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email e join email_sent s
+            on e.email_no = s.email_no
+		where
+		    id = #{id}
+            and del_yn = 'N'
+	</select>
+	
+	<select id="getTotalDraftsEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email_drafts
+		where
+		    id = #{id}
+            and del_yn = 'N'
+	</select>
 
 </mapper>

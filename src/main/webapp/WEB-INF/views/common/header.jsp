@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인화면</title>
+    <title>${param.title}</title>
     
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/main.css">
     
@@ -38,7 +38,7 @@
 					<div class="mainHeader">
 						<nav class="navbar" style="padding: 0px;">
 							<!-- 로고 & 프젝명 -->
-							<a class="navbar-brand" href="#"
+							<a class="navbar-brand" href="${pageContext.request.contextPath }/"
 								style="font-size: 2.7rem; color: #000;"> <img alt="logo"
 								src="${pageContext.request.contextPath }/resources/images/logo_transparent22.png"
 								style="width: 56px; height: 50px;"> <strong>Floworks</strong>

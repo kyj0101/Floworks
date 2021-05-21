@@ -6,7 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 임시저장" name="title"/>
+</jsp:include>
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
 
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/email/emailCompose.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
@@ -168,7 +171,7 @@
 			<div class="btn-div">
 				<button type="button" class="btn btn-secondary btn-lg"
 					onclick="history.back();">취소</button>
-				<button type="button" class="btn btn-primary btn-lg" id="send-btn">보내기</button>
+				<button type="button" class="btn btn-primary btn-lg" id="draft-send-btn">보내기</button>
 			</div>
 
 		</div>
@@ -210,7 +213,26 @@ $("#btn-draft-update").click(function(){
 });
 
 
-$("#send-btn").click(function(){
+$("#draft-send-btn").click(function(){
+	
+	if(recipientNullCheck()){
+		return false;
+		
+	}else if(checkRecipient($("input[name=id]").val())){
+		return false;
+		
+	}else if(idRegExpCheck()){
+		return false;
+	
+	}else if(recipientDuplicate()){
+		return false;
+		
+	}else if(!exEmailRegExp($("input[name='externalRecipient']").val())){
+
+		$(".required-recipient-input").focus();
+		
+		return false;
+	}
 	
 	const $titleInput = $("input[name=subject]");
 	
@@ -220,6 +242,7 @@ $("#send-btn").click(function(){
 });
 
 function fileSave(){
+	
 	const csrfHeaderName = "${_csrf.headerName}";
 	const csrfTokenValue = "${_csrf.token}";
 	
@@ -258,7 +281,6 @@ function fileSave(){
 		
 		success(no){
 			$fileNoInput.val(no);
-			console.log(no);
 		},
 		
 		error(xhr,status,error){
