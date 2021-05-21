@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.floworks.board.model.vo.Post;
+import com.kh.floworks.board.model.vo.PostFile;
 import com.kh.floworks.board.model.vo.PostList;
 
 public interface BoardService {
@@ -14,6 +15,8 @@ public interface BoardService {
 
 	int insertPost(Post post);
 
-	Post selectOnePostCollection(int postNo);
+	PostList selectOnePostCollection(int postNo);
+
+	PostFile selectOnePostFile(int postFile);
 
 }

@@ -1,10 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
     
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/board/boardView.css" />
+
+<!-- js -->
+<script src="${pageContext.request.contextPath}/resources/js/board/boardView.js"></script>
 
 
  
@@ -17,37 +26,33 @@
      </div>
 
      <div>
-         <h3>제목 들어올 자리입니다</h3>
+     	 <h3>${postList.postTitle}</h3>
          <div class="postWriter" >
              <img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle d-inline-block" id="postProfile">
-             <label id="postName">작성자이름 직급 (부서)</label>
+             <label id="postName">${postList.name} ( ${postList.departmentName} )</label>
              <br>
-             <small id="postDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-             <small id="postCount" class="form-text text-muted d-inline-block">조회수 : 2</small>
+             <small id="postDate" class="form-text text-muted d-inline-block"><fmt:formatDate value="${postList.postDate}" pattern="yy/MM/dd"/></small>
+             <small id="postCount" class="form-text text-muted d-inline-block">조회수 : ${postList.postReadCount}</small>
              <div id="moveGroup" class="a-grup d-inline-block float-right">
-                 <a href="#comment-list">댓글[2]</a>
-                 <a href="#fileButton">첨부파일[7]</a>
+                 <a href="#comment-list">댓글[ ${postList.commentCount} ]</a>
+                 <a href="#fileButton">첨부파일[ ${postList.fileCount} ]</a>
              </div>
              <hr>
          </div>
 
          <div class="form-group" id="postText">
-             <textarea class="form-control" id="postTextarea" rows="20" placeholder="내용이 들어올 자리입니다" readonly></textarea>
+             <textarea class="form-control" id="postTextarea" rows="20" placeholder="내용이 들어올 자리입니다" readonly>${postList.postContent}</textarea>
          </div>
-
 
          <!-- 첨부파일 버튼-->
+         <c:forEach items="${postList.postFileList}" var="pfList">
+         <c:if test="${pfList.postOriginalFileName != null}">
          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="fileButton">
-             <label class="btn btn-light active">
-               <input type="radio" name="options" id="option1"> 첨부파일1111111111
-             </label>
-             <label class="btn btn-light">
-               <input type="radio" name="options" id="option2"> 첨부파일2222222222222
-             </label>
-             <label class="btn btn-light">
-               <input type="radio" name="options" id="option3"> 첨부파일33333333333
-             </label>
+               <button class="btn btn-light active" type="button" name="options" id="option1" onclick="fileDownload(${pfList.postFileNo});"> 첨부파일 - ${pfList.postOriginalFileName}
          </div>
+         </c:if>
+         </c:forEach>
+         
          <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
          <div class="float-right" id="view-btn">
              <button type="button" class="btn btn-primary float-right">수정</button>

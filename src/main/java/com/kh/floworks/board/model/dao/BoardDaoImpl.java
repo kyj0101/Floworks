@@ -40,13 +40,23 @@ public class BoardDaoImpl implements BoardDao {
 		return session.insert("board.insertPost", post);
 	}
 
-	@Override
-	public Post selectOnePostCollection(int postNo) {
-		return session.selectOne("board.selectOnePostCollection", postNo);
-	}
 
 	@Override
 	public int insertPostFile(PostFile pFile) {
 		return session.insert("board.insertFile", pFile);
 	}
+	
+	
+	@Override
+	public PostList selectOnePostCollection(int postNo) {
+		return session.selectOne("board.selectOnePostCollection", postNo);
+	}
+
+	@Override
+	public PostFile selectOnePostFile(int postFile) {
+		return session.selectOne("board.selectOnePostFile", postFile);
+	}
+	
+	
+	
 }

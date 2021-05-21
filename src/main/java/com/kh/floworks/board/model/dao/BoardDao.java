@@ -17,6 +17,8 @@ public interface BoardDao {
 
 	int insertPostFile(PostFile pFile);
 
-	Post selectOnePostCollection(int postNo);
+	PostList selectOnePostCollection(int postNo);
+
+	PostFile selectOnePostFile(int postFile);
 
 }

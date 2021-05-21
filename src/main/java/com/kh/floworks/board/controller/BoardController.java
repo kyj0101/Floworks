@@ -2,14 +2,20 @@ package com.kh.floworks.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,7 +34,6 @@ import com.kh.floworks.board.model.vo.PostList;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.common.utils.PageBarUtils;
 
-
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -37,6 +43,13 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private ServletContext servletContext; // application객체
+	
 	
 	@GetMapping("/boardList")
 	public void boardList(
@@ -71,12 +84,11 @@ public class BoardController {
 	@GetMapping("/boardView")
 	public void boardView(@RequestParam int postNo, Model model) {
 		//1. 업무로직
-//		Board board = boardService.selectOneBoard(no);
-		Post post = boardService.selectOnePostCollection(postNo);
-		log.info("post = {}", post);
+		PostList postList = boardService.selectOnePostCollection(postNo);
+		log.info("postList = {}", postList);
 		
 		//2. jsp위임
-		model.addAttribute("post", post);
+		model.addAttribute("postList", postList);
 }
 	
 	@GetMapping("/boardUpdate")
@@ -146,5 +158,60 @@ public class BoardController {
 
 		return "redirect:/board/boardList";
 	}
+	
+	
+	
+	@GetMapping(
+			value = "/fileDownload", 
+			produces = "application/octet-stream;charset=utf-8"
+		)
+	@ResponseBody
+	public Resource fileDownload(@RequestParam int postFile, HttpServletResponse response) 
+			throws UnsupportedEncodingException {
+		
+		//1.업무조회
+		PostFile pFile = boardService.selectOnePostFile(postFile);
+		log.info("pFile = {}", pFile);
+	
+		String postOriginalFileName = pFile.getPostOriginalFileName();
+		String postRenamedFileName = pFile.getPostRenamedFileName();
+		
+		//2. Resource준비
+		String saveDirectory = servletContext.getRealPath("/resources/upload/board");
+		File downFile = new File(saveDirectory, postRenamedFileName);
+		String location = "file:" + downFile;
+		log.info("location = {}", location);
+		Resource resource = new FileSystemResource(downFile);
+		
+		//3. 응답헤더
+		//한글파일 깨짐 방지
+		postOriginalFileName = new String(postOriginalFileName.getBytes("utf-8"), "iso-8859-1");
+		response.setContentType("application/octet-stream;charset=utf-8");
+		response.addHeader("Content-Disposition", "attachment;filename=\"" + postOriginalFileName + "\"");
+		
+		return resource;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

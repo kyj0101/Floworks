@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostFile {
 
-	private int no;
+	private int postFileNo;
 	private int postNo;
 	private String postOriginalFileName;
 	private String postRenamedFileName;
