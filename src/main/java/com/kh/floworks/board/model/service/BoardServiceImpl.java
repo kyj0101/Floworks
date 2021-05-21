@@ -52,7 +52,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Post selectOnePostCollection(int postNo) {
+	public PostList selectOnePostCollection(int postNo) {
 		return boardDao.selectOnePostCollection(postNo);
+	}
+
+	@Override
+	public PostFile selectOnePostFile(int postFile) {
+		return boardDao.selectOnePostFile(postFile);
 	}
 }

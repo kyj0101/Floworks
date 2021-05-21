@@ -6,14 +6,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
     
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 상세보기" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailDetail.css" />
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
-    
+
 <section>
 	<div class="email-header">
 		<h5><strong>${email.subject}</strong></h5>
@@ -41,11 +43,10 @@
 		<div class="collapse" id="collapseExample">
 			<div class="card card-body">
 				참조인 : ${email.emailCC}
-				<br> 
-				<c:out value = "${id}"/> 
-				<c:if test="${listType == 'sent'}" >
-				숨은 참조인 : ${email.emailBCC}
-				<br>
+				<br>  
+				<c:if test="${listType == 'sent' || id == email.emailBCC}" >
+					숨은 참조인 : ${email.emailBCC}
+					<br>
 				</c:if>
 				외부 수신인 : ${email.externalRecipient}
 			</div>
@@ -53,14 +54,21 @@
 	</div>
 
 	<div class="email-btn">
-		<p>2021/05/10 12:40:00</p>
+		<p><fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/></p>
 		<button id="bookmark-btn">
 			<i class="fas fa-star"></i>
 		</button>
-
-		<button id="delete-btn">
-			<i class="fas fa-trash"></i>
-		</button>
+		
+		<form action="${pageContext.request.contextPath}/email/delete?type=${listType}&id=${id}" method="POST">
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+			<input type="hidden" name="deleteCheck" value="${email.emailNo}"/>
+			
+			<button id="delete-btn" type="submit">
+				<i class="fas fa-trash"></i>
+			</button>
+		</form>
+		
 	</div>
 
 	<div class="email-content">
@@ -96,16 +104,66 @@
 <script>
 $(() => {
     $("#bookmark-btn").click((e) => {
-        console.log($(".fa-star"))
-        $(".fa-star").toggleClass('on');
+        const $star = $(".fa-star");
+        
+        $star.toggleClass('on');
+        
+        if($star.hasClass('on')){
+        	updateStarredEmail("Y");
+        }
+        
+        if(!$star.hasClass('on')){
+        	updateStarredEmail("N");
+        }
+<<<<<<< HEAD
+    });
+    
+    if("${email.emailStarred}" == 'true'){
+    	$(".fa-star").addClass('on');
+    }
+    
+=======
+        
     })
+    
+    
+    if("${email.emailStarred}" == 'true'){
+    	$(".fa-star").addClass('on');
+    }
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
+    	
 }); 
 
 $(".file-a").click(function(){
-	
 	const renamedFile = $(this).attr("href");
-	
-	
 });
+
+function updateStarredEmail(value){
+	
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	const type = "${listType}";
+	const id = "${id}";
+	const emailNo = "${email.emailNo}";
+	
+	$.ajax({
+		type:"post",
+		url:"${pageContext.request.contextPath}/email/updateStarred",
+		data:{"type":type, "id":id, "emailNo":emailNo, "value":value},
+		
+		beforeSend(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		
+		success(){
+		},
+		
+		error(xhr,status,error){
+			console.log(xhr);
+		},
+		
+	});
+}
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

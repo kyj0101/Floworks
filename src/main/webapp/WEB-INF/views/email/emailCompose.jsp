@@ -6,7 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 작성" name="title"/>
+</jsp:include>
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
 
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/email/emailCompose.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
@@ -29,7 +32,7 @@
 <form action="${pageContext.request.contextPath}/email/send" method="POST" id="send-form" enctype="multipart/form-data">
 		<div class="input-div">
 			<div class="email-input-div">
-
+	
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 					<span>','로 수신자를 여러명 선택할 수 있습니다.(최대 5명)</span>
 
@@ -216,9 +219,9 @@ $(".recipient-input").autocomplete({
 
 $("#btn-save").click(function(){
 
-	$("#send-form").attr("action","${pageContext.request.contextPath}/email/save");
+	$("#send-form").attr("action","${pageContext.request.contextPath}/email/draftSave");
 	
-	if(file1 === null && file2 === null && file3 === null){
+	if(fileAllNullCheck()){
 		$("#send-form").submit();
 	
 	}else{

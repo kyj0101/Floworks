@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인화면</title>
+    <title>${param.title}</title>
     
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/main.css">
     
@@ -345,5 +345,9 @@ $(function(){
 	$("#logout-a").click(function(){
 		$("#logout-form").submit();
 	});
+	
+	if("${msg}" != ""){
+		alert("${msg}");
+	}
 });
 </script>

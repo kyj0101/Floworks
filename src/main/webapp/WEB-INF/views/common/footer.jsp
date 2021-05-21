@@ -7,7 +7,7 @@
 	<!-- https://icons.getbootstrap.kr/#%EC%95%84%EC%9D%B4%EC%BD%98 -->
 	<ul class="nav flex-column navbar-nav">
 		<li class="nav-item">
-		<li class="nav-item"><a class="nav-link " href="#"> <i
+		<li class="nav-item"><a class="nav-link " href="${pageContext.request.contextPath }/home"> <i
 				class="bi bi-house-door"></i>홈으로
 		</a></li>
 		<li class="nav-item"><a class="nav-link " href="#sidebarEmail"
