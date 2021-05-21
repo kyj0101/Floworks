@@ -6,7 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 임시저장" name="title"/>
+</jsp:include>
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
 
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/email/emailCompose.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
@@ -212,6 +215,25 @@ $("#btn-draft-update").click(function(){
 
 $("#draft-send-btn").click(function(){
 	
+	if(recipientNullCheck()){
+		return false;
+		
+	}else if(checkRecipient($("input[name=id]").val())){
+		return false;
+		
+	}else if(idRegExpCheck()){
+		return false;
+	
+	}else if(recipientDuplicate()){
+		return false;
+		
+	}else if(!exEmailRegExp($("input[name='externalRecipient']").val())){
+
+		$(".required-recipient-input").focus();
+		
+		return false;
+	}
+	
 	const $titleInput = $("input[name=subject]");
 	
 	$titleInput.val(titleNullCheck($titleInput.val()));
@@ -220,6 +242,7 @@ $("#draft-send-btn").click(function(){
 });
 
 function fileSave(){
+	
 	const csrfHeaderName = "${_csrf.headerName}";
 	const csrfTokenValue = "${_csrf.token}";
 	

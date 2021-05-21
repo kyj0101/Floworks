@@ -6,7 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
     
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 상세보기" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailDetail.css" />

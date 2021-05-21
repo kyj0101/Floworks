@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인화면</title>
+    <title>${param.title}</title>
     
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/main.css">
     
