@@ -115,12 +115,22 @@ $(() => {
         if(!$star.hasClass('on')){
         	updateStarredEmail("N");
         }
+<<<<<<< HEAD
     });
     
     if("${email.emailStarred}" == 'true'){
     	$(".fa-star").addClass('on');
     }
     
+=======
+        
+    })
+    
+    
+    if("${email.emailStarred}" == 'true'){
+    	$(".fa-star").addClass('on');
+    }
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
     	
 }); 
 
@@ -154,8 +164,6 @@ function updateStarredEmail(value){
 		
 	});
 }
-
-
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

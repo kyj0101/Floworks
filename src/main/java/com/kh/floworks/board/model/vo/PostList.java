@@ -23,8 +23,8 @@ public class PostList {
 	private String departmentName;
 	private String name;
 	
-	private int fileCount;			
+	private int fileCount;	
+	private List<PostFile> postFileList;
 	private int commentCount;			
-
 	
 }

@@ -58,5 +58,4 @@ public interface EmailService {
 
 	int getTotalDraftsEmail(String id);
 
-
 }

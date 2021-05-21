@@ -79,64 +79,56 @@ public class EmailController {
 		return "/email/emailCompose";
 	}
 
+
 	@RequestMapping("/sent")
 	public String emailSentList(String id,
 								@RequestParam(defaultValue = "1") int cPage,
 								Model model,
 								HttpServletRequest request) {
 		
-		int totalContents = emailService.getTotalSentEmail(id);
-		String url = request.getRequestURI() + "?id=" + id;
-		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
-		
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 		param.put("id", id);
 		
-		List<Email> emailList = emailService.selectSentList(param);
+		int totalContents = emailService.getTotalSentEmail(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 		
-		for(Email email : emailList) {
-			
-			String recipient = email.getRecipient();
-			String externalRecipient = email.getExternalRecipient();
-			String subject = email.getSubject();
-			
-			email.setSubject(subject.length() > 20 ? (subject.substring(0, 20) + "...") : subject);
-			email.setRecipient(recipient != null && recipient.length() > 20 ? (recipient.substring(0, 20) + "...") : recipient);
-			email.setExternalRecipient(externalRecipient != null && externalRecipient.length() > 20 ? (externalRecipient.substring(0, 20) + "...") : externalRecipient);
-		}
+		List<Email> emailList = emailService.selectSentList(param);
+		emailList = EmailUtils.shorteningLetters(emailList);
 		
 		model.addAttribute("emailList", emailList);
-		model.addAttribute("listType", "sent");
+		model.addAttribute("listType", "inbox");
 		model.addAttribute("pageBar", pageBar);
-
+	
 		return "/email/emailList";
 	}
-
+		
 	@RequestMapping("/inbox")
 	public String emailIndoxList(String id,
 								@RequestParam(defaultValue = "1") int cPage,
 								Model model,
 								HttpServletRequest request) {
 		
-		int totalContents = emailService.getTotalInboxEmail(id);
-		String url = request.getRequestURI() + "?id=" + id;
-		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
-
 		Map<String, Object> param = new HashMap<>();
 
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 		param.put("id", id);
 		
+		int totalContents = emailService.getTotalInboxEmail(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		
 		List<Email> emailList = emailService.selectInboxList(param);
-
+		emailList = EmailUtils.shorteningLetters(emailList);
+		
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "inbox");
 		model.addAttribute("pageBar", pageBar);
-		
+
 		return "/email/emailList";
 	}
 
@@ -146,18 +138,19 @@ public class EmailController {
 								Model model,
 								HttpServletRequest request) {
 		
-		int totalContents = emailService.getTotalDraftsEmail(id);
-		String url = request.getRequestURI() + "?id=" + id;
-		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
-		
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 		param.put("id", id);
 		
+		int totalContents = emailService.getTotalDraftsEmail(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		
 		List<Email> emailList = emailService.selectDraftList(param);
-
+		emailList = EmailUtils.shorteningLetters(emailList);
+		
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("listType", "drafts");
 		model.addAttribute("pageBar", pageBar);
@@ -176,19 +169,18 @@ public class EmailController {
 	public String emailDetail(int emailNo, Model model, String listType, String id) {
 
 		Map<String, Object> param = new HashMap<>();
-
+		
 		param.put("emailNo", emailNo);
 		param.put("id", id);
-
-		Email email = listType.equals("inbox") ? emailService.selectOneEmailInbox(param)
-				: emailService.selectOneEmailSent(emailNo);
+		
+		Email email = listType.equals("inbox") ? emailService.selectOneEmailInbox(param) : emailService.selectOneEmailSent(emailNo);
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 
 		model.addAttribute("email", email);
 		model.addAttribute("listType", listType);
 		model.addAttribute("fileMap", fileMap);
 		model.addAttribute("id", id);
-		
+
 		return "/email/emailDetail";
 	}
 
