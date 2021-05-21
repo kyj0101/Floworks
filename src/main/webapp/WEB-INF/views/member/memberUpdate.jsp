@@ -16,6 +16,7 @@
 		<div class="update-div">
 			<form method="POST" id="contactForm" name="contactForm"
 				class="contactForm">
+				 <h1>개인 정보 수정하기</h1>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">

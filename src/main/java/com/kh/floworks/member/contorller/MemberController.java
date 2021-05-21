@@ -40,4 +40,5 @@ public class MemberController {
 		
 		return "/member/updatePassword";
 	}
+	
 }
