@@ -52,6 +52,10 @@ function inputNullCheck(){
 	const inputs = $(".form-control");
 	
 	for(input of inputs){
+	
+		if($(input).hasClass("workspace") && $("input[name=createWorkspace]").prop("checked")){
+			continue;
+		}
 		
 		if($(input).val() == ""){
 			
@@ -98,7 +102,7 @@ $(() => {
 	});
 	
 	$("input[name=name]").change(function(){
-		console.log("시발");
+		
 		const $input = $("input[name=name]");
 		const name = $input.val();
 		const warningP = $input.next().next();
@@ -109,6 +113,21 @@ $(() => {
 			showWarning(warningP, "올바른 이름이 아닙니다.");
 		}
 	});
+	
+	$("input[name=createWorkspace]").change(function(){
+		
+		const $input = $("input[name=createWorkspace]");
+		
+		console.log($input.prop("checked"));
+		console.log($("input[name=workspaceId]"));
+		
+		if($input.prop("checked")){
+			$("input[name=workspaceId]").attr("readOnly", true);
+		
+		}else{
+			$("input[name=workspaceId]").attr("readOnly", false);
+		}
+	})
 
 
  });

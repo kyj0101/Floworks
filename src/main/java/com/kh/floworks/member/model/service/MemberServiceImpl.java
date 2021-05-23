@@ -50,6 +50,14 @@ public class MemberServiceImpl implements MemberService {
 
 		return result == 1;
 	}
+	
+	@Override
+	public boolean selectworkspaceIdDuplicate(String id) {
+		
+		int result = memberDao.selectworkspaceIdDuplicate(id);
+
+		return result == 1;
+	}
 
 	@Override
 	public int insertUser(User user) {
@@ -75,6 +83,18 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member member) {
 		return memberDao.insertMember(member);
 	}
+
+	@Override
+	public int insertWorkspace(Map<String, String> param) {
+		return memberDao.insertWorkspace(param);
+	}
+
+	@Override
+	public String selectWorkspaceOwner(String workspaceId) {
+		return memberDao.selectWorkspaceOwner(workspaceId);
+	}
+
+
 
 
 }

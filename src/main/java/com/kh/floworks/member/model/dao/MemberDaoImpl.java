@@ -40,6 +40,11 @@ public class MemberDaoImpl implements MemberDao{
 	public int selectWorkSpaceIdExist(String workSpaceId) {
 		return session.selectOne("member.selectWorkSpaceIdExist", workSpaceId);
 	}
+	
+	@Override
+	public int selectworkspaceIdDuplicate(String id) {
+		return session.selectOne("member.selectworkspaceIdDuplicate", id);
+	}
 
 	@Override
 	public int insertUser(User user) {
@@ -65,4 +70,16 @@ public class MemberDaoImpl implements MemberDao{
 	public int insertMember(Member member) {
 		return session.insert("member.insertMember", member);
 	}
+
+	@Override
+	public int insertWorkspace(Map<String, String> param) {
+		return session.insert("member.insertWorkspace", param);
+	}
+
+	@Override
+	public String selectWorkspaceOwner(String workspaceId) {
+		return session.selectOne("member.selectWorkspaceOwner", workspaceId);
+	}
+
+
 }

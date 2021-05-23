@@ -371,5 +371,14 @@
 		    id = #{id}
             and del_yn = 'N'
 	</select>
+	
+	<select id="selectProfileRename" resultType="string">
+		select
+		    profile_file_rename
+		from
+		    member
+		where
+		    id = #{id}
+	</select>
 
 </mapper>

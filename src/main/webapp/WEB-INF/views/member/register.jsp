@@ -74,7 +74,7 @@
 					<p class="input-warning">비밀번호가 일치하지 않습니다.</p>
 				</div>
 				
-				<input type="hidden" name="password" val="" >
+				<input type="hidden" name="password" value="" >
 				
 				<hr>
 
@@ -95,13 +95,13 @@
 				<hr>
 				
 				<div class="form-label-group">
-					<input type="text" name="workspaceId" id="inputWorkspace" class="form-control" placeholder="workspace">
+					<input type="text" name="workspaceId" id="inputWorkspace" class="form-control workspace" placeholder="workspace">
 					<label for="inputWorkspace">워크스페이스 ID</label>
 					<p class="input-warning">잘못된 주소 입니다.</p>
 				</div>
 				
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate"> 
+					<input class="form-check-input" type="checkbox" value="true" name="createWorkspace" id="flexCheckIndeterminate"> 
 					<label class="form-check-label" for="flexCheckIndeterminate">워크스페이스 생성하기 </label>
 				</div>
 				<hr>
@@ -272,9 +272,9 @@ $("#submit-btn").click(function(){
 	}
 });
 
-$("input[name=workSpaceId]").change(function(){
+$("input[name=workspaceId]").change(function(){
 	
-	const $input = $("input[name=workSpaceId]");
+	const $input = $("input[name=workspaceId]");
 	const workSpaceId = $input.val();
 	const warningP = $input.next().next();
 	console.log(warningP);
@@ -368,7 +368,8 @@ function bcryptPassword(email, password){
 		},
 
 		success(password){
-			$("input[name='password']").val(password);
+			$("input[name=password]").val(password);
+			console.log($("input[name=password]").val(password));
 		},
 		
 		error(xhr, status, err){
@@ -388,7 +389,7 @@ function createUser(email, password){
 		  
 	    var user = userCredential.user;
 	    
-	    $(".form-signin").submit();
+	   	$(".form-signin").submit();
 	    
 	  })
 	  

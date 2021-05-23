@@ -87,6 +87,15 @@
 			workspace_id = #{workSpaceId}
 	</select>
 	
+	<select id="selectworkspaceIdDuplicate" resultType="int">
+		select
+		    count(*)
+		from
+		    workspace
+		where
+		    workspace_id = #{id}
+	</select>
+	
 	<insert id="insertUser">
 		insert into
 			floworks_user
@@ -135,6 +144,26 @@
 			    #{profileFileRename}
 			    )
 	</insert>
+	
+	<insert id="insertWorkspace">
+		insert into
+			workspace
+		values(
+				#{workspaceId},
+				#{workspaceName},
+				#{password},
+				#{userId}
+				)
+	</insert>
+	
+	<select id="selectWorkspaceOwner" resultType="string">
+		select
+			owner
+		from
+			workspace
+		where
+			workspace_id = #{workspaceId}
+	</select>
 	
 
 

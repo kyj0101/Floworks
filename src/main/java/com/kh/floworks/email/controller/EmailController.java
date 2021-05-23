@@ -100,7 +100,7 @@ public class EmailController {
 		emailList = EmailUtils.shorteningLetters(emailList);
 		
 		model.addAttribute("emailList", emailList);
-		model.addAttribute("listType", "inbox");
+		model.addAttribute("listType", "sent");
 		model.addAttribute("pageBar", pageBar);
 	
 		return "/email/emailList";
@@ -168,12 +168,22 @@ public class EmailController {
 	@GetMapping("/detail")
 	public String emailDetail(int emailNo, Model model, String listType, String id) {
 
+		Email email = null;
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("emailNo", emailNo);
 		param.put("id", id);
 		
-		Email email = listType.equals("inbox") ? emailService.selectOneEmailInbox(param) : emailService.selectOneEmailSent(emailNo);
+		if(listType.equals("inbox")) {
+		
+			email = emailService.selectOneEmailInbox(param); 
+			
+			model.addAttribute("fileRename", emailService.selectProfileRename(email.getId()));
+	
+		}else {
+			email = emailService.selectOneEmailSent(emailNo);			
+		}
+		
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 
 		model.addAttribute("email", email);
@@ -201,10 +211,9 @@ public class EmailController {
 	public String draftEmailUpdate(Email email) {
 
 		try {
-			log.info("email={}", email);
-			int result = emailService.updateDraft(email);
-			log.info("result={}", result);
 
+			emailService.updateDraft(email);
+			
 			return "redirect:/email/drafts?id=" + email.getId();
 
 		} catch (Exception e) {
@@ -217,8 +226,9 @@ public class EmailController {
 	public String draftEmailSend(Email email, RedirectAttributes redirectAttr) throws MessagingException {
 
 		try {
-			log.info("{}", email);
+
 			emailService.deleteDraft(email.getEmailNo());
+			
 			return sendEmail(email, redirectAttr);
 
 		} catch (MessagingException e) {
@@ -263,7 +273,8 @@ public class EmailController {
 	}
 
 	@PostMapping("/send")
-	public String sendEmail(Email email, RedirectAttributes redirectAttr) throws MessagingException {
+	public String sendEmail(Email email, RedirectAttributes redirectAttr) throws MessagingException{
+
 		try {
 
 			if (email.getExternalRecipient() != null && !email.getExternalRecipient().equals("")) {

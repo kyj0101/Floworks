@@ -19,14 +19,19 @@ public interface MemberService {
 
 	boolean selectWorkSpaceIdExist(String workSpaceId);
 
+	boolean selectworkspaceIdDuplicate(String id);
+
 	String selectWorkspacePassword(String workSpaceId);
 	
 	List<Map<String, String>> selectDeptNameList();
 
 	List<String> selectPositionList();
 
+	String selectWorkspaceOwner(String workspaceId);
+
 	int insertUser(User user);
 
 	int insertMember(Member member);
 
+	int insertWorkspace(Map<String, String> param);
 }
