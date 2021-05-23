@@ -88,8 +88,7 @@ public class EmailAuthenticationController {
 			String url = "/notice/" + email.substring(0, index);
 			EmailAuthentication emailAuth = new EmailAuthentication(email, authKey, "Y");
 			int result = emailAuthService.updateEmailAuthStatus(emailAuth);
-			log.info("result={}", result);
-			log.info("url={}", url);
+
 			if (result <= 0) {
 				throw new IllegalArgumentException();
 			}

@@ -25,8 +25,7 @@
 				<input type="hidden" name="id" value="${id}" />
 				
 				<div class="box" style="background: #BDBDBD;">
-					<img class="profile"
-						src="">
+					<img class="profile" src="">
 				</div>
 
 
@@ -40,9 +39,8 @@
 					</div>
 				</div>
 
-
 				<div class="form-label-group">
-					<input type="text" name="workSpaceId" class="form-control" placeholder="workspaceid" value="${workSpaceId}" readonly>
+					<input type="text" name="workspaceId" class="form-control" placeholder="workspaceid" value="${workspaceId}" readonly>
 				</div>
 
 				<div class="form-label-group">
@@ -56,7 +54,7 @@
 					</div>
 					<select class="custom-select" id="inputGroupSelect01" name="departmentCode">
 						
-						<option selected class="department" >부서를 선택하세요.</option>
+						<option selected class="department-default" >부서를 선택하세요.</option>
 						
 						<c:forEach items="${deptList}" var="dept">
 						
@@ -66,21 +64,28 @@
 	
 					</select>
 				</div>
-
+	
 				<div class="input-group mb-3">
+					
 					<div class="input-group-prepend">
 						<label class="input-group-text" for="inputGroupSelect01">직급</label>
 					</div>
-					<select class="custom-select" id="inputGroupSelect01" name="position">
 						
-						<option selected class="position">직급을 선택하세요.</option>
+					<select class="custom-select" id="inputGroupSelect01" class="position" name="position">
+						<option selected class="position-default">직급을 선택하세요.</option>			
 						
-						<c:forEach items="${positionList}" var="position">
+						<c:if test="${owner == id}">
+							<option selected>대표</option>
+						</c:if>
 						
-							<option>${position}</option>
-							
-						</c:forEach>
-					
+						<c:if test="${owner != id}">
+						
+							<c:forEach items="${positionList}" var="position">
+								<option>${position}</option>
+							</c:forEach>
+						
+						</c:if>
+
 					</select>
 				</div>
 
@@ -101,10 +106,10 @@ $("#submit-btn").click(function(){
 	if($("input[name=password]").val() === ""){
 		alert("비밀번호를 입력하세요.");
 	
-	}else if($(".department:selected").length >= 1){
+	}else if($(".department-default:selected").length == 1){
 		alert("부서를 선택하세요.");
 		
-	}else if($(".position:selected").length >= 1){
+	}else if($(".position-default:selected").length == 1){
 		alert("직급을 선택하세요.");
 		
 	}else{
@@ -113,6 +118,5 @@ $("#submit-btn").click(function(){
 	
 	return false;
 })
-
 
 </script>

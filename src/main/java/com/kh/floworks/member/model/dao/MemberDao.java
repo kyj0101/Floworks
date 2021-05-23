@@ -17,6 +17,8 @@ public interface MemberDao {
 	int selectPhoneDuplicate(String phone);
 
 	int selectWorkSpaceIdExist(String workSpaceId);
+	
+	int selectworkspaceIdDuplicate(String id);
 
 	int insertUser(User user);
 
@@ -25,9 +27,11 @@ public interface MemberDao {
 	List<String> selectPositionList();
 
 	String selectWorkspacePassword(String workSpaceId);
+	
+	String selectWorkspaceOwner(String workspaceId);
 
 	int insertMember(Member member);
 
-
+	int insertWorkspace(Map<String, String> param);
 
 }
