@@ -58,6 +58,9 @@ public interface EmailService {
 	int getTotalSentEmail(String id);
 
 	int getTotalDraftsEmail(String id);
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 
 }

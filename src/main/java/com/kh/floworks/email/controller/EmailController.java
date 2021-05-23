@@ -237,9 +237,14 @@ public class EmailController {
 
 		List<String> recipientList = emailService.selectRecipientList(param);
 
+<<<<<<< HEAD
 		return ResponseEntity.ok()
 							.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
 							.body(recipientList);
+=======
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.body(recipientList);
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 	}
 
 	@PostMapping("/saveFile")
@@ -274,7 +279,12 @@ public class EmailController {
 				log.info("email ={}", email);
 				Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 				Map<String, File> attachFiles = FileUtils.getAttachFiles(fileMap, attachDirectory);
+<<<<<<< HEAD
 				Map<String, File> ckFiles = FileUtils.getAttachFiles(EmailUtils.getFileNames(email.getEmailContent()),ckDirectory);
+=======
+				Map<String, File> ckFiles = FileUtils.getAttachFiles(EmailUtils.getFileNames(email.getEmailContent()),
+						ckDirectory);
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 
 				sendMail(email, ckFiles, attachFiles);
 			}
