@@ -3,6 +3,7 @@ package com.kh.floworks.email.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.floworks.authentication.model.vo.EmailAuthentication;
 import com.kh.floworks.email.model.vo.Email;
 
 
@@ -57,5 +58,6 @@ public interface EmailService {
 	int getTotalSentEmail(String id);
 
 	int getTotalDraftsEmail(String id);
+
 
 }

@@ -236,6 +236,7 @@ function saveFile(){
 	
 	const csrfHeaderName = "${_csrf.headerName}";
 	const csrfTokenValue = "${_csrf.token}";
+	
 	const $fileInput = $("input[name='fileNo']");
 	const formData = new FormData();
 	const files = [file1, file2, file3];
@@ -250,6 +251,7 @@ function saveFile(){
 		processData:false,
 		contentType:false,
 		data:formData,
+		
 		beforeSend(xhr){
 			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		},

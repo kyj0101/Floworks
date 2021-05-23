@@ -27,6 +27,4 @@ public class User {
 	private String quitYn;
 	private String role;
 	
-	
-
 }
