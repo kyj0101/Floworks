@@ -127,6 +127,11 @@ public class EmailServiceImpl implements EmailService{
 	public Email selectOneEmailSent(int emailNo) {
 		return emailDao.selectOneEmailSent(emailNo);
 	}
+	
+	@Override
+	public String selectProfileRename(String id) {
+		return emailDao.selectProfileRename(id);
+	}
 
 	@Override
 	public int updateDraftFile(Map<String, Object> param) {

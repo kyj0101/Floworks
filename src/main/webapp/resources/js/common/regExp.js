@@ -1,6 +1,6 @@
 function exEmailRegExp(email, noAlert){
 	
-	if(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(email)){
+	if(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(email) || email == ""){
 		return true;
 		
 	}else{
@@ -12,7 +12,7 @@ function exEmailRegExp(email, noAlert){
 
 function idRegExp(id, noAlert){
 
-	if(/^[a-zA-Z0-9]{3,8}$/.test(id)){
+	if(/^[a-zA-Z0-9]{3,8}$/.test(id) || id == ""){
 		return true;
 	
 	}else{

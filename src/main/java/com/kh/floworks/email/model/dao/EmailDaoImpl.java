@@ -139,6 +139,11 @@ public class EmailDaoImpl implements EmailDao{
 	public Email selectOneEmailSent(int emailNo) {
 		return session.selectOne("email.selectOneEmailSent", emailNo);
 	}
+	
+	@Override
+	public String selectProfileRename(String id) {
+		return session.selectOne("email.selectProfileRename", id);
+	}
 
 	@Override
 	public int updateStarredEmailInbox(Map<String, Object> param) {
@@ -179,4 +184,6 @@ public class EmailDaoImpl implements EmailDao{
 	public int getTotalDraftsEmail(String id) {
 		return session.selectOne("email.getTotalDraftsEmail", id);
 	}
+
+
 }

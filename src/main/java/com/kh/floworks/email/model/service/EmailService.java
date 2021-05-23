@@ -42,6 +42,8 @@ public interface EmailService {
 	Email selectOneEmailInbox(Map<String, Object> param);
 
 	Email selectOneEmailSent(int emailNo);
+	
+	String selectProfileRename(String id);
 
 	int updateStarredEmailInbox(Map<String, Object> param);
 
@@ -58,5 +60,7 @@ public interface EmailService {
 	int getTotalSentEmail(String id);
 
 	int getTotalDraftsEmail(String id);
+
+
 
 }
