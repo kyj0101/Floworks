@@ -6,7 +6,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<jsp:include page="/WEB-INF/views/common/mainHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/mainHeader.jsp">
+<jsp:param value="로그인" name="title"/>
+</jsp:include>
+
+<!-- icon -->
+<script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
 
 <div class="container-fluid">
 	<div class="row no-gutter">
@@ -48,7 +53,13 @@
 
 								<button
 									class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
-									type="submit">Sign in</button>
+									type="submit">Sign in
+								</button>
+								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 btn-google btn-block"
+									type="submit">
+									<i class="fab fa-google-plus-g"></i>
+								</button>
+								<a href=m">Sign in with Google</a>
 
 								<div class="text-center">
 
@@ -66,13 +77,4 @@
 	</div>
 </div>
 </body>
-
-<script>
-
-const msg = '${requestScope.msg}';
-
-msg.length > 0  && alert(msg);
-
-</script>
-
 </html>

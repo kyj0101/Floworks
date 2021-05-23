@@ -25,7 +25,7 @@ public class MainPageController {
 		return "mainPage";
 	}
 	
-	@GetMapping("/home")
+	@RequestMapping("/home")
 	public String home() {
 		return "/home";
 	}
