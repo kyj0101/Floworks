@@ -1,5 +1,3 @@
-
-<<<<<<< HEAD
 function exEmailRegExp(email, noAlert){
 	
 	if(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(email)){
@@ -57,32 +55,7 @@ function nameRegExp(name, noAlert){
 	if(/^[가-힣]{2,4}$/.test(name)){
 		return true;
 		
-	}else{
-		
+	}else{	
 		noAlert || alert("올바른 이름이 아닙니다.");
-=======
-function exEmailRegExp(email){
-	
-	if(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(email) || email == ""){
-		return true;
-		
-	}else{
-		alert("외부 이메일 형식이 올바르지 않습니다.");
-	
-		return false;
 	}
-}
-
-function idRegExp(id){
-
-	if(/^[a-zA-Z0-9]*$/.test(id) || id == ""){
-		return true;
-	
-	}else{
-		
-		alert("아이디 형식이 올바르지 않습니다.");
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
-		
-		return false;
-	}	
 }
