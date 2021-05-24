@@ -22,6 +22,7 @@
 		where
 			email = #{email}
 			and auth_key = #{authKey}
+			and auth_status = 'N'
 	</update>
 	
 	<delete id="deleteEmailAuth">

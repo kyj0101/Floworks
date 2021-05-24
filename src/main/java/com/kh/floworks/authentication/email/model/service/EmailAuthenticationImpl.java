@@ -1,10 +1,10 @@
-package com.kh.floworks.authentication.model.service;
+package com.kh.floworks.authentication.email.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.floworks.authentication.model.dao.EmailAuthenticationDao;
-import com.kh.floworks.authentication.model.vo.EmailAuthentication;
+import com.kh.floworks.authentication.email.model.dao.EmailAuthenticationDao;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 
 @Service
 public class EmailAuthenticationImpl implements EmailAuthenticationService{

@@ -46,7 +46,7 @@ $(function(){
 				$("h1").text("인증이 완료되었습니다. 창을 닫으셔도 됩니다.");
 			},
 			error(xhr, status, err){
-				console.log(xhr, status, err);
+				alert("잘못된 인증 페이지 입니다.");
 			}
 		});
 	});

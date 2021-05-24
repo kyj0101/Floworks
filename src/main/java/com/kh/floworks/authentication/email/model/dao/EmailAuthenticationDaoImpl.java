@@ -1,10 +1,10 @@
-package com.kh.floworks.authentication.model.dao;
+package com.kh.floworks.authentication.email.model.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.floworks.authentication.model.vo.EmailAuthentication;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 
 @Repository
 public class EmailAuthenticationDaoImpl implements EmailAuthenticationDao{

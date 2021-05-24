@@ -1,6 +1,6 @@
-package com.kh.floworks.authentication.model.service;
+package com.kh.floworks.authentication.email.model.service;
 
-import com.kh.floworks.authentication.model.vo.EmailAuthentication;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 
 public interface EmailAuthenticationService {
 
