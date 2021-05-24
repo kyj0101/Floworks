@@ -1,4 +1,4 @@
-package com.kh.floworks.authentication.model.vo;
+package com.kh.floworks.authentication.email.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

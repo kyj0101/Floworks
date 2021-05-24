@@ -15,20 +15,6 @@
 <script src="${pageContext.request.contextPath }/resources/js/member/register.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
-<!-- firebase -->
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.js" integrity="sha512-Kdp1G1My+u1wTb7ctOrJxdEhEPnrVxBjAg8PXSvzBpmVMfiT+x/8MNua6TH771Ueyr/iAOIMclPHvJYHDpAlfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js" integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
-  
 <section>
 	<div class="register-div">
 		<div class="card-body">
@@ -121,19 +107,7 @@
 
 <script>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCwutWxVZ--dVexFAJL1JPzY6D20sdIl_0",
-  authDomain: "floworks-793f9.firebaseapp.com",
-  projectId: "floworks-793f9",
-  storageBucket: "floworks-793f9.appspot.com",
-  messagingSenderId: "344968682548",
-  appId: "1:344968682548:web:253ca72ef95eb96fd6fe61",
-  measurementId: "G-DY0T2EMH4G"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-
+			
 $("#email-btn").click(function(){
 	
 	const csrfHeaderName = "${_csrf.headerName}";
@@ -266,9 +240,7 @@ $("#submit-btn").click(function(){
 		return false;
 	
 	}else{
-		const email = $("input[name=email]").val();
-		const password = $("input[name=row-password]").val();
-		bcryptPassword(email, password);
+		$(".form-signin").submit();
 	}
 });
 
@@ -352,52 +324,4 @@ function connection(email){
 	});
 }
 
-//암호화된 비밀번호를 firebase에도 저장해야하기 때문에 암호화 한 후 비밀번호를 가져온다.
-function bcryptPassword(email, password){
-	
-	const csrfHeaderName = "${_csrf.headerName}";
-	const csrfTokenValue = "${_csrf.token}";
-	
-	$.ajax({
-		type:"post",
-		url:"${pageContext.request.contextPath}/register/bcrypt/password",
-		data:{"password":password},
-		
-		beforeSend(xhr){
-			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		},
-
-		success(password){
-			$("input[name=password]").val(password);
-			console.log($("input[name=password]").val(password));
-		},
-		
-		error(xhr, status, err){
-			console.log(xhr, status, err)
-		},
-		
-		complete(data,textStatus){
-			createUser(email, password);
-		}
-	});
-}
-
-function createUser(email, password){
-	
-	firebase.auth().createUserWithEmailAndPassword(email, password)
-	  .then((userCredential) => {
-		  
-	    var user = userCredential.user;
-	    
-	   	$(".form-signin").submit();
-	    
-	  })
-	  
-	  .catch((error) => {
-		  
-	    var errorCode = error.code;
-	    var errorMessage = error.message;
-	    
-	  });
-}
 </script>

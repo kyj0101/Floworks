@@ -73,16 +73,7 @@ public class RegisterController {
 		
 		return isExist ? "true" : "false";
 	}
-	
-	@ResponseBody
-	@PostMapping("/bcrypt/password")
-	public String getBcryptPassword(String password) {
 
-		String bcryptPwd = bcryptPasswordEncoder.encode(password);
-		
-		return bcryptPwd;
-	}
-	
 	@ResponseBody
 	@GetMapping("/workspaceId/duplicate")
 	public String workspaceIdDuplicateTest(String id) {	
@@ -97,8 +88,9 @@ public class RegisterController {
 
 		try {
 			
-			log.info("{}", createWorkspace);
+			String bcryptPwd = bcryptPasswordEncoder.encode(user.getPassword());
 			
+			user.setPassword(bcryptPwd);
 			memberService.insertUser(user);
 			
 			if(createWorkspace) {
@@ -158,7 +150,6 @@ public class RegisterController {
 			member.setProfileFileRename(fileMap.get("reNamed1"));
 			member.setId(id);
 
-			
 			memberService.insertMember(member);
 			redirectAttr.addFlashAttribute("msg", "회원가입이 완료되었습니다. 다시 로그인 해주세요.");
 		
@@ -181,21 +172,28 @@ public class RegisterController {
 	public String createWorkspaceInsert(String userId, 
                                         String workspaceName,
                                         @RequestParam(name = "id") String workspaceId,
-                                        @RequestParam(name = "row-password") String password) {
-		
-		Map<String, String> param = new HashMap<>();
-		
-		param.put("userId", userId);
-		param.put("workspaceName", workspaceName);
-		param.put("workspaceId", workspaceId);
-		param.put("password", bcryptPasswordEncoder.encode(password));
-		
-		memberService.insertWorkspace(param);
-		
-		return "redirect:/register/registerWorkspace?id=" 
-				+ userId 
-				+ "&workspaceId=" 
-				+ workspaceId;
+                                        @RequestParam(name = "row-password") String password,
+                                        RedirectAttributes redirectAttr) {
+		try {
+			
+			Map<String, String> param = new HashMap<>();
+
+			param.put("userId", userId);
+			param.put("workspaceName", workspaceName);
+			param.put("workspaceId", workspaceId);
+			param.put("password", bcryptPasswordEncoder.encode(password));
+			
+			redirectAttr.addFlashAttribute("msg", "워크스페이스 생성이 완료되었습니다.");
+			memberService.insertWorkspace(param);
+			
+			return "redirect:/register/registerWorkspace?id=" 
+					+ userId 
+					+ "&workspaceId=" 
+					+ workspaceId;
+			
+		} catch (NullPointerException e) {
+			throw e;
+		}
 	}
 
 }

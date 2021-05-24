@@ -28,42 +28,30 @@
 
 								<div class="form-label-group">
 
-									<input type="text" id="inputEmail" name="username"
-										class="form-control" placeholder="ID" required> <label
-										for="inputEmail">ID</label>
-
+									<input type="text" id="inputEmail" name="username" class="form-control" placeholder="ID" required> 
+									<label for="inputEmail">ID</label>
 								</div>
 
 								<div class="form-label-group">
 
-									<input type="password" id="inputPassword" name="password"
-										class="form-control" placeholder="Password" required>
+									<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
 									<label for="inputPassword">Password</label>
 
 								</div>
 
 								<div class="custom-control custom-checkbox mb-3">
 
-									<input type="checkbox" class="custom-control-input" id="customCheck1" name="remember-me"> 
-									
+									<input type="checkbox" class="custom-control-input" id="customCheck1" name="remember-me"> 									
 									<label class="custom-control-label" for="customCheck1">로그인 상태 유지</label>
 
 								</div>
 
-								<button
-									class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
-									type="submit">Sign in
+								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
+									Sign in
 								</button>
-								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 btn-google btn-block"
-									type="submit">
-									<i class="fab fa-google-plus-g"></i>
-								</button>
-								<a href=m">Sign in with Google</a>
-
+								
 								<div class="text-center">
-
-									<a class="small" href="#">비밀번호를 잊으셨나요?</a>
-
+									<a class="small" href="${pageContext.request.contextPath }/find/password">비밀번호를 잊으셨나요?</a>
 								</div>
 
 							</form:form>

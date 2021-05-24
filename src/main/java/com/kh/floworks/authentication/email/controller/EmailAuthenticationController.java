@@ -1,4 +1,4 @@
-package com.kh.floworks.authentication.controller;
+package com.kh.floworks.authentication.email.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.floworks.authentication.model.service.EmailAuthenticationService;
-import com.kh.floworks.authentication.model.vo.EmailAuthentication;
+import com.kh.floworks.authentication.email.model.service.EmailAuthenticationService;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 import com.kh.floworks.email.model.service.EmailService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +57,7 @@ public class EmailAuthenticationController {
 			helper.setTo(email);
 			helper.setSubject("Floworks 이메일 인증입니다.");
 			helper.setText("<p>안녕하세요.</p>"
-                         + "<p>다음 링크를 눌려 이메일 인증을 완료하세요.</p>"
+                         + "<p>다음 링크를 통해 이메일 인증을 완료하세요.</p>"
 					     + "<p><a href='" + url + "'>이메일 인증</a></p>"
 					     + "<p>감사합니다.</p>"
 					     + "<p>- Floworks -</p>", true);
@@ -75,7 +75,7 @@ public class EmailAuthenticationController {
 		model.addAttribute("authKey", authKey);
 		model.addAttribute("email", email);
 		
-		return "/member/auth";
+		return "/auth/emailAuth";
 	}
 	
 	@ResponseBody
