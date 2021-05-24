@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<title>탈퇴하기</title>
+<title>비밀번호 수정</title>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/updatePassword.css">
@@ -14,8 +14,8 @@
 <section>
 	<div class="section-div">
         <div class="del-div" >
-            <form method="POST" id="contactForm" name="contactForm"
-            class="contactForm">
+            <form method="POST" id="updatePwdFrm" name="updatePwdFrm"
+            class="updatePwdFrm">
             <h1>비밀번호 수정하기</h1>
            	<div class="row">
 					<div class="col-md-12">
@@ -38,7 +38,7 @@
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="submit" value="변경하기" class="btn btn-primary">
+							<input type="button" value="변경하기" class="btn btn-primary">
 							<div class="submitting"></div>
 						</div>
 					</div>
