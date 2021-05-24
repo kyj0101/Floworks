@@ -1,6 +1,11 @@
 package com.kh.floworks.member.contorller;
 
 import java.util.stream.Collectors;
+import java.io.UnsupportedEncodingException;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,6 +13,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.member.model.service.MemberService;
 import com.kh.floworks.member.model.vo.User;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
+import com.kh.floworks.member.model.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +47,10 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	private JavaMailSenderImpl mailSender;
+	
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 	
 	@GetMapping("/mainPage")
 	public String indexPage() {
@@ -39,8 +58,7 @@ public class MemberController {
 	}
 	
 	@GetMapping(value={"/mypage","/mypage/update"})
-	public String mypage(String id, Model model ) {
-		
+	public String mypage() {		
 		return "/member/memberUpdate";
 	}
 
@@ -110,14 +128,12 @@ public class MemberController {
 	
 	
 	@GetMapping("/delete")
-	public String memberDelete() {
-		
+	public String memberDelete() {		
 		return "/member/memberDelete";
 	}
 	
 	@GetMapping("/updatePwd")
-	public String updatePassword() {
-		
+	public String updatePassword() {	
 		return "/member/updatePassword";
 	}
 	

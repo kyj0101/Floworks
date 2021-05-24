@@ -46,6 +46,8 @@ public interface EmailDao {
 	Email selectOneEmailInbox(Map<String, Object> param);
 
 	Email selectOneEmailSent(int emailNo);
+	
+	String selectProfileRename(String id);
 
 	int updateStarredEmailInbox(Map<String, Object> param);
 

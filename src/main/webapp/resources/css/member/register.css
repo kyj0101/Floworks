@@ -1,9 +1,12 @@
 @charset "UTF-8";
 
+.card-title{
+	margin-bottom: 50px;
+}
 .register-div {
 	background-color: rgb(240, 240, 240);
 	width: 1280px;
-	height: 1000px;
+	height: 1200px;
 	margin: 0 auto;
 }
 
@@ -31,10 +34,6 @@
 	font-size: 1.8rem;
 }
 
-.display-none {
-	display: none;
-}
-
 .card-signin .card-body {
 	padding: 2rem;
 }
@@ -44,7 +43,7 @@
 }
 
 .form-signin .btn {
-	font-size: 80%;
+	font-size: 85%;
 	border-radius: 5rem;
 	letter-spacing: .1rem;
 	font-weight: bold;
@@ -81,5 +80,34 @@
     padding-right: 20px;
     padding-top: 10px;
     color: red;
+    display: none
+    
+}
+
+#recaptcha-container{
+	width: 100%; 
+	height: 80px;
+	text-align: right;  
+}
+
+#recaptcha-container{
+	width: 100%; 
+	height: 80px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+#phone-btn{
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top: 20px;
+}
+
+.email-p{
+	color: blue;
+	text-align: right;
+    padding-right: 20px;
+    padding-top: 10px;
     display: none
 }
