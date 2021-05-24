@@ -88,8 +88,9 @@ public class RegisterController {
 
 		try {
 			
+
 			String bcryptPwd = bcryptPasswordEncoder.encode(user.getPassword());
-			
+
 			user.setPassword(bcryptPwd);
 			memberService.insertUser(user);
 			
@@ -156,16 +157,9 @@ public class RegisterController {
 			return "redirect:/login";
  		
 		} catch (Exception e) {
+
 			throw e;
 		}
-	}
-	
-	@RequestMapping("/createWorkspace")
-	public String createWorkspace(String id, Model model) {
-		
-		model.addAttribute("id", id);
-		
- 		return "/member/createWorkspace";
 	}
 	
 	@PostMapping("/workspaceId/insert")
@@ -192,8 +186,38 @@ public class RegisterController {
 					+ workspaceId;
 			
 		} catch (NullPointerException e) {
+
 			throw e;
 		}
+	}
+	
+	@RequestMapping("/createWorkspace")
+	public String createWorkspace(String id, Model model) {
+		
+		model.addAttribute("id", id);
+		
+ 		return "/member/createWorkspace";
+	}
+
+	@PostMapping("/workspaceId/insert")
+	public String createWorkspaceInsert(String userId, 
+                                        String workspaceName,
+                                        @RequestParam(name = "id") String workspaceId,
+                                        @RequestParam(name = "row-password") String password) {
+		
+		Map<String, String> param = new HashMap<>();
+		
+		param.put("userId", userId);
+		param.put("workspaceName", workspaceName);
+		param.put("workspaceId", workspaceId);
+		param.put("password", bcryptPasswordEncoder.encode(password));
+		
+		memberService.insertWorkspace(param);
+		
+		return "redirect:/register/registerWorkspace?id=" 
+				+ userId 
+				+ "&workspaceId=" 
+				+ workspaceId;
 	}
 
 }
