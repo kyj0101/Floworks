@@ -198,26 +198,6 @@ public class RegisterController {
 		
  		return "/member/createWorkspace";
 	}
-
-	@PostMapping("/workspaceId/insert")
-	public String createWorkspaceInsert(String userId, 
-                                        String workspaceName,
-                                        @RequestParam(name = "id") String workspaceId,
-                                        @RequestParam(name = "row-password") String password) {
-		
-		Map<String, String> param = new HashMap<>();
-		
-		param.put("userId", userId);
-		param.put("workspaceName", workspaceName);
-		param.put("workspaceId", workspaceId);
-		param.put("password", bcryptPasswordEncoder.encode(password));
-		
-		memberService.insertWorkspace(param);
-		
-		return "redirect:/register/registerWorkspace?id=" 
-				+ userId 
-				+ "&workspaceId=" 
-				+ workspaceId;
-	}
-
 }
+
+
