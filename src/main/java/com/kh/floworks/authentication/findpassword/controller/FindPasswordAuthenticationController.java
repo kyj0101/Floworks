@@ -130,7 +130,7 @@ public class FindPasswordAuthenticationController {
 	@PostMapping("/update")
 	public String authCheck(String id,
                             String authKey,
-                            @RequestParam(value = "row-password") String password,
+                            String password,
                             RedirectAttributes redirectAttr) {
 		
 		try {

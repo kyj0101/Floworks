@@ -94,6 +94,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectWorkspaceOwner(workspaceId);
 	}
 
+	@Override
+	public int updateUserWorkspaceId(Map<String, String> param) {
+		return memberDao.updateUserWorkspaceId(param);
+	}
+
 
 
 

@@ -81,5 +81,10 @@ public class MemberDaoImpl implements MemberDao{
 		return session.selectOne("member.selectWorkspaceOwner", workspaceId);
 	}
 
+	@Override
+	public int updateUserWorkspaceId(Map<String, String> param) {
+		return session.update("member.updateUserWorkspaceId", param);
+	}
+
 
 }

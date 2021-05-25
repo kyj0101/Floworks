@@ -34,4 +34,6 @@ public interface MemberDao {
 
 	int insertWorkspace(Map<String, String> param);
 
+	int updateUserWorkspaceId(Map<String, String> param);
+
 }
