@@ -54,12 +54,25 @@
 			<div class="collapse hide" id="sidebarAtten"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴 1 </a></li>
+					<li class="nav-item"><a href="#" class="nav-link active">메뉴 1 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
 			</div></li>
+			
+		<li class="nav-item">
+			<a class="nav-link" href="#sidebarleave" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebarleave"> 
+				<i class="bi bi-clipboard-check"></i>
+				휴가
+			</a>
+			<div class="collapse hide" id="sidebarleave" style="padding-left: 35px;">
+				<ul class="nav nav-sm flex-column">
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/leave/request" class="nav-link active">휴가 신청</a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
+				</ul>
+			</div></li>
+			
 		<li class="nav-item"><a class="nav-link" href="#sidebarChart"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarChart"> <i class="bi bi-diagram-3"></i>조직도
