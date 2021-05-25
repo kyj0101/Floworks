@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
-import com.kh.floworks.member.model.vo.User;
 
 public interface MemberService extends UserDetailsService {
 	

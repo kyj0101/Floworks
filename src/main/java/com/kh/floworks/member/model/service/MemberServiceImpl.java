@@ -15,7 +15,6 @@ import com.kh.floworks.member.model.vo.User;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
@@ -29,14 +28,14 @@ public class MemberServiceImpl implements MemberService {
 	/**
 	 * @return UserDetails을 상속한 Member객체 
 	 */
-	@Override
-	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		User user = memberDao.selectOneMember(id);
-		log.debug("userSevice = {}", user);
-		if(user == null)
-			throw new UsernameNotFoundException(id);
-		return user;
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+//		User user = memberDao.selectOneMember(id);
+//		log.debug("userSevice = {}", user);
+//		if(user == null)
+//			throw new UsernameNotFoundException(id);
+//		return user;
+//	}
 
 //	@Override
 //	public int updateMember(User user) {
@@ -117,6 +116,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String selectWorkspaceOwner(String workspaceId) {
 		return memberDao.selectWorkspaceOwner(workspaceId);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

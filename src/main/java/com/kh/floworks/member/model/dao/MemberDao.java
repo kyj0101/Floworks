@@ -8,7 +8,7 @@ import com.kh.floworks.member.model.vo.User;
 
 public interface MemberDao {
 
-	Member selectOneMember(String username);
+	//Member selectOneMember(String username);
 
 //	User selectOneUser(String id);
 //

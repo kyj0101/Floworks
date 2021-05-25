@@ -1,11 +1,6 @@
 package com.kh.floworks.member.contorller;
 
 import java.util.stream.Collectors;
-import java.io.UnsupportedEncodingException;
-import java.util.UUID;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,14 +8,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.member.model.service.MemberService;
 import com.kh.floworks.member.model.vo.User;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
-import com.kh.floworks.member.model.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,10 +33,8 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	private JavaMailSenderImpl mailSender;
 	
-	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
+	
 	
 	@GetMapping("/mainPage")
 	public String indexPage() {
@@ -91,40 +75,41 @@ public class MemberController {
 //		
 //	}
 //	
-	@PostMapping("/memberUpdate.do")
-	public String memberUpdate(User updateMember, Authentication oldAuthentication, RedirectAttributes redirectAttr) {
-		//1.업무로직 : db반영
-		
-		log.info("updateMember = {}", updateMember);
-		
-		//2. 인증객체(Principal) 준비, 비밀번호(password), 권한목록(authorities) 필드는 null이어서는 안된다.
-		updateMember.setPassword(((User)oldAuthentication.getPrincipal()).getPassword());
-
-		//Collection<? extends GrantedAuthority>로 저장된 권한 collection을 List<SimpleGrantedAuthority>로 변환
-			updateMember.setAuthorities(
-					oldAuthentication
-						.getAuthorities()
-						.stream()
-						.map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
-						.collect(Collectors.toList())
-			);
-		
-		
-		
-		//2. security context 에서 principal 갱신
-		Authentication newAuthentication = 
-				new UsernamePasswordAuthenticationToken(
-							updateMember,
-							oldAuthentication.getCredentials(),
-							oldAuthentication.getAuthorities()
-						);
-		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-		
-		//3.사용자 피드백
-		redirectAttr.addFlashAttribute("msg", "사용자 정보 수정 성공");
-		
-		return "redirect:/member/memberUpdate.do";
-	}
+	
+//	@PostMapping("/memberUpdate.do")
+//	public String memberUpdate(User updateMember, Authentication oldAuthentication, RedirectAttributes redirectAttr) {
+//		//1.업무로직 : db반영
+//		
+//		log.info("updateMember = {}", updateMember);
+//		
+//		//2. 인증객체(Principal) 준비, 비밀번호(password), 권한목록(authorities) 필드는 null이어서는 안된다.
+//		updateMember.setPassword(((User)oldAuthentication.getPrincipal()).getPassword());
+//
+//		//Collection<? extends GrantedAuthority>로 저장된 권한 collection을 List<SimpleGrantedAuthority>로 변환
+//			updateMember.setAuthorities(
+//					oldAuthentication
+//						.getAuthorities()
+//						.stream()
+//						.map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
+//						.collect(Collectors.toList())
+//			);
+//		
+//		
+//		
+//		//2. security context 에서 principal 갱신
+//		Authentication newAuthentication = 
+//				new UsernamePasswordAuthenticationToken(
+//							updateMember,
+//							oldAuthentication.getCredentials(),
+//							oldAuthentication.getAuthorities()
+//						);
+//		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+//		
+//		//3.사용자 피드백
+//		redirectAttr.addFlashAttribute("msg", "사용자 정보 수정 성공");
+//		
+//		return "redirect:/member/memberUpdate.do";
+//	}
 	
 	
 	@GetMapping("/delete")

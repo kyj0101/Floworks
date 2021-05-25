@@ -16,10 +16,10 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	private SqlSession session;
 	
-	@Override
-	public Member selectOneMember(String username) {
-		return null;
-	}
+//	@Override
+//	public Member selectOneMember(String username) {
+//		return null;
+//	}
 
 //	@Override
 //	public User selectOneUser(String id) {
