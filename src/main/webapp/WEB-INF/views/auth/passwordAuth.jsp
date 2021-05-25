@@ -32,7 +32,7 @@
 								<input type="hidden" name="authKey" value="${authKey}" />
 								
 								<div class="form-label-group">
-									<input type="password" name="row-password" id="inputPassword" class="form-control" placeholder="Password">
+									<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
 									<label for="inputPassword">비밀 번호</label>
 									<p class="input-warning">잘못된 비밀번호 입니다.</p>
 								</div>

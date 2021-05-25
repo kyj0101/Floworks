@@ -34,4 +34,6 @@ public interface MemberService {
 	int insertMember(Member member);
 
 	int insertWorkspace(Map<String, String> param);
+
+	int updateUserWorkspaceId(Map<String, String> param);
 }
