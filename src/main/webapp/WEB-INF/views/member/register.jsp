@@ -159,7 +159,7 @@ $("input[name=id]").change(function(){
 	hideWarning(warningP);
 	
 	if(!idRegExp(id,true)){
-		showWarning(warningP, "아이디는 최소 3자리에서 최대 8자리인 영문자와 숫자의 조합이여야 합니다.");
+		showWarning(warningP, "아이디는 최소 3자리에서 최대 15자리인 영문자와 숫자의 조합이여야 합니다.");
 	}
 	
 	$.ajax({

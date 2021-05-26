@@ -27,13 +27,26 @@ Member member = (Member) session.getAttribute("loginMember");
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
 <section>
+<h1><sec:authentication property="principal.hireDate"/></h1>
 	<div class="section-div">
 		<div class="update-div">
 			<form:form  name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post">
-				 <h1>개인 정보 수정하기</h1>
-				<div class="row">
+				<h1>개인 정보 수정하기</h1>
+				 
+				<!-- 모든 필드값을 가져오지 않으면 null값이 되므로 모든 값을 가져옴. -->
+				 
+				<!-- member  -->
+				<input type="hidden" name="profileFileRename" value='<sec:authentication property="principal.profileFileRename"/>'/>
+ 				<input type="hidden" name="departmentCode" value='<sec:authentication property="principal.departmentCode"/>'/>
+ 				<input type="hidden" name="position" value='<sec:authentication property="principal.position"/>'/>
+ 				<input type="hidden" name="hireDate" value='<sec:authentication property="principal.hireDate"/>'/>
+ 				<input type="hidden" name="resign" value='<sec:authentication property="principal.resign"/>'/>
+ 				
+ 				<!-- user -->
+ 				<input type="hidden" name="workspaceId" value='<sec:authentication property="principal.workspaceId"/>'/>
+ 				
+ 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
 							<input type="text" class="form-control" name="id" id="id" placeholder="이름" value='<sec:authentication property="principal.id"/>'readonly required/>

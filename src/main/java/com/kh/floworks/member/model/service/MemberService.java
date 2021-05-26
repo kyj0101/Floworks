@@ -44,4 +44,6 @@ public interface MemberService extends UserDetailsService {
 	int insertWorkspace(Map<String, String> param);
 
 	int updateUserWorkspaceId(Map<String, String> param);
+
+	int updateMember(Member updateMember);
 }

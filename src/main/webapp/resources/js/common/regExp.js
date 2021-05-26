@@ -12,7 +12,7 @@ function exEmailRegExp(email, noAlert){
 
 function idRegExp(id, noAlert){
 
-	if(/^[a-zA-Z0-9]{3,8}$/.test(id) || id == ""){
+	if(/^[a-zA-Z0-9]{3,15}$/.test(id) || id == ""){
 		return true;
 	
 	}else{

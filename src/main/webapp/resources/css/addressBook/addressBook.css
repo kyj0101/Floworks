@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+section{
+	padding:20px;
+}
+    
+aside{
+	height: 970px;
+}
+
+.member-list-ul{
+	list-style:  none;
+	margin: 0 auto;
+}
+.member-list-li{
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.img-circle{
+	width: 30px; 
+	height: 30px; 
+	border-radius: 50%;
+}

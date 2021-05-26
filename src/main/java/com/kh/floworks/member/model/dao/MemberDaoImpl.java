@@ -95,5 +95,10 @@ public class MemberDaoImpl implements MemberDao{
 		return session.update("member.updateUserWorkspaceId", param);
 	}
 
+	@Override
+	public int updateMember(Member updateMember) {
+		return session.update("member.updateMember", updateMember);
+	}
+
 
 }

@@ -39,4 +39,6 @@ public interface MemberDao {
 
 	int updateUserWorkspaceId(Map<String, String> param);
 
+	int updateMember(Member updateMember);
+
 }

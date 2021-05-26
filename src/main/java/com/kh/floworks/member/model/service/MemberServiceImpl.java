@@ -37,12 +37,6 @@ public class MemberServiceImpl implements MemberService {
 //		return user;
 //	}
 
-//	@Override
-//	public int updateMember(User user) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//	
 	@Override
 	public boolean selectIdDuplicate(String id) {
 
@@ -126,6 +120,11 @@ public class MemberServiceImpl implements MemberService {
   @Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
 		return memberDao.updateUserWorkspaceId(param);
+	}
+
+	@Override
+	public int updateMember(Member updateMember) {
+		return memberDao.updateMember(updateMember);
 	}
 
 
