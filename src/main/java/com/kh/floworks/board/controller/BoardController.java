@@ -1,7 +1,6 @@
 package com.kh.floworks.board.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.board.model.service.BoardService;
 import com.kh.floworks.board.model.vo.Post;
+import com.kh.floworks.board.model.vo.PostComment;
 import com.kh.floworks.board.model.vo.PostFile;
 import com.kh.floworks.board.model.vo.PostList;
 import com.kh.floworks.common.utils.FileUtils;
@@ -48,12 +48,12 @@ public class BoardController {
 	private ResourceLoader resourceLoader;
 	
 	@Autowired
-	private ServletContext servletContext; // application객체
+	private ServletContext servletContext; 
 	
 	
 	@GetMapping("/boardList")
-	public void boardList(
-				@RequestParam(defaultValue = "1") int cPage, 
+	public void boardList(@RequestParam(defaultValue = "1") int cPage,  
+			@RequestParam int boardNo, 
 				Model model,
 				HttpServletRequest request) {
 		//1. 사용자입력값
@@ -65,12 +65,12 @@ public class BoardController {
 		
 		//2. 업무로직
 		//a. contents영역 : mybatis의 RowBounds
-		List<PostList> list = boardService.selectPostList(param);
+		List<PostList> list = boardService.selectPostList(param, boardNo);
 		log.info("list = {}", list);
 		
 		//b. pagebar영역
-		int totalContents = boardService.getTotalContents();
-		String url = request.getRequestURI();
+		int totalContents = boardService.getTotalContents(boardNo);
+		String url = request.getRequestURI() + "?boardNo=" + boardNo;
 		log.info("totalContents = {}", totalContents);
 		log.info("url = {}", url);
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
@@ -81,35 +81,53 @@ public class BoardController {
 		model.addAttribute("pageBar", pageBar);
 	}
 	
-	@GetMapping("/boardView")
+
+	@GetMapping("/serchboard")
+	public void selectdeptList(Model model,
+								@RequestParam String dept, 
+								HttpServletRequest request) {
+		log.info("dept = {}", dept);
+
+		//2. 업무로직
+		List<PostList> list = boardService.selectdeptList(dept);
+		log.info("deptlist = {}", list);
+		
+
+		//3. jsp처리 위임
+		model.addAttribute("list", list);
+	}
+	
+	
+	
+	
+	@GetMapping({"/boardView", "/boardUpdateForm"})
 	public void boardView(@RequestParam int postNo, Model model) {
 		//1. 업무로직
 		PostList postList = boardService.selectOnePostCollection(postNo);
 		log.info("postList = {}", postList);
-		
+		//조회수
+		boardService.rdCountPost(postNo);
+		log.info("postNo = {}", postNo);
 		//2. jsp위임
 		model.addAttribute("postList", postList);
-}
-	
-	@GetMapping("/boardUpdate")
-	public void boardUpdate() {
-		
 	}
 	
+	
 	@GetMapping("/boardForm")
-	public void boardForm() {
-			
+	public void boardForm(@RequestParam int boardNo,Model model) {
+		model.addAttribute("boardNo", boardNo);
 	}					
 	
 	
 	@PostMapping("/boardEnroll")
 	public String boardEnroll(Post post,
+							  @RequestParam int boardNo,
 							  RedirectAttributes redirectAttr,
 							  @RequestParam(value="upFile", required = false) MultipartFile[] upFiles,
 							  HttpServletRequest request) throws Exception {
 
 		try {
-			log.debug("post = {}", post);
+			log.info("post = {}", post);
 			//0. 파일 저장 및 Attachment객체 생성
 			//저장경로
 			String saveDirectory = 
@@ -144,6 +162,7 @@ public class BoardController {
 			
 			//1. 업무로직
 			post.setPostFileList(pFList);
+			post.setBoardNo(boardNo);
 			log.info("post = {}", post);
 			int result = boardService.insertPost(post);
 			
@@ -156,7 +175,7 @@ public class BoardController {
 			throw e;
 		}
 
-		return "redirect:/board/boardList";
+		return "redirect:/board/boardList?boardNo=" + boardNo;
 	}
 	
 	
@@ -166,8 +185,8 @@ public class BoardController {
 			produces = "application/octet-stream;charset=utf-8"
 		)
 	@ResponseBody
-	public Resource fileDownload(@RequestParam int postFile, HttpServletResponse response) 
-			throws UnsupportedEncodingException {
+	public Resource fileDownload(@RequestParam int postFile, 
+								HttpServletResponse response) throws UnsupportedEncodingException{
 		
 		//1.업무조회
 		PostFile pFile = boardService.selectOnePostFile(postFile);
@@ -192,21 +211,116 @@ public class BoardController {
 		return resource;
 	}
 	
+	@PostMapping("/postModify")
+	public String postUpdate(@ModelAttribute("postList") PostList postList, 
+							 RedirectAttributes redirectAttr,
+							 HttpServletRequest request, 
+							 @RequestParam(value="upFile", required = false) MultipartFile[] upFiles) throws Exception{
+								
+		try {
+			log.info("post = {}", postList);
+			//0. 파일 저장 및 Attachment객체 생성
+			//저장경로
+			String saveDirectory = 
+					request.getServletContext().getRealPath("/resources/upload/board");
+			//File객체를 통해서 directory가능
+			File dir = new File(saveDirectory);
+			if(!dir.exists()) 
+				dir.mkdirs(); // 복수개 폴더 생성 가능
+			
+			//복수개의 postFile객체를 담을 list생성
+			List<PostFile> pFList = new ArrayList<>();
+		
+			for(MultipartFile upFile : upFiles) {	
+				if(upFile.isEmpty() || upFile.getSize() == 0)
+					continue;
+				log.info("upFile = {}", upFile);
+				log.info("upFile.name = {}", upFile.getOriginalFilename());
+				log.info("upFile.size = {}", upFile.getSize());
+				//저장할 파일명 생성
+				File renamedFile = FileUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+				//파일 저장
+				upFile.transferTo(renamedFile);
+				log.info("renamedFile = {}", renamedFile);
+				log.info("upFile = {}", upFile);
+				//PostFile객체생성
+				PostFile pF = new PostFile();
+				pF.setPostOriginalFileName(upFile.getOriginalFilename());
+				pF.setPostRenamedFileName(renamedFile.getName());
+				pFList.add(pF);
+				log.info("pFList = {}", pFList);
+			}
+			
+			//1. 업무로직
+			postList.setPostFileList(pFList);
+			log.info("post = {}", postList);
+			int result = boardService.updatePost(postList);
+			log.info("result = {}", result);
+			//2. 사용자피드백
+			String msg = result > 0 ? "게시글이 수정 등록되었습니다" : "게시글 수정에 실패하였습니다";
+			redirectAttr.addFlashAttribute("msg", msg);
+			
+		}catch (Exception e) {
+			log.error("게시물 수정 오류!", e);
+			throw e;
+		}
+			
+		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo();
+	}
+
 	
 	
+	@GetMapping("/postDelete")
+	public String postDelete(@RequestParam int postNo, 
+							@RequestParam int boardNo, 
+							RedirectAttributes redirectAttr) {
+		//1. 업무로직
+		int result = boardService.updateDelPost(postNo);
+		log.info("result = {}", result);
+		
+		//2. 사용자피드백
+		String msg = result > 0 ? "게시글이 삭제되었습니다" : "게시글 삭제에 실패하였습니다";
+		redirectAttr.addFlashAttribute("msg", msg);
+		log.info("boardNo = {}", boardNo);
+		return "redirect:/board/boardList?boardNo=" + boardNo;
+	}
+	
+
+	
+	@PostMapping("/commentInsert")
+	public String commentInsert(PostComment postComment,
+							  RedirectAttributes redirectAttr,
+							  HttpServletRequest request) {
+
+			//1. 업무로직
+			log.info("postComment = {}", postComment);
+			int result = boardService.insertPostComment(postComment);
+			
+			//2. 사용자피드백
+			String msg = result > 0 ? "댓글이 등록되었습니다" : "댓글 등록에 실패하였습니다";
+			redirectAttr.addFlashAttribute("msg", msg);
+		
+
+		return "redirect:/board/boardView?postNo=" + postComment.getPostNo();
+	}
 	
 	
+	@GetMapping("/commentDelete")
+	public String commentDelete(@RequestParam int postNo,
+								@RequestParam int commentNo, 
+							RedirectAttributes redirectAttr) {
+		//1. 업무로직
+		int result = boardService.commentDelete(commentNo);
+		log.info("result = {}", result);
+		
+		//2. 사용자피드백
+		String msg = result > 0 ? "댓글이 삭제되었습니다" : "댓글 삭제에 실패하였습니다";
+		redirectAttr.addFlashAttribute("msg", msg);
+		
+		return "redirect:/board/boardView?postNo=" + postNo;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

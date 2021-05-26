@@ -25,6 +25,8 @@ public class PostList {
 	
 	private int fileCount;	
 	private List<PostFile> postFileList;
-	private int commentCount;			
+	private int commentCount;
+	private List<PostComment> postCommentList;
+
 	
 }

@@ -43,8 +43,8 @@
 			<div class="collapse hide" id="sidebarCommu"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList" class="nav-link active"> 공지사항 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=1" class="nav-link active"> 공지게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=2" class="nav-link "> 자유게시판 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAtten"
