@@ -16,19 +16,17 @@
     		and m.id = #{id}
 	</select>
 	
-	<resultMap type="member" id="memberMap" extends="userMap">
-	
+	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
 		
 		<result column="hire_date" property="hireDate"/>
 		<result column="resign" property="resign"/>
 		<result column="position" property="position"/>
-		<result column="department_code" property="departmentCode"/>
-		
+		<result column="department_code" property="departmentCode"/>		
+		<result column="department_name" property="department"/>
 	</resultMap>
 	
-	<resultMap type="user" id="userMap">
-	
+	<resultMap type="user" id="userMap">	
 		<id column="id" property="id"/>
 		
 		<result column="workspace_id" property="workspaceId"/>
@@ -38,8 +36,146 @@
 		<result column="phone" property="phone"/>
 		<result column="address" property="address"/>
 		<result column="quit_yn" property="quitYn"/>
-		<result column="role" property="role"/>
-		
+		<result column="role" property="role"/>		
 	</resultMap>
+	
+	<select id="selectIdDuplicate"  resultType="int">
+		select
+		    count(*)
+		from
+		    floworks_user
+		where
+		    id = #{id}
+	</select>
+	
+	<select id="selectEmailDuplicate" resultType="int">
+		select
+		    count(*)
+		from
+		    floworks_user
+		where
+		    email = #{email}
+	</select>
+	
+	<select id="selectPhoneDuplicate" resultType="int">
+		select
+		    count(*)
+		from
+		    floworks_user
+		where
+		    phone = #{phone}		
+	</select>
+	
+	<select id="selectWorkSpaceIdExist" resultType="int">
+		select
+			count(*)
+		from 
+			workspace
+		where
+			workspace_id = #{workSpaceId}
+	</select>
+	
+	<select id="selectWorkspacePassword" resultType="string">
+		select
+			password
+		from
+			workspace
+		where
+			workspace_id = #{workSpaceId}
+	</select>
+	
+	<select id="selectworkspaceIdDuplicate" resultType="int">
+		select
+		    count(*)
+		from
+		    workspace
+		where
+		    workspace_id = #{id}
+	</select>
+	
+	<insert id="insertUser">
+		insert into
+			floworks_user
+		values(
+               #{id},
+		       #{workspaceId}, 
+		       #{password}, 
+		       #{name}, 
+		       #{email}, 
+		       #{phone},
+		       #{address}, 
+		       default,
+		       default
+		       )
+	</insert>
+	
+	<select id="selectDeptNameList" resultMap="deptMap">
+		select
+		    *
+		from
+		    department
+	</select>
+	
+	<select id="selectPositionList" resultType="string">
+		select
+		    position
+		from
+		    position
+	</select>
+	
+	<resultMap type="map" id="deptMap">
+		<id column="DEPARTMENT_CODE" property="departmentCode"/>
+		<result column="DEPARTMENT_NAME" property="departmentName"/>
+	</resultMap>
+	
+	<insert id="insertMember">
+		insert into
+		    member
+		values(
+			    #{id},
+			    default,
+			    default,
+			    #{position},
+			    #{departmentCode},
+			    #{profileFileOrinalname},
+			    <if test="profileFileRename == null">
+			    	default
+			    </if>
+			    <if test="profileFileRename != null">
+			    	 #{profileFileRename}
+			    </if>
+			    )
+	</insert>
+	
+	<insert id="insertWorkspace">
+		insert into
+			workspace
+		values(
+				#{workspaceId},
+				#{workspaceName},
+				#{password},
+				#{userId}
+				)
+	</insert>
+	
+	<select id="selectWorkspaceOwner" resultType="string">
+		select
+			owner
+		from
+			workspace
+		where
+			workspace_id = #{workspaceId}
+	</select>
+	
+	<update id="updateUserWorkspaceId"> 
+		update
+			floworks_user
+		set 
+			workspace_id = #{workspaceId}
+		where
+			id = #{userId}
+	</update>
+	
+
 
 </mapper>

@@ -23,7 +23,13 @@
 		<ul>
 			<li>
 				<div class="box">
-					<img class="profile" src="${pageContext.request.contextPath }/resources/images/profileSample.jpg">
+					<c:if test="${listType == 'sent'}" >
+						<img class="profile" src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" >
+					</c:if>
+					
+					<c:if test="${listType == 'inbox'}" >
+						<img class="profile" src="${pageContext.request.contextPath}/resources/upload/profile/${fileRename}">
+					</c:if>
 				</div>
 			</li>
 			<li>
@@ -115,23 +121,15 @@ $(() => {
         if(!$star.hasClass('on')){
         	updateStarredEmail("N");
         }
-<<<<<<< HEAD
     });
     
-    if("${email.emailStarred}" == 'true'){
-    	$(".fa-star").addClass('on');
-    }
-    
-=======
-        
     })
     
     
     if("${email.emailStarred}" == 'true'){
     	$(".fa-star").addClass('on');
     }
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
-    	
+
 }); 
 
 $(".file-a").click(function(){

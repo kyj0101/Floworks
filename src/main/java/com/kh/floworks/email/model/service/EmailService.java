@@ -3,6 +3,7 @@ package com.kh.floworks.email.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 import com.kh.floworks.email.model.vo.Email;
 
 
@@ -41,6 +42,8 @@ public interface EmailService {
 	Email selectOneEmailInbox(Map<String, Object> param);
 
 	Email selectOneEmailSent(int emailNo);
+	
+	String selectProfileRename(String id);
 
 	int updateStarredEmailInbox(Map<String, Object> param);
 
@@ -57,5 +60,7 @@ public interface EmailService {
 	int getTotalSentEmail(String id);
 
 	int getTotalDraftsEmail(String id);
+
+
 
 }

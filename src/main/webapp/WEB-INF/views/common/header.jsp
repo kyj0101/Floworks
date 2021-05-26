@@ -81,11 +81,11 @@
 							<ul class="dropdown-menu" role="menu"
 								aria-labelledby="dropdownMenu1">
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="${pageContext.request.contextPath }/member/mypage">마이페이지</a></li>
+									href="${pageContext.request.contextPath}/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#" id="logout-a">로그아웃</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Something else here</a></li>
+									href="${pageContext.request.contextPath}/address/list">주소록</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#">Separated link</a></li>
 							</ul>
@@ -330,7 +330,7 @@
 
 						<div class="mainHeader">
 							<!-- 로그인한 사용자의 프로필 -->
-							<img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle"
+							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle"
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
 							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>

@@ -21,6 +21,8 @@ public class Member extends User implements UserDetails{
 	private Date hireDate;
 	private String resign;
 	private String department;
+	private String profileFileOrinalname;
+	private String profileFileRename;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
