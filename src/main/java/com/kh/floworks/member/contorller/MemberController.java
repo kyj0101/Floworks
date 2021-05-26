@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.member.model.service.MemberService;
+import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,13 @@ public class MemberController {
 		return "/member/memberUpdate";
 	}
 
+	@GetMapping("/memberDetail.do")
+	public void memberDetail(Model model) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+		model.addAttribute("loginMember", authentication.getPrincipal());
+		
+	}
 //	@PostMapping("member/memberUpdate")
 //	public String memberUpdate(@ModelAttribute("member") User user,
 //			 ModelMap model, 
@@ -75,41 +83,33 @@ public class MemberController {
 //		
 //	}
 //	
+	@GetMapping("/memberUpdate.do")
+	public void memberDetail(Authentication authentication, @AuthenticationPrincipal Member member, Model model) {
+		//1.security context holder bean
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		//2. handler의 매개인자로 authentication객체 요청
+		// UsernamePasswordAuthenticationToken
+		log.debug("authentication = {}", authentication); 
+		log.debug("member = {}", authentication.getPrincipal());
+		
+		//3. @AuthenticationPrincipal Member member
+		log.debug("member = {}", member);
+		
+		model.addAttribute("loginMember", authentication.getPrincipal());
+		
+	}
 	
-//	@PostMapping("/memberUpdate.do")
-//	public String memberUpdate(User updateMember, Authentication oldAuthentication, RedirectAttributes redirectAttr) {
-//		//1.업무로직 : db반영
-//		
-//		log.info("updateMember = {}", updateMember);
-//		
-//		//2. 인증객체(Principal) 준비, 비밀번호(password), 권한목록(authorities) 필드는 null이어서는 안된다.
-//		updateMember.setPassword(((User)oldAuthentication.getPrincipal()).getPassword());
-//
-//		//Collection<? extends GrantedAuthority>로 저장된 권한 collection을 List<SimpleGrantedAuthority>로 변환
-//			updateMember.setAuthorities(
-//					oldAuthentication
-//						.getAuthorities()
-//						.stream()
-//						.map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
-//						.collect(Collectors.toList())
-//			);
-//		
-//		
-//		
-//		//2. security context 에서 principal 갱신
-//		Authentication newAuthentication = 
-//				new UsernamePasswordAuthenticationToken(
-//							updateMember,
-//							oldAuthentication.getCredentials(),
-//							oldAuthentication.getAuthorities()
-//						);
-//		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-//		
-//		//3.사용자 피드백
-//		redirectAttr.addFlashAttribute("msg", "사용자 정보 수정 성공");
-//		
-//		return "redirect:/member/memberUpdate.do";
-//	}
+	
+	@PostMapping("/memberUpdate.do")
+	public String memberUpdate(User updateMember, Authentication oldAuthentication, RedirectAttributes redirectAttr) {
+		//1.업무로직 : db반
+		log.info("??????????????????????????????????>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		log.info("updateMember = {}", updateMember);
+		
+			
+		return "redirect:/member/memberUpdate.do";
+	}
 	
 	
 	@GetMapping("/delete")

@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.kh.floworks.member.model.vo.Member, java.util.*"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%
+Member member = (Member) session.getAttribute("loginMember");
+%>
 <title>개인정보 수정하기</title>
 
 <!-- css -->
@@ -9,6 +13,8 @@
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
+
+<!-- 
 <script>
 	$(document).ready(function(){
 		$("#btnUpdate").click(function(){
@@ -17,6 +23,7 @@
 		});
 	});
 </script>
+ -->
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
