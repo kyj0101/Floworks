@@ -32,17 +32,17 @@
           부서
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownboardButton">
-          <a class="dropdown-item" href="boardList?dept=기획부">기획부</a>
-          <a class="dropdown-item" href="boardList?dept=개발부">개발부</a>
-          <a class="dropdown-item" href="boardList?dept=총무부">총무부</a>
-          <a class="dropdown-item" href="boardList?dept=국내영업부">국내영업부</a>
-          <a class="dropdown-item" href="boardList?dept=마케팅부">마케팅부</a>
-          <a class="dropdown-item" href="boardList?dept=회계관리부">회계관리부</a>
-          <a class="dropdown-item" href="boardList?dept=">전체보기</a>
+          <a class="dropdown-item" href="boardList?dept=기획부&boardNo=${boardNo}">기획부</a>
+          <a class="dropdown-item" href="boardList?dept=개발부&boardNo=${boardNo}">개발부</a>
+          <a class="dropdown-item" href="boardList?dept=총무부&boardNo=${boardNo}">총무부</a>
+          <a class="dropdown-item" href="boardList?dept=국내영업부&boardNo=${boardNo}">국내영업부</a>
+          <a class="dropdown-item" href="boardList?dept=마케팅부&boardNo=${boardNo}">마케팅부</a>
+          <a class="dropdown-item" href="boardList?dept=회계관리부&boardNo=${boardNo}">회계관리부</a>
+          <a class="dropdown-item" href="boardList?dept=부&boardNo=${boardNo}">전체보기</a>
         </div>
       </div>
     <input type="button" class="btn btn-primary d-inline-block float-right"
-    		value="글쓰기" onclick="goBoardForm(${list[0].boardNo});"/>
+    		value="글쓰기" onclick="goBoardForm(${boardNo});"/>
     <div id="board-list">
         <table class="table table-hover">
             <thead>

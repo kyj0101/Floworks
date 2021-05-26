@@ -24,22 +24,14 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao boardDao;
 
 	@Override
-	public List<PostList> selectPostList(Map<String, Object> param, int boardNo) {
-		return boardDao.selectPostList(param, boardNo);
-	}
-
-
-
-	@Override
-	public List<PostList> selectdeptList(String dept) {
-		return boardDao.selectdeptList(dept);
+	public List<PostList> selectPostList(Map<String, Object> param, Map<String, Object> search) {
+		return boardDao.selectPostList(param, search);
 	}
 
 	
-	
 	@Override
-	public int getTotalContents(int boardNo) {
-		return boardDao.getTotalContents(boardNo);
+	public int getTotalContents(Map<String, Object> search) {
+		return boardDao.getTotalContents(search);
 	}
 
 //	@Transactional(rollbackFor = Exception.class)

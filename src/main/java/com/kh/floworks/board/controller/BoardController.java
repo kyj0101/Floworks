@@ -53,7 +53,8 @@ public class BoardController {
 	
 	@GetMapping("/boardList")
 	public void boardList(@RequestParam(defaultValue = "1") int cPage,  
-			@RequestParam int boardNo, 
+				@RequestParam int boardNo, 
+				@RequestParam String dept, 
 				Model model,
 				HttpServletRequest request) {
 		//1. 사용자입력값
@@ -63,14 +64,18 @@ public class BoardController {
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 		
+		Map<String, Object> search = new HashMap<>();
+		search.put("boardNo", boardNo);
+		search.put("dept", dept);
+		
 		//2. 업무로직
 		//a. contents영역 : mybatis의 RowBounds
-		List<PostList> list = boardService.selectPostList(param, boardNo);
+		List<PostList> list = boardService.selectPostList(param, search);
 		log.info("list = {}", list);
 		
 		//b. pagebar영역
-		int totalContents = boardService.getTotalContents(boardNo);
-		String url = request.getRequestURI() + "?boardNo=" + boardNo;
+		int totalContents = boardService.getTotalContents(search);
+		String url = request.getRequestURI() + "?boardNo=" + boardNo + "&dept=" + dept;
 		log.info("totalContents = {}", totalContents);
 		log.info("url = {}", url);
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
@@ -79,25 +84,10 @@ public class BoardController {
 		//3. jsp처리 위임
 		model.addAttribute("list", list);
 		model.addAttribute("pageBar", pageBar);
+		model.addAttribute("boardNo", boardNo);
 	}
 	
 
-	@GetMapping("/serchboard")
-	public void selectdeptList(Model model,
-								@RequestParam String dept, 
-								HttpServletRequest request) {
-		log.info("dept = {}", dept);
-
-		//2. 업무로직
-		List<PostList> list = boardService.selectdeptList(dept);
-		log.info("deptlist = {}", list);
-		
-
-		//3. jsp처리 위임
-		model.addAttribute("list", list);
-	}
-	
-	
 	
 	
 	@GetMapping({"/boardView", "/boardUpdateForm"})

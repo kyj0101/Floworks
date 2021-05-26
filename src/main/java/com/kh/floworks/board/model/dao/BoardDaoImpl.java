@@ -1,5 +1,6 @@
 package com.kh.floworks.board.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,30 +26,25 @@ public class BoardDaoImpl implements BoardDao {
 	private SqlSession session;
 
 	@Override
-	public List<PostList> selectPostList(Map<String, Object> param,  int boardNo) {
+	public List<PostList> selectPostList(Map<String, Object> param, Map<String, Object> search) {
 		int cPage = (int)param.get("cPage");
 		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit; 
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		log.info("boardNo = {}", boardNo);
-		return session.selectList("board.selectPostList", boardNo, rowBounds);
-	}
+//		log.info("boardNo = {}", boardNo);
 
-
-	@Override
-	public List<PostList> selectdeptList(String dept) {
-		return session.selectList("board.selectdeptList", dept);
+		log.info("search = {}", search);
+		return session.selectList("board.selectPostList", search, rowBounds);
 	}
 
 
 	
 	
-	
 	@Override
-	public int getTotalContents(int boardNo) {
-		return session.selectOne("board.getTotalContents", boardNo);
+	public int getTotalContents(Map<String, Object> search) {
+		return session.selectOne("board.getTotalContents", search);
 	}
 
 	@Override
