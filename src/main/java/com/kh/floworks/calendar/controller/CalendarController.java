@@ -2,7 +2,9 @@ package com.kh.floworks.calendar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.floworks.calendar.model.service.CalendarService;
@@ -13,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/calendar")
 public class CalendarController {  
+	
+	@Autowired
+	private CalendarService calendarService;
 //	
 //	@Autowired
 //	private CalendarService calendarService;
@@ -29,14 +34,14 @@ public class CalendarController {
 		return "/calendar/calendarPopup";
 	}
 	
-//	//일정 관리 페이지
-//	@RequestMapping("/calendarMain")
-//	public String calendar(Model model)throws Exception {
-//		
-//		model.addAttribute("showSchedule" , CalendarService.showSchedule());
-//		
-//		return "/calendar/calendarkMain";
-//	}
+	//일정 관리 페이지
+	@PostMapping("/calendarMain")
+	public String calendar(Model model)throws Exception {
+		
+		model.addAttribute("showSchedule",calendarService.showSchedule(model));
+		
+		return "/calendar/calendarkMain";
+	}
 	
 //	//일정 추가 버튼 클릭 Ajax
 //	@ResponseBody
