@@ -6,39 +6,64 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
-
+  
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+ 
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/board/boardUpdateForm.css" />
+
  
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/board/boardForm.js"></script>
- 
+
 
 <!-- ckeditor-->
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 
+ 
 
-
+ 
 <section>
-    <!-- http://bootstrapk.com/components/#page-header -->
+   <!-- http://bootstrapk.com/components/#page-header -->
     <div class="page-header" >
-        <h1>게시글 작성</h1>
+        <h1>게시글 수정</h1>
         <hr class="my-4">
     </div>
 
     <div id="board-write">
         <form:form
-        	name="boardEn" 
-			action="${pageContext.request.contextPath}/board/boardEnroll" 
+        	name="boardUp" 
+			action="${pageContext.request.contextPath}/board/postModify" 
 			method="post"
 			enctype="multipart/form-data" 
 			onsubmit="return boardValidate();">
-            <input type="text" class="form-control mb-3" placeholder="제목을 입력하세요" name="postTitle" id="title">
-            <!-- 
-            <input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" >
-             -->
-			<input type="hidden" name="id" value="aaa123"/>
-            <input type="hidden" name="boardNo" value="${boardNo}"/>
+            <input type="text" class="form-control mb-3" value="${postList.postTitle}"  name="postTitle" id="title">
+            <input type="hidden" class="form-control mb-3" value="${postList.postNo}"  name="postNo">
+            <input type="hidden" class="form-control mb-3" value="${postList.boardNo}"  name="boardNo">
             
+            <c:forEach items="${postList.postFileList}" var="pfList">
+         	<c:if test="${pfList.postOriginalFileName != null}">
+            <div class="input-group mb-1" id="addFile">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" name="upFile" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01">${pfList.postOriginalFileName}</label>
+                </div>
+            </div>
+            </c:if>
+         	</c:forEach>
+         
+           <div class="input-group mb-1" id="addFile">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="upFile" aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
+                </div>
+            </div>
             <div class="input-group mb-1" id="addFile">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
@@ -48,44 +73,17 @@
                   <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
                 </div>
             </div>
-            <div class="input-group mb-1" id="addFile">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
-                </div>
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="upFile" aria-describedby="inputGroupFileAddon01">
-                  <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
-                </div>
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="upFile" aria-describedby="inputGroupFileAddon01">
-                  <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
-                </div>
-            </div>
+            
             <div class="form-group">
-              <textarea class="form-control" name="postContent" rows="10" placeholder="내용을 입력하세요"></textarea>
+              <textarea class="form-control"  name="postContent">${postList.postContent}</textarea>
             </div>
-            <input id="submitbtn" type="submit" class="btn btn-primary float-right" value="작성하기" >
+            <input id="update-btn" type="submit" class="btn btn-primary float-right" value="수정하기" >
         </form:form>
     </div>
     
-</section>
-
+</section>			 
  
  
- 
- 
- 
- 
- 
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-
-
-
 <script>
 window.onload = ()=>{
     CKEDITOR.replace('postContent', {
@@ -99,3 +97,18 @@ CKEDITOR.editorConfig = function( config ) {
     config.fillEmptyBlocks = false;
 };
 </script>
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

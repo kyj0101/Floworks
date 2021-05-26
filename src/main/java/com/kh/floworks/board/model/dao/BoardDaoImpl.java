@@ -9,30 +9,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.floworks.board.model.vo.Post;
+import com.kh.floworks.board.model.vo.PostComment;
 import com.kh.floworks.board.model.vo.PostFile;
 import com.kh.floworks.board.model.vo.PostList;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
 @Repository
+@Slf4j
 public class BoardDaoImpl implements BoardDao {
 
 	@Autowired
 	private SqlSession session;
 
 	@Override
-	public List<PostList> selectPostList(Map<String, Object> param) {
+	public List<PostList> selectPostList(Map<String, Object> param,  int boardNo) {
 		int cPage = (int)param.get("cPage");
 		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit; 
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return session.selectList("board.selectPostList", null, rowBounds);
+		log.info("boardNo = {}", boardNo);
+		return session.selectList("board.selectPostList", boardNo, rowBounds);
 	}
 
+
 	@Override
-	public int getTotalContents() {
-		return session.selectOne("board.getTotalContents");
+	public List<PostList> selectdeptList(String dept) {
+		return session.selectList("board.selectdeptList", dept);
+	}
+
+
+	
+	
+	
+	@Override
+	public int getTotalContents(int boardNo) {
+		return session.selectOne("board.getTotalContents", boardNo);
 	}
 
 	@Override
@@ -56,7 +72,45 @@ public class BoardDaoImpl implements BoardDao {
 	public PostFile selectOnePostFile(int postFile) {
 		return session.selectOne("board.selectOnePostFile", postFile);
 	}
-	
+
+	@Override
+	public int updatePost(PostList postList) {
+		return session.update("board.updatePost", postList);
+	}
+
+	@Override
+	public int updatePostFile(PostFile pFile) {
+		log.info("pFile = {}", pFile);
+		return session.update("board.updatePostFile", pFile);
+	}
+
+	@Override
+	public int updateDelPost(int postNo) {
+		return session.update("board.updateDelPost", postNo);
+	}
+
+	@Override
+	public Object rdCountPost(int postNo) {
+		return session.update("board.rdCountPost", postNo);
+	}
+
+	@Override
+	public int insertPostComment(PostComment postComment) {
+		return session.insert("board.insertPostComment", postComment);
+	}
+
+	@Override
+	public int commentDelete(int commentNo) {
+		return session.update("board.commentDelete", commentNo);
+	}
+
+
+	@Override
+	public List<Post> selectMainList() {
+		return session.selectList("board.selectMainList");
+	}
+
+
 	
 	
 }
