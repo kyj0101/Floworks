@@ -2,7 +2,7 @@
 function click_add() {
 	var url = "calendarPopup";
 	var name = "calendarPopup";
-	var option = "width = 600, height = 600 left = 100, top=50,location=no";
+	var option = "width = 560, height = 500 left = 400, top=50,location=no";
 	window.open(url,name,option)
 };
 
@@ -31,7 +31,7 @@ $(function() {
 $.fn.serializeObject = function(){
     var o = {};
     var a = this.serializeArray();
-    $.each(a, function() {
+    $.each(a, function() {  
     	var name = $.trim(this.name),
     		value = $.trim(this.value);
     	
