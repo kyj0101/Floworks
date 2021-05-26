@@ -38,7 +38,6 @@
 }
 #fileButton {
     position: relative;
-    top: -50px;
 }
 h3 {
     position: relative;
@@ -61,14 +60,24 @@ a {
 }
 #comment-list {
     position: relative;
-    top: -10px;
+    top: 40px;
 }
 #view-btn{
     position: relative;
     display: inline-block;
-    top: -50px;
 }
 #postCm{
 	 position: relative;
 }
 
+#postText{
+    width: 100%;
+    min-height:500px;
+    background-color: rgb(243, 243, 243);
+    margin-left: 0px;
+    padding: 30px;
+    top: 15px;
+}
+section .btn{
+	margin-right: 2px;
+}

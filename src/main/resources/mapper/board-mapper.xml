@@ -119,7 +119,7 @@
 		from (select (select count(*) from post_file where post_no = #{postNo}) file_count,
 		        (select count(*) from post_comment where post_no = #{postNo}  and comment_del = 'N') comment_count,
 		        k.*
-		from (select p.* ,d.department_name, f.name
+		from (select p.* ,d.department_name, f.name, m.profile_file_rename
 		        from post p 
 		            left join floworks_user f
 		                on p.id = f.id
@@ -139,9 +139,6 @@
 		        on cm.department_code = cd.department_code
 		where
 		    a.post_no = #{postNo}
-		start with comment_level = 1
-		connect by post_comment_no = prior comment_no
-		order siblings by comment_no
 		    <!-- 
 		start with comment_level = 1
 		connect by post_comment_no = prior comment_no
@@ -161,6 +158,8 @@
 		<result column="name" property="name"/>
 		<result column="file_count" property="fileCount"/>
 		<result column="comment_count" property="commentCount"/>	
+		<result column="profile_file_rename" property="profileFileRename"/>	
+		
 		<collection property="postFileList" ofType="postFile">
 			<id column="post_file" property="postFileNo"/>
 			<result column="post_no" property="postNo"/>

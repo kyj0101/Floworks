@@ -30,7 +30,7 @@
      <div>
      	 <h3>${postList.postTitle}</h3>
          <div class="postWriter" >
-             <img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle d-inline-block" id="postProfile">
+             <img src="${pageContext.request.contextPath }/resources/upload/profile/${postList.profileFileRename}" alt="프로필사진" class="img-circle d-inline-block" id="postProfile">
              <label id="postName">${postList.name} ( ${postList.departmentName} )</label>
              <br>
              <small id="postDate" class="form-text text-muted d-inline-block"><fmt:formatDate value="${postList.postDate}" pattern="yy/MM/dd"/></small>
@@ -43,8 +43,11 @@
          </div>
 
          <div class="form-group" id="postText">
-             <textarea class="form-control" id="postTextarea" rows="20" placeholder="내용이 들어올 자리입니다" readonly>${postList.postContent}</textarea>
-         </div>
+         <c:if test="${postList.commentCount == null}">
+			<p>내용 없음</p>
+		 </c:if>
+		 ${postList.postContent}
+		 </div>
 
          <!-- 첨부파일 버튼-->
          <c:forEach items="${postList.postFileList}" var="pfList">
@@ -154,10 +157,8 @@
 			 				placeholder="댓글을 입력해주세요" aria-label="Recipient's username"
 			 				aria-describedby="button-addon2">
 			  		<input type="hidden" name="commentLevel" value="1" />
-               		<!-- 왜 안되지,,,ㅠ
+               		
                		<input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />    
-               		 -->
-               		<input type="hidden" name="id" value="aaa123"/>
 					<input type="hidden" name="postNo" value="${postList.postNo}" />
                		<input type="hidden" name="postCommentNo" value="0" />  
 			  		<div class="input-group-append d-inline" >		

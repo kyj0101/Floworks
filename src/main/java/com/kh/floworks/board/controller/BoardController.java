@@ -121,6 +121,7 @@ public class BoardController {
 	
 	@PostMapping("/boardEnroll")
 	public String boardEnroll(Post post,
+							  @RequestParam String id,
 							  @RequestParam int boardNo,
 							  RedirectAttributes redirectAttr,
 							  @RequestParam(value="upFile", required = false) MultipartFile[] upFiles,
@@ -163,6 +164,7 @@ public class BoardController {
 			//1. 업무로직
 			post.setPostFileList(pFList);
 			post.setBoardNo(boardNo);
+			post.setId(id);
 			log.info("post = {}", post);
 			int result = boardService.insertPost(post);
 			
