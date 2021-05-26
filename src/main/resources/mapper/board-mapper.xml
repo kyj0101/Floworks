@@ -7,7 +7,7 @@
 	<select id="selectPostList" resultMap="postMap">
 		select 
 			(select count(*) from post_file where post_no = k.post_no) file_count,
-	        (select count(*) from post_comment where post_no = k.post_no) comment_count,
+	        (select count(*) from post_comment where post_no = k.post_no  and comment_del = 'N') comment_count,
 	        k.*
 		from 
 			(select p.* ,d.department_name, f.name
@@ -19,10 +19,36 @@
 	            left join department d
 	                on m.department_code = d.department_code) k
 	    where 
-	    	board_no = 1
+	    	board_no = #{boardNo} and
+            post_del = 'N' 
 		order 
 			by post_no desc
 	</select>
+	
+	<select id="selectdeptList" resultMap="postMap">
+		select 
+			(select count(*) from post_file where post_no = k.post_no) file_count,
+	        (select count(*) from post_comment where post_no = k.post_no  and comment_del = 'N') comment_count,
+	        k.*
+		from 
+			(select p.* ,d.department_name, f.name
+	        from post p 
+	            left join floworks_user f
+	                on p.id = f.id
+	            left join member m
+	                on f.id = m.id
+	            left join department d
+	                on m.department_code = d.department_code) k
+	    where 
+	    	board_no = 1 and
+            post_del = 'N' and
+            department_name like '%' || #{dept}
+		order 
+			by post_no desc
+	</select>
+	
+	
+	
 	
 	<resultMap type="hashmap" id="postMap">
 		<id column="post_no" property="postNo"/>
@@ -51,7 +77,8 @@
 	                on f.id = m.id
 	            left join department d
 	                on m.department_code = d.department_code) 
-	    where board_no=1
+	    where board_no = #{boardNo}  and
+     		  post_del = 'N'
 	</select>
 	
 	<insert id="insertPost">
@@ -59,13 +86,13 @@
 			post (post_no, board_no, id, post_title, post_content)
 		values(
 			seq_post_post_no.nextval,
-			'1',
-			'aaa123',
+			#{boardNo},
+			#{id},
 			#{postTitle},
 			#{postContent}
 		)
 	<!--
-	 방금 insert된 board객체의 no컬럼(pk)값을  board.no에 대입 -->
+	 방금 insert된 post객체의 post_no컬럼(pk)값을  post_no에 대입 -->
 	<selectKey resultType="_int" keyProperty="postNo" order="AFTER">
 		select
 			seq_post_post_no.currval
@@ -88,11 +115,11 @@
 	
 	
 	<select id="selectOnePostCollection" resultMap="postCollectionMap">
-		select *
+		select a.*, f.*, pc.*, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
 		from (select (select count(*) from post_file where post_no = #{postNo}) file_count,
-		        (select count(*) from post_comment where post_no = #{postNo}) comment_count,
+		        (select count(*) from post_comment where post_no = #{postNo}  and comment_del = 'N') comment_count,
 		        k.*
-		from (select p.* ,d.department_name, f.name
+		from (select p.* ,d.department_name, f.name, m.profile_file_rename
 		        from post p 
 		            left join floworks_user f
 		                on p.id = f.id
@@ -100,11 +127,23 @@
 		                on f.id = m.id
 		            left join department d
 		                on m.department_code = d.department_code) k ) a
-		    left join
-		    post_file f
-		        on a.post_no = f.post_no
+		        left join post_file f
+		                on a.post_no = f.post_no
+		        left join post_comment pc
+		                on a.post_no = pc.post_no
+		        left join floworks_user fu
+		                on pc.id = fu.id
+		        left join member cm
+		                on fu.id = cm.id
+		        left join department cd
+		        on cm.department_code = cd.department_code
 		where
 		    a.post_no = #{postNo}
+		    <!-- 
+		start with comment_level = 1
+		connect by post_comment_no = prior comment_no
+		order siblings by comment_no
+		     -->
 	</select>
 	<resultMap type="postList" id="postCollectionMap">
 		<id column="post_no" property="postNo"/>
@@ -119,15 +158,29 @@
 		<result column="name" property="name"/>
 		<result column="file_count" property="fileCount"/>
 		<result column="comment_count" property="commentCount"/>	
+		<result column="profile_file_rename" property="profileFileRename"/>	
+		
 		<collection property="postFileList" ofType="postFile">
 			<id column="post_file" property="postFileNo"/>
 			<result column="post_no" property="postNo"/>
 			<result column="post_original_filename" property="postOriginalFileName"/>
 			<result column="post_renamed_filename" property="postRenamedFileName"/>
 		</collection>
+		<collection property="postCommentList" ofType="postComment">
+			<id column="comment_no" property="commentNo"/>
+			<result column="comment_level" property="commentLevel"/>
+			<result column="comment_content" property="commentContent"/>
+			<result column="comment_date" property="commentDate"/>
+			<result column="id" property="id"/>
+			<result column="post_no" property="postNo"/>
+			<result column="post_comment_no" property="postCommentNo"/>
+			<result column="comment_del" property="commentDel" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+			<result column="cmt_name" property="cmtName"/>
+			<result column="cmt_dept_name" property="cmtDeptName"/>	
+		</collection>
 	</resultMap>
 	
-	<select id="selectOnePostFile" resultMap="postFileLMap">
+	<select id="selectOnePostFile" resultMap="postFileMap">
 		select 
 			*
 		from
@@ -136,7 +189,7 @@
 			post_file = #{postFile}
 	</select>
 	
-	<resultMap type="postFile" id="postFileLMap">
+	<resultMap type="postFile" id="postFileMap">
 			<id column="post_file" property="postFileNo"/>
 			<result column="post_no" property="postNo"/>
 			<result column="post_original_filename" property="postOriginalFileName"/>
@@ -144,5 +197,99 @@
 	</resultMap>
 	
 	
+	<update id="updatePost" >
+	 update
+	 	post
+	 set
+	 	post_title = #{postTitle},
+	 	post_content = #{postContent}
+	 where
+	 	post_no = #{postNo}
+	</update>
+	<!-- 
+	<update id="updatePostFile">
+	 <foreach item="postFile" index="index" collection="List">
+	 	update
+			post_file
+		set
+			post_file = seq_post_file_post_file.nextval,
+			post_original_fileName = #{postFile.postOriginalFileName},
+			post_renamed_fileName = #{postFile.postRenamedFileName}
+		where
+			post_no = #{postFile.postNo}	 
+	 </foreach>
+	</update>	
+	 -->
+
+	<update id="updatePostFile" >
+	 	update
+			post_file
+		set
+			post_original_fileName = #{postOriginalFileName},
+			post_renamed_fileName = #{postRenamedFileName}
+		where
+			post_no = #{postNo}	 
+	</update>	
+	
+	<update id="updateDelPost">
+		update
+				post
+		 set
+		 	post_del = 'Y'
+	    where
+		 	post_no = #{postNo}
+	</update>
+	
+	<update id="rdCountPost">
+		update
+		    post
+		set
+		    post_read_count = post_read_count + 1
+		where
+		    post_no = #{postNo}
+	</update>
+	
+	<insert id="insertPostComment">
+		insert into 
+			post_comment 
+		values(
+			seq_post_comment_comment_no.nextval, 
+			#{commentLevel}, 
+			#{commentContent}, 
+			default, 
+			#{id}, 
+			#{postNo}, 
+			#{postCommentNo}, 
+			default)
+	</insert>
+	
+	<update id="commentDelete">
+		update
+			post_comment
+		 set
+		 	comment_del = 'Y'
+	    where
+		 	comment_no = #{commentNo}
+	</update>
+	
+	<select id="selectMainList" resultMap="postMap">
+	select *
+	from (select a.*, rank() OVER (ORDER BY post_no DESC) rank
+	        from 
+	            (select p.* ,d.department_name, f.name
+	            from post p 
+	                left join floworks_user f
+	                    on p.id = f.id
+	                left join member m
+	                    on f.id = m.id
+	                left join department d
+	                    on m.department_code = d.department_code) a
+	        where board_no=1 and
+	              post_del = 'N') 
+	where    
+	    rank <![CDATA[<=]]> 3
+	</select>
+
+
 
 </mapper>

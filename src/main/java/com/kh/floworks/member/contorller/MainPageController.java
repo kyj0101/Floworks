@@ -25,12 +25,7 @@ public class MainPageController {
 	public String main(Model model) {
 		return "mainPage";
 	}
-	
-	@RequestMapping("/home")
-	public String home() {
-		return "/home";
-	}
-	
+
 	@GetMapping("/mainPage")
 	public String indexPage() {
 		return "/member/mainPage";
