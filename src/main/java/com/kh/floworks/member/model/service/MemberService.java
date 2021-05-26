@@ -3,13 +3,21 @@ package com.kh.floworks.member.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
-public interface MemberService {
+
+public interface MemberService extends UserDetailsService {
 	
 	String ROLE_USER = "USER";
 	String ROLE_ADMIN = "ADMIN";
+	
+//	User selectOneUser(String id);
+//
+//	int updateMember(User user);
+
 	
 	boolean selectIdDuplicate(String id);
 
@@ -36,4 +44,6 @@ public interface MemberService {
 	int insertWorkspace(Map<String, String> param);
 
 	int updateUserWorkspaceId(Map<String, String> param);
+
+	int updateMember(Member updateMember);
 }

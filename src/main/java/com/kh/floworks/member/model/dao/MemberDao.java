@@ -8,8 +8,11 @@ import com.kh.floworks.member.model.vo.User;
 
 public interface MemberDao {
 
-	Member selectOneMember(String username);
+	//Member selectOneMember(String username);
 
+//	User selectOneUser(String id);
+//
+//	Object updateMember(User user);
 	int selectIdDuplicate(String id);
 
 	int selectEmailDuplicate(String email);
@@ -35,5 +38,7 @@ public interface MemberDao {
 	int insertWorkspace(Map<String, String> param);
 
 	int updateUserWorkspaceId(Map<String, String> param);
+
+	int updateMember(Member updateMember);
 
 }

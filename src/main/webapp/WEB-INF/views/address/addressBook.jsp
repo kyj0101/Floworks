@@ -41,8 +41,8 @@
 	<hr class="my-4">
 	
 <!-- Modal -->
-<div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade"  id="memberModal"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">주소록에 사원 추가</h5>
@@ -50,14 +50,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body member-modal-body">
+      <div class="modal-body member-modal-body ">
 		<form class="col-12" action="#">
 			<div class="input-group">
 			
 			<select class="form-select form-select-sm small search-type" aria-label="분류" style="width: 70px; height: 50px; border-radius: 10px 0px 0px 10px; border-color: gainsboro;">
 				<option class="search-option" selected>분류</option>
-				<option class="search-option" value="position">직원</option>
 				<option class="search-option" value="department_name">부서</option>
+				<option class="search-option" value="position">직급</option>
+				<option class="search-option" value="name">이름</option>
 			</select> 
 			
 			<input type="search" class="form-control bg-light border-0 small" list="datalistOptions" id="member-search" placeholder="검색어를 입력하세요." aria-label="Search" aria-describedby="basic-addon2" style="height: 50px;">
@@ -70,76 +71,16 @@
 			
 			</div>
 		</form>
-		
 		<hr />
 		<div>
 			<ul class="member-list-ul">
-				<li class="member-list-li">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" style="width: 30px; height: 30px; border-radius: 50%;">
-					<p>이름 : 김대표</p>
-					<p>부서 : 개발팀</p>
-					<p>직급 : 대표</p>
-					<button type="button" class="btn btn-primary">추가</button>
-				</li>
-				<hr />
-				<li class="member-list-li">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" style="width: 30px; height: 30px; border-radius: 50%;">
-					<p>이름 : 김대표</p>
-					<p>부서 : 개발팀</p>
-					<p>직급 : 대표</p>
-					<button type="button" class="btn btn-primary">추가</button>
-				</li>
-				<hr />
-				<li class="member-list-li">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" style="width: 30px; height: 30px; border-radius: 50%;">
-					<p>이름 : 김대표</p>
-					<p>부서 : 개발팀</p>
-					<p>직급 : 대표</p>
-					<button type="button" class="btn btn-primary">추가</button>
-				</li>
-				<hr />
-				<li class="member-list-li">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" style="width: 30px; height: 30px; border-radius: 50%;">
-					<p>이름 : 김대표</p>
-					<p>부서 : 개발팀</p>
-					<p>직급 : 대표</p>
-					<button type="button" class="btn btn-primary">추가</button>
-				</li>
-				<hr />
-				<li class="member-list-li">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" style="width: 30px; height: 30px; border-radius: 50%;">
-					<p>이름 : 김대표</p>
-					<p>부서 : 개발팀</p>
-					<p>직급 : 대표</p>
-					<button type="button" class="btn btn-primary">추가</button>
-				</li>
+				<hr />	
 			</ul>
 		</div>
 		
 
 	  </div>
       <div class="modal-footer">
-        		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Previous"> <span aria-hidden="true">&gt;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				</a></li>
-			</ul>
-		</nav>
       </div>
     </div>
   </div>
@@ -193,7 +134,7 @@
 		</div>
 
 		<hr class="my-4">
-		<!--pagination : https://getbootstrap.com/docs/5.0/components/pagination/-->
+
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 				<li class="page-item"><a class="page-link" href="#"
@@ -224,12 +165,17 @@ $('#myModal').on('shown.bs.modal', function () {
 	  $('#memberModal').trigger('focus')
 });
 
-$(".search-btn").click(function(){
-	
-	const option = $(".search-option:selected").val();
+$('#myModal').modal('handleUpdate');
+
+
+function find(){
+
+	const type = $(".search-option:selected").val();
 	const keyword = $("#member-search").val();
+	const workspaceId = "<sec:authentication property='principal.workspaceId'/>";
+	const id = "<sec:authentication property='principal.id'/>";
 	
-	if(option === "분류") {
+	if(type === "분류") {
 		
 		alert("분류를 선택하세요.");
 		
@@ -242,9 +188,52 @@ $(".search-btn").click(function(){
 		
 		return false;
 	}
-})
 	
+	const $ul = $(".member-list-ul");
+	$ul.html("");
+	
+	$.ajax({
+		
+		url:"${pageContext.request.contextPath}/address/search",
+		data:{ 'type':type, 
+			   'keyword':keyword, 
+			   'workspaceId':workspaceId, 
+			   'id':id
+			   },
+		
+		success(data){
+			for(member of data){
 
+				let html = "<li class='member-list-li'>";
+				html += "<img src='${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property='principal.profileFileRename'/>' alt='프로필사진' class='img-circle'>";
+				html += "<p>이름 :" + member.name + "</p>";
+				html += "<p>부서 :" + member.department + "</p>";
+				html += "<p>직급 :" + member.position + "</p>";
+				html += "<input type='hidden' value='" + member.id + "'/>";
+				html += "<button type='button' class='btn btn-primary add-btn'>추가</button>";
+				html += "</li>";
+				html += "<hr/>";
+	
+				$ul.append(html);
+
+			}
+		},
+		
+		error(xhr, status, err){
+			console.log(xhr, status, err);
+		}	
+	});
+}
+
+
+
+$(".search-btn").on('click', find);
+
+function add(e){
+	console.log($(e.target).prev().val());
+}
+
+$(".member-list-ul").on('click', "button", add);
 
 </script>
 

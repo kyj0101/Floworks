@@ -5,20 +5,22 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-
 import lombok.Data;
+
 
 @Data
 public class Member extends User implements UserDetails{
+
+	private static final long serialVersionUID = 1L;
 	
 	private String departmentCode;
 	private String position;
-	private Date hireDate;
+	private Date hireDate;	
 	private String resign;
 	private String department;
 	private String profileFileOrinalname;
@@ -68,57 +70,51 @@ public class Member extends User implements UserDetails{
 
 	@Override
 	public String getAddress() {
-		// TODO Auto-generated method stub
 		return super.getAddress();
 	}
 
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
 		return super.getEmail();
 	}
 
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return super.getId();
 	}
 
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return super.getPassword();
 	}
 
 
 	@Override
 	public String getPhone() {
-		// TODO Auto-generated method stub
 		return super.getPhone();
 	}
 
 
 	@Override
 	public String getQuitYn() {
-		// TODO Auto-generated method stub
 		return super.getQuitYn();
 	}
 
 
 	@Override
 	public String getRole() {
-		// TODO Auto-generated method stub
 		return super.getRole();
 	}
 
 
 	@Override
 	public String getWorkspaceId() {
-		// TODO Auto-generated method stub
 		return super.getWorkspaceId();
 	}
+	
+	
 
 }

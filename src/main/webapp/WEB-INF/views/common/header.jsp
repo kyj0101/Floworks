@@ -38,7 +38,7 @@
 					<div class="mainHeader">
 						<nav class="navbar" style="padding: 0px;">
 							<!-- 로고 & 프젝명 -->
-							<a class="navbar-brand" href="${pageContext.request.contextPath }/"
+							<a class="navbar-brand" href="${pageContext.request.contextPath}/home"
 								style="font-size: 2.7rem; color: #000;"> <img alt="logo"
 								src="${pageContext.request.contextPath }/resources/images/logo_transparent22.png"
 								style="width: 56px; height: 50px;"> <strong>Floworks</strong>

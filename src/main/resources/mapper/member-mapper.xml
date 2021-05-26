@@ -176,6 +176,16 @@
 			id = #{userId}
 	</update>
 	
-
+	<update id="updateMember">
+		update
+			floworks_user
+		set
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			address = #{address}
+		where
+			id = #{id}
+	</update>
 
 </mapper>
