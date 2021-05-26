@@ -1,8 +1,12 @@
 package com.kh.floworks.member.contorller;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -100,14 +106,49 @@ public class MemberController {
 		
 	}
 	
-	
-	@PostMapping("/memberUpdate.do")
-	public String memberUpdate(User updateMember, Authentication oldAuthentication, RedirectAttributes redirectAttr) {
-		//1.업무로직 : db반
-		log.info("??????????????????????????????????>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		log.info("updateMember = {}", updateMember);
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
 		
-			
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+	
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
+	}
+	
+	//추가적으로 프로필이미지 수정, 이메일 변경시 이메일 재인증 등의 추가 작업이 필요할 것 같다.
+	@PostMapping("/memberUpdate.do")
+	public String memberUpdate(User updateUser, 
+                               Member updateMember, 
+                               Authentication oldAuthentication, 
+                               RedirectAttributes redirectAttr) {
+
+		//member를 커맨드 객체로 사용하면 상속 받은 멤버변수값을 가져오지 못하므로 직접 set으로 값대입함.
+		updateMember.setName(updateUser.getName());
+		updateMember.setId(updateUser.getId());
+		updateMember.setEmail(updateUser.getEmail());
+		updateMember.setPhone(updateUser.getPhone());
+		updateMember.setAddress(updateUser.getAddress());
+		updateMember.setWorkspaceId(updateUser.getWorkspaceId());
+		updateMember.setPassword(((Member)oldAuthentication.getPrincipal()).getPassword());
+
+		updateMember.setRole(
+							oldAuthentication
+							.getAuthorities()
+							.stream()
+							.map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
+							.collect(Collectors.toList()).toString()
+		);
+		
+		Authentication newAuthentication = 
+				new UsernamePasswordAuthenticationToken(
+														updateMember,
+														oldAuthentication.getCredentials(),
+														oldAuthentication.getAuthorities()
+														);	
+		
+		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+		memberService.updateMember(updateMember);		
+		redirectAttr.addFlashAttribute("msg", "사용자 정보 수정 성공");
+		
 		return "redirect:/member/memberUpdate.do";
 	}
 	
