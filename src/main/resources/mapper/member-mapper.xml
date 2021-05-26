@@ -16,19 +16,17 @@
     		and m.id = #{id}
 	</select>
 	
-	<resultMap type="member" id="memberMap" extends="userMap">
-	
+	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
 		
 		<result column="hire_date" property="hireDate"/>
 		<result column="resign" property="resign"/>
 		<result column="position" property="position"/>
-		<result column="department_code" property="departmentCode"/>
-		
+		<result column="department_code" property="departmentCode"/>		
+		<result column="department_name" property="department"/>
 	</resultMap>
 	
-	<resultMap type="user" id="userMap">
-	
+	<resultMap type="user" id="userMap">	
 		<id column="id" property="id"/>
 		
 		<result column="workspace_id" property="workspaceId"/>
@@ -38,8 +36,7 @@
 		<result column="phone" property="phone"/>
 		<result column="address" property="address"/>
 		<result column="quit_yn" property="quitYn"/>
-		<result column="role" property="role"/>
-		
+		<result column="role" property="role"/>		
 	</resultMap>
 	
 	<select id="selectIdDuplicate"  resultType="int">
@@ -141,7 +138,12 @@
 			    #{position},
 			    #{departmentCode},
 			    #{profileFileOrinalname},
-			    #{profileFileRename}
+			    <if test="profileFileRename == null">
+			    	default
+			    </if>
+			    <if test="profileFileRename != null">
+			    	 #{profileFileRename}
+			    </if>
 			    )
 	</insert>
 	
@@ -165,6 +167,25 @@
 			workspace_id = #{workspaceId}
 	</select>
 	
-
+	<update id="updateUserWorkspaceId"> 
+		update
+			floworks_user
+		set 
+			workspace_id = #{workspaceId}
+		where
+			id = #{userId}
+	</update>
+	
+	<update id="updateMember">
+		update
+			floworks_user
+		set
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			address = #{address}
+		where
+			id = #{id}
+	</update>
 
 </mapper>

@@ -40,7 +40,7 @@
 				</div>
 
 				<div class="form-label-group">
-					<input type="password" name="row-password" id="inputPassword" class="form-control" placeholder="Password">
+					<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
 					<label for="inputPassword">워크스페이스 비밀번호</label>
 					<p class="input-warning">잘못된 비밀번호 입니다.</p>
 				</div>
@@ -73,7 +73,7 @@ $("input[name=id]").change(function(){
 	hideWarning(warningP);
 	
 	if(!idRegExp(id,true)){
-		showWarning(warningP, "아이디는 최소 3자리에서 최대 8자리인 영문자와 숫자의 조합이여야 합니다.");
+		showWarning(warningP, "아이디는 최소 3자리에서 최대 15자리인 영문자와 숫자의 조합이여야 합니다.");
 	}
 	
 	$.ajax({

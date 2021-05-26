@@ -22,6 +22,6 @@ public class LoginTest {
 
 	@Test 
 	public void testInsertMember() {
-		log.info("{}", bcry.encode("1234"));
+		log.info("{}", bcry.encode("123456"));
 	}
 }

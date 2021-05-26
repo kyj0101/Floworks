@@ -166,7 +166,7 @@ public class RegisterController {
 	public String createWorkspaceInsert(String userId, 
                                         String workspaceName,
                                         @RequestParam(name = "id") String workspaceId,
-                                        @RequestParam(name = "row-password") String password,
+                                        String password,
                                         RedirectAttributes redirectAttr) {
 		try {
 			
@@ -177,8 +177,9 @@ public class RegisterController {
 			param.put("workspaceId", workspaceId);
 			param.put("password", bcryptPasswordEncoder.encode(password));
 			
-			redirectAttr.addFlashAttribute("msg", "워크스페이스 생성이 완료되었습니다.");
 			memberService.insertWorkspace(param);
+			memberService.updateUserWorkspaceId(param);
+			redirectAttr.addFlashAttribute("msg", "워크스페이스 생성이 완료되었습니다.");
 			
 			return "redirect:/register/registerWorkspace?id=" 
 					+ userId 

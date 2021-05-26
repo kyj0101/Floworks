@@ -28,9 +28,13 @@
 <!-- custom -->
 <link href="${pageContext.request.contextPath }/resources/fullcalendar/custom/css/calendar.css" rel="stylesheet" />	
 <script src='${pageContext.request.contextPath }/resources/fullcalendar/custom/js/calendar.js'></script>
+<<<<<<< HEAD
 
 	
 
+=======
+	
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 	  
@@ -45,6 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       themeSystem: 'bootstrap',
     
+<<<<<<< HEAD
+=======
+      selectable: true,
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
       initialDate: new Date(),
       locale : "ko",
       navLinks: true, // can click day/week names to navigate views
@@ -53,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
       selectable: true,
       dayMaxEvents: true,
       events: [
+<<<<<<< HEAD
     	  <% 
       	  for (int i = 0; i < list.size(); i++) {
       	  	Calendar vo = (Calendar)list.get(i);
@@ -114,7 +123,30 @@ document.addEventListener('DOMContentLoaded', function() {
               display: 'background'
             },
 		*/
+=======
+    	  {
+              title: 'Business Lunch',
+              start: '2021-05-03T13:00:00',
+              constraint: 'businessHours'
+            },
+            {
+              title: 'Meeting',
+              start: '2020-09-13T11:00:00',
+              constraint: 'availableForMeeting', // defined below
+              color: '#257e4a'
+            },
+            {
+              title: 'Conference',
+              start: '2020-09-18',
+              end: '2020-09-20'
+            },
+            {
+              title: 'Party',
+              start: '2020-09-29T20:00:00'
+            },
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 
+<<<<<<< HEAD
             // red areas where no events can be dropped
             
             {
@@ -125,6 +157,37 @@ document.addEventListener('DOMContentLoaded', function() {
               color: '#ff9f89'
             }
             
+=======
+            // areas where "Meeting" must be dropped
+            {
+              groupId: 'availableForMeeting',
+              start: '2020-09-11T10:00:00',
+              end: '2020-09-11T16:00:00',
+              display: 'background'
+            },
+            {
+              groupId: 'availableForMeeting',
+              start: '2020-09-13T10:00:00',
+              end: '2020-09-13T16:00:00',
+              display: 'background'
+            },
+
+            // red areas where no events can be dropped
+            {
+              start: '2020-09-24',
+              end: '2020-09-28',
+              overlap: false,
+              display: 'background',
+              color: '#ff9f89'
+            },
+            {
+              start: '2020-09-06',
+              end: '2020-09-08',
+              overlap: false,
+              display: 'background',
+              color: '#ff9f89'
+            }
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
     	 
     	        ]
     	 });

@@ -20,13 +20,19 @@ import com.kh.floworks.calendar.model.vo.Calendar;
 
 import lombok.extern.slf4j.Slf4j;
 
+import com.kh.floworks.calendar.model.service.CalendarService;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @Slf4j
 @RequestMapping("/calendar")
 public class CalendarController {  
+
 	
 	@Autowired
 	private CalendarService calendarService;
+
 
 	
 	@GetMapping("/calendarMain")
@@ -85,4 +91,5 @@ public class CalendarController {
 		
 		return list;
 	}
+
 }

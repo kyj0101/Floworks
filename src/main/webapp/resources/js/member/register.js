@@ -74,9 +74,9 @@ $(() => {
       $(".workspace-div").toggle("display-none");
     });
     
-    $("input[name=row-password]").change(function(){
+    $("input[name=password]").change(function(){
 	
-		const $input = $("input[name=row-password]");
+		const $input = $("input[name=password]");
 		const password = $input.val();
 		const warningP = $input.next().next();
 	
@@ -91,7 +91,7 @@ $(() => {
 		
 		const $input = $("#inputConfirmPassword");
 		const passwordCk = $input.val();
-		const password = $("input[name=row-password]").val();
+		const password = $("input[name=password]").val();
 		const warningP = $input.next().next();
 	
 		hideWarning(warningP);
