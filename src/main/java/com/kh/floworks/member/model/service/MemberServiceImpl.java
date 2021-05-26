@@ -120,8 +120,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		return null;
+  }
+
+  @Override
+	public int updateUserWorkspaceId(Map<String, String> param) {
+		return memberDao.updateUserWorkspaceId(param);
 	}
 
 

@@ -1,0 +1,43 @@
+	<resultMap type="hashmap" id="postFileMap">
+		<id column="post_file" property="postFile"/>
+		<result column="post_original_filename" property="postOriginalFileName"/>
+		<result column="post_rename_filename" property="postRenamedFileName"/>
+		<result column="post_no" property="postNo"/>
+	</resultMap>
+	<resultMap type="hashmap" id="boardMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="board_name" property="boardName"/>
+	</resultMap>
+	<resultMap type="hashmap" id="postCommentMap">
+		<id column="comment_no" property="commentNo"/>
+		<result column="comment_level" property="commentLevel"/>
+		<result column="comment_content" property="commentContent"/>
+		<result column="comment_date" property="commentDate"/>
+		<result column="id" property="id"/>
+		<result column="post_no" property="postNo"/>
+		<result column="comment_del" property="commentDel"/>
+	</resultMap>
+	
+
+
+
+
+
+
+
+
+
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo;</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">&raquo;</a>
+              </li>
+            </ul>
+        </nav>

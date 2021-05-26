@@ -13,11 +13,15 @@
 <script src="${pageContext.request.contextPath}/resources/js/board/boardForm.js"></script>
  
 
- 
+<!-- ckeditor-->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+
+
 <section>
     <!-- http://bootstrapk.com/components/#page-header -->
     <div class="page-header" >
-        <h1>공지사항</h1>
+        <h1>게시글 작성</h1>
         <hr class="my-4">
     </div>
 
@@ -29,9 +33,11 @@
 			enctype="multipart/form-data" 
 			onsubmit="return boardValidate();">
             <input type="text" class="form-control mb-3" placeholder="제목을 입력하세요" name="postTitle" id="title">
-            
-            <input type="hidden" name="id" value="${loginMember.id}" >
-
+            <!-- 
+            <input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" >
+             -->
+			<input type="hidden" name="id" value="aaa123"/>
+            <input type="hidden" name="boardNo" value="${boardNo}"/>
             
             <div class="input-group mb-1" id="addFile">
                 <div class="input-group-prepend">
@@ -61,7 +67,7 @@
                 </div>
             </div>
             <div class="form-group">
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="postContent" rows="10" placeholder="내용을 입력하세요"></textarea>
+              <textarea class="form-control" name="postContent" rows="10" placeholder="내용을 입력하세요"></textarea>
             </div>
             <input id="submitbtn" type="submit" class="btn btn-primary float-right" value="작성하기" >
         </form:form>
@@ -77,3 +83,19 @@
  
  
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
+
+
+<script>
+window.onload = ()=>{
+    CKEDITOR.replace('postContent', {
+        height: 500,
+    });   
+};
+CKEDITOR.editorConfig = function( config ) {
+    config.filebrowserUploadMethod = "form";
+
+    config.enterMode = CKEDITOR.ENTER_BR;
+    config.fillEmptyBlocks = false;
+};
+</script>

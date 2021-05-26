@@ -6,7 +6,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="게시판" name="title"/>
+</jsp:include>
+
+
+
    
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/board/boardList.css" />
@@ -18,7 +23,7 @@
 <section>
   <!-- http://bootstrapk.com/components/#page-header -->
     <div class="page-header" >
-        <h1>공지사항</h1>
+        <h1>게시판</h1>
         <hr class="my-4">
     </div>
 
@@ -27,13 +32,17 @@
           부서
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownboardButton">
-          <a class="dropdown-item" href="#">A부서</a>
-          <a class="dropdown-item" href="#">B부서</a>
-          <a class="dropdown-item" href="#">S부서</a>
+          <a class="dropdown-item" href="boardList?dept=기획부">기획부</a>
+          <a class="dropdown-item" href="boardList?dept=개발부">개발부</a>
+          <a class="dropdown-item" href="boardList?dept=총무부">총무부</a>
+          <a class="dropdown-item" href="boardList?dept=국내영업부">국내영업부</a>
+          <a class="dropdown-item" href="boardList?dept=마케팅부">마케팅부</a>
+          <a class="dropdown-item" href="boardList?dept=회계관리부">회계관리부</a>
+          <a class="dropdown-item" href="boardList?dept=">전체보기</a>
         </div>
       </div>
     <input type="button" class="btn btn-primary d-inline-block float-right"
-    		value="글쓰기" onclick="goBoardForm();"/>
+    		value="글쓰기" onclick="goBoardForm(${list[0].boardNo});"/>
     <div id="board-list">
         <table class="table table-hover">
             <thead>
@@ -48,6 +57,7 @@
               </tr>
             </thead>
             <tbody>
+            <c:if test="${list != null}">
               <c:forEach items="${list}" var="post">
 				<tr data-no="${post.postNo}">
 					<td>${post.postNo}</td>
@@ -64,13 +74,13 @@
 					<td>${post.postReadCount}</td>
 				</tr>
 			  </c:forEach>
+		    </c:if>
             </tbody>
         </table>
 
         <br>
 		${pageBar}
     </div>
-    
 </section> 
 
  

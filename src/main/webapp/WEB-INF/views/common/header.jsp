@@ -81,11 +81,11 @@
 							<ul class="dropdown-menu" role="menu"
 								aria-labelledby="dropdownMenu1">
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="${pageContext.request.contextPath }/member/mypage">마이페이지</a></li>
+									href="${pageContext.request.contextPath}/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#" id="logout-a">로그아웃</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Something else here</a></li>
+									href="${pageContext.request.contextPath}/address/list">주소록</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#">Separated link</a></li>
 							</ul>
