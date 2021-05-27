@@ -20,32 +20,12 @@
 	                on m.department_code = d.department_code) k
 	    where 
 	    	board_no = #{boardNo} and
-            post_del = 'N' 
-		order 
-			by post_no desc
-	</select>
-	
-	<select id="selectdeptList" resultMap="postMap">
-		select 
-			(select count(*) from post_file where post_no = k.post_no) file_count,
-	        (select count(*) from post_comment where post_no = k.post_no  and comment_del = 'N') comment_count,
-	        k.*
-		from 
-			(select p.* ,d.department_name, f.name
-	        from post p 
-	            left join floworks_user f
-	                on p.id = f.id
-	            left join member m
-	                on f.id = m.id
-	            left join department d
-	                on m.department_code = d.department_code) k
-	    where 
-	    	board_no = 1 and
             post_del = 'N' and
             department_name like '%' || #{dept}
 		order 
 			by post_no desc
 	</select>
+
 	
 	
 	
@@ -78,7 +58,8 @@
 	            left join department d
 	                on m.department_code = d.department_code) 
 	    where board_no = #{boardNo}  and
-     		  post_del = 'N'
+     		  post_del = 'N' and
+              department_name like '%' || #{dept}
 	</select>
 	
 	<insert id="insertPost">
