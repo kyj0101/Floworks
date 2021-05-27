@@ -83,11 +83,9 @@
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="${pageContext.request.contextPath}/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
+									href="${pageContext.request.contextPath}/address/list?owner=<sec:authentication property="principal.id"/>">주소록</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#" id="logout-a">로그아웃</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="${pageContext.request.contextPath}/address/list">주소록</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Separated link</a></li>
 							</ul>
 						</div>
 
