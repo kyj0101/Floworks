@@ -20,7 +20,9 @@
 			<a href="${pageContext.request.contextPath}/board/boardView?postNo=${post.postNo}" class="list-group-item list-group-item-action">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">${post.postTitle}</h5>
-					<small><fmt:formatDate value="${post.postDate}" pattern="yy/MM/dd HH:mm:ss"/></small>
+					<small>
+						<fmt:formatDate value="${post.postDate}" pattern="yy/MM/dd HH:mm:ss"/>
+					</small>
 				</div>
 				<p class="mb-1">${post.postContent}</p>
 				<small>${post.name} ${post.id} [ ${post.departmentName} ]</small>
@@ -34,7 +36,9 @@
 					class="list-group-item list-group-item-action">
 					<div class="d-flex w-100 justify-content-between">
 						<h5 class="mb-1">${email.subject}</h5>
-						<small><fmt:formatDate value="${email.time}"pattern="yy/MM/dd HH:mm:ss" /></small>
+						<small>
+							<fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/>
+						</small>
 					</div>
 					<p class="mb-1">${emai.emailContent}</p> 
 					<small> 
