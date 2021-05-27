@@ -96,7 +96,7 @@
 				<div class="input-group">
 					<p class="input-group-text">제목</p>
 					<input type="text" class="form-control"
-						name="subject" aria-label="Username" value="제목 없음"
+						name="subject" aria-label="Username" value=""
 						aria-describedby="addon-wrapping">
 				</div>
 
@@ -178,10 +178,10 @@ $(".recipient-input").autocomplete({
 			
 			success(data){
 				response($.map(data, (item) =>{
-	
+
 					return {
 						label:item,
-						value:item
+						value:item.substring(0, item.indexOf(" "))
 					}
 				})	  
 			  );

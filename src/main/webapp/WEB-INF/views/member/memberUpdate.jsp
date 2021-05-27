@@ -3,23 +3,25 @@
 <%@page import="com.kh.floworks.member.model.vo.Member, java.util.*"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%
-Member member = (Member) session.getAttribute("loginMember");
-%>
-<title>개인정보 수정하기</title>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="개인정보 수정" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/memberUpdate.css">
 
+<!-- js -->   
+<script src="${pageContext.request.contextPath }/resources/js/member/createWorkspace.js"></script>
+
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section>
 	<div class="section-div">
 		<div class="update-div">
-			<form:form  name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post">
-				<h1>개인 정보 수정하기</h1>
+			<form:form  name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post"  enctype="multipart/form-data">
+				<h3 class="">개인 정보 수정하기</h1>
 				 
 				<!-- 모든 필드값을 가져오지 않으면 null값이 되므로 모든 값을 가져옴. -->
 				 
@@ -33,6 +35,16 @@ Member member = (Member) session.getAttribute("loginMember");
  				<!-- user -->
  				<input type="hidden" name="workspaceId" value='<sec:authentication property="principal.workspaceId"/>'/>
  				
+ 				<div class="input-group mb-3 form-group file-div">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Upload</span>
+					</div>
+					<div class="custom-file">
+						<input type="file" name="profile" class="custom-file-input" id="file01">
+						<label class="custom-file-label" for="file01"><sec:authentication property="principal.profileFileRename"/></label>
+					</div>
+				</div>
+				
  				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">

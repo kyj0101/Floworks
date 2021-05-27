@@ -48,22 +48,24 @@
                         <!-- mr : margin right -->
                         <div class="mainHeader mr-5">
                             <nav class="navbar navbar-expand-mg">
-                                <form action="#" class="form-inline">
-                                    <div class="input-group">
+                                <form class="form-inline">
+                                    <div class="input-group form-inline">
                                         <div class="input-group-prepend">
-                                          <button type="button" class="btn btn-outline-secondary" id="select-search">검색태그</button>
+                                          <button type="button" class="btn btn-outline-secondary" id="select-search" disabled="disabled">검색태그</button>
                                           <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="select-search-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           </button>
                                           <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">커뮤니티</a>
-                                            <a class="dropdown-item" href="#">이메일</a>
-                                            <a class="dropdown-item" href="#">주소록</a>
-                                            <a class="dropdown-item" href="#">채팅</a>
+                                            <button class="dropdown-item" type="button">게시판</button>
+										    <button class="dropdown-item" type="button">보낸 이메일</button>
+										    <button class="dropdown-item" type="button">받은 이메일</button>
+										    <button class="dropdown-item" type="button">파일</button>
                                           </div>
                                         </div>
-                                        <input type="text" class="form-control" id="input-search" aria-label="Text input with segmented dropdown button" placeholder="검색어를 입력하세요.">
+                                        <input type="text" class="form-control" id="input-search" aria-label="" placeholder="검색어를 입력하세요.">
                                     </div>
-                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                    <button class="btn btn-outline-secondary search-btn" type="button">
+                                    	검색
+                                    </button>
                                 </form>
                                 <p style="margin: 5px auto; padding-left: 30px;"></p>
                             </nav>
@@ -338,7 +340,8 @@
 			</nav>
 
 		</header>
-<script>
+
+		<script>
 $(function(){
 	$("#logout-a").click(function(){
 		$("#logout-form").submit();
@@ -347,5 +350,25 @@ $(function(){
 	if("${msg}" != ""){
 		alert("${msg}");
 	}
+	
+	$(".dropdown-item").click(function(){
+		$("#select-search").text($(this).text());
+	});
+	
+	$(".search-btn").click(function(){
+		
+		const type = $("#select-search").text();
+		const keyword = $("#input-search").val();
+
+		if(type === "게시판"){
+			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword;
+		
+		}else if(type === "보낸 이메일"){
+			
+			const id = "<sec:authentication property='principal.id'/>"
+			
+			location.href="${pageContext.request.contextPath}/search/email/sent?keyword=" + keyword + "&id=" + id;
+		}
+	});
 });
 </script>

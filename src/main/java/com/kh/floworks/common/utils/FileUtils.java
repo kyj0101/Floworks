@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileUtils {
 	
+	public static final String PROFILE_SAVEDIRECTORY = "/resources/upload/profile";
+	
 	public static File getRenamedFile(String saveDirectory, String oldName) {
 		
 		File newFile = null;
@@ -86,6 +88,13 @@ public class FileUtils {
 				file.delete();
 			}
 		}
+	}
+	
+	public static void deleteOneFile(String saveDirectory, String renamedFile) {
+		
+		File dir = new File(saveDirectory, renamedFile);
+		
+		dir.delete();
 	}
 
 	public static Map<String, File> getAttachFiles(Map<String, String> fileNameMap, String saveDirectory) {

@@ -15,21 +15,7 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Autowired
 	private SqlSession session;
-	
-//	@Override
-//	public Member selectOneMember(String username) {
-//		return null;
-//	}
 
-//	@Override
-//	public User selectOneUser(String id) {
-//		return session.selectOne("user.selectOneUser",id);
-//	}
-//
-//	@Override
-//	public Object updateMember(User user) {
-//		return session.update("user.updateMember", user);
-//	}
 	@Override
 	public int selectIdDuplicate(String id) {
 		return session.selectOne("member.selectIdDuplicate", id);
@@ -98,6 +84,11 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public int updateMember(Member updateMember) {
 		return session.update("member.updateMember", updateMember);
+	}
+
+	@Override
+	public int updateProfile(Member updateMember) {
+		return session.update("member.updateProfile", updateMember);
 	}
 
 
