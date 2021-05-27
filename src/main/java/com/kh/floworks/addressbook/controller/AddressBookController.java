@@ -55,7 +55,7 @@ public class AddressBookController {
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 		
 		List<Member> memberList = addressBookService.selectAddressMemberList(param);
-		
+		log.info("memberList{}", memberList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pageBar", pageBar);
 		

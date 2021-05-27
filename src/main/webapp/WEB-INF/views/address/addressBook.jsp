@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-
+<h1><sec:authentication property="principal.department"/></h1>
 <section>
 	<div class="page-header">
 
@@ -39,6 +39,68 @@
 		</div>						          
 	</div>
 	<hr class="my-4">
+<div class="d-flex flex-column align-items-stretch bg-white">
+	<div class="list-group list-group-flush border-bottom scrollarea">
+		
+		<c:forEach items="${memberList}" var="member">
+		<a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+			<div class="row g-0">
+				<div class="col-1">
+					<img src="${pageContext.request.contextPath }/resources/upload/profile/${member.profileFileRename}" alt="프로필사진" class="img-circle"
+					style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
+				</div>
+
+				<div class="col-11">
+					<div class="row g-0 mb-4">
+
+						<div class="col">
+							<strong>Name: </strong> <span>${member.name}</span>
+						</div>
+						
+						<div class="col">
+							<strong>부서: </strong> <span>${member.department}</span>
+						</div>
+						
+						<div class="col">
+							<strong>직급: </strong> <span>${member.position}</span>
+						</div>
+
+					</div>
+
+					<div class="row g-0 mb-4">
+
+						<div class="col">
+							<strong>E-mail:</strong> <span>${member.email}</span>
+						</div>
+						
+						<div class="col">
+							<strong>ID</strong> <span>${member.id}</span>
+						</div>
+
+						<div class="col-2">
+							<button type="button" class="address-btn btn btn-primary">
+								<i class="bi bi-envelope-fill"></i>
+							</button>
+						</div>
+						
+						<div class="col-2">
+							<button type="button" class="address-btn btn btn-secondary">
+								<i class="bi bi-trash-fill"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		</c:forEach>		
+	</div>
+</div>
+
+<hr class="my-4">
+${pageBar}
+		
+</section>
+
 	
 <!-- Modal -->
 <div class="modal fade"  id="memberModal"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -46,7 +108,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">주소록에 사원 추가</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/address/list?owner=<sec:authentication property="principal.profileFileRename"/>'">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/address/list?owner=<sec:authentication property="principal.id"/>'">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -86,55 +148,6 @@
   </div>
 </div>
 
-<div class="d-flex flex-column align-items-stretch bg-white">
-	<div class="list-group list-group-flush border-bottom scrollarea">
-		
-		<c:forEach items="${memberList}" var="member">
-		<a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-			<div class="row g-0">
-				<div class="col-1">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/${member.profileFileRename}" alt="프로필사진" class="img-circle"
-					style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
-				</div>
-
-				<div class="col-11">
-					<div class="row g-0 mb-4">
-
-						<div class="col">
-							<strong>Name: </strong> <span>${member.name}</span>
-						</div>
-						
-						<div class="col">
-							<strong>부서: </strong> <span>${member.department}</span>
-						</div>
-						
-						<div class="col">
-							<strong>직급: </strong> <span>${member.position}</span>
-						</div>
-
-					</div>
-
-					<div class="row g-0 mb-4">
-
-						<div class="col">
-							<strong>E-mail:</strong> <span>${member.email}</span>
-						</div>
-
-						<div class="col-2">
-							<button type="button" class="btn btn-primary">메일 보내기</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</a>
-		</c:forEach>		
-	</div>
-</div>
-
-<hr class="my-4">
-${pageBar}
-		
-</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
 <script>

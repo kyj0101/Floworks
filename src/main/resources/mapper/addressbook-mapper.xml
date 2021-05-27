@@ -6,7 +6,9 @@
 
 	<select id="selectSearchMemberList" resultMap="memberMap">
 		select
-		    *
+		   	U.*,
+            M.*,
+            D.department_name
 		from floworks_user U
 		        join member M
 		            on U.id = M.id
@@ -38,10 +40,12 @@
 		    *
 		from
 		    address_book a
-		        join member m
-		            on a.id = m.id
 		        join floworks_user u 
-		            on m.id = u.id
+		            on a.id = u.id
+                join member m
+		            on u.id = m.id
+                join department d
+                    on m.department_code = d.department_code
 		where
 			owner = #{owner}
 	</select>
@@ -62,7 +66,7 @@
 		<result column="resign" property="resign"/>
 		<result column="position" property="position"/>
 		<result column="department_code" property="departmentCode"/>	
-		<result column="department_name" property="department"/>	
+		<result column="department_name" property="department"/>
 	</resultMap>
 	
 	<resultMap type="user" id="userMap">	
