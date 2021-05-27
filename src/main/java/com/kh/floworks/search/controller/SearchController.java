@@ -29,79 +29,78 @@ public class SearchController {
 	@Autowired
 	private SearchService searchServcie;
 
+
 	@GetMapping("/post")
-	public String searchPost(String keyword,
+	public String searchPost(String keyword, 
 			                 @RequestParam(defaultValue = "1") int cPage,
 			                 HttpServletRequest request,
-                             Model model){
+			                 Model model) {
 		try {
-			
+
 			Map<String, Object> param = new HashMap<>();
-			
+
 			param.put("numPerPage", SearchListUtils.numPerPage);
 			param.put("cPage", cPage);
 			param.put("keyword", keyword);
-			
+
 			int totalContents = searchServcie.getTotalSearchPost(keyword);
 			String url = request.getRequestURI() + "?keyword=" + keyword;
 			String pageBar = PageBarUtils.getPageBar(totalContents, cPage, SearchListUtils.numPerPage, url);
-			
+
 			List<Map<String, Object>> postList = searchServcie.selectSearchPostList(param);
 
-			for(Map<String, Object> postMap : postList) {
-				
+			for (Map<String, Object> postMap : postList) {
+
 				String content = (String) postMap.get("postContent");
 				content = SearchListUtils.shorteningContent(content);
-				
+
 				postMap.put("postContent", content);
 			}
-			
+
 			model.addAttribute("postList", postList);
 			model.addAttribute("pageBar", pageBar);
-			
+
 			return "/search/searchResult";
-			
+
 		} catch (NullPointerException e) {
 			throw e;
 		}
 	}
-	
-	
-	//보낸 이메일 : 작성자, 받은 사람, 내용, 발송일
-	//받은 이메일 : 작성자, 받은 사람, 내용, 발송일
-	//보낸이메일, 받은이메일 두번 DB에 가져와야할듯
-	@GetMapping("/email/sent")
-	public String searchEmail(String keyword, 
-			                  String id, 
-			                  @RequestParam(defaultValue = "1") int cPage,
-				              HttpServletRequest request,
-				              Model model) {
-		try {
-			
-			Map<String, Object> param = new HashMap<>();
-			
-			param.put("numPerPage", SearchListUtils.numPerPage);
-			param.put("cPage", cPage);
-			param.put("keyword", keyword);
-			param.put("id", id);
-			
-			int totalContents = searchServcie.getTotalSearchEmailSent(param);
-			String url = request.getRequestURI() + "?keyword=" + keyword + "&id=" + id;
-			String pageBar = PageBarUtils.getPageBar(totalContents, cPage, SearchListUtils.numPerPage, url);
-			
-			List<Email> emailSentList = searchServcie.selectSearchEmailSent(param);
-			emailSentList = EmailUtils.shorteningLetters(emailSentList);
-			
-			model.addAttribute("emailSentList", emailSentList);
-			model.addAttribute("pageBar", pageBar);
-			
-			return "/search/searchResult";
-			
+		
+		//보낸 이메일 : 작성자, 받은 사람, 내용, 발송일
+		//받은 이메일 : 작성자, 받은 사람, 내용, 발송일
+		//보낸이메일, 받은이메일 두번 DB에 가져와야할듯
+		@GetMapping("/email/sent")
+		public String searchEmail(String keyword, 
+				                  String id, 
+				                  @RequestParam(defaultValue = "1") int cPage,
+				                  HttpServletRequest request, Model model) {
+			try {
+
+				Map<String, Object> param = new HashMap<>();
+
+				param.put("numPerPage", SearchListUtils.numPerPage);
+				param.put("cPage", cPage);
+				param.put("keyword", keyword);
+				param.put("id", id);
+
+				int totalContents = searchServcie.getTotalSearchEmailSent(param);
+				String url = request.getRequestURI() + "?keyword=" + keyword + "&id=" + id;
+				String pageBar = PageBarUtils.getPageBar(totalContents, cPage, SearchListUtils.numPerPage, url);
+
+				List<Email> emailSentList = searchServcie.selectSearchEmailSent(param);
+				emailSentList = EmailUtils.shorteningLetters(emailSentList);
+
+				model.addAttribute("emailSentList", emailSentList);
+				model.addAttribute("pageBar", pageBar);
+
+				return "/search/searchResult";
+
 		} catch (NullPointerException e) {
-			throw e;
+				throw e;
 		}
 	}
-	
+
 	//이메일 파일, 게시판 파일, (전자결재는 일단 보류)
 	public String searchFile() {
 		return "/search/searchResult";

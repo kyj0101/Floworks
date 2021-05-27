@@ -359,10 +359,7 @@ $(function(){
 		
 		const type = $("#select-search").text();
 		const keyword = $("#input-search").val();
-		
-		console.log(type);
-		console.log(keyword);
-		
+
 		if(type === "게시판"){
 			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword;
 		
@@ -374,6 +371,4 @@ $(function(){
 		}
 	});
 });
-
-
 </script>
