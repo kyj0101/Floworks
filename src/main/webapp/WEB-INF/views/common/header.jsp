@@ -56,7 +56,8 @@
                                           </button>
                                           <div class="dropdown-menu">
                                             <button class="dropdown-item" type="button">게시판</button>
-										    <button class="dropdown-item" type="button">이메일</button>
+										    <button class="dropdown-item" type="button">보낸 이메일</button>
+										    <button class="dropdown-item" type="button">받은 이메일</button>
 										    <button class="dropdown-item" type="button">파일</button>
                                           </div>
                                         </div>
@@ -362,15 +363,17 @@ $(function(){
 		console.log(type);
 		console.log(keyword);
 		
-		if(type == "게시판"){
-			console.log("??");
-			searchPost(keyword);
+		if(type === "게시판"){
+			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword;
+		
+		}else if(type === "보낸 이메일"){
+			
+			const id = "<sec:authentication property='principal.id'/>"
+			
+			location.href="${pageContext.request.contextPath}/search/email/sent?keyword=" + keyword + "&id=" + id;
 		}
 	});
 });
 
-function searchPost(keyword){
-	console.log(keyword);
-	location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword;
-}
+
 </script>

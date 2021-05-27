@@ -4,6 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="search">
 
+	<resultMap type="map" id="postMap">
+		<id column="post_no" property="postNo"/>
+		<result column="id" property="id"/>
+		<result column="post_title" property="postTitle"/>
+		<result column="post_content" property="postContent"/>
+		<result column="post_date" property="postDate"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="name" property="name"/>		
+	</resultMap>
+
 	<select id="selectSearchBoardList" resultMap="postMap">
 		select 
 		    *
@@ -22,6 +32,8 @@
 		    or post_title like '%' || #{keyword} || '%' 
 		    or post_content like '%' || #{keyword} || '%' 
 		    or post_date like '%' || #{keyword} || '%' 
+		order by
+			post_date desc
 	</select>
 	
 	<select id="getTotalSearchPost" resultType="int">
@@ -44,16 +56,47 @@
 		    or post_date like '%' || #{keyword} || '%' 
 	</select>
 	
+	<select id="selectSearchEmailSent" resultType="email">
+		select
+		    *
+		from email e
+		        join email_sent s
+		            on e.email_no = s.email_no
+		where
+		    e.id = #{id}
+		    and del_yn = 'N'
+		    and e.recipient like '%' || #{keyword} || '%' 
+		    or e.external_recipient like '%' || #{keyword} || '%' 
+		    or e.email_cc like '%' || #{keyword} || '%' 
+		    or e.email_bcc like '%' || #{keyword} || '%' 
+		    or e.subject like '%' || #{keyword} || '%' 
+		    or e.email_content like '%' || #{keyword} || '%' 
+		    or e.time like '%' || #{keyword} || '%' 
+		order by
+			time desc
+	</select>
+	
+		
+	<select id="getTotalSearchEmailSent" resultType="int">
+		select
+		    count(*)
+		from email e
+		        join email_sent s
+		            on e.email_no = s.email_no
+		where
+		    e.id = #{id}
+		    and del_yn = 'N'
+		    and e.recipient like '%' || #{keyword} || '%' 
+		    or e.external_recipient like '%' || #{keyword} || '%' 
+		    or e.email_cc like '%' || #{keyword} || '%' 
+		    or e.email_bcc like '%' || #{keyword} || '%' 
+		    or e.subject like '%' || #{keyword} || '%' 
+		    or e.email_content like '%' || #{keyword} || '%' 
+		    or e.time like '%' || #{keyword} || '%' 
+	</select>
 	
 	
-	<resultMap type="map" id="postMap">
-		<id column="post_no" property="postNo"/>
-		<result column="id" property="id"/>
-		<result column="post_title" property="postTitle"/>
-		<result column="post_content" property="postContent"/>
-		<result column="post_date" property="postDate"/>
-		<result column="department_name" property="departmentName"/>
-		<result column="name" property="name"/>		
-	</resultMap>
+	
+
 
 </mapper>
