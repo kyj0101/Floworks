@@ -9,4 +9,10 @@ public interface AddressBookService {
 
 	List<Member> selectSearchMemberList(Map<String, Object> param);
 
+	int insertAddress(Map<String, String> param);
+
+	int getTotalAddressBook(String owner);
+
+	List<Member> selectAddressMemberList(Map<String, Object> param);
+
 }

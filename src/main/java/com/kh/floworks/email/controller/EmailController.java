@@ -282,10 +282,9 @@ public class EmailController {
 				String attachDirectory = servletContext.getRealPath(directory);
 				String ckDirectory = servletContext.getRealPath("/resources/upload/editorEmailFile");
 
-				log.info("email ={}", email);
+
 				Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 				Map<String, File> attachFiles = FileUtils.getAttachFiles(fileMap, attachDirectory);
-
 				Map<String, File> ckFiles = FileUtils.getAttachFiles(EmailUtils.getFileNames(email.getEmailContent()),ckDirectory);
 				
 				sendMail(email, ckFiles, attachFiles);
@@ -367,7 +366,7 @@ public class EmailController {
 
 		try {
 
-			int result = emailService.insertDraftEmail(email);
+			emailService.insertDraftEmail(email);
 
 			return "redirect:/email/drafts?id=" + email.getId();
 

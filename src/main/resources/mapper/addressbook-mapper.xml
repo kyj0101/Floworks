@@ -16,12 +16,43 @@
 		    ${type} like '%' || #{keyword} || '%'
 		    and workspace_id = #{workspaceId}
 		    and quit_yn = 'N'
-		    and U.id != (select id
-                		from address_book
-                		where owner = #{id})
+		    and U.id not in (select id
+                		     from address_book
+                		     where owner = #{id})
     		and U.id != #{id}
 		order by
 			U.name
+	</select>
+	
+	<insert id="insertAddress">
+		insert into
+			address_book
+		values(
+				#{owner},
+				#{id}
+				)
+	</insert>
+	
+	<select id="selectAddressMemberList" resultMap="memberMap">
+		select
+		    *
+		from
+		    address_book a
+		        join member m
+		            on a.id = m.id
+		        join floworks_user u 
+		            on m.id = u.id
+		where
+			owner = #{owner}
+	</select>
+	
+	<select id="getTotalAddressBook" resultType="int">
+		select
+			count(*)
+		from
+			address_book
+		where
+			owner = #{owner}
 	</select>
 	
 	<resultMap type="member" id="memberMap" extends="userMap">	
