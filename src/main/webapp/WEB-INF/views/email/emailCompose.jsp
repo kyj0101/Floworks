@@ -178,10 +178,10 @@ $(".recipient-input").autocomplete({
 			
 			success(data){
 				response($.map(data, (item) =>{
-	
+
 					return {
 						label:item,
-						value:item
+						value:item.substring(0, item.indexOf(" "))
 					}
 				})	  
 			  );

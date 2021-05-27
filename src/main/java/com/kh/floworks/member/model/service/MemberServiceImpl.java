@@ -20,23 +20,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao memberDao;
 
-//	@Override
-//	public User selectOneUser(String id) {
-//		return memberDao.selectOneUser(id);
-//	}
-
-	/**
-	 * @return UserDetails을 상속한 Member객체 
-	 */
-//	@Override
-//	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-//		User user = memberDao.selectOneMember(id);
-//		log.debug("userSevice = {}", user);
-//		if(user == null)
-//			throw new UsernameNotFoundException(id);
-//		return user;
-//	}
-
 	@Override
 	public boolean selectIdDuplicate(String id) {
 
@@ -117,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
 		return null;
   }
 
-  @Override
+	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
 		return memberDao.updateUserWorkspaceId(param);
 	}
@@ -125,6 +108,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMember(Member updateMember) {
 		return memberDao.updateMember(updateMember);
+	}
+
+	@Override
+	public int updateProfile(Member updateMember) {
+		return memberDao.updateProfile(updateMember);
 	}
 
 
