@@ -9,4 +9,14 @@ public interface AddressBookDao {
 
 	List<Member> selectSearchMemberList(Map<String, Object> param);
 
+	int insertAddress(Map<String, String> param);
+
+	List<Member> selectAddressMemberList(String owner);
+
+	int getTotalAddressBook(String owner);
+
+	List<Member> selectAddressMemberList(Map<String, Object> param);
+
+	int deleteAddress(Map<String, String> param);
+
 }

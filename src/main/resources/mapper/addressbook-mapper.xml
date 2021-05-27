@@ -6,7 +6,9 @@
 
 	<select id="selectSearchMemberList" resultMap="memberMap">
 		select
-		    *
+		   	U.*,
+            M.*,
+            D.department_name
 		from floworks_user U
 		        join member M
 		            on U.id = M.id
@@ -16,13 +18,54 @@
 		    ${type} like '%' || #{keyword} || '%'
 		    and workspace_id = #{workspaceId}
 		    and quit_yn = 'N'
-		    and U.id != (select id
-                		from address_book
-                		where owner = #{id})
-    		and U.id != #{id}
+		    and U.id not in (select id
+                		     from address_book
+                		     where owner = #{owner})
+    		and U.id != #{owner}
 		order by
 			U.name
 	</select>
+	
+	<insert id="insertAddress">
+		insert into
+			address_book
+		values(
+				#{owner},
+				#{id}
+				)
+	</insert>
+	
+	<select id="selectAddressMemberList" resultMap="memberMap">
+		select
+		    *
+		from
+		    address_book a
+		        join floworks_user u 
+		            on a.id = u.id
+                join member m
+		            on u.id = m.id
+                join department d
+                    on m.department_code = d.department_code
+		where
+			owner = #{owner}
+	</select>
+	
+	<select id="getTotalAddressBook" resultType="int">
+		select
+			count(*)
+		from
+			address_book
+		where
+			owner = #{owner}
+	</select>
+	
+	<delete id="deleteAddress">
+		delete from
+			address_book
+		where
+			owner = #{owner}
+			and id = #{id}
+	</delete>
 	
 	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
@@ -31,7 +74,7 @@
 		<result column="resign" property="resign"/>
 		<result column="position" property="position"/>
 		<result column="department_code" property="departmentCode"/>	
-		<result column="department_name" property="department"/>	
+		<result column="department_name" property="department"/>
 	</resultMap>
 	
 	<resultMap type="user" id="userMap">	

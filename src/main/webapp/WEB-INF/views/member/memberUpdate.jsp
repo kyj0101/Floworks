@@ -14,21 +14,8 @@ Member member = (Member) session.getAttribute("loginMember");
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
 
-<!-- 
-<script>
-	$(document).ready(function(){
-		$("#btnUpdate").click(function(){
-			document.contactForm.action = "${pageContext.request.contextPath}/member/memberUpdate";
-			document.contactForm.submit();
-		});
-	});
-</script>
- -->
-
-
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section>
-<h1><sec:authentication property="principal.hireDate"/></h1>
 	<div class="section-div">
 		<div class="update-div">
 			<form:form  name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post">
