@@ -33,7 +33,6 @@ public class BoardDaoImpl implements BoardDao {
 		int offset = (cPage - 1) * limit; 
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-//		log.info("boardNo = {}", boardNo);
 
 		log.info("search = {}", search);
 		return session.selectList("board.selectPostList", search, rowBounds);
