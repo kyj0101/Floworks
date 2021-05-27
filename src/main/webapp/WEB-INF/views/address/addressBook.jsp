@@ -202,7 +202,7 @@ function find(){
 			for(member of data){
 
 				let html = "<li class='member-list-li'>";
-				html += "<img src='${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property='principal.profileFileRename'/>' alt='프로필사진' class='img-circle'>";
+				html += "<img src='${pageContext.request.contextPath }/resources/upload/profile/" + member.profileFileRename  +"' alt='프로필사진' class='img-circle'>";
 				html += "<p>이름 :" + member.name + "</p>";
 				html += "<p>부서 :" + member.department + "</p>";
 				html += "<p>직급 :" + member.position + "</p>";

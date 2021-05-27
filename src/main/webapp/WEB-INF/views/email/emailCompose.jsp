@@ -96,7 +96,7 @@
 				<div class="input-group">
 					<p class="input-group-text">제목</p>
 					<input type="text" class="form-control"
-						name="subject" aria-label="Username" value="제목 없음"
+						name="subject" aria-label="Username" value=""
 						aria-describedby="addon-wrapping">
 				</div>
 

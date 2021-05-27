@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="search">
+
+	<select id="selectSearchBoardList" resultMap="postMap">
+		select 
+		    *
+		from
+		     post p 
+		        join floworks_user f
+		            on p.id = f.id
+		        join member m
+		            on f.id = m.id 
+        		join department d
+            		on m.department_code = d.department_code
+		where 
+		    p.id like '%' || #{keyword} || '%'
+		    or f.name like '%' || #{keyword} || '%'
+		    or d.department_name = '%' || #{keyword} || '%' 
+		    or post_title like '%' || #{keyword} || '%' 
+		    or post_content like '%' || #{keyword} || '%' 
+		    or post_date like '%' || #{keyword} || '%' 
+	</select>
+	
+	<select id="getTotalSearchPost" resultType="int">
+		select 
+		    count(*)
+		from
+		     post p 
+		        join floworks_user f
+		            on p.id = f.id
+		        join member m
+		            on f.id = m.id 
+        		join department d
+            		on m.department_code = d.department_code
+		where 
+		    p.id like '%' || #{keyword} || '%'
+		    or f.name like '%' || #{keyword} || '%'
+		    or d.department_name = '%' || #{keyword} || '%' 
+		    or post_title like '%' || #{keyword} || '%' 
+		    or post_content like '%' || #{keyword} || '%' 
+		    or post_date like '%' || #{keyword} || '%' 
+	</select>
+	
+	
+	
+	<resultMap type="map" id="postMap">
+		<id column="post_no" property="postNo"/>
+		<result column="id" property="id"/>
+		<result column="post_title" property="postTitle"/>
+		<result column="post_content" property="postContent"/>
+		<result column="post_date" property="postDate"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="name" property="name"/>		
+	</resultMap>
+
+</mapper>
