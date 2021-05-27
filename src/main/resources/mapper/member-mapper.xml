@@ -187,5 +187,14 @@
 		where
 			id = #{id}
 	</update>
+	
+	<update id="updateProfile">
+		update
+			member
+		set
+			profile_file_rename = #{profileFileRename}
+		where
+			id = #{id}
+	</update>
 
 </mapper>

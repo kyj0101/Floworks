@@ -98,12 +98,19 @@
 	
 	<select id="selectRecipientList" resultType="string">
 		select
-    		*
+            u.id || ' ' || name || ' ' || '[' || department_name || ']' || position
 		from
-    		floworks_user
-		where
-    		id like '%' || #{searchKeyword} || '%'
+    		floworks_user u
+                join member m 
+                    on u.id = m.id
+                join department d
+                    on d.department_code = m.department_code
+        where
+    		u.id like '%' || #{searchKeyword} || '%'
     		and workspace_id = #{workspaceId}
+        	and quit_yn = 'N'
+        order by
+        	name
 	</select> 
 	
 	<select id="selectInboxList" resultType="email">

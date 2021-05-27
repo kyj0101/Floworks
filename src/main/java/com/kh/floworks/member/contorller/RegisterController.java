@@ -144,7 +144,7 @@ public class RegisterController {
 			}
 			
 			MultipartFile[] multipartFile = {profile};
-			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/profile");
+			String saveDirectory = request.getServletContext().getRealPath(FileUtils.PROFILE_SAVEDIRECTORY);
 			Map<String, String> fileMap = FileUtils.getFileMap(multipartFile, saveDirectory);
 						
 			member.setProfileFileOrinalname(fileMap.get("originalName1"));

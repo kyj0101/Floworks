@@ -41,4 +41,6 @@ public interface MemberDao {
 
 	int updateMember(Member updateMember);
 
+	int updateProfile(Member updateMember);
+
 }
