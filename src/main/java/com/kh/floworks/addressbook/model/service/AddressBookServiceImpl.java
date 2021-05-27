@@ -38,4 +38,9 @@ public class AddressBookServiceImpl implements AddressBookService{
 		return addressBookDao.selectAddressMemberList(param);
 	}
 
+	@Override
+	public int deleteAddress(Map<String, String> param) {
+		return addressBookDao.deleteAddress(param);
+	}
+
 }

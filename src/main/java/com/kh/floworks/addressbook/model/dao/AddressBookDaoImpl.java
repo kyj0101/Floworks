@@ -48,4 +48,9 @@ public class AddressBookDaoImpl implements AddressBookDao{
 		return session.selectList("addressBook.selectAddressMemberList", param, rowBounds);
 	}
 
+	@Override
+	public int deleteAddress(Map<String, String> param) {
+		return session.delete("addressBook.deleteAddress", param);
+	}
+
 }

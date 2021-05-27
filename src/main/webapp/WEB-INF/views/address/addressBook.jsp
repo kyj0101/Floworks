@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<h1><sec:authentication property="principal.department"/></h1>
 <section>
 	<div class="page-header">
 
@@ -28,12 +27,6 @@
 					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#memberModal">
 					  주소록에 사원 추가하기
 					</button>
-
-					
-					<!--나중에 session이나 다른 기능으로 받아와야할 것 들-->
-					<datalist id="datalistOptions">
-
-					</datalist>
 				</div>
 			</form>
 		</div>						          
@@ -43,55 +36,61 @@
 	<div class="list-group list-group-flush border-bottom scrollarea">
 		
 		<c:forEach items="${memberList}" var="member">
-		<a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-			<div class="row g-0">
-				<div class="col-1">
-					<img src="${pageContext.request.contextPath }/resources/upload/profile/${member.profileFileRename}" alt="프로필사진" class="img-circle"
-					style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
-				</div>
-
-				<div class="col-11">
-					<div class="row g-0 mb-4">
-
-						<div class="col">
-							<strong>Name: </strong> <span>${member.name}</span>
-						</div>
-						
-						<div class="col">
-							<strong>부서: </strong> <span>${member.department}</span>
-						</div>
-						
-						<div class="col">
-							<strong>직급: </strong> <span>${member.position}</span>
-						</div>
-
+		<form:form action="${pageContext.request.contextPath}/address/delete" method="POST">
+			
+			<input type="hidden" name="owner" value="<sec:authentication property='principal.id'/>" />
+			<input type="hidden" name="id" value="${member.id}" />
+			
+			<a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+				<div class="row g-0">
+					<div class="col-1">
+						<img src="${pageContext.request.contextPath }/resources/upload/profile/${member.profileFileRename}" alt="프로필사진" class="img-circle"
+						style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
 					</div>
-
-					<div class="row g-0 mb-4">
-
-						<div class="col">
-							<strong>E-mail:</strong> <span>${member.email}</span>
+		
+					<div class="col-11">
+						<div class="row g-0 mb-4">
+	
+							<div class="col">
+								<strong>Name: </strong> <span>${member.name}</span>
+							</div>
+							
+							<div class="col">
+								<strong>부서: </strong> <span>${member.department}</span>
+							</div>
+							
+							<div class="col">
+								<strong>직급: </strong> <span>${member.position}</span>
+							</div>
+	
 						</div>
-						
-						<div class="col">
-							<strong>ID</strong> <span>${member.id}</span>
-						</div>
-
-						<div class="col-2">
-							<button type="button" class="address-btn btn btn-primary">
-								<i class="bi bi-envelope-fill"></i>
-							</button>
-						</div>
-						
-						<div class="col-2">
-							<button type="button" class="address-btn btn btn-secondary">
-								<i class="bi bi-trash-fill"></i>
-							</button>
+	
+						<div class="row g-0 mb-4">
+	
+							<div class="col">
+								<strong>E-mail:</strong> <span>${member.email}</span>
+							</div>
+							
+							<div class="col">
+								<strong>ID</strong> <span>${member.id}</span>
+							</div>
+	
+							<div class="col-2">
+								<button type="button" class="address-btn btn btn-primary" id="email-btn" onclick="location.href='${pageContext.request.contextPath}/email/compose?defaultRecipient=${member.id}'">
+									<i class="bi bi-envelope-fill"></i>
+								</button>
+							</div>
+							
+							<div class="col-2">
+								<button type="submit" class="address-btn btn btn-secondary"> 
+									<i class="bi bi-trash-fill"></i>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</a>
+			</a>
+		</form:form>
 		</c:forEach>		
 	</div>
 </div>
@@ -164,7 +163,7 @@ function find(){
 	const type = $(".search-option:selected").val();
 	const keyword = $("#member-search").val();
 	const workspaceId = "<sec:authentication property='principal.workspaceId'/>";
-	const id = "<sec:authentication property='principal.id'/>";
+	const owner = "<sec:authentication property='principal.id'/>";
 	
 	if(type === "분류") {
 		
@@ -189,7 +188,7 @@ function find(){
 		data:{ 'type':type, 
 			   'keyword':keyword, 
 			   'workspaceId':workspaceId, 
-			   'id':id
+			   'owner':owner
 			   },
 		
 		success(data){

@@ -20,8 +20,8 @@
 		    and quit_yn = 'N'
 		    and U.id not in (select id
                 		     from address_book
-                		     where owner = #{id})
-    		and U.id != #{id}
+                		     where owner = #{owner})
+    		and U.id != #{owner}
 		order by
 			U.name
 	</select>
@@ -58,6 +58,14 @@
 		where
 			owner = #{owner}
 	</select>
+	
+	<delete id="deleteAddress">
+		delete from
+			address_book
+		where
+			owner = #{owner}
+			and id = #{id}
+	</delete>
 	
 	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>

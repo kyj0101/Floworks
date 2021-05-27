@@ -17,4 +17,6 @@ public interface AddressBookDao {
 
 	List<Member> selectAddressMemberList(Map<String, Object> param);
 
+	int deleteAddress(Map<String, String> param);
+
 }

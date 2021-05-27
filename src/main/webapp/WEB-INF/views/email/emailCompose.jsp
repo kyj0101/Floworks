@@ -69,7 +69,7 @@
 					<p class="input-group-text">수신자</p>
 					<input type="search"
 						class="form-control recipient-input required-recipient-input"
-						name="recipient" aria-describedby="addon-wrapping">
+						name="recipient" aria-describedby="addon-wrapping" value="${defaultRecipient}">
 				</div>
 
 				<div class="input-group cc-div" id="cc">

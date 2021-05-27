@@ -69,16 +69,14 @@ public class EmailController {
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
-	@RequestMapping("/list")
-	public String emailList() {
-		return "/email/emailList";
-	}
-
 	@GetMapping("/compose")
-	public String emailCompose() {
+	public String emailCompose(@RequestParam(required = false) String defaultRecipient,
+								Model model) {
+		
+		model.addAttribute("defaultRecipient", defaultRecipient);
+		
 		return "/email/emailCompose";
 	}
-
 
 	@RequestMapping("/sent")
 	public String emailSentList(String id,
