@@ -17,6 +17,10 @@ public interface SearchService {
 
 	List<Map<String, Object>> selectSearchPostFileList(Map<String, Object> param);
 
+	List<Map<String, Object>> selectSearchEmailSentFileList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectSearchEmailInboxFileList(Map<String, Object> param);
+
 	int getTotalSearchPost(Map<String, Object> param);
 
 	int getTotalSearchEmailSent(Map<String, Object> param);
@@ -25,6 +29,8 @@ public interface SearchService {
 
 	int getTotalSearchPostFile(Map<String, Object> param);
 
+	int getTotalFileEmailInbox(Map<String, Object> param);
 
+	int getTotalFileEmailSent(Map<String, Object> param);
 
 }
