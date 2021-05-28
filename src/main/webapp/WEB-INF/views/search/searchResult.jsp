@@ -67,6 +67,22 @@
 				</a>
 			</c:forEach>
 		</c:if>
+		
+		<c:if test="${postFileList != null}">
+			<c:forEach items="${postFileList}" var="postFileMap">
+				<a href="${pageContext.request.contextPath}/search/download/post/?fileReName=${postFileMap.postRenamedFileName}&fileOriName=${postFileMap.postOriginalFileName}" class="list-group-item list-group-item-action">
+					<div class="d-flex w-100 justify-content-between ">
+						<h5 class="mb-1">${postFileMap.postTitle}</h5>
+						<small>
+							<fmt:formatDate value="${postFileMap.postDate}" pattern="yy/MM/dd HH:mm:ss"/>
+						</small>
+					</div>
+					<p class="mb-1">
+						${postFileMap.postOriginalFileName}
+					</p>
+					</a>
+			</c:forEach>
+		</c:if>
 	</div>
 ${pageBar}
 </section>

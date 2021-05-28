@@ -26,7 +26,8 @@
         		join department d
             		on m.department_code = d.department_code
 		where 
-			f.workspace_id = #{workspaceId}
+			post_del = 'N'
+			and f.workspace_id = #{workspaceId}
 		    and (p.id like '%' || #{keyword} || '%'
 		    or f.name like '%' || #{keyword} || '%'
 		    or d.department_name = '%' || #{keyword} || '%' 
@@ -49,7 +50,8 @@
         		join department d
             		on m.department_code = d.department_code
 		where
-			f.workspace_id = #{workspaceId}
+			post_del = 'N'
+			and f.workspace_id = #{workspaceId}
 		    and (p.id like '%' || #{keyword} || '%'
 		    or f.name like '%' || #{keyword} || '%'
 		    or d.department_name = '%' || #{keyword} || '%' 
@@ -132,6 +134,47 @@
 		    or e.subject like '%' || #{keyword} || '%'
 		    or e.email_content like '%' || #{keyword} || '%'
 		    or e.time like '%' || #{keyword} || '%')
+	</select>
+	
+	<select id="selectSearchPostFileList" resultMap="postAndFileMap">
+		select
+		    *
+		from
+		    post_file f
+		        join post p
+		            on f.post_no = p.post_no
+		        join floworks_user u
+		            on p.id = u.id
+		where
+			post_del = 'N'
+		    and u.workspace_id = #{workspaceId}
+		    and post_original_filename like '%' || #{keyword} || '%'
+		order by
+			post_date desc
+	</select>
+	
+	<resultMap type="map" id="postAndFileMap">
+		<id column="post_no" property="postNo"/>
+		<result column="id" property="id"/>
+		<result column="post_title" property="postTitle"/>
+		<result column="post_date" property="postDate"/>
+		<result column="POST_ORIGINAL_FILENAME" property="postOriginalFileName"/>
+		<result column="POST_RENAMED_FILENAME" property="postRenamedFileName"/>
+	</resultMap>
+	
+	<select id="getTotalSearchPostFile" resultType="int">
+		select
+		    count(*)
+		from
+		    post_file f
+		        join post p
+		            on f.post_no = p.post_no
+		        join floworks_user u
+		            on p.id = u.id
+		where
+			post_del = 'N'
+		    and u.workspace_id = #{workspaceId}
+		    and post_original_filename like '%' || #{keyword} || '%'
 	</select>
 
 
