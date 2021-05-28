@@ -7,8 +7,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
- 
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="게시글 작성하기" name="title"/>
+</jsp:include>
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/board/boardForm.js"></script>
  
@@ -19,11 +20,7 @@
 
 
 <section>
-    <!-- http://bootstrapk.com/components/#page-header -->
-    <div class="page-header" >
-        <h1>게시글 작성</h1>
-        <hr class="my-4">
-    </div>
+
 
     <div id="board-write">
         <form:form
@@ -90,8 +87,6 @@ window.onload = ()=>{
     });   
 };
 CKEDITOR.editorConfig = function( config ) {
-    config.filebrowserUploadMethod = "form";
-
     config.enterMode = CKEDITOR.ENTER_BR;
     config.fillEmptyBlocks = false;
 };

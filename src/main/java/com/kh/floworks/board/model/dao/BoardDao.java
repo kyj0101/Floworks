@@ -24,8 +24,6 @@ public interface BoardDao {
 
 	int updatePost(PostList postList);
 
-	int updatePostFile(PostFile pFile);
-
 	int updateDelPost(int postNo);
 
 	Object rdCountPost(int postNo);
@@ -36,6 +34,9 @@ public interface BoardDao {
 
 	List<Post> selectMainList();
 
+	void deletePost(int deleteNo);
+	
+	int insertPostFile(List<PostFile> pFList);
 
 
 }
