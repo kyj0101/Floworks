@@ -32,6 +32,10 @@ public interface BoardService {
 
 	List<Post> selectMainList();
 
+	void deletePost(int deleteNo);
+
+	void insertPostFile(List<PostFile> pFList);
+
 
 
 

@@ -21,17 +21,12 @@
 
 
 <section>
-  <!-- http://bootstrapk.com/components/#page-header -->
-    <div class="page-header" >
-        <h1>게시판</h1>
-        <hr class="my-4">
-    </div>
 
     <div class="dropdown d-inline-block mb-2">
         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownboardButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           부서
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownboardButton">
+        <div class="dropdown-menu" aria-labelledby="dropdownboardButton" id="dropdowndept">
           <a class="dropdown-item" href="boardList?dept=기획부&boardNo=${boardNo}">기획부</a>
           <a class="dropdown-item" href="boardList?dept=개발부&boardNo=${boardNo}">개발부</a>
           <a class="dropdown-item" href="boardList?dept=총무부&boardNo=${boardNo}">총무부</a>
@@ -62,10 +57,10 @@
 				<tr data-no="${post.postNo}">
 					<td>${post.postNo}</td>
 					<td>${post.departmentName}</td>
-					<td>${post.postTitle}<c:if test="${post.commentCount gt 0}"> [${post.commentCount}]</c:if>
+					<td id="titletd">${post.postTitle}<c:if test="${post.commentCount gt 0}"> [${post.commentCount}]</c:if>
 					</td>
 					<td>${post.name}</td>
-					<td>
+					<td >
 						<c:if test="${post.fileCount gt 0}">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
   						<path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>

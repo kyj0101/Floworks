@@ -60,17 +60,18 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectOnePostFile(postFile);
 	}
 
+
 	@Override
 	public int updatePost(PostList postList) {
 		int result = 0;
 		//1. board객체 등록
 		result = boardDao.updatePost(postList);
 		log.info("postNo = {}", postList.getPostNo());
-		//2. 객체 등록
+		log.info("postNo = {}", postList.getPostFileList());
 		if(!postList.getPostFileList().isEmpty()) {
 			for(PostFile pFile : postList.getPostFileList()) {
 				pFile.setPostNo(postList.getPostNo());
-				result = boardDao.updatePostFile(pFile);
+				result = boardDao.insertPostFile(pFile);
 			}
 		}
 		return result;
@@ -80,7 +81,6 @@ public class BoardServiceImpl implements BoardService {
 	public int updateDelPost(int postNo) {
 		int result = 0;
 		result = boardDao.updateDelPost(postNo);
-		
 		return result;
 	}
 
@@ -110,6 +110,22 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Post> selectMainList() {
 		return boardDao.selectMainList();
+	}
+
+
+	@Override
+	public void deletePost(int deleteNo) {
+		boardDao.deletePost(deleteNo);
+		
+	}
+
+
+
+
+	@Override
+	public void insertPostFile(List<PostFile> pFList) {
+		boardDao.insertPostFile(pFList);
+		
 	}
 
 

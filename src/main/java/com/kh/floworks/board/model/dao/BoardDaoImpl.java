@@ -51,10 +51,17 @@ public class BoardDaoImpl implements BoardDao {
 		return session.insert("board.insertPost", post);
 	}
 
-
 	@Override
 	public int insertPostFile(PostFile pFile) {
+		log.info("pFile = {}", pFile);
 		return session.insert("board.insertFile", pFile);
+	}
+
+
+	@Override
+	public int insertPostFile(List<PostFile>  pFList) {
+		log.info("pFList = {}", pFList);
+		return session.insert("board.reInsertFile", pFList);
 	}
 	
 	
@@ -73,11 +80,6 @@ public class BoardDaoImpl implements BoardDao {
 		return session.update("board.updatePost", postList);
 	}
 
-	@Override
-	public int updatePostFile(PostFile pFile) {
-		log.info("pFile = {}", pFile);
-		return session.update("board.updatePostFile", pFile);
-	}
 
 	@Override
 	public int updateDelPost(int postNo) {
@@ -104,6 +106,19 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Post> selectMainList() {
 		return session.selectList("board.selectMainList");
 	}
+
+
+
+
+	@Override
+	public void deletePost(int deleteNo) {
+		session.delete("board.deleteFile", deleteNo);
+	}
+
+
+
+
+
 
 
 	
