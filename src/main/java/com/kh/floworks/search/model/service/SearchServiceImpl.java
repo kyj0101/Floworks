@@ -29,22 +29,30 @@ public class SearchServiceImpl implements SearchService{
 	public List<Email> selectSearchEmailInbox(Map<String, Object> param) {
 		return searchDao.selectSearchEmailInbox(param);
 	}
-
+	
 	@Override
-	public int getTotalSearchPost(String keyword) {
-		return searchDao.getTotalSearchPost(keyword);
+	public List<Map<String, Object>> selectSearchPostFileList(Map<String, Object> param) {
+		return searchDao.selectSearchPostFileList(param);
 	}
 
+	@Override
+	public int getTotalSearchPost(Map<String, Object> param) {
+		return searchDao.getTotalSearchPost(param);
+	}
 
 	@Override
 	public int getTotalSearchEmailSent(Map<String, Object> param) {
 		return searchDao.getTotalSearchEmailSent(param);
 	}
 
-
-
 	@Override
 	public int getTotalSearchEmailInbox(Map<String, Object> param) {
 		return searchDao.getTotalSearchEmailInbox(param);
 	}
+
+	@Override
+	public int getTotalSearchPostFile(Map<String, Object> param) {
+		return searchDao.getTotalSearchPostFile(param);
+	}
+
 }

@@ -15,11 +15,16 @@ public interface SearchService {
 
 	List<Email> selectSearchEmailInbox(Map<String, Object> param);
 
-	int getTotalSearchPost(String keyword);
+	List<Map<String, Object>> selectSearchPostFileList(Map<String, Object> param);
+
+	int getTotalSearchPost(Map<String, Object> param);
 
 	int getTotalSearchEmailSent(Map<String, Object> param);
 
 	int getTotalSearchEmailInbox(Map<String, Object> param);
+
+	int getTotalSearchPostFile(Map<String, Object> param);
+
 
 
 }
