@@ -19,6 +19,15 @@ $(() => {
 			$label.text("파일을 선택하세요.");
 		else 
 			$label.text(f.name);
+		
+		if($addFileBtn.val()){
+			//파일을 선택한 경우 #delFile체크
+			$("#delFile").prop("checked", true);
+		}
+		else {
+			//파일선택을 취소한 경우 #delFile체크해제
+			$("#delFile").prop("checked", false);
+		}
 
 	});
 	
