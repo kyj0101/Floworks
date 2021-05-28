@@ -356,18 +356,20 @@ $(function(){
 	});
 	
 	$(".search-btn").click(function(){
-		
+
 		const type = $("#select-search").text();
 		const keyword = $("#input-search").val();
-
-		if(type === "게시판"){
-			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword;
+		const id = "<sec:authentication property='principal.id'/>"
+		const workspaceId =  "<sec:authentication property='principal.id'/>"
 		
-		}else if(type === "보낸 이메일"){
-			
-			const id = "<sec:authentication property='principal.id'/>"
-			
+		if(type === "게시판"){
+			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword + "&workspaceId=" + workspaceId;
+		
+		}else if(type === "보낸 이메일"){	
 			location.href="${pageContext.request.contextPath}/search/email/sent?keyword=" + keyword + "&id=" + id;
+		
+		}else if(type === "받은 이메일"){
+			location.href="${pageContext.request.contextPath}/search/email/inbox?keyword=" + keyword + "&id=" + id;	
 		}
 	});
 });

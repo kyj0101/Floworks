@@ -32,7 +32,7 @@
 
 		<c:if test="${emailSentList != null}">
 			<c:forEach items="${emailSentList}" var="email">
-				<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=sent"
+				<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=sent&id=<sec:authentication property='principal.id'/>"
 					class="list-group-item list-group-item-action">
 					<div class="d-flex w-100 justify-content-between">
 						<h5 class="mb-1">${email.subject}</h5>
@@ -40,13 +40,29 @@
 							<fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/>
 						</small>
 					</div>
-					<p class="mb-1">${emai.emailContent}</p> 
 					<small> 
 						수신자 : ${email.recipient == null ? "없음" : email.recipient} | 
 						외부수신자 : ${email.externalRecipient == null ? "없음" : email.externalRecipient}
 						<br /> 
 						CC : ${email.emailCC == null ? "없음" : email.emailCC} | 
 						BCC : ${email.emailBCC == null ? "없음" : email.emailBCC}
+					</small>
+				</a>
+			</c:forEach>
+		</c:if>
+		
+		<c:if test="${emailInboxList != null}">
+			<c:forEach items="${emailInboxList}" var="email">
+				<a href="${pageContext.request.contextPath}/email/detail?emailNo=${email.emailNo}&listType=inbox&id=<sec:authentication property='principal.id'/>"
+					class="list-group-item list-group-item-action">
+					<div class="d-flex w-100 justify-content-between">
+						<h5 class="mb-1">${email.subject}</h5>
+						<small>
+							<fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/>
+						</small>
+					</div>
+					<small> 
+						수신자 : ${email.id}
 					</small>
 				</a>
 			</c:forEach>

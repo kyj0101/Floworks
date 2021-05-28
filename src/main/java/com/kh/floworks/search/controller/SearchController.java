@@ -25,13 +25,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/search")
 @Slf4j
 public class SearchController {
+	
 
 	@Autowired
 	private SearchService searchServcie;
 
-
+	
 	@GetMapping("/post")
-	public String searchPost(String keyword, 
+	public String searchPost(String keyword,
+							 String workspaceId,
 			                 @RequestParam(defaultValue = "1") int cPage,
 			                 HttpServletRequest request,
 			                 Model model) {
@@ -42,6 +44,7 @@ public class SearchController {
 			param.put("numPerPage", SearchListUtils.numPerPage);
 			param.put("cPage", cPage);
 			param.put("keyword", keyword);
+			param.put("workspaceId", workspaceId);
 
 			int totalContents = searchServcie.getTotalSearchPost(keyword);
 			String url = request.getRequestURI() + "?keyword=" + keyword;
@@ -67,39 +70,71 @@ public class SearchController {
 		}
 	}
 		
-		//보낸 이메일 : 작성자, 받은 사람, 내용, 발송일
-		//받은 이메일 : 작성자, 받은 사람, 내용, 발송일
-		//보낸이메일, 받은이메일 두번 DB에 가져와야할듯
-		@GetMapping("/email/sent")
-		public String searchEmail(String keyword, 
+
+	@GetMapping("/email/sent")
+	public String searchEmailSent(String keyword, 
 				                  String id, 
 				                  @RequestParam(defaultValue = "1") int cPage,
 				                  HttpServletRequest request, Model model) {
-			try {
+		try {
 
-				Map<String, Object> param = new HashMap<>();
+			Map<String, Object> param = new HashMap<>();
 
-				param.put("numPerPage", SearchListUtils.numPerPage);
-				param.put("cPage", cPage);
-				param.put("keyword", keyword);
-				param.put("id", id);
+			param.put("numPerPage", SearchListUtils.numPerPage);
+			param.put("cPage", cPage);
+			param.put("keyword", keyword);
+			param.put("id", id);
 
-				int totalContents = searchServcie.getTotalSearchEmailSent(param);
-				String url = request.getRequestURI() + "?keyword=" + keyword + "&id=" + id;
-				String pageBar = PageBarUtils.getPageBar(totalContents, cPage, SearchListUtils.numPerPage, url);
+			int totalContents = searchServcie.getTotalSearchEmailSent(param);
+			String url = request.getRequestURI() + "?keyword=" + keyword + "&id=" + id;
+			String pageBar = PageBarUtils.getPageBar(totalContents, cPage, SearchListUtils.numPerPage, url);
 
-				List<Email> emailSentList = searchServcie.selectSearchEmailSent(param);
-				emailSentList = EmailUtils.shorteningLetters(emailSentList);
+			List<Email> emailSentList = searchServcie.selectSearchEmailSent(param);
+			emailSentList = EmailUtils.shorteningLetters(emailSentList);
 
-				model.addAttribute("emailSentList", emailSentList);
-				model.addAttribute("pageBar", pageBar);
+			model.addAttribute("emailSentList", emailSentList);
+			model.addAttribute("pageBar", pageBar);
 
-				return "/search/searchResult";
+			return "/search/searchResult";
 
 		} catch (NullPointerException e) {
 				throw e;
 		}
 	}
+	
+	@GetMapping("/email/inbox")
+	public String searchEmailInbox(String keyword, 
+                                   String id, 
+                                   @RequestParam(defaultValue = "1") int cPage,
+                                   HttpServletRequest request, Model model) {
+		try {
+			
+			Map<String, Object> param = new HashMap<>();
+
+			param.put("numPerPage", SearchListUtils.numPerPage);
+			param.put("cPage", cPage);
+			param.put("keyword", keyword);
+			param.put("id", id);
+			
+			int totalContents = searchServcie.getTotalSearchEmailInbox(param);
+			String url = request.getRequestURI() + "?keyword=" + keyword + "&id=" + id;
+			String pageBar = PageBarUtils.getPageBar(totalContents, cPage, SearchListUtils.numPerPage, url);
+			
+			List<Email> emailInboxList = searchServcie.selectSearchEmailInbox(param);
+			emailInboxList = EmailUtils.shorteningLetters(emailInboxList);
+
+			model.addAttribute("emailInboxList", emailInboxList);
+			model.addAttribute("pageBar", pageBar);
+			
+		} catch (NullPointerException e) {
+			throw e;
+		}
+		
+		
+		return "/search/searchResult";
+		
+	}
+		
 
 	//이메일 파일, 게시판 파일, (전자결재는 일단 보류)
 	public String searchFile() {
