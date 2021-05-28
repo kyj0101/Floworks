@@ -174,8 +174,8 @@ public class EmailController {
 		
 		if(listType.equals("inbox")) {
 		
-			email = emailService.selectOneEmailInbox(param); 
-			
+			email = emailService.selectOneEmailInbox(param);
+
 			model.addAttribute("fileRename", emailService.selectProfileRename(email.getId()));
 	
 		}else {
@@ -183,7 +183,7 @@ public class EmailController {
 		}
 		
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
-
+		log.info("listType{}",listType);
 		model.addAttribute("email", email);
 		model.addAttribute("listType", listType);
 		model.addAttribute("fileMap", fileMap);

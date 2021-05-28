@@ -26,12 +26,13 @@
         		join department d
             		on m.department_code = d.department_code
 		where 
-		    p.id like '%' || #{keyword} || '%'
+			f.workspace_id = #{workspaceId}
+		    and (p.id like '%' || #{keyword} || '%'
 		    or f.name like '%' || #{keyword} || '%'
 		    or d.department_name = '%' || #{keyword} || '%' 
 		    or post_title like '%' || #{keyword} || '%' 
 		    or post_content like '%' || #{keyword} || '%' 
-		    or post_date like '%' || #{keyword} || '%' 
+		    or post_date like '%' || #{keyword} || '%')
 		order by
 			post_date desc
 	</select>
@@ -47,13 +48,14 @@
 		            on f.id = m.id 
         		join department d
             		on m.department_code = d.department_code
-		where 
-		    p.id like '%' || #{keyword} || '%'
+		where
+			f.workspace_id = #{workspaceId}
+		    and (p.id like '%' || #{keyword} || '%'
 		    or f.name like '%' || #{keyword} || '%'
 		    or d.department_name = '%' || #{keyword} || '%' 
 		    or post_title like '%' || #{keyword} || '%' 
 		    or post_content like '%' || #{keyword} || '%' 
-		    or post_date like '%' || #{keyword} || '%' 
+		    or post_date like '%' || #{keyword} || '%')
 	</select>
 	
 	<select id="selectSearchEmailSent" resultType="email">
@@ -65,13 +67,13 @@
 		where
 		    e.id = #{id}
 		    and del_yn = 'N'
-		    and e.recipient like '%' || #{keyword} || '%' 
+		    and (e.recipient like '%' || #{keyword} || '%' 
 		    or e.external_recipient like '%' || #{keyword} || '%' 
 		    or e.email_cc like '%' || #{keyword} || '%' 
 		    or e.email_bcc like '%' || #{keyword} || '%' 
 		    or e.subject like '%' || #{keyword} || '%' 
 		    or e.email_content like '%' || #{keyword} || '%' 
-		    or e.time like '%' || #{keyword} || '%' 
+		    or e.time like '%' || #{keyword} || '%')
 		order by
 			time desc
 	</select>
@@ -86,15 +88,51 @@
 		where
 		    e.id = #{id}
 		    and del_yn = 'N'
-		    and e.recipient like '%' || #{keyword} || '%' 
+		    and (e.recipient like '%' || #{keyword} || '%' 
 		    or e.external_recipient like '%' || #{keyword} || '%' 
 		    or e.email_cc like '%' || #{keyword} || '%' 
 		    or e.email_bcc like '%' || #{keyword} || '%' 
 		    or e.subject like '%' || #{keyword} || '%' 
 		    or e.email_content like '%' || #{keyword} || '%' 
-		    or e.time like '%' || #{keyword} || '%' 
+		    or e.time like '%' || #{keyword} || '%')
 	</select>
 	
+	<select id="search.selectSearchEmailInbox" resultType="email">
+		select
+		    *
+		from
+		    email e
+		        join email_inbox i
+		            on e.email_no = i.email_no
+		where
+		    i.recipient_id = #{id}
+		    and del_yn = 'N'
+		    and (e.external_recipient like '%' || #{keyword} || '%'
+		    or e.id like '%' || #{keyword} || '%'
+		    or e.email_cc like '%' || #{keyword} || '%'
+		    or e.email_bcc like '%' || #{keyword} || '%'
+		    or e.subject like '%' || #{keyword} || '%'
+		    or e.email_content like '%' || #{keyword} || '%'
+		    or e.time like '%' || #{keyword} || '%')
+	</select>
+	
+	<select id="getTotalSearchEmailInbox" resultType="int">
+		select
+		    count(*)
+		from
+		    email e
+		        join email_inbox i
+		            on e.email_no = i.email_no
+		where
+		    i.recipient_id = #{id}
+		    and del_yn = 'N'
+		    and (e.external_recipient like '%' || #{keyword} || '%'
+		    or e.email_cc like '%' || #{keyword} || '%'
+		    or e.email_bcc like '%' || #{keyword} || '%'
+		    or e.subject like '%' || #{keyword} || '%'
+		    or e.email_content like '%' || #{keyword} || '%'
+		    or e.time like '%' || #{keyword} || '%')
+	</select>
 
 
 </mapper>

@@ -24,6 +24,11 @@ public class SearchServiceImpl implements SearchService{
 	public List<Email> selectSearchEmailSent(Map<String, Object> param) {
 		return searchDao.selectSearchEmailSent(param);
 	}
+	
+	@Override
+	public List<Email> selectSearchEmailInbox(Map<String, Object> param) {
+		return searchDao.selectSearchEmailInbox(param);
+	}
 
 	@Override
 	public int getTotalSearchPost(String keyword) {
@@ -34,5 +39,12 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public int getTotalSearchEmailSent(Map<String, Object> param) {
 		return searchDao.getTotalSearchEmailSent(param);
+	}
+
+
+
+	@Override
+	public int getTotalSearchEmailInbox(Map<String, Object> param) {
+		return searchDao.getTotalSearchEmailInbox(param);
 	}
 }
