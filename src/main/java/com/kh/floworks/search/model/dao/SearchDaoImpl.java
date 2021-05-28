@@ -63,6 +63,30 @@ public class SearchDaoImpl implements SearchDao{
 		
 		return session.selectList("search.selectSearchPostFileList", param, rowBounds);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectSearchEmailSentFileList(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("search.selectSearchEmailSentFileList", param, rowBounds);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSearchEmailInboxFileList(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("search.selectSearchEmailInboxFileList", param, rowBounds);
+	}
 
 	@Override
 	public int getTotalSearchPost(Map<String, Object> param) {
@@ -82,5 +106,15 @@ public class SearchDaoImpl implements SearchDao{
 	@Override
 	public int getTotalSearchPostFile(Map<String, Object> param) {
 		return session.selectOne("search.getTotalSearchPostFile", param);
+	}
+
+	@Override
+	public int getTotalFileEmailSent(Map<String, Object> param) {
+		return session.selectOne("search.getTotalFileEmailSent", param);
+	}
+
+	@Override
+	public int getTotalFileEmailInbox(Map<String, Object> param) {
+		return session.selectOne("search.getTotalFileEmailInbox", param);
 	}
 }
