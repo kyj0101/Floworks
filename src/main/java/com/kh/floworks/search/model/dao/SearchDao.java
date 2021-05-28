@@ -11,8 +11,13 @@ public interface SearchDao {
 
 	List<Email> selectSearchEmailSent(Map<String, Object> param);
 
+	List<Email> selectSearchEmailInbox(Map<String, Object> param);
+
 	int getTotalSearchPost(String keyword);
 	
 	int getTotalSearchEmailSent(Map<String, Object> param);
+
+	int getTotalSearchEmailInbox(Map<String, Object> param);
+
 
 }
