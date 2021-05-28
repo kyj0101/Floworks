@@ -235,12 +235,13 @@ public class EmailController {
 	}
 
 	@GetMapping("/getRecipientList")
-	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId) {
+	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId, String id) {
 
 		Map<String, String> param = new HashMap<>();
 
 		param.put("searchKeyword", searchKeyword);
 		param.put("workspaceId", workspaceId);
+		param.put("id", id);
 
 		List<String> recipientList = emailService.selectRecipientList(param);
 
