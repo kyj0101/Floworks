@@ -55,10 +55,12 @@
                                           <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="select-search-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           </button>
                                           <div class="dropdown-menu">
-                                            <button class="dropdown-item" type="button">게시판</button>
-										    <button class="dropdown-item" type="button">보낸 이메일</button>
-										    <button class="dropdown-item" type="button">받은 이메일</button>
-										    <button class="dropdown-item" type="button">파일</button>
+                                            <button class="dropdown-item" type="button" >게시판</button>
+										    <button class="dropdown-item" type="button" >게시판 파일</button>
+										    <button class="dropdown-item" type="button" >보낸 이메일</button>
+										    <button class="dropdown-item" type="button" >받은 이메일</button>
+										    <button class="dropdown-item" type="button" >보낸 이메일 파일</button>
+										    <button class="dropdown-item" type="button" >받은 이메일 파일</button>
                                           </div>
                                         </div>
                                         <input type="text" class="form-control" id="input-search" aria-label="" placeholder="검색어를 입력하세요.">
@@ -360,7 +362,7 @@ $(function(){
 		const type = $("#select-search").text();
 		const keyword = $("#input-search").val();
 		const id = "<sec:authentication property='principal.id'/>"
-		const workspaceId =  "<sec:authentication property='principal.id'/>"
+		const workspaceId =  "<sec:authentication property='principal.workspaceId'/>"
 		
 		if(type === "게시판"){
 			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword + "&workspaceId=" + workspaceId;
@@ -370,7 +372,23 @@ $(function(){
 		
 		}else if(type === "받은 이메일"){
 			location.href="${pageContext.request.contextPath}/search/email/inbox?keyword=" + keyword + "&id=" + id;	
+		
+		}else if(type === "게시판 파일"){
+			location.href="${pageContext.request.contextPath}/search/file/post?keyword=" + keyword + "&workspaceId=" + workspaceId;
+		
+		}else if(type === "보낸 이메일 파일"){
+			location.href="${pageContext.request.contextPath}/search/file/email/sent?keyword=" + keyword + "&id=" + id;	
+		
+		}else if(type === "받은 이메일 파일"){
+			location.href="${pageContext.request.contextPath}/search/file/email/inbox?keyword=" + keyword + "&id=" + id;	
+		
+		}else{
+			
+			alert("검색태그를 설정하세요.");
+			
+			return false;
 		}
+		
 	});
 });
 </script>

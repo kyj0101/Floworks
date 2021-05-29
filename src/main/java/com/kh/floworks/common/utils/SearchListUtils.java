@@ -6,7 +6,9 @@ import com.kh.floworks.email.model.vo.Email;
 
 public class SearchListUtils {
 	
-	public static final int numPerPage = 7;
+	public static final int NUMPERPAGE = 7;
+	
+	public static final int EMAIL_FILE_NUMPERPAGE = 3;
 	
 	public static String shorteningContent(String content) {
 		

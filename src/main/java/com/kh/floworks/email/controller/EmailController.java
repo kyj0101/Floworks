@@ -54,7 +54,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmailController {
 
-	private final String directory = "/resources/upload/email";
 	private final int numPerPage = 15;
 	
 	@Autowired
@@ -236,12 +235,13 @@ public class EmailController {
 	}
 
 	@GetMapping("/getRecipientList")
-	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId) {
+	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId, String id) {
 
 		Map<String, String> param = new HashMap<>();
 
 		param.put("searchKeyword", searchKeyword);
 		param.put("workspaceId", workspaceId);
+		param.put("id", id);
 
 		List<String> recipientList = emailService.selectRecipientList(param);
 
@@ -255,7 +255,7 @@ public class EmailController {
 			throws IOException {
 		try {
 
-			String saveDirectory = servletContext.getRealPath(directory);
+			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 			Map<String, String> fileMap = FileUtils.getFileMap(uploadFile, saveDirectory);
 
 			emailService.insertFile(fileMap);
@@ -277,7 +277,7 @@ public class EmailController {
 
 			if (email.getExternalRecipient() != null && !email.getExternalRecipient().equals("")) {
 
-				String attachDirectory = servletContext.getRealPath(directory);
+				String attachDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 				String ckDirectory = servletContext.getRealPath("/resources/upload/editorEmailFile");
 
 
@@ -317,7 +317,7 @@ public class EmailController {
 
 		try {
 
-			String saveDirectory = servletContext.getRealPath(directory);
+			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 			File downloadFile = new File(saveDirectory, fileReName);
 			Resource resource = resourceLoader.getResource("file:" + downloadFile);
 
@@ -388,7 +388,7 @@ public class EmailController {
 
 		try {
 
-			String saveDirectory = servletContext.getRealPath(directory);
+			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 
 			// 업로드된 파일 & 기존파일이 없다면 원래의 파일을 삭제함.
 			if (uploadFile.length == 0 && uploadFileReName == null) {

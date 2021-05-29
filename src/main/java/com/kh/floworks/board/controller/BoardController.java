@@ -51,7 +51,7 @@ public class BoardController {
 	private ServletContext servletContext; 
 	
 	
-	@GetMapping("/boardList")
+	@GetMapping(value="/boardList", produces="application/json;charset=UTF-8")
 	public void boardList(@RequestParam(defaultValue = "1") int cPage,  
 				@RequestParam int boardNo, 
 				@RequestParam String dept, 
@@ -167,7 +167,7 @@ public class BoardController {
 			throw e;
 		}
 
-		return "redirect:/board/boardList?boardNo=" + boardNo;
+		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=";
 	}
 	
 	
@@ -203,14 +203,25 @@ public class BoardController {
 		return resource;
 	}
 	
+	
+	
 	@PostMapping("/postModify")
 	public String postUpdate(@ModelAttribute("postList") PostList postList, 
+							 @ModelAttribute("postFile") PostFile postFile, 
 							 RedirectAttributes redirectAttr,
 							 HttpServletRequest request, 
 							 @RequestParam(value="upFile", required = false) MultipartFile[] upFiles) throws Exception{
 								
+		log.info("postList = {}", postList);
+		log.info("postFile = {}", postFile);
+		
+		//파일 삭제 
+		//boardService.deletePost(deleteNo);
+		
 		try {
 			log.info("post = {}", postList);
+			log.info("upFiles = {}", upFiles);
+			
 			//0. 파일 저장 및 Attachment객체 생성
 			//저장경로
 			String saveDirectory = 
@@ -222,7 +233,8 @@ public class BoardController {
 			
 			//복수개의 postFile객체를 담을 list생성
 			List<PostFile> pFList = new ArrayList<>();
-		
+
+			
 			for(MultipartFile upFile : upFiles) {	
 				if(upFile.isEmpty() || upFile.getSize() == 0)
 					continue;
@@ -239,11 +251,18 @@ public class BoardController {
 				PostFile pF = new PostFile();
 				pF.setPostOriginalFileName(upFile.getOriginalFilename());
 				pF.setPostRenamedFileName(renamedFile.getName());
+				pF.setPostNo(postFile.getPostNo());
 				pFList.add(pF);
+
 				log.info("pFList = {}", pFList);
 			}
 			
+		
+
+			
 			//1. 업무로직
+
+//			postList.setPostNo(postList.getPostNo());
 			postList.setPostFileList(pFList);
 			log.info("post = {}", postList);
 			int result = boardService.updatePost(postList);
@@ -257,7 +276,7 @@ public class BoardController {
 			throw e;
 		}
 			
-		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo();
+		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo() + "&dept=";
 	}
 
 	
@@ -274,7 +293,9 @@ public class BoardController {
 		String msg = result > 0 ? "게시글이 삭제되었습니다" : "게시글 삭제에 실패하였습니다";
 		redirectAttr.addFlashAttribute("msg", msg);
 		log.info("boardNo = {}", boardNo);
-		return "redirect:/board/boardList?boardNo=" + boardNo;
+		
+		
+		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=";
 	}
 	
 

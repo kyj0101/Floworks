@@ -106,7 +106,8 @@
                 join department d
                     on d.department_code = m.department_code
         where
-    		u.id like '%' || #{searchKeyword} || '%'
+        	u.id != #{id}
+    		and u.id like '%' || #{searchKeyword} || '%'
     		and workspace_id = #{workspaceId}
         	and quit_yn = 'N'
         order by

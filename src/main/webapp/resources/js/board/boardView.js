@@ -31,28 +31,4 @@ function commentDelete(postNo, commentNo){
 
 
 
-//대댓글부분
-//$(() => {
-//	$('#reply${cmt.commentNo}').one('click', function(){
-//		var $this = $(this)
-//		var $trFromBtnReply = $this.parent().parent();
-//		console.log($trFromBtnReply);
-
-//	$('#replyForm${cmt.commentNo}').insertAfter($trFromBtnReply)
-//		       			 .css("display", "")
-//			   			 .slideDown(500)
-//			  			 .find("form")
-//					     .submit(function(e){
-//						 	var $textarea = $(e.target).children('.hdcm');
-//							 if(/^(.|\n){1,}$/.test($textarea.val()) == false){
-//								alert("댓글 내용을 작성해주세요.");
-//								$textarea.focus();
-//								e.preventDefault();
-//							}
-//									   
-//					 });
-//		});
-//});		
-
-
 

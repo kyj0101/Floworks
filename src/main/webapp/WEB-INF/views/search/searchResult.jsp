@@ -67,6 +67,70 @@
 				</a>
 			</c:forEach>
 		</c:if>
+		
+		<c:if test="${postFileList != null}">
+			<c:forEach items="${postFileList}" var="postFileMap">
+				<a href="${pageContext.request.contextPath}/search/download/post/?fileReName=${postFileMap.postRenamedFileName}&fileOriName=${postFileMap.postOriginalFileName}" class="list-group-item list-group-item-action">
+					<div class="d-flex w-100 justify-content-between ">
+						<h5 class="mb-1">${postFileMap.postTitle}</h5>
+						<small>
+							<fmt:formatDate value="${postFileMap.postDate}" pattern="yy/MM/dd HH:mm:ss"/>
+						</small>
+					</div>
+					<p class="mb-1">
+						${postFileMap.postOriginalFileName}
+					</p>
+					</a>
+			</c:forEach>
+		</c:if>
+		<c:if test="${emailSentFileList != null}">
+			<c:forEach items="${emailSentFileList}" var="emailFileMap">
+				<li class="list-group-item list-group-item-action">
+					<div class="d-flex w-100 justify-content-between">
+						<h5 class="mb-1">${emailFileMap.subject}</h5>
+						<small>
+							<fmt:formatDate value="${emailFileMap.time}" pattern="yy/MM/dd HH:mm:ss"/>
+						</small>
+					</div>
+					<div class="w-100 justify-content-between" style="margin:20px 0 20px 0;">
+						<a href="${pageContext.request.contextPath}/search/download/email?fileReName=${emailFileMap.fileRenamed1}&fileOriName=${emailFileMap.fileOriginalname1}" >${emailFileMap.fileOriginalname1}</a>
+						<br />
+						<a href="${pageContext.request.contextPath}/search/download/email?fileReName=${emailFileMap.fileRenamed2}&fileOriName=${emailFileMap.fileOriginalname2}" >${emailFileMap.fileOriginalname2}</a>
+						<br />
+						<a href="${pageContext.request.contextPath}/search/download/email?fileReName=${emailFileMap.fileRenamed3}&fileOriName=${emailFileMap.fileOriginalname3}" >${emailFileMap.fileOriginalname3}</a>
+					</div>
+					<small> 
+						수신자 : ${emailFileMap.recipient == null ? "없음" : emailFileMap.recipient} | 
+						외부수신자 : ${emailFileMap.externalRecipient == null ? "없음" : emailFileMap.externalRecipient}
+						<br /> 
+						CC : ${emailFileMap.emailCC == null ? "없음" : emailFileMap.emailCC} | 
+						BCC : ${emailFileMap.emailBCC == null ? "없음" : emailFileMap.emailBCC}
+					</small>
+				</li>
+			</c:forEach>
+		</c:if>
+		<c:if test="${emailInboxFileList != null}">
+			<c:forEach items="${emailInboxFileList}" var="emailFileMap">
+				<li  class="list-group-item list-group-item-action">
+					<div class="d-flex w-100 justify-content-between">
+						<h5 class="mb-1">${emailFileMap.subject}</h5>
+						<small>
+							<fmt:formatDate value="${emailFileMap.time}" pattern="yy/MM/dd HH:mm:ss"/>
+						</small>
+					</div>
+					<div class="w-100 justify-content-between" style="margin:20px 0 20px 0;">
+						<a href="${pageContext.request.contextPath}/search/download/email?fileReName=${emailFileMap.fileRenamed1}&fileOriName=${emailFileMap.fileOriginalname1}" >${emailFileMap.fileOriginalname1}</a>
+						<br />
+						<a href="${pageContext.request.contextPath}/search/download/email?fileReName=${emailFileMap.fileRenamed2}&fileOriName=${emailFileMap.fileOriginalname2}" >${emailFileMap.fileOriginalname2}</a>
+						<br />
+						<a href="${pageContext.request.contextPath}/search/download/email?fileReName=${emailFileMap.fileRenamed3}&fileOriName=${emailFileMap.fileOriginalname3}" >${emailFileMap.fileOriginalname3}</a>
+					</div>
+					<small> 
+						수신자 : ${emailFileMap.id}
+					</small>
+				</li>
+			</c:forEach>
+		</c:if>
 	</div>
 ${pageBar}
 </section>

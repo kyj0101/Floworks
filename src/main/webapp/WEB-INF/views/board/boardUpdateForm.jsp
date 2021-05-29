@@ -7,8 +7,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
   
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
- 
+
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="게시글 수정하기" name="title"/>
+</jsp:include>
+
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/board/boardUpdateForm.css" />
 
@@ -24,11 +27,6 @@
 
  
 <section>
-   <!-- http://bootstrapk.com/components/#page-header -->
-    <div class="page-header" >
-        <h1>게시글 수정</h1>
-        <hr class="my-4">
-    </div>
 
     <div id="board-write">
         <form:form
@@ -43,19 +41,26 @@
             
             <c:forEach items="${postList.postFileList}" var="pfList">
          	<c:if test="${pfList.postOriginalFileName != null}">
-            <div class="input-group mb-1" id="addFile">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" id="fileButton">
+               <button class="btn btn-outline-primary" type="button" name="options" id="option1" >
+               	  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
+				  <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+				  </svg> ${pfList.postOriginalFileName} -삭제하기</button>
+         	</div>
+            </c:if>
+         	</c:forEach>
+
+      		
+           <div class="input-group mb-1" id="addFile">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
                 </div>
                 <div class="custom-file">
-                  <input type="file" name="upFile" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                  <label class="custom-file-label" for="inputGroupFile01">${pfList.postOriginalFileName}</label>
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="upFile" aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요</label>
                 </div>
             </div>
-            </c:if>
-         	</c:forEach>
-         
-           <div class="input-group mb-1" id="addFile">
+            <div class="input-group mb-1" id="addFile">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupFileAddon01">파일첨부</span>
                 </div>
@@ -91,7 +96,6 @@ window.onload = ()=>{
     });   
 };
 CKEDITOR.editorConfig = function( config ) {
-    config.filebrowserUploadMethod = "form";
 
     config.enterMode = CKEDITOR.ENTER_BR;
     config.fillEmptyBlocks = false;

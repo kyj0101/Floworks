@@ -4,16 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="search">
 
-	<resultMap type="map" id="postMap">
-		<id column="post_no" property="postNo"/>
-		<result column="id" property="id"/>
-		<result column="post_title" property="postTitle"/>
-		<result column="post_content" property="postContent"/>
-		<result column="post_date" property="postDate"/>
-		<result column="department_name" property="departmentName"/>
-		<result column="name" property="name"/>		
-	</resultMap>
-
 	<select id="selectSearchBoardList" resultMap="postMap">
 		select 
 		    *
@@ -26,7 +16,8 @@
         		join department d
             		on m.department_code = d.department_code
 		where 
-			f.workspace_id = #{workspaceId}
+			post_del = 'N'
+			and f.workspace_id = #{workspaceId}
 		    and (p.id like '%' || #{keyword} || '%'
 		    or f.name like '%' || #{keyword} || '%'
 		    or d.department_name = '%' || #{keyword} || '%' 
@@ -49,7 +40,8 @@
         		join department d
             		on m.department_code = d.department_code
 		where
-			f.workspace_id = #{workspaceId}
+			post_del = 'N'
+			and f.workspace_id = #{workspaceId}
 		    and (p.id like '%' || #{keyword} || '%'
 		    or f.name like '%' || #{keyword} || '%'
 		    or d.department_name = '%' || #{keyword} || '%' 
@@ -133,6 +125,146 @@
 		    or e.email_content like '%' || #{keyword} || '%'
 		    or e.time like '%' || #{keyword} || '%')
 	</select>
+	
+	<select id="selectSearchPostFileList" resultMap="postAndFileMap">
+		select
+		    *
+		from
+		    post_file f
+		        join post p
+		            on f.post_no = p.post_no
+		        join floworks_user u
+		            on p.id = u.id
+		where
+			post_del = 'N'
+		    and u.workspace_id = #{workspaceId}
+		    and post_original_filename like '%' || #{keyword} || '%'
+		order by
+			post_date desc
+	</select>
+
+	<select id="getTotalSearchPostFile" resultType="int">
+		select
+		    count(*)
+		from
+		    post_file f
+		        join post p
+		            on f.post_no = p.post_no
+		        join floworks_user u
+		            on p.id = u.id
+		where
+			post_del = 'N'
+		    and u.workspace_id = #{workspaceId}
+		    and post_original_filename like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectSearchEmailSentFileList" resultMap="emailAndFileMap">
+		select
+		    *
+		from
+		    email_file  f
+		        join email e
+		            on f.file_no = e.file_no
+		        join email_sent s
+		            on e.email_no = s.email_no
+		where
+		    e.id = #{id}
+		    and del_yn = 'N'
+		    and (f.file_originalname1 like '%' || #{keyword} || '%'
+		    or f.file_originalname2 like '%' || #{keyword} || '%'
+		    or f.file_originalname3 like '%' || #{keyword} || '%')
+		order by
+			time desc
+	</select>
+	
+	<select id="getTotalFileEmailSent" resultType="int">
+		select
+		    count(*)
+		from
+		    email_file  f
+		        join email e
+		            on f.file_no = e.file_no
+		        join email_sent s
+		            on e.email_no = s.email_no
+		where
+		    e.id = #{id}
+		    and del_yn = 'N'
+		    and (f.file_originalname1 like '%' || #{keyword} || '%'
+		    or f.file_originalname2 like '%' || #{keyword} || '%'
+		    or f.file_originalname3 like '%' || #{keyword} || '%')
+	</select>
+	
+	<select id="selectSearchEmailInboxFileList" resultMap="emailAndFileMap">
+		select
+		    *
+		from
+		    email_file  f
+		        join email e
+		            on f.file_no = e.file_no
+		        join email_inbox s
+		            on e.email_no = s.email_no
+		where
+		    s.recipient_id = #{id}
+		    and del_yn = 'N'
+		    and (f.file_originalname1 like '%' || #{keyword} || '%'
+		    or f.file_originalname2 like '%' || #{keyword} || '%'
+		    or f.file_originalname3 like '%' || #{keyword} || '%')
+		order by
+			time desc
+	</select>
+	
+	<select id="getTotalFileEmailInbox" resultType="int">
+		select
+		    count(*)
+		from
+		    email_file  f
+		        join email e
+		            on f.file_no = e.file_no
+		        join email_inbox s
+		            on e.email_no = s.email_no
+		where
+		    s.recipient_id = #{id}
+		    and del_yn = 'N'
+		    and (f.file_originalname1 like '%' || #{keyword} || '%'
+		    or f.file_originalname2 like '%' || #{keyword} || '%'
+		    or f.file_originalname3 like '%' || #{keyword} || '%')
+	</select>
+
+	<resultMap type="map" id="emailAndFileMap">
+		<id column="email_no" property="emailNo"/>
+		<result column="id" property="id"/>
+		<result column="subject" property="subject"/>
+		<result column="time" property="time"/>
+		<result column="recipient" property="recipient" />
+		<result column="external_Recipient" property="externalRecipient" />
+		<result column="email_cc" property="emailCC" />
+		<result column="email_bcc" property="emailBCC" />
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_originalname1" property="fileOriginalname1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_originalname2" property="fileOriginalname2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+		<result column="file_originalname3" property="fileOriginalname3" />
+	</resultMap>
+	
+	<resultMap type="map" id="postAndFileMap">
+		<id column="post_no" property="postNo"/>
+		<result column="id" property="id"/>
+		<result column="post_title" property="postTitle"/>
+		<result column="post_date" property="postDate"/>
+		<result column="POST_ORIGINAL_FILENAME" property="postOriginalFileName"/>
+		<result column="POST_RENAMED_FILENAME" property="postRenamedFileName"/>
+	</resultMap>
+	
+	<resultMap type="map" id="postMap">
+		<id column="post_no" property="postNo"/>
+		<result column="id" property="id"/>
+		<result column="post_title" property="postTitle"/>
+		<result column="post_content" property="postContent"/>
+		<result column="post_date" property="postDate"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="name" property="name"/>		
+	</resultMap>
 
 
 </mapper>
