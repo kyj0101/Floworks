@@ -22,7 +22,7 @@
 	                <div class="input-group-prepend">
 	                  <span class="input-group-text" id="inputGroup-sizing-default">직원명</span>
 	                </div>
-	                <input type="text" id="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="조충범" readonly>
+	                <input type="text" id="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<sec:authentication property="principal.name"/>" readonly>
 	            </div>
 	
 	            <div class="input-group mb-3">
