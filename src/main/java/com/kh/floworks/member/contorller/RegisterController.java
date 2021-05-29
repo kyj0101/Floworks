@@ -87,7 +87,6 @@ public class RegisterController {
 	public String registerUser(User user , @RequestParam(required = false) boolean createWorkspace) {
 
 		try {
-			
 
 			String bcryptPwd = bcryptPasswordEncoder.encode(user.getPassword());
 
@@ -109,7 +108,9 @@ public class RegisterController {
 	}
 	
 	@RequestMapping("/registerWorkspace")
-	public String registerWorkspace(String id, String workspaceId, Model model) {
+	public String registerWorkspace(@RequestParam(required = false) String id, 
+			                        @RequestParam(required = false) String workspaceId,
+			                        Model model) {
 		
 		List<Map<String,String>> deptList = memberService.selectDeptNameList();
 		List<String> positionList = memberService.selectPositionList();
