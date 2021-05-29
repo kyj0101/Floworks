@@ -15,9 +15,11 @@
 		<hr class="my-4">
 	</div>
 
+	<sec:authentication property="principal" var="loginId"/>
 	<div class="list-group">
 	<c:if test="${mainPostList != null}">
-	<c:forEach items="${mainPostList}" var="mPost">
+	<c:forEach items="${mainPostList}"  begin="1" end="3" var="mPost">
+		<c:if test="${loginId.workspaceId eq mPost.workspaceId}">
 		<a href="${pageContext.request.contextPath}/board/boardView?postNo=${mPost.postNo}" class="list-group-item list-group-item-action">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">${mPost.postTitle}</h5>
@@ -26,6 +28,7 @@
 			<p class="mb-1">${mPost.postContent}</p> 
 			<small>${mPost.name} (${mPost.departmentName})</small>
 		</a> 
+		</c:if>
 	</c:forEach>
 	</c:if>
 	</div>
