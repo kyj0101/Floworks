@@ -36,8 +36,13 @@
           <a class="dropdown-item" href="boardList?dept=부&boardNo=${boardNo}">전체보기</a>
         </div>
       </div>
+      
+    <sec:authentication property="principal" var="loginId"/>  
+    <c:if test="${loginId.position eq '대표' || boardNo eq 2}">  
     <input type="button" class="btn btn-primary d-inline-block float-right"
     		value="글쓰기" onclick="goBoardForm(${boardNo});"/>
+    </c:if>		
+    		
     <div id="board-list">
         <table class="table table-hover">
             <thead>
@@ -54,6 +59,7 @@
             <tbody>
             <c:if test="${list != null}">
               <c:forEach items="${list}" var="post">
+              	<c:if test="${loginId.workspaceId eq post.workspaceId}"> 
 				<tr data-no="${post.postNo}">
 					<td>${post.postNo}</td>
 					<td>${post.departmentName}</td>
@@ -70,6 +76,7 @@
 					<td><fmt:formatDate value="${post.postDate}" pattern="yy/MM/dd"/></td>
 					<td>${post.postReadCount}</td>
 				</tr>
+				</c:if>
 			  </c:forEach>
 		    </c:if>
             </tbody>

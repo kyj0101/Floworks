@@ -32,6 +32,7 @@
             <input type="text" class="form-control mb-3" placeholder="제목을 입력하세요" name="postTitle" id="title">
             <input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />
             <input type="hidden" name="boardNo" value="${boardNo}"/>
+            <input type="hidden" name="workspaceId" value="${workspaceId}"/>
             
             <div class="input-group mb-1" id="addFile">
                 <div class="input-group-prepend">

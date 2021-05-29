@@ -56,13 +56,16 @@
          </c:if>
          </c:forEach>
          
-         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
+         <sec:authentication property="principal" var="loginId"/>
+         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 
+         -->
 
+		 <c:if test="${loginId.id eq postList.id || loginId.position eq '대표'}">
          <div class="float-right" id="view-btn">
              <button type="button" class="btn btn-primary float-right" onclick="postUpdate(${postList.postNo},${postList.boardNo});">수정</button>
              <button type="button" class="btn btn-primary float-right" onclick="postDelete(${postList.postNo},${postList.boardNo});">삭제</button>
          </div>
-
+		 </c:if>
 		 
          <!-- 댓글자리 -->
          <div id="comment-list">
@@ -79,9 +82,9 @@
 	                     </td>
 	                     <td>
 	                         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-
+							 <c:if test="${loginId.id eq cmt.cmId || loginId.position eq '대표'}">
 	                         <button type="submit"  class="btn btn-secondary float-right" onclick="commentDelete(${cmt.postNo},${cmt.commentNo});">삭제</button>
-
+							 </c:if>
 	                     </td>
 	                 </tr>
                  </c:if>
@@ -90,7 +93,7 @@
              </table>
             
 		   <form:form 
-		 		name="postCm"
+		   		name="postCm"
 		 		action="${pageContext.request.contextPath}/board/commentInsert" 
 				method="post"
 				enctype="multipart/form-data" 
