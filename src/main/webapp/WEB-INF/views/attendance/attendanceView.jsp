@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<%@page import="com.kh.floworks.member.model.vo.Member, java.util.*"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="근태 조회" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/attendance/attendance.css">
 
-
+<!-- js -->   
+<script src="${pageContext.request.contextPath }/resources/js/attendance/attendance.js"></script>
 <section>
 
 	<!-- 개인 근태 관리 창 -->
@@ -22,7 +29,7 @@
 	                <div class="input-group-prepend">
 	                  <span class="input-group-text" id="inputGroup-sizing-default">직원명</span>
 	                </div>
-	                <input type="text" id="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="조충범" readonly>
+	                <input type="text" id="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<sec:authentication property="principal.name"/>" readonly>
 	            </div>
 	
 	            <div class="input-group mb-3">
@@ -46,7 +53,7 @@
 	                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="13" readonly>
 	            </div>
 	
-	            <button type="button" class="btn btn-outline-secondary">연차 사용하기</button>
+	            <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/leave/request'">연차 사용하기</button>
 	            
 	        </div>
 	    </div>
