@@ -33,6 +33,37 @@ $(() => {
 	
 });
 
+$(() => {
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	$("[name=deleteBtn]").onclick(e => {	
+		var deleteNo = $(e.target).val();
+		console.log(deleteNo);
+		  
+		
+	});
+	$.ajax({
+	        type:"post",
+	        url:"${pageContext.request.contextPath}/fileDelete",
+	        data: {deleteNo},
+	        //토큰 처리
+	        beforeSend(xhr){
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+	        
+	        success(no){
+	          
+	        },
+	        
+	        error(xhr,status,error){
+	            alert("파일 삭제 중 에러가 발생했습니다.");
+	        },
+	    });//end of ajax 
+
+});
+
+
+
 
 
 
