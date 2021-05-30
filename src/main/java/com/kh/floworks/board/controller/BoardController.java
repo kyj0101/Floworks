@@ -326,8 +326,8 @@ public class BoardController {
 		return "redirect:/board/boardView?postNo=" + postNo;
 	}
 	
-	@ResponseBody
 	@PostMapping("/fileDelete")
+	@ResponseBody
 	public void fileDelete(@RequestParam int deleteNo) {
 		log.info("deleteNo = {}", deleteNo);
 		//1. 업무로직

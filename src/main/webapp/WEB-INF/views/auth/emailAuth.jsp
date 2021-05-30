@@ -31,7 +31,7 @@
 		<div class="container-fluid px-4 px-lg-0">
 			<h1 class=" lh-1 mb-4"
 				style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Floworks</h1>
-			<p class="mb-5">아래 버튼을 눌려 이메일 인증을 완료하세요.</p>
+			<p class="mb-5 info-p">아래 버튼을 눌려 이메일 인증을 완료하세요.</p>
 			<div class="input-group input-group-newsletter">
 				<button id="btn" type="button"
 					class="btn btn-light btn-lg justify-content-center"
@@ -51,13 +51,12 @@ $(function(){
 	
 	
 	$("#btn").click(function(){
-		console.log("?")
+
 		const csrfHeaderName = "${_csrf.headerName}";
 		const csrfTokenValue = "${_csrf.token}";
 
 		const authKey = "${authKey}";
 		const email = "${email}";
-		console.log(email);
 
 		$.ajax({
 			type:"post",
@@ -69,7 +68,7 @@ $(function(){
 			},
 			
 			success(){
-				$("h1").text("인증이 완료되었습니다. 창을 닫으셔도 됩니다.");
+				$(".info-p").text("인증이 완료되었습니다. 창을 닫으셔도 됩니다.");
 			},
 			error(xhr, status, err){
 				alert("잘못된 인증 페이지 입니다.");
@@ -77,3 +76,6 @@ $(function(){
 		});
 	});
 });
+
+</script>
+

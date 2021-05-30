@@ -108,6 +108,38 @@ CKEDITOR.editorConfig = function( config ) {
 };
 
 
+$(()=>{
+	
+	$("[name=deleteBtn]").click(e => {
+		
+		const csrfHeaderName = "${_csrf.headerName}";
+		const csrfTokenValue = "${_csrf.token}";
+		const deleteNo = $(e.target).val();
+		console.log("daleteNo ",deleteNo)
+		
+ 		$.ajax({
+	        type:"post",
+	        url:"${pageContext.request.contextPath}/board/fileDelete",
+	        data: {deleteNo},
+	        //토큰 처리
+	        beforeSend(xhr){
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+	        
+	        success(no){
+	          
+	        },
+	        
+	        error(xhr,status,error){
+				console.log(xhr,status,error);
+	            alert("파일 삭제 중 에러가 발생했습니다.");
+	        },
+	    });//end of ajax 		
+	});
+
+	
+	
+})
 
 </script>
 
