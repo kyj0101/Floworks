@@ -127,7 +127,10 @@ $(()=>{
 	        },
 	        
 	        success(no){
-	          
+	        	alert("선택하신 파일이 삭제되었습니다.");
+	        	console.log($(e.target));
+	        	$(e.target).hide();
+
 	        },
 	        
 	        error(xhr,status,error){

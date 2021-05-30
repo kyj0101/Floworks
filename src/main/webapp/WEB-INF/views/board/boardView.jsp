@@ -105,7 +105,7 @@
 			 				aria-describedby="button-addon2">
 			  		<input type="hidden" name="commentLevel" value="1" />
                		
-               		<input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />    
+               		<input type="hidden" name="cmId" value="<sec:authentication property="principal.id"/>" />    
 					<input type="hidden" name="postNo" value="${postList.postNo}" />
                		<input type="hidden" name="postCommentNo" value="0" />  
 			  		<div class="input-group-append d-inline" >		
