@@ -332,6 +332,7 @@ $(".recipient-input").autocomplete({
 	
 	source: function(request, response){
 		
+		const id = '<sec:authentication property="principal.id"/>'
 		const workspaceId = '<sec:authentication property="principal.workspaceId"/>'
 		const keyword = request.term;
 		const subKeyword = keyword.substring(keyword.lastIndexOf(",") + 1).trim();
@@ -339,7 +340,10 @@ $(".recipient-input").autocomplete({
 		$.ajax({
 			
 			url:"${pageContext.request.contextPath}/email/getRecipientList",
-			data:{ 'searchKeyword':subKeyword, 'workspaceId':workspaceId},
+			data:{'searchKeyword':subKeyword, 
+				  'workspaceId':workspaceId,
+			      'id':id	  
+			},
 			
 			success(data){
 				response($.map(data, (item) =>{

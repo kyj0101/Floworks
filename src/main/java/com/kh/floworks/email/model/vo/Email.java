@@ -11,6 +11,7 @@ public class Email {
 	
 	private int emailNo;
 	private String id;
+	private String name;
 	private String recipient;
 	private String externalRecipient;
 	private String emailCC;

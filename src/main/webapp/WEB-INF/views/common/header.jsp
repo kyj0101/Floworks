@@ -55,12 +55,12 @@
                                           <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="select-search-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           </button>
                                           <div class="dropdown-menu">
-                                            <button class="dropdown-item" type="button" >게시판</button>
-										    <button class="dropdown-item" type="button" >게시판 파일</button>
-										    <button class="dropdown-item" type="button" >보낸 이메일</button>
-										    <button class="dropdown-item" type="button" >받은 이메일</button>
-										    <button class="dropdown-item" type="button" >보낸 이메일 파일</button>
-										    <button class="dropdown-item" type="button" >받은 이메일 파일</button>
+                                            <button class="dropdown-item menu-btn" type="button" >게시판</button>
+										    <button class="dropdown-item menu-btn" type="button" >게시판 파일</button>
+										    <button class="dropdown-item menu-btn" type="button" >보낸 이메일</button>
+										    <button class="dropdown-item menu-btn" type="button" >받은 이메일</button>
+										    <button class="dropdown-item menu-btn" type="button" >보낸 이메일 파일</button>
+										    <button class="dropdown-item menu-btn" type="button" >받은 이메일 파일</button>
                                           </div>
                                         </div>
                                         <input type="text" class="form-control" id="input-search" aria-label="" placeholder="검색어를 입력하세요.">
@@ -354,8 +354,28 @@ $(function(){
 	}
 	
 	$(".dropdown-item").click(function(){
-		$("#select-search").text($(this).text());
+		const type = $(this).text();
+		const $inputSearch = $("#input-search");
+		
+		$("#select-search").text(type);
+		
+		if(type === "게시판"){
+			$inputSearch.attr("placeholder", "글쓴이,부서명,제목,내용,날짜로 검색하세요.");
+		}
+		
+		if(type === "보낸 이메일"){	
+			$inputSearch.attr("placeholder", "수신자,제목,내용,날짜로 검색하세요.");
+		}
+		
+		if(type === "받은 이메일"){
+			$inputSearch.attr("placeholder", "발송인,수신자,제목,내용,날짜로 검색하세요.");		
+		}
+		
+		if(type === "게시판 파일" || type === "보낸 이메일 파일" || type === "받은 이메일 파일"){
+			$inputSearch.attr("placeholder", "파일 이름으로 검색하세요.");
+		}
 	});
+	
 	
 	$(".search-btn").click(function(){
 
@@ -388,7 +408,6 @@ $(function(){
 			
 			return false;
 		}
-		
-	});
+	});d
 });
 </script>

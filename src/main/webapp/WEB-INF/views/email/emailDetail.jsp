@@ -34,7 +34,7 @@
 			</li>
 			<li>
 				<p>
-					<strong>${email.id}</strong>
+					<strong>${email.name} : ${email.id}</strong>
                     <br>
                     to : ${email.recipient}
 				</p>
