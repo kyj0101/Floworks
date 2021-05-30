@@ -142,7 +142,6 @@
 					onclick="history.back();">취소</button>
 				<button type="button" class="btn btn-primary btn-lg" id="send-btn">보내기</button>
 			</div>
-
 		</div>
 	</form>
 </section>

@@ -215,8 +215,6 @@ public class BoardController {
 		log.info("postList = {}", postList);
 		log.info("postFile = {}", postFile);
 		
-		//파일 삭제 
-		//boardService.deletePost(deleteNo);
 		
 		try {
 			log.info("post = {}", postList);
@@ -256,13 +254,8 @@ public class BoardController {
 
 				log.info("pFList = {}", pFList);
 			}
-			
-		
 
-			
 			//1. 업무로직
-
-//			postList.setPostNo(postList.getPostNo());
 			postList.setPostFileList(pFList);
 			log.info("post = {}", postList);
 			int result = boardService.updatePost(postList);
@@ -321,7 +314,7 @@ public class BoardController {
 	@GetMapping("/commentDelete")
 	public String commentDelete(@RequestParam int postNo,
 								@RequestParam int commentNo, 
-							RedirectAttributes redirectAttr) {
+								RedirectAttributes redirectAttr) {
 		//1. 업무로직
 		int result = boardService.commentDelete(commentNo);
 		log.info("result = {}", result);
@@ -333,8 +326,13 @@ public class BoardController {
 		return "redirect:/board/boardView?postNo=" + postNo;
 	}
 	
-
-	
+	@PostMapping("/fileDelete")
+	@ResponseBody
+	public void fileDelete(@RequestParam int deleteNo) {
+		log.info("deleteNo = {}", deleteNo);
+		//1. 업무로직
+		boardService.deletePost(deleteNo);
+	}
 	
 	
 	

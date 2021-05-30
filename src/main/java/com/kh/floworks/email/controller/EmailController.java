@@ -181,8 +181,9 @@ public class EmailController {
 			email = emailService.selectOneEmailSent(emailNo);			
 		}
 		
+		
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
-		log.info("listType{}",listType);
+		log.info("email{}",email);
 		model.addAttribute("email", email);
 		model.addAttribute("listType", listType);
 		model.addAttribute("fileMap", fileMap);

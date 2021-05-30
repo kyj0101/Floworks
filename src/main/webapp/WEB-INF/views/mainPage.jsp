@@ -33,7 +33,7 @@
 		location.href="${pageContext.request.contextPath}/register";
 	}
 	function goWorksapace(){
-		location.href="${pageContext.request.contextPath}/createWorkspace";
+		location.href="${pageContext.request.contextPath}/register/registerWorkspace";
 	}
 	function goHome(){
 		location.href="${pageContext.request.contextPath}/home";
@@ -59,14 +59,15 @@
 			<sec:authorize access="isAnonymous()">
 			
 				<div class="menu">
-			        
-			        <!-- Indicates caution should be taken with this action -->
+				
 					<button type="button" id="menu" class="btn btn-warning" onclick="goLogin();">로그인</button>
 					<button type="button" id="menu" class="btn btn-warning" onclick="goRegister();">회원가입</button>
-					<button type="button" id="menu" class="btn btn-warning" onclick="goWorksapace();" style="width: 160px;">워크스페이스 추가</button>
 		    	
 		    	</div>
-			
+				
+				<div>
+					<h1 style=""></h1>
+				</div>
 			</sec:authorize>
 		    
 	    </div>

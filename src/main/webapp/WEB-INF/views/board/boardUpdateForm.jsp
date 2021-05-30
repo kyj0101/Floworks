@@ -42,7 +42,7 @@
             <c:forEach items="${postList.postFileList}" var="pfList">
          	<c:if test="${pfList.postOriginalFileName != null}">
             <div class="btn-group btn-group-toggle" data-toggle="buttons" id="fileButton">
-               <button class="btn btn-outline-primary" type="button" name="options" id="option1" >
+               <button class="btn btn-outline-primary" type="button" name="deleteBtn"  value="${pfList.postFileNo}"  id="option1" >
                	  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
 				  <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
 				  </svg> ${pfList.postOriginalFileName} -삭제하기</button>
@@ -90,16 +90,60 @@
  
  
 <script>
+
 window.onload = ()=>{
     CKEDITOR.replace('postContent', {
         height: 500,
     });   
+    
+
+    
 };
+
 CKEDITOR.editorConfig = function( config ) {
 
     config.enterMode = CKEDITOR.ENTER_BR;
     config.fillEmptyBlocks = false;
+		
 };
+
+
+$(()=>{
+	
+	$("[name=deleteBtn]").click(e => {
+		
+		const csrfHeaderName = "${_csrf.headerName}";
+		const csrfTokenValue = "${_csrf.token}";
+		const deleteNo = $(e.target).val();
+		console.log("daleteNo ",deleteNo)
+		
+ 		$.ajax({
+	        type:"post",
+	        url:"${pageContext.request.contextPath}/board/fileDelete",
+	        data: {deleteNo},
+	        //토큰 처리
+	        beforeSend(xhr){
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+	        
+	        success(no){
+	        	alert("선택하신 파일이 삭제되었습니다.");
+	        	console.log($(e.target));
+	        	$(e.target).hide();
+
+	        },
+	        
+	        error(xhr,status,error){
+				console.log(xhr,status,error);
+	            alert("파일 삭제 중 에러가 발생했습니다.");
+	        },
+	    });//end of ajax 		
+	});
+
+	
+	
+})
+
 </script>
 
 

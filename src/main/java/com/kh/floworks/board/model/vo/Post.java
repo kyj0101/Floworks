@@ -20,7 +20,7 @@ public class Post {
 	private Date postDate;
 	private int postReadCount;
 	private boolean postDel;
-	
+	private String workspaceId;
 	
 	private int fileCount;			
 	private List<PostFile> postFileList;
