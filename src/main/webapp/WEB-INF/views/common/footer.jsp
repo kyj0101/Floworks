@@ -54,24 +54,14 @@
 			<div class="collapse hide" id="sidebarAtten"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">메뉴 1 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+					<li class="nav-item">
+						<a href="${pageContext.request.contextPath}/attendance/view?workspaceId=<sec:authentication property="principal.workspaceId"/>&id=<sec:authentication property="principal.id"/>" class="nav-link active">내 근태 관리</a>
+					</li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
-			</div></li>
-			
-		<li class="nav-item">
-			<a class="nav-link" href="#sidebarleave" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebarleave"> 
-				<i class="bi bi-clipboard-check"></i>
-				휴가
-			</a>
-			<div class="collapse hide" id="sidebarleave" style="padding-left: 35px;">
-				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/leave/request" class="nav-link active">휴가 신청</a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
-				</ul>
-			</div></li>
+			</div>
+		</li>			
 			
 		<li class="nav-item"><a class="nav-link" href="#sidebarChart"
 			data-toggle="collapse" role="button" aria-expanded="true"
@@ -119,8 +109,9 @@
 			<div class="collapse hide" id="sidebarAdmin"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴 1 </a></li>
+					<li class="nav-item">
+						<a href="#" class="nav-link active"> 메뉴 1 </a>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 2 </a>
 					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
