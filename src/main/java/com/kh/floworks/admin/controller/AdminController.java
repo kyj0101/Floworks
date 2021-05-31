@@ -34,4 +34,6 @@ public class AdminController {
 			
 			model.addAttribute("loginMember", authentication.getPrincipal());
 	}
+	
+	
 }
