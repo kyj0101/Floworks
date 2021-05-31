@@ -25,7 +25,12 @@ public interface AttendanceDao {
 
 	List<String> selectAttendanceMonth(String id);
 
+	List<Attendance> selectListAttendance(Map<String, Object> param);
+
 	int updateAttendanceOfficeOff(Map<String, Object> param);
+
+	int getTotalAttendance(String id);
+
 
 
 
