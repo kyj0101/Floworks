@@ -5,15 +5,16 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
+import lombok.ToString;
 
 
 @Data
+@ToString
 public class Member extends User implements UserDetails{
 
 	private static final long serialVersionUID = 1L;
