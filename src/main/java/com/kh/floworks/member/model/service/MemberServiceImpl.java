@@ -115,6 +115,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateProfile(updateMember);
 	}
 
+	@Override
+	public Member selectOneMember(String id) {
+		return memberDao.selectOneMember(id);
+	}
+
 
 
 

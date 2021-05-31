@@ -27,7 +27,7 @@
 
 	<script>
 	function goLogin(){
-		location.href="${pageContext.request.contextPath}/login.do";
+		location.href="${pageContext.request.contextPath}/login";
 	}
 	function goRegister(){
 		location.href="${pageContext.request.contextPath}/register";

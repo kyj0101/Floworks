@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/createWorkspace.css">
 
 <!-- js -->   
-<script src="${pageContext.request.contextPath }/resources/js/member/createWorkspace.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/member/profileThumbnail.js"></script>
 
 <section>
 	<div class="register-div">

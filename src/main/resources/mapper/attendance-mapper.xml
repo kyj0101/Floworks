@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attendance">
+
+	<insert id="insertAttendanceOfficeIn">
+		insert into 
+			attendance
+		values(
+				#{id}, 
+		        #{day}, 
+		        #{officeIn}, 
+		        null,
+		        #{latenessYn}
+		        )
+	</insert>
+	
+	<select id="selectAttendanceSystem" resultMap="attendanceSystemMap">
+		select
+		    *
+		from
+		    attendance_system
+		where
+		    workspace_id = #{workspaceId}
+	</select>
+	
+	<select id="selectLatenessCount" resultType="int">
+		select
+		    count(*)
+		from
+		    attendance
+		where
+		    id = #{id}
+		    and  extract(month from day) = #{month}
+		    and  lateness_yn = 'Y'
+	</select>
+	
+	<select id="selectweekOfficeHours" resultType="attendance">
+		select
+			day,
+		    office_in,
+		    office_off
+		from 
+		    attendance
+		where
+			id = #{id}
+		    and day between #{startOfWeek} and #{endOfWeek}
+	</select>
+	
+	<select id="selectmonthOfficeHours" resultType="attendance">
+		select
+		    day,
+		    office_in,
+		    office_off
+		from
+		    attendance
+		where
+		    id = #{id}
+		    and  extract(month from day) = #{month}
+	</select>
+	
+	<select id="selectOneAttendance" resultType="attendance">
+		select  
+		   	*
+		from
+		    attendance
+		where
+		    id = #{id}
+		    and to_char(day, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+	</select>
+	
+	<select id="selectAttendanceYear" resultType="string">
+		select distinct
+		    extract(year from day)
+		from
+		    attendance
+		where
+		    id = #{id}
+	</select>
+	
+	<select id="selectAttendanceMonth" resultType="string">
+		select distinct
+		    extract(month from day)
+		from
+		    attendance
+		where
+		    id = #{id}
+	</select>
+	
+	<update id="updateAttendanceOfficeOff">
+		update
+			attendance
+		set
+			office_off = #{now}
+		where
+			id = #{id}
+			and to_char(day, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+	</update>
+	
+	<resultMap type="map" id="attendanceSystemMap">
+	
+		<result column="FLEX_TIME_YN" property="flexTimeYn"/>
+		<result column="OFFICE_IN_TIME" property="officeInTime"/>
+		<result column="OFFICE_OFF_TIME" property="officeOffTime"/>
+		<result column="MEMO" property="memo"/>
+		<result column="lunch_time_start" property="lunchTimeStart"/>
+		<result column="lunch_time_end" property="lunchTimeEnd"/>
+		
+	</resultMap>
+
+</mapper>
