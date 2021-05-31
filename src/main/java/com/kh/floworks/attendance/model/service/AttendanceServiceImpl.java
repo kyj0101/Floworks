@@ -58,9 +58,20 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 	
 	@Override
+	public List<Attendance> selectListAttendance(Map<String, Object> param) {
+		return attendanceDao.selectListAttendance(param);
+	}
+
+	@Override
 	public int updateAttendanceOfficeOff(Map<String, Object> param) {
 		return attendanceDao.updateAttendanceOfficeOff(param);
 	}
+
+	@Override
+	public int getTotalAttendance(String id) {
+		return attendanceDao.getTotalAttendance(id);
+	}
+
 
 
 

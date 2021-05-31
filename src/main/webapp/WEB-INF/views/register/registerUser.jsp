@@ -12,6 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js" integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- js -->
+<script src="${pageContext.request.contextPath }/resources/js/member/register.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/member/profileThumbnail.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
@@ -24,19 +25,19 @@
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 				
 				<div class="form-label-group">
-					<input type="text" name="id" id="inputUserame" class="form-control" placeholder="Username">
+					<input type="text" name="id" id="inputUserame" class="form-control register-form-control" placeholder="Username">
 					<label for="inputUserame">아이디</label>
 					<p class="input-warning">중복된 아이디 입니다.</p>
 				</div>
 				
 				<div class="form-label-group">
-					<input type="text" name="name" id="inputname" class="form-control" placeholder="Username">
+					<input type="text" name="name" id="inputname" class="form-control register-form-control" placeholder="Username">
 					<label for="inputname">이름</label>
 					<p class="input-warning">올바른 이름이 아닙니다.</p>
 				</div>
 
 				<div class="form-label-group">
-					<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"> 
+					<input type="email" name="email" id="inputEmail" class="form-control register-form-control" placeholder="Email address"> 
 					<label for="inputEmail">이메일</label>
 					<p class="input-warning">이메일 형식이 올바르지 않습니다.</p>
 					<p class="email-p">이메일 인증이 완료되었습니다.</p>
@@ -49,13 +50,13 @@
 				<hr>
 
 				<div class="form-label-group">
-					<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
+					<input type="password" name="password" id="inputPassword" class="form-control register-form-control" placeholder="Password">
 					<label for="inputPassword">비밀 번호</label>
 					<p class="input-warning">잘못된 비밀번호 입니다.</p>
 				</div>
 
 				<div class="form-label-group">
-					<input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password">
+					<input type="password" id="inputConfirmPassword" class="form-control register-form-control" placeholder="Password">
 					<label for="inputConfirmPassword">비밀 번호 확인</label>
 					<p class="input-warning">비밀번호가 일치하지 않습니다.</p>
 				</div>
@@ -63,7 +64,7 @@
 				<hr>
 
 				<div class="form-label-group">
-					<input type="tel" name="phone" id="inputuserame" class="form-control" placeholder="Username"> 
+					<input type="tel" name="phone" id="inputuserame" class="form-control register-form-control" placeholder="Username"> 
 					<label for="inputuserame">전화 번호 ('-'를 빼고 입력해주세요.)</label>
 					<p class="input-warning">잘못된 전화번호 입니다.</p>
 				</div>
@@ -71,7 +72,7 @@
 				<hr />
 
 				<div class="form-label-group">
-					<input type="text" name="address" id="inputAddress" class="form-control" placeholder="address">
+					<input type="text" name="address" id="inputAddress" class="form-control register-form-control" placeholder="address">
 					<label for="inputAddress">주소</label>
 					<p class="input-warning">잘못된 주소 입니다.</p>
 				</div>
@@ -79,7 +80,7 @@
 				<hr>
 				
 				<div class="form-label-group">
-					<input type="text" name="workspaceId" id="inputWorkspace" class="form-control workspace" placeholder="workspace">
+					<input type="text" name="workspaceId" id="inputWorkspace" class="form-control workspace register-form-control" placeholder="workspace">
 					<label for="inputWorkspace">워크스페이스 ID</label>
 					<p class="input-warning">잘못된 아이디 입니다.</p>
 				</div>
@@ -90,7 +91,7 @@
 				</div>
 				<hr>
  
-				<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" id="submit-btn">
+				<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase register-form-control" id="submit-btn">
 					가입하기
 				</button>
 				<hr />

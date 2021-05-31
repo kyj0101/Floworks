@@ -2,6 +2,7 @@ package com.kh.floworks.member.contorller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,15 +46,8 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
-	
-	
-	@GetMapping("/mainPage")
-	public String indexPage() {
-		return "/member/mainPage";
-	}
 
-	@GetMapping(value={"/mypage","/mypage/update"})
+	@GetMapping("/mypage")
 	public String memberUpdate(String id, Model model) {
 		
 		//스프링 시큐리티 태그를 사용하면 글자가 깨져서 직접 model에 member객체를 전달한다.
@@ -124,16 +117,46 @@ public class MemberController {
 	
 		return "redirect:/member/mypage?id=" + updateMember.getId();
 	}
-	
-	
+
 	@GetMapping("/delete")
 	public String memberDelete() {		
 		return "/member/memberDelete";
 	}
 	
-	@GetMapping("/updatePwd")
+	@GetMapping("/update/password")
 	public String updatePassword() {	
-		return "/member/updatePassword";
+		return "/member/memberUpdatePassword";
+	}
+	
+	@PostMapping("/update/password")
+	public String updatePassword(String id,
+			                     String password,
+                                 @RequestParam(value="original-password") String originalPassword,
+                                 RedirectAttributes redirectAttr) {	
+		try {
+			
+			Member member = memberService.selectOneMember(id);
+			
+			if(bcryptPasswordEncoder.matches(originalPassword, member.getPassword())) {
+				
+				Map<String, Object> param = new HashMap<>();
+				
+				param.put("id", id);
+				param.put("password", bcryptPasswordEncoder.encode(password));
+				
+				memberService.updatePassword(param);
+				redirectAttr.addFlashAttribute("msg", "정상적으로 비밀번호가 변경되었습니다.");
+			
+			}else {
+				redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않으므로 비밀번호를 변경할 수 없습니다.");
+			}
+			
+			return "redirect:/member/update/password";
+			
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
 	}
 	
 	@InitBinder

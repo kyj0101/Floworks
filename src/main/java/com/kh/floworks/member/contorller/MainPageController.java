@@ -26,34 +26,29 @@ public class MainPageController {
 		return "mainPage";
 	}
 
-	@GetMapping("/mainPage")
-	public String indexPage() {
-		return "/member/mainPage";
-	}
-
 	@GetMapping("/login")
 	public String login() {	
-		return "/member/login";
+		return "/login/login";
 	}
 	
 	@PostMapping("/login") //로그인 처리 X  | 로그인 실패 후 POST 요청 처리 O 
-	public String loginFail() {		
-		return "/member/login";
+	public String loginFail() {
+		return "/login/login";
 	}
 	
 	@GetMapping("/register")
 	public String register() {
-		return "/member/register"; 
+		return "/register/registerUser"; 
 	}
 	
 	@GetMapping("/createWorkspace")
 	public String createWorkspace() {
-		return "/member/createWorkspace"; 
+		return "/register/createWorkspace"; 
 	}
 	
 	@GetMapping("/find/password")
 	public String findPassword() {
-		return "/member/findPassword";
+		return "/login/findPassword";
 	}
 
 }
