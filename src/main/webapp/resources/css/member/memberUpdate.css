@@ -41,7 +41,7 @@
     background-color: rgb(226, 226, 226);
     border-radius: 10px;
     width: 75%;
-    height: 600px;
+    height: 700px;
     margin: 0px auto 0 auto;
     padding:20px;
     text-align: center;
@@ -74,4 +74,28 @@ section{
 
 .custom-file-label{
 	text-align: left;
+}
+
+.input-warning{   
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 10px;
+    color: red;
+    display: none
+    
+}
+.email-p{
+	color: blue;
+	text-align: right;
+    padding-right: 20px;
+    padding-top: 10px;
+    display: none
+}
+
+label{
+	display: none;
+}
+
+.custom-file-label{
+	display: inline-block;
 }
