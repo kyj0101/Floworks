@@ -118,8 +118,8 @@ $(document).ready(function(){
 			<div class="current-time">
            	<%-- <input class="form-control" type="text" value="<%= sdf.format(nowTime) %>"> --%>
                 <div class="form-control" >
-                <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today"/>
-                현재 시간 : <c:out value="${today}"/>
+                <fmt:formatDate value="${now}" pattern="yyyy/MM/dd HH:mm:ss" var="today"/>
+                <c:out value="${today}"/>
                 </div>
                 
             </div>

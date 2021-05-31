@@ -125,6 +125,10 @@
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 <<<<<<< HEAD
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/memberList.do" class="nav-link "> 직원 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList.do" class="nav-link "> 근태 목록 조회 </a></li>
+=======
+<<<<<<< HEAD
 					<li class="nav-item">
 						<a href="#" class="nav-link active"> 메뉴 1 </a>
 					</li>
@@ -140,6 +144,7 @@
 
 					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 				</ul>
 			</div></li>
 		<hr>
