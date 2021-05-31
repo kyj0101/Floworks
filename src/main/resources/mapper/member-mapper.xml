@@ -170,6 +170,15 @@
 			id = #{id}
 	</update>
 	
+	<update id="updatePassword">
+		update
+			floworks_user
+		set
+			password = #{password}
+		where
+			id = #{id}
+	</update>
+	
 	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
 		

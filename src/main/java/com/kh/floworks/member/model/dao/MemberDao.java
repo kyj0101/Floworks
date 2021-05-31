@@ -40,5 +40,5 @@ public interface MemberDao {
 
 	int updateProfile(Member updateMember);
 
-	
+	int updatePassword(Map<String, Object> param);
 }

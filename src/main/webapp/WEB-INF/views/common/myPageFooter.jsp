@@ -24,7 +24,7 @@
 
 				<li class="nav-item">
 					<hr class="line-hr" style="border-bottom-width: 0px;"> 
-					<a href="${pageContext.request.contextPath}/member/updatePwd" class="nav-link"> 비밀 번호 수정 </a>
+					<a href="${pageContext.request.contextPath}/member/update/password" class="nav-link"> 비밀 번호 수정 </a>
 					<hr class="line-hr" style="border-bottom-width: 0px;">
 				</li>
 

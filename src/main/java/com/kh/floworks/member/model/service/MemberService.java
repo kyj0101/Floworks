@@ -9,7 +9,7 @@ import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
 
-public interface MemberService extends UserDetailsService {
+public interface MemberService{
 	
 	String ROLE_USER = "USER";
 	String ROLE_ADMIN = "ADMIN";
@@ -45,6 +45,8 @@ public interface MemberService extends UserDetailsService {
 	int updateMember(Member updateMember);
 
 	int updateProfile(Member updateMember);
+
+	int updatePassword(Map<String, Object> param);
 
 	
 }

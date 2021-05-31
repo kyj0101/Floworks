@@ -24,7 +24,7 @@ function idRegExp(id, noAlert){
 }
 
 function passwordRegExp(password, noAlert){
-	
+
 	if( /^[a-zA-Z0-9!@#$%^&*+=]{6,15}$/.test(password)){
 		return true;
 		
