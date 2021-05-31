@@ -32,11 +32,7 @@ Member member = (Member) session.getAttribute("loginMember");
 	<div class="section-div">
 		<div class="update-div">
 			<form:form  name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post">
-<<<<<<< HEAD
 				 <h1>개인 정보 수정하기</h1>
-				<div class="row">
-=======
-				<h1>개인 정보 수정하기</h1>
 				 
 				<!-- 모든 필드값을 가져오지 않으면 null값이 되므로 모든 값을 가져옴. -->
 				 
@@ -51,7 +47,6 @@ Member member = (Member) session.getAttribute("loginMember");
  				<input type="hidden" name="workspaceId" value='<sec:authentication property="principal.workspaceId"/>'/>
  				
  				<div class="row">
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 					<div class="col-md-12">
 						<div class="form-group">
 							<input type="text" class="form-control" name="id" id="id" placeholder="이름" value='<sec:authentication property="principal.id"/>'readonly required/>

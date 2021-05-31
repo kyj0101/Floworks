@@ -17,30 +17,10 @@ public class CalendarServiceImpl implements CalendarService{
 	@Autowired
 	private CalendarDao calendarDao;
 
-//	@Override
-//	public Object showSchedule(Model model) {
-//		return calendarDao.insertCalendar(model);
-//	}
-	
-	public List<Calendar> showSchedule() throws Exception{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String id = auth.getName();
-		
-		return calendarDao.showSchedule(id);
-	}
-	
-	public void addSchedule(Calendar vo) throws Exception{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String id = auth.getName();
-		
-		vo.setCalendarId(id);
-		
-		calendarDao.addSchedule(vo);
+	@Override
+	public int insertCal(String dateList) {
+		return calendarDao.insertCal(dateList);
 	}
 
-	@Override
-	public Object showSchedule(Model model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

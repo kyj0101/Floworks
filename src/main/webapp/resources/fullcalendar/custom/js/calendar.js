@@ -27,6 +27,34 @@ $(function() {
 	$("#endDate").datepicker('setDate', 'today');
 });
 
+/******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
+    var eventId = 1 + Math.floor(Math.random() * 1000);
+
+    $("#save-event").on('click', function(){
+    	var title = $("#title").val();
+   		var startDate = $("#startDate").val();
+   		var endDate = $("#endDate").val();
+
+   		calendar.addEvent({
+    		title: title,
+    		start: startDate,
+    		end: endDate,
+    		allDay: true
+    	});
+
+        if (startDate > endDate) {
+            alert('끝나는 날짜가 앞설 수 없습니다.');
+            return false;
+        }
+
+        if (title === '') {
+            alert('일정명은 필수입니다.');
+            return false;
+        }
+
+        $("#eventModal").modal('hide');
+    });
+    
 //add schedule
 $.fn.serializeObject = function(){
     var o = {};

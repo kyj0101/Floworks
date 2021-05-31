@@ -3,19 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendar">
-
-	<insert id="insertCalendar">
+	<insert id="insertCal">
 		insert into
-			calendar(calendarId,calendarNo,subject,startDate,endDate,memo,memo)
-		values (
-			#{calendarId},
-			#{calendarNo},
-			#{subject},
+			calendar
+		values(
+			#{id},
+			#{title},
 			#{startDate},
-			#{endDate},
-			#{memo}
+			#{endDate}
 		)
 	</insert>
 	
+
 
 </mapper>

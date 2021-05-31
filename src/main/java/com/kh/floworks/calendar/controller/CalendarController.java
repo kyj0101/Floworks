@@ -1,25 +1,16 @@
 package com.kh.floworks.calendar.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.floworks.calendar.model.service.CalendarService;
-import com.kh.floworks.calendar.model.vo.Calendar;
-
-import lombok.extern.slf4j.Slf4j;
-
+import com.google.gson.Gson;
 import com.kh.floworks.calendar.model.service.CalendarService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/calendar")
 public class CalendarController {  
-
 	
 	@Autowired
 	private CalendarService calendarService;
-
-
 	
 	@GetMapping("/calendarMain")
 	public String calendarMain() {
@@ -41,55 +29,25 @@ public class CalendarController {
 		return "/calendar/calendarMain";
 	}
 	
-	//일정 관리 페이지
-	@PostMapping("/calendarMain")
-	public String calendar(Model model) throws Exception {
-		log.info("----------------------컨드롤러다 --------------------------");
-		log.info("model",model);
+	@PostMapping("/calendarInsert")
+	public String calendarInsert(@RequestParam String dateList, RedirectAttributes redirectAttr) {
+		log.info("dateList = {}", dateList);
 		
-		model.addAttribute("showSchedule",calendarService.showSchedule(model));
+		Gson gson = new Gson();
+		Map<String, String>[] dateMapList = gson.fromJson(dateList, Map[].class);
 		
-		return "/calendar/calendarkMain";
+		int result = calendarService.insertCal(dateList);
+		String msg = result > 0 ? "일정 입력 성공!" : "일정 입력 실패! 다시 입력 해주세요.";
+		log.info("dateMapList = {}", dateMapList);
+		for(Map<String, String> date : dateMapList)
+			log.info("date = {}", date);
+		
+		//2. 리다이렉트 및 사용자 피드백
+		redirectAttr.addFlashAttribute("msg", msg);
+				
+		return "redirect:/calendar/calendarMain.do";
 	}
 	
-	//일정추가팝업
-	@GetMapping("/calendarPopup")
-	public String calendarPopup() throws Exception {
-		return "/calendar/calendarPopup";
-	}
 	
-	//일정 추가 버튼 클릭 Ajax......아닌가?
-	//form 데이터를 받는 controller 
-	@ResponseBody
-	@PostMapping("/addSchedule")
-	public Map<Object, Object> addSchedule(@RequestBody Calendar vo) throws Exception{
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		log.info("=========================================");
-
-		CalendarService.addSchedule(vo);
-	
-		return map;
-	}
-	
-	@RequestMapping(value="/calendarMain")
-	public String schedule(Model model)throws Exception{
-		model.addAttribute("showSchedule", calendarService.showSchedule(model));
-		log.info("겟방식의로 보내는중.");
-		return "/calendarMain";
-	}
-	
-	//일정 보이기 (임시)
-	//
-	@ResponseBody
-	@GetMapping("/showSchedule")
-	public List<Calendar> showSchedule() throws Exception {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String id = auth.getName();
-		
-		
-		List<Calendar> list = CalendarService.showSchedule();
-		
-		return list;
-	}
 
 }

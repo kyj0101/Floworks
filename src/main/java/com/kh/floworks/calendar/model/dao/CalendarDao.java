@@ -8,10 +8,7 @@ import com.kh.floworks.calendar.model.vo.Calendar;
 
 public interface CalendarDao {
 
-	Object insertCalendar(Model model);
+	int insertCal(String dateList);
 
-	List<Calendar> showSchedule(String id);
-
-	void addSchedule(Calendar vo);
 
 }
