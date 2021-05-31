@@ -1,6 +1,5 @@
 package com.kh.floworks.attendance.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +20,7 @@ import com.kh.floworks.attendance.model.vo.Attendance;
 import com.kh.floworks.common.utils.AttendanceUtils;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @RequestMapping("/attendance")
 @Controller
@@ -89,8 +89,7 @@ public class AttendanceController {
 			throw e;
 		}
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param id : 출근 기록을 하는 사용자 아이디
@@ -159,3 +158,4 @@ public class AttendanceController {
 		return "/attendance/myAttendanceList";
 	}
 } 
+

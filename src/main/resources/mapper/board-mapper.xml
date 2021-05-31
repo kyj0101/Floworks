@@ -222,7 +222,7 @@
 			#{commentLevel}, 
 			#{commentContent}, 
 			default, 
-			#{id}, 
+			#{cmId}, 
 			#{postNo}, 
 			#{postCommentNo}, 
 			default)

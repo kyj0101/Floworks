@@ -70,10 +70,6 @@ $(() => {
 
 
 
-
-
-
-
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	config.language = 'ko'; // 언어는 한글
