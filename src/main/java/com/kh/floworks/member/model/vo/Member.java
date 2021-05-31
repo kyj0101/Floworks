@@ -66,56 +66,48 @@ public class Member extends User implements UserDetails{
 
 	@Override
 	public String getAddress() {
-		// TODO Auto-generated method stub
 		return super.getAddress();
 	}
 
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
 		return super.getEmail();
 	}
 
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return super.getId();
 	}
 
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return super.getPassword();
 	}
 
 
 	@Override
 	public String getPhone() {
-		// TODO Auto-generated method stub
 		return super.getPhone();
 	}
 
 
 	@Override
 	public String getQuitYn() {
-		// TODO Auto-generated method stub
 		return super.getQuitYn();
 	}
 
 
 	@Override
 	public String getRole() {
-		// TODO Auto-generated method stub
 		return super.getRole();
 	}
 
 
 	@Override
 	public String getWorkspaceId() {
-		// TODO Auto-generated method stub
 		return super.getWorkspaceId();
 	}
 

@@ -24,31 +24,30 @@
         <table class="ap-doc-table" id="ap-doc-table">
             <tr>
                 <th>문서 종류</th>
-                <td>지출 결의서</td>
+                <td>${approval.category}</td>
             </tr>
             <tr>
                 <th>결재선</th>
-                <td>베라티 &nbsp; 음바페 &nbsp; 파레데스 &nbsp; 드락슬러</td>
+                <td>
+                    <c:forEach items="${apverList}" var="avr">
+                    	<span>${avr.name} &lt;${avr.dept}, ${avr.position}&gt;</span><br />
+                    </c:forEach>
+				</td>
+            </tr>
+            <tr>
+            	<th>기안일자</th>
+            	<td><fmt:formatDate value="${approval.reqDate}" pattern="yyyy-MM-dd  HH:mm:ss"/></td>
             </tr>
             <tr>
                 <th>제목</th>
                 <td>
-                    전자결재 모듈 UI업데이트 회의록
+                    ${approval.title}
                 </td>
             </tr>
             <tr>
                 <th>내용</th>
                 <td>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis fugit neque voluptate. Praesentium sapiente deserunt aperiam, dolor numquam eius enim quae, cupiditate hic est repellat consequuntur ducimus facere recusandae ab?
-                    Officia animi voluptatibus voluptas mollitia quisquam atque aut odit iusto quae libero fugit repellendus asperiores, consequuntur eum consequatur harum blanditiis. Tempora vero molestiae adipisci omnis optio repellat reiciendis voluptatem perspiciatis.
-                    Numquam recusandae corrupti tenetur ullam nulla excepturi ipsa sit, optio dolore cumque amet earum, veritatis voluptate beatae debitis molestiae qui quis neque repellendus consequatur rem. Reprehenderit autem optio quos cum?
-                    Saepe est praesentium assumenda quas corrupti deleniti dolor a, rerum nam laboriosam nesciunt. Culpa, illum. Omnis aut libero hic, assumenda impedit, corporis dolor totam, consequatur nisi nobis nesciunt nihil recusandae?
-                    Explicabo, quidem ex! Numquam porro, laudantium beatae, dolorem est veniam, iste illum natus ut nemo molestias saepe vero libero error repudiandae labore? Ipsum, autem commodi quos nesciunt enim quo id.
-                    Tempora eius fugit sint repellendus aliquid eum quos praesentium veniam magni accusantium eveniet reprehenderit eaque pariatur, ad perferendis possimus alias et commodi cum nobis cumque, iste fugiat. Eius, quas inventore.
-                    Laudantium obcaecati pariatur harum tempora quibusdam illo eum excepturi nemo eos ipsum non placeat recusandae explicabo, minus commodi officiis dolore id nobis praesentium vel similique totam. Consequatur molestias maiores nam?
-                    Aperiam sit, deserunt accusamus et similique nam harum molestias cumque repellendus voluptas. Placeat, officia quisquam voluptate unde iste accusantium vel praesentium, quia, impedit distinctio magnam esse sunt dolores? Totam, obcaecati.
-                    Odio tempora unde vel voluptate adipisci voluptatibus, repellat, delectus facilis, atque id corporis? Facilis, mollitia. Error sapiente hic pariatur fuga praesentium porro. Provident modi aut quibusdam expedita vitae, sapiente laboriosam?
-                    Necessitatibus exercitationem magni, sunt vel minus quod qui veritatis omnis, inventore quis illum pariatur blanditiis a dignissimos totam aliquam sequi repellendus ut perspiciatis cumque. Doloribus eum natus rem voluptatibus illo.
+                    ${approval.content}
                 </td>
             </tr>
             <tr>
@@ -82,8 +81,21 @@
         <button type="button" class="btn btn-secondary btn-lg back-to-list" id="back-to-list">
             목록
         </button>
+        <sec:authentication property="principal" var="loginId"/>
+        <% // TODO 결재 버튼 (로그인 계정 == 작성자 -> 수정, 삭제 / 로그인 계정 == 결재선 -> 결재 버튼) 수정 필요. (Test 통과가 안되고 있음) %>
+        <c:if test="${loginId.id eq approval.writer}">
+	        <button type="button" class="btn btn-info btn-lg update-btn" id="update-btn">
+	            수정
+	        </button>
+	        <button type="button" class="btn btn-danger btn-lg delete-btn" id="delete-btn">
+	            삭제
+	        </button>
+        </c:if>
         <button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
-            결재
+            ${approval.writer}
+        </button>
+        <button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
+            ${loginId.id}
         </button>
     </div>
 
