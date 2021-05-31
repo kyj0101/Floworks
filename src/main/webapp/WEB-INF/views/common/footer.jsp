@@ -58,10 +58,20 @@
 					<li class="nav-item">
 						<a href="${pageContext.request.contextPath}/attendance/view?workspaceId=<sec:authentication property="principal.workspaceId"/>&id=<sec:authentication property="principal.id"/>" class="nav-link active">내 근태 관리</a>
 					</li>
+
+					<li class="nav-item">
+						<a href="${pageContext.request.contextPath}/attendance/list?id=<sec:authentication property="principal.id"/>" class="nav-link "> 내 근태 조회 </a>
+					</li>
+
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a></li>
 
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a></li>
+
+
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/attendance/attendanceView.do" class="nav-link active">근태</a></li>
+
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+
 
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
@@ -120,9 +130,14 @@
 					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 2 </a>
 =======
+<<<<<<< HEAD
+					<li class="nav-item">
+						<a href="#" class="nav-link active"> 메뉴 1 </a>
+					</li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 2 </a>
 					<li class="nav-item"><a href="#" class="nav-link active"> 직원 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList.do" class="nav-link "> 근태 목록 조회 </a>
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
+
 					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>

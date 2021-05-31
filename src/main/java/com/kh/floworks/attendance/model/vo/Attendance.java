@@ -1,6 +1,8 @@
 package com.kh.floworks.attendance.model.vo;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class Attendance {
 
 	private String id;
-	private Date date;
-	private Date attendTime;
-	private Date leaveTime;
-	private int holiday;
+	private Date day;
+	private Date officeIn;
+	private Date officeOff;
+	private String latenessYn;
 	
 }
