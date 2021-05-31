@@ -7,25 +7,33 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<%-- <%
+    // User에서 넘긴 회원정보를 추출한다.
+    ArrayList<User> memberList = (ArrayList<User>)request.getAttribute("memberList");
+%> --%>
+
+<%-- <jsp:param value="근태 조회" name="title"/> --%>
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
 	<section>
-		<!-- 직원 근태 목록 -->
-		<div class="page-header" >
-		    <h1>직원 근태 조회</h1>
-		    <hr class="my-4">
-		</div>
-		
-		<table class="table table-striped table-centered mb-0">
+	<!-- 직원 목록 관리 창 -->
+	<div class="page-header" >
+	    <h1>직원 정보 조회</h1>
+	    <hr class="my-4">
+	</div>
+	
+    <table class="table table-striped table-centered mb-0">
         <thead>
             <tr>
-                <th>직원번호</th>
+            	<th>ID</th>
                 <th>직원명</th>
                 <th>부서</th>
                 <th>직급</th>
                 <th>연락처</th>
-                <th>출근 내역</th>
-                <th>퇴근 내역</th>
-                <th>연차 내역</th>
-                
+                <th>주소</th>
+                <th>입사일</th>
+                <th>퇴사일</th>
+                <th>퇴사여부</th>
                 
             </tr>
         </thead>
