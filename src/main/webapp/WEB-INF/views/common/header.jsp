@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인화면</title>
+    <title>${param.title}</title>
     
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/main.css">
     
@@ -38,7 +38,7 @@
 					<div class="mainHeader">
 						<nav class="navbar" style="padding: 0px;">
 							<!-- 로고 & 프젝명 -->
-							<a class="navbar-brand" href="#"
+							<a class="navbar-brand" href="${pageContext.request.contextPath}/home"
 								style="font-size: 2.7rem; color: #000;"> <img alt="logo"
 								src="${pageContext.request.contextPath }/resources/images/logo_transparent22.png"
 								style="width: 56px; height: 50px;"> <strong>Floworks</strong>
@@ -48,22 +48,26 @@
                         <!-- mr : margin right -->
                         <div class="mainHeader mr-5">
                             <nav class="navbar navbar-expand-mg">
-                                <form action="#" class="form-inline">
-                                    <div class="input-group">
+                                <form class="form-inline">
+                                    <div class="input-group form-inline">
                                         <div class="input-group-prepend">
-                                          <button type="button" class="btn btn-outline-secondary" id="select-search">검색태그</button>
+                                          <button type="button" class="btn btn-outline-secondary" id="select-search" disabled="disabled">검색태그</button>
                                           <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="select-search-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           </button>
                                           <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">커뮤니티</a>
-                                            <a class="dropdown-item" href="#">이메일</a>
-                                            <a class="dropdown-item" href="#">주소록</a>
-                                            <a class="dropdown-item" href="#">채팅</a>
+                                            <button class="dropdown-item menu-btn" type="button" >게시판</button>
+										    <button class="dropdown-item menu-btn" type="button" >게시판 파일</button>
+										    <button class="dropdown-item menu-btn" type="button" >보낸 이메일</button>
+										    <button class="dropdown-item menu-btn" type="button" >받은 이메일</button>
+										    <button class="dropdown-item menu-btn" type="button" >보낸 이메일 파일</button>
+										    <button class="dropdown-item menu-btn" type="button" >받은 이메일 파일</button>
                                           </div>
                                         </div>
-                                        <input type="text" class="form-control" id="input-search" aria-label="Text input with segmented dropdown button" placeholder="검색어를 입력하세요.">
+                                        <input type="text" class="form-control" id="input-search" aria-label="" placeholder="검색어를 입력하세요.">
                                     </div>
-                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                    <button class="btn btn-outline-secondary search-btn" type="button">
+                                    	검색
+                                    </button>
                                 </form>
                                 <p style="margin: 5px auto; padding-left: 30px;"></p>
                             </nav>
@@ -81,13 +85,11 @@
 							<ul class="dropdown-menu" role="menu"
 								aria-labelledby="dropdownMenu1">
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="${pageContext.request.contextPath }/member/mypage">마이페이지</a></li>
+									href="${pageContext.request.contextPath}/member/mypage">마이페이지</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1"
+									href="${pageContext.request.contextPath}/address/list?owner=<sec:authentication property="principal.id"/>">주소록</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="#" id="logout-a">로그아웃</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Something else here</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Separated link</a></li>
 							</ul>
 						</div>
 
@@ -330,7 +332,7 @@
 
 						<div class="mainHeader">
 							<!-- 로그인한 사용자의 프로필 -->
-							<img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle"
+							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle"
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
 							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
@@ -340,7 +342,8 @@
 			</nav>
 
 		</header>
-<script>
+
+		<script>
 $(function(){
 	$("#logout-a").click(function(){
 		$("#logout-form").submit();
@@ -349,5 +352,62 @@ $(function(){
 	if("${msg}" != ""){
 		alert("${msg}");
 	}
+	
+	$(".dropdown-item").click(function(){
+		const type = $(this).text();
+		const $inputSearch = $("#input-search");
+		
+		$("#select-search").text(type);
+		
+		if(type === "게시판"){
+			$inputSearch.attr("placeholder", "글쓴이,부서명,제목,내용,날짜로 검색하세요.");
+		}
+		
+		if(type === "보낸 이메일"){	
+			$inputSearch.attr("placeholder", "수신자,제목,내용,날짜로 검색하세요.");
+		}
+		
+		if(type === "받은 이메일"){
+			$inputSearch.attr("placeholder", "발송인,수신자,제목,내용,날짜로 검색하세요.");		
+		}
+		
+		if(type === "게시판 파일" || type === "보낸 이메일 파일" || type === "받은 이메일 파일"){
+			$inputSearch.attr("placeholder", "파일 이름으로 검색하세요.");
+		}
+	});
+	
+	
+	$(".search-btn").click(function(){
+
+		const type = $("#select-search").text();
+		const keyword = $("#input-search").val();
+		const id = "<sec:authentication property='principal.id'/>"
+		const workspaceId =  "<sec:authentication property='principal.workspaceId'/>"
+		
+		if(type === "게시판"){
+			location.href="${pageContext.request.contextPath}/search/post?keyword=" + keyword + "&workspaceId=" + workspaceId;
+		
+		}else if(type === "보낸 이메일"){	
+			location.href="${pageContext.request.contextPath}/search/email/sent?keyword=" + keyword + "&id=" + id;
+		
+		}else if(type === "받은 이메일"){
+			location.href="${pageContext.request.contextPath}/search/email/inbox?keyword=" + keyword + "&id=" + id;	
+		
+		}else if(type === "게시판 파일"){
+			location.href="${pageContext.request.contextPath}/search/file/post?keyword=" + keyword + "&workspaceId=" + workspaceId;
+		
+		}else if(type === "보낸 이메일 파일"){
+			location.href="${pageContext.request.contextPath}/search/file/email/sent?keyword=" + keyword + "&id=" + id;	
+		
+		}else if(type === "받은 이메일 파일"){
+			location.href="${pageContext.request.contextPath}/search/file/email/inbox?keyword=" + keyword + "&id=" + id;	
+		
+		}else{
+			
+			alert("검색태그를 설정하세요.");
+			
+			return false;
+		}
+	});d
 });
 </script>

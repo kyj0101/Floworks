@@ -3,10 +3,14 @@ package com.kh.floworks.common.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.floworks.email.model.vo.Email;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class EmailUtils {
+	
+	public static final String EMAIL_DIRECTORY = "/resources/upload/email";
 	
 	public static String addCidToTag(String content, List<String> cid) {
 
@@ -50,6 +54,22 @@ public class EmailUtils {
 		}
 		
 		return fileNames;
+	}
+	
+	public static List<Email> shorteningLetters(List<Email> emailList){
+		
+		for(Email email : emailList) {
+			
+			String recipient = email.getRecipient();
+			String externalRecipient = email.getExternalRecipient();
+			String subject = email.getSubject();
+			
+			email.setSubject(subject.length() > 20 ? (subject.substring(0, 20) + "...") : subject);
+			email.setRecipient(recipient != null && recipient.length() > 20 ? (recipient.substring(0, 20) + "...") : recipient);
+			email.setExternalRecipient(externalRecipient != null && externalRecipient.length() > 20 ? (externalRecipient.substring(0, 20) + "...") : externalRecipient);
+		}
+		
+		return emailList;
 	}
 }
 

@@ -6,7 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 작성" name="title"/>
+</jsp:include>
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
 
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/email/emailCompose.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailCompose.css" />
@@ -66,7 +69,7 @@
 					<p class="input-group-text">수신자</p>
 					<input type="search"
 						class="form-control recipient-input required-recipient-input"
-						name="recipient" aria-describedby="addon-wrapping">
+						name="recipient" aria-describedby="addon-wrapping" value="${defaultRecipient}">
 				</div>
 
 				<div class="input-group cc-div" id="cc">
@@ -93,7 +96,7 @@
 				<div class="input-group">
 					<p class="input-group-text">제목</p>
 					<input type="text" class="form-control"
-						name="subject" aria-label="Username" value="제목 없음"
+						name="subject" aria-label="Username" value=""
 						aria-describedby="addon-wrapping">
 				</div>
 
@@ -139,7 +142,6 @@
 					onclick="history.back();">취소</button>
 				<button type="button" class="btn btn-primary btn-lg" id="send-btn">보내기</button>
 			</div>
-
 		</div>
 	</form>
 </section>
@@ -164,6 +166,7 @@ $(".recipient-input").autocomplete({
 	
 	source: function(request, response){
 		
+		const id = '<sec:authentication property="principal.id"/>'
 		const workspaceId = '<sec:authentication property="principal.workspaceId"/>'
 		const keyword = request.term;
 		const subKeyword = keyword.substring(keyword.lastIndexOf(",") + 1).trim();
@@ -171,14 +174,17 @@ $(".recipient-input").autocomplete({
 		$.ajax({
 			
 			url:"${pageContext.request.contextPath}/email/getRecipientList",
-			data:{ 'searchKeyword':subKeyword, 'workspaceId':workspaceId},
+			data:{'searchKeyword':subKeyword, 
+				  'workspaceId':workspaceId,
+			      'id':id	  
+			},
 			
 			success(data){
 				response($.map(data, (item) =>{
-	
+
 					return {
 						label:item,
-						value:item
+						value:item.substring(0, item.indexOf(" "))
 					}
 				})	  
 			  );
@@ -233,6 +239,7 @@ function saveFile(){
 	
 	const csrfHeaderName = "${_csrf.headerName}";
 	const csrfTokenValue = "${_csrf.token}";
+	
 	const $fileInput = $("input[name='fileNo']");
 	const formData = new FormData();
 	const files = [file1, file2, file3];
@@ -247,6 +254,7 @@ function saveFile(){
 		processData:false,
 		contentType:false,
 		data:formData,
+		
 		beforeSend(xhr){
 			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		},

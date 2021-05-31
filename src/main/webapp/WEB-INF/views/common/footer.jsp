@@ -7,7 +7,7 @@
 	<!-- https://icons.getbootstrap.kr/#%EC%95%84%EC%9D%B4%EC%BD%98 -->
 	<ul class="nav flex-column navbar-nav">
 		<li class="nav-item">
-		<li class="nav-item"><a class="nav-link " href="#"> <i
+		<li class="nav-item"><a class="nav-link " href="${pageContext.request.contextPath }/home"> <i
 				class="bi bi-house-door"></i>홈으로
 		</a></li>
 		<li class="nav-item"><a class="nav-link " href="#sidebarEmail"
@@ -43,8 +43,8 @@
 			<div class="collapse hide" id="sidebarCommu"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList" class="nav-link active"> 공지사항 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=1&dept=부" class="nav-link active"> 공지게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=2&dept=부" class="nav-link "> 자유게시판 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAtten"
@@ -54,12 +54,20 @@
 			<div class="collapse hide" id="sidebarAtten"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴 1 </a></li>
+
+					<li class="nav-item">
+						<a href="${pageContext.request.contextPath}/attendance/view?workspaceId=<sec:authentication property="principal.workspaceId"/>&id=<sec:authentication property="principal.id"/>" class="nav-link active">내 근태 관리</a>
+					</li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a></li>
+
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/attendance/attendanceView.do" class="nav-link active">근태</a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
-			</div></li>
+			</div>
+		</li>			
+			
 		<li class="nav-item"><a class="nav-link" href="#sidebarChart"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarChart"> <i class="bi bi-diagram-3"></i>조직도
@@ -106,9 +114,15 @@
 			<div class="collapse hide" id="sidebarAdmin"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴 1 </a></li>
+<<<<<<< HEAD
+					<li class="nav-item">
+						<a href="#" class="nav-link active"> 메뉴 1 </a>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 2 </a>
+=======
+					<li class="nav-item"><a href="#" class="nav-link active"> 직원 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList.do" class="nav-link "> 근태 목록 조회 </a>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 					</li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>

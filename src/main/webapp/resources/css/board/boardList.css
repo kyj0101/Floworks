@@ -21,3 +21,12 @@
 .table-date {
 	width: 10%
 }
+.table td, .table th {
+	text-align: center;
+}
+#titletd{
+	text-align: left;
+}
+#dropdowndept{
+	top: 0% !important;
+}

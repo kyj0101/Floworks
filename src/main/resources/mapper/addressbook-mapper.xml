@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="addressBook">
+
+	<select id="selectSearchMemberList" resultMap="memberMap">
+		select
+		   	U.*,
+            M.*,
+            D.department_name
+		from floworks_user U
+		        join member M
+		            on U.id = M.id
+		        join department D
+		            on D.department_code = M.department_code
+		where
+		    ${type} like '%' || #{keyword} || '%'
+		    and workspace_id = #{workspaceId}
+		    and quit_yn = 'N'
+		    and U.id not in (select id
+                		     from address_book
+                		     where owner = #{owner})
+    		and U.id != #{owner}
+		order by
+			U.name
+	</select>
+	
+	<insert id="insertAddress">
+		insert into
+			address_book
+		values(
+				#{owner},
+				#{id}
+				)
+	</insert>
+	
+	<select id="selectAddressMemberList" resultMap="memberMap">
+		select
+		    *
+		from
+		    address_book a
+		        join floworks_user u 
+		            on a.id = u.id
+                join member m
+		            on u.id = m.id
+                join department d
+                    on m.department_code = d.department_code
+		where
+			owner = #{owner}
+	</select>
+	
+	<select id="getTotalAddressBook" resultType="int">
+		select
+			count(*)
+		from
+			address_book
+		where
+			owner = #{owner}
+	</select>
+	
+	<delete id="deleteAddress">
+		delete from
+			address_book
+		where
+			owner = #{owner}
+			and id = #{id}
+	</delete>
+	
+	<resultMap type="member" id="memberMap" extends="userMap">	
+		<id column="id" property="id"/>
+		
+		<result column="hire_date" property="hireDate"/>
+		<result column="resign" property="resign"/>
+		<result column="position" property="position"/>
+		<result column="department_code" property="departmentCode"/>	
+		<result column="department_name" property="department"/>
+	</resultMap>
+	
+	<resultMap type="user" id="userMap">	
+		<id column="id" property="id"/>
+		
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="address" property="address"/>
+		<result column="quit_yn" property="quitYn"/>	
+	</resultMap>
+
+</mapper>

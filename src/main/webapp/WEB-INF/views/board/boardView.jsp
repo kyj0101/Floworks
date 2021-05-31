@@ -1,172 +1,119 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
     
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="게시글 상세보기" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/board/boardView.css" />
+
+<!-- js -->
+<script src="${pageContext.request.contextPath}/resources/js/board/boardView.js"></script>
 
 
  
  
  <section>
-     <!-- http://bootstrapk.com/components/#page-header -->
-     <div class="page-header" >
-         <h1>공지사항</h1>
-         <hr class="my-4">
-     </div>
 
      <div>
-         <h3>제목 들어올 자리입니다</h3>
+     	 <h3>${postList.postTitle}</h3>
          <div class="postWriter" >
-             <img src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt="프로필사진" class="img-circle d-inline-block" id="postProfile">
-             <label id="postName">작성자이름 직급 (부서)</label>
+             <img src="${pageContext.request.contextPath }/resources/upload/profile/${postList.profileFileRename}" alt="프로필사진" class="img-circle d-inline-block" id="postProfile">
+             <label id="postName">${postList.name} ( ${postList.departmentName} )</label>
              <br>
-             <small id="postDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-             <small id="postCount" class="form-text text-muted d-inline-block">조회수 : 2</small>
+             <small id="postDate" class="form-text text-muted d-inline-block"><fmt:formatDate value="${postList.postDate}" pattern="yy/MM/dd"/></small>
+             <small id="postCount" class="form-text text-muted d-inline-block">조회수 : ${postList.postReadCount}</small>
              <div id="moveGroup" class="a-grup d-inline-block float-right">
-                 <a href="#comment-list">댓글[2]</a>
-                 <a href="#fileButton">첨부파일[7]</a>
+                 <a href="#comment-list">댓글[ ${postList.commentCount} ]</a>
+                 <a href="#fileButton">첨부파일[ ${postList.fileCount} ]</a>
              </div>
              <hr>
          </div>
 
          <div class="form-group" id="postText">
-             <textarea class="form-control" id="postTextarea" rows="20" placeholder="내용이 들어올 자리입니다" readonly></textarea>
-         </div>
-
+         <c:if test="${postList.commentCount == null}">
+			<p>내용 없음</p>
+		 </c:if>
+		 ${postList.postContent}
+		 </div>
 
          <!-- 첨부파일 버튼-->
+         <c:forEach items="${postList.postFileList}" var="pfList">
+         <c:if test="${pfList.postOriginalFileName != null}">
          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="fileButton">
-             <label class="btn btn-light active">
-               <input type="radio" name="options" id="option1"> 첨부파일1111111111
-             </label>
-             <label class="btn btn-light">
-               <input type="radio" name="options" id="option2"> 첨부파일2222222222222
-             </label>
-             <label class="btn btn-light">
-               <input type="radio" name="options" id="option3"> 첨부파일33333333333
-             </label>
+               <button class="btn btn-outline-primary" type="button" name="options" id="option1" onclick="fileDownload(${pfList.postFileNo});">
+               	  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
+				  <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+				  </svg> ${pfList.postOriginalFileName} </button>
          </div>
-         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-         <div class="float-right" id="view-btn">
-             <button type="button" class="btn btn-primary float-right">수정</button>
-             <button type="button" class="btn btn-primary float-right">삭제</button>
-         </div>
+         </c:if>
+         </c:forEach>
+         
+         <sec:authentication property="principal" var="loginId"/>
+         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 
+         -->
 
+		 <c:if test="${loginId.id eq postList.id || loginId.position eq '대표'}">
+         <div class="float-right" id="view-btn">
+             <button type="button" class="btn btn-primary float-right" onclick="postUpdate(${postList.postNo},${postList.boardNo});">수정</button>
+             <button type="button" class="btn btn-primary float-right" onclick="postDelete(${postList.postNo},${postList.boardNo});">삭제</button>
+         </div>
+		 </c:if>
+		 
          <!-- 댓글자리 -->
          <div id="comment-list">
-             <div>
-                 <textarea id="comment-area" class="d-inline-block" placeholder="댓글을 입력해주세요"></textarea>
-                 <button id="comment-btn" type="button" class="btn btn-secondary float-right d-inline-block">입력</button>
-             </div> 
-             <table  class="table" id="tb-comment">
-                 <tr class=level1>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         댓글내용입니다
-                     </td>
-                     <td>
-                         <button type="button" class="btn btn-secondary float-right">답글</button>
-                         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button type="button" class="btn btn-secondary float-right">삭제</button>
-                     </td>
-                 </tr>
-                 <tr class=level2>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         대댓글 내용 입니다
-                     </td>
-                     <td>     
-                         <!--댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button  type="button" class="btn btn-secondary float-right">삭제</button>	
-                     </td>
-                     
-                 </tr>   
-                 <tr class=level1>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         댓글내용입니다
-                     </td>
-                     <td>
-                         <button type="button" class="btn btn-secondary float-right">답글</button>
-                         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button type="button" class="btn btn-secondary float-right">삭제</button>
-                     </td>
-                 </tr>
-                 <tr class=level2>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         대댓글 내용 입니다
-                     </td>
-                     <td>     
-                         <!--댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button  type="button" class="btn btn-secondary float-right">삭제</button>	
-                     </td>
-                     
-                 </tr> 
-                 <tr class=level2>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         대댓글 내용 입니다
-                     </td>
-                     <td>     
-                         <!--댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button  type="button" class="btn btn-secondary float-right">삭제</button>	
-                     </td>
-                     
-                 </tr>    
-                 <tr class=level1>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         댓글내용입니다
-                     </td>
-                     <td>
-                         <button type="button" class="btn btn-secondary float-right">답글</button>
-                         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button type="button" class="btn btn-secondary float-right">삭제</button>
-                     </td>
-                 </tr>
-                 <tr class=level2>
-                     <td>
-                         <label id="commentName">작성자이름 직급 (부서)</label>
-                         <small id="commentDate" class="form-text text-muted d-inline-block">2021.05.21 15:20</small>
-                         <br />
-                         대댓글 내용 입니다
-                     </td>
-                     <td>     
-                         <!--댓글 작성자와 관리자권한이 있는 경우만 노출 -->
-                         <button  type="button" class="btn btn-secondary float-right">삭제</button>	
-                     </td>
-                     
-                 </tr>      
+             <table  class="table" id="tb-comment">  
+             <c:forEach items="${postList.postCommentList}" var="cmt">
+	           	<c:if test="${cmt.commentNo != null && cmt.commentDel == false}">
+             	<c:if test="${cmt.commentLevel eq 1}">
+	                 <tr class=level1>
+	                     <td>
+	                         <label id="commentName">${cmt.cmtName}(${cmt.cmtDeptName})</label>
+	                         <small id="commentDate" class="form-text text-muted d-inline-block"><fmt:formatDate value="${cmt.commentDate}" pattern="yy/MM/dd"/></small>
+	                         <br />
+	                         ${cmt.commentContent}
+	                     </td>
+	                     <td>
+	                         <!-- 댓글 작성자와 관리자권한이 있는 경우만 노출 -->
+							 <c:if test="${loginId.id eq cmt.cmId || loginId.position eq '대표'}">
+	                         <button type="submit"  class="btn btn-secondary float-right" onclick="commentDelete(${cmt.postNo},${cmt.commentNo});">삭제</button>
+							 </c:if>
+	                     </td>
+	                 </tr>
+                 </c:if>
+	             </c:if>
+               </c:forEach>  
              </table>
-             <nav aria-label="Page navigation example">
-                 <ul class="pagination justify-content-center">
-                   <li class="page-item disabled">
-                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo;</a>
-                   </li>
-                   <li class="page-item"><a class="page-link" href="#">1</a></li>
-                   <li class="page-item"><a class="page-link" href="#">2</a></li>
-                   <li class="page-item"><a class="page-link" href="#">3</a></li>
-                   <li class="page-item">
-                     <a class="page-link" href="#">&raquo;</a>
-                   </li>
-                 </ul>
-             </nav>
-
+            
+		   <form:form 
+		   		name="postCm"
+		 		action="${pageContext.request.contextPath}/board/commentInsert" 
+				method="post"
+				enctype="multipart/form-data" 
+				onsubmit="return commentValidate();"
+				id="postCm">  
+				 <div class="input-group mb-3">
+			 		<input type="text" name="commentContent" class="form-control d-inline" 
+			 				placeholder="댓글을 입력해주세요" aria-label="Recipient's username"
+			 				aria-describedby="button-addon2">
+			  		<input type="hidden" name="commentLevel" value="1" />
+               		
+               		<input type="hidden" name="cmId" value="<sec:authentication property="principal.id"/>" />    
+					<input type="hidden" name="postNo" value="${postList.postNo}" />
+               		<input type="hidden" name="postCommentNo" value="0" />  
+			  		<div class="input-group-append d-inline" >		
+			    		<button class="btn btn-outline-secondary d-inline" type="submit"
+			    			  id="button-addon2">입력</button>
+			 	 	</div>
+				 </div>
+		 	</form:form>
 
          </div>
      </div>      
@@ -179,8 +126,8 @@
  
      
  </section>
- 
- 
+
+
  
  
  

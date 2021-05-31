@@ -1,10 +1,11 @@
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 
 #postName {
     top: -7px;
     left: 10px;
     position: relative;
 }
+
 #postDate {
     top: -38px;
     left: 60px;
@@ -33,10 +34,10 @@
 #postText {
     position: relative;
     top: -35px;
+    
 }
 #fileButton {
     position: relative;
-    top: -50px;
 }
 h3 {
     position: relative;
@@ -53,26 +54,30 @@ h3 {
 table#tb-comment tr.level2 td:first-of-type{
     padding-left:50px;
 }
-#comment-btn{
-    position: relative;
-    height: 50px;
-}
-#comment-area{
-    position: relative;
-    width: 907px;
-}
-.btn {
-    margin: 2px;
-}
+
 a {
     color: #000;
 }
 #comment-list {
     position: relative;
-    top: -40px;
+    top: 40px;
 }
 #view-btn{
     position: relative;
     display: inline-block;
-    top: -50px;
+}
+#postCm{
+	 position: relative;
+}
+
+#postText{
+    width: 100%;
+    min-height:500px;
+    background-color: rgb(243, 243, 243);
+    margin-left: 0px;
+    padding: 30px;
+    top: 15px;
+}
+section .btn{
+	margin-right: 2px;
 }

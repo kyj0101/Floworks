@@ -54,7 +54,7 @@
 	<!-- SqlSessionTemplate -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
   		<constructor-arg index="0" ref="sqlSessionFactory" />
-	</bean>	
+  	</bean>	
 	
 	<!-- TransactionManager -->
 	<bean id="transactionManager"
@@ -84,6 +84,7 @@
 		
 	</bean>
 	
+
 	<!-- 선언적 트랜잭션 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		
@@ -105,5 +106,5 @@
 		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 	
 	</aop:config>
-	
+
 </beans>

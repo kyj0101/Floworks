@@ -6,14 +6,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
     
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="이메일 상세보기" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/email/emailDetail.css" />
 
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js" crossorigin="anonymous"></script>
-    
+
 <section>
 	<div class="email-header">
 		<h5><strong>${email.subject}</strong></h5>
@@ -21,12 +23,18 @@
 		<ul>
 			<li>
 				<div class="box">
-					<img class="profile" src="${pageContext.request.contextPath }/resources/images/profileSample.jpg">
+					<c:if test="${listType == 'sent'}" >
+						<img class="profile" src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>">
+					</c:if>
+					
+					<c:if test="${listType == 'inbox'}" >
+						<img class="profile" src="${pageContext.request.contextPath}/resources/upload/profile/${fileRename}">
+					</c:if>
 				</div>
 			</li>
 			<li>
 				<p>
-					<strong>${email.id}</strong>
+					<strong>${email.name} : ${email.id}</strong>
                     <br>
                     to : ${email.recipient}
 				</p>
@@ -52,14 +60,21 @@
 	</div>
 
 	<div class="email-btn">
-		<p>2021/05/10 12:40:00</p>
+		<p><fmt:formatDate value="${email.time}" pattern="yy/MM/dd HH:mm:ss"/></p>
 		<button id="bookmark-btn">
 			<i class="fas fa-star"></i>
 		</button>
-
-		<button id="delete-btn">
-			<i class="fas fa-trash"></i>
-		</button>
+		
+		<form action="${pageContext.request.contextPath}/email/delete?type=${listType}&id=${id}" method="POST">
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+			<input type="hidden" name="deleteCheck" value="${email.emailNo}"/>
+			
+			<button id="delete-btn" type="submit">
+				<i class="fas fa-trash"></i>
+			</button>
+		</form>
+		
 	</div>
 
 	<div class="email-content">
@@ -106,19 +121,19 @@ $(() => {
         if(!$star.hasClass('on')){
         	updateStarredEmail("N");
         }
-        
-    })
-    
-    
+    });
+
     if("${email.emailStarred}" == 'true'){
     	$(".fa-star").addClass('on');
     }
-    	
+    
+	$(".file-a").click(function(){
+		const renamedFile = $(this).attr("href");
+	});
+
 }); 
 
-$(".file-a").click(function(){
-	const renamedFile = $(this).attr("href");
-});
+
 
 function updateStarredEmail(value){
 	

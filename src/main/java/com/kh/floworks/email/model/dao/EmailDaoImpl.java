@@ -1,9 +1,9 @@
 package com.kh.floworks.email.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -50,11 +50,6 @@ public class EmailDaoImpl implements EmailDao{
 	}
 
 	@Override
-	public List<Email> selectSentList(String id) {
-		return session.selectList("email.selectSentList", id);
-	}
-
-	@Override
 	public Email selectOneEmail(int emailNo) {
 		return session.selectOne("email.selectOneEmail", emailNo);
 	}
@@ -63,20 +58,46 @@ public class EmailDaoImpl implements EmailDao{
 	public Map<String, String> selectOneFile(int fileNo) {
 		return session.selectOne("email.selectOneFile", fileNo);
 	}
+	
+	@Override
+	public List<Email> selectSentList(Map<String, Object> param) {
+
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("email.selectSentList", param.get("id"), rowBounds);
+	}
 
 	@Override
-	public List<Email> selectInboxList(String id) {
-		return session.selectList("email.selectInboxList", id);
+	public List<Email> selectInboxList(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("email.selectInboxList", param.get("id"), rowBounds);
+	}
+	
+	@Override
+	public List<Email> selectDraftList(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("email.selectDraftList", param.get("id"), rowBounds);
 	}
 
 	@Override
 	public List<String> selectRecipientList(Map<String, String> param) {
 		return session.selectList("email.selectRecipientList", param);
-	}
-
-	@Override
-	public List<Email> selectDraftList(String id) {
-		return session.selectList("email.selectDraftList", id);
 	}
 
 	@Override
@@ -118,6 +139,11 @@ public class EmailDaoImpl implements EmailDao{
 	public Email selectOneEmailSent(int emailNo) {
 		return session.selectOne("email.selectOneEmailSent", emailNo);
 	}
+	
+	@Override
+	public String selectProfileRename(String id) {
+		return session.selectOne("email.selectProfileRename", id);
+	}
 
 	@Override
 	public int updateStarredEmailInbox(Map<String, Object> param) {
@@ -128,4 +154,36 @@ public class EmailDaoImpl implements EmailDao{
 	public int updateStarredEmailSent(Map<String, Object> param) {
 		return session.update("email.updateStarredEmailSent", param);
 	}
+
+	@Override
+	public int deleteEmailInbox(Map<String, Object> param) {
+		return session.update("email.deleteEmailInbox", param);
+	}
+
+	@Override
+	public int deleteEmailSent(Map<String, Object> param) {
+		return session.update("email.deleteEmailSent", param);
+	}
+
+	@Override
+	public int deleteEmailDrafts(Map<String, Object> param) {
+		return session.update("email.deleteEmailDrafts", param);
+	}
+
+	@Override
+	public int getTotalInboxEmail(String id) {
+		return session.selectOne("email.getTotalInboxEmail", id);
+	}
+
+	@Override
+	public int getTotalSentEmail(String id) {
+		return session.selectOne("email.getTotalSentEmail", id);
+	}
+
+	@Override
+	public int getTotalDraftsEmail(String id) {
+		return session.selectOne("email.getTotalDraftsEmail", id);
+	}
+
+
 }

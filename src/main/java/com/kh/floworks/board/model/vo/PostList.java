@@ -22,9 +22,14 @@ public class PostList {
 	private boolean postDel;
 	private String departmentName;
 	private String name;
+	private String workspaceId;
 	
-	private int fileCount;			
-	private int commentCount;			
+	private String profileFileRename;
+	
+	private int fileCount;	
+	private List<PostFile> postFileList;
+	private int commentCount;
+	private List<PostComment> postCommentList;
 
 	
 }

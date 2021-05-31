@@ -11,4 +11,26 @@
 			floworks_user
 	</select>
 
+	<select id="selectOneUser" resultMap="userMap" >
+		select
+			*
+		from
+			floworks_user
+		where
+			id = #{id}
+	</select>
+	<resultMap type="user" id="userMap">
+	
+	</resultMap>
+	
+	<update id="updateMember" parameterType="user">
+		update floworks_user
+		set 
+			name = #{name}, 
+			email = #{email}, 
+			phone = #{phone}, 
+			address = #{address}
+		where 
+			id = #{id}
+	</update>
 </mapper>

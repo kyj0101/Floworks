@@ -23,11 +23,6 @@ public class EmailServiceImpl implements EmailService{
 	private EmailDao emailDao;
 	
 	@Override
-	public List<String> selectRecipientList(Map<String, String> param) {
-		return emailDao.selectRecipientList(param);
-	}
-
-	@Override
 	public int insertFile(Map<String, String> fileMap) {
 		
 		emailDao.insertEmailFiles(fileMap);
@@ -59,7 +54,7 @@ public class EmailServiceImpl implements EmailService{
 
 		for(String recipient : allRecipientList) {
 			
-			if(recipient.equals(", ")) {
+			if(recipient.equals(", ") || recipient.equals("")) {
 				continue;
 			}
 			
@@ -78,17 +73,26 @@ public class EmailServiceImpl implements EmailService{
 		return 1;
 	}
 	
-
 	@Override
 	public int insertDraftEmail(Email email) {
 		return emailDao.insertDraftEmail(email);
 	}
-
+	
 	@Override
-	public List<Email> selectSentList(String id) {
-		return emailDao.selectSentList(id);
+	public List<Email> selectSentList(Map<String, Object> param) {
+		return emailDao.selectSentList(param);
 	}
 
+	@Override
+	public List<Email> selectInboxList(Map<String, Object> param) {
+		return emailDao.selectInboxList(param);
+	}
+	
+	@Override
+	public List<Email> selectDraftList(Map<String, Object> param) {
+		return emailDao.selectDraftList(param);
+	}
+	
 	@Override
 	public Email selectOneEmail(int emailNo) {
 		return emailDao.selectOneEmail(emailNo);
@@ -98,47 +102,22 @@ public class EmailServiceImpl implements EmailService{
 	public Map<String, String> selectFile(int fileNo) {
 		return emailDao.selectOneFile(fileNo);
 	}
-
-	@Override
-	public List<Email> selectInboxList(String id) {
-		return emailDao.selectInboxList(id);
-	}
-
-	@Override
-	public List<Email> selectDraftList(String id) {
-		return emailDao.selectDraftList(id);
-	}
-
+	
 	@Override
 	public Email selectOneDraftEmail(int emailNo) {
 		return emailDao.selectOneDraftEmail(emailNo);
 	}
-
+	
 	@Override
-	public int updateDraftFile(Map<String, Object> param) {
-		return emailDao.updateDraftFile(param);
+	public List<String> selectRecipientList(Map<String, String> param) {
+		return emailDao.selectRecipientList(param);
 	}
-
-	@Override
-	public int deleteFile(int fileNo) {
-		return emailDao.deleteFile(fileNo);
-	}
-
-	@Override
-	public int updateDraft(Email email) {
-		return emailDao.updateDraft(email);
-	}
-
+	
 	@Override
 	public List<Map<String, String>> selectFileList() {
 		return emailDao.selectFileList();
 	}
-
-	@Override
-	public int deleteDraft(int emailNo) {
-		return emailDao.deleteDraft(emailNo);
-	}
-
+	
 	@Override
 	public Email selectOneEmailInbox(Map<String, Object> param) {
 		return emailDao.selectOneEmailInbox(param);
@@ -147,6 +126,21 @@ public class EmailServiceImpl implements EmailService{
 	@Override
 	public Email selectOneEmailSent(int emailNo) {
 		return emailDao.selectOneEmailSent(emailNo);
+	}
+	
+	@Override
+	public String selectProfileRename(String id) {
+		return emailDao.selectProfileRename(id);
+	}
+
+	@Override
+	public int updateDraftFile(Map<String, Object> param) {
+		return emailDao.updateDraftFile(param);
+	}
+
+	@Override
+	public int updateDraft(Email email) {
+		return emailDao.updateDraft(email);
 	}
 
 	@Override
@@ -157,5 +151,46 @@ public class EmailServiceImpl implements EmailService{
 	@Override
 	public int updateStarredEmailSent(Map<String, Object> param) {
 		return emailDao.updateStarredEmailSent(param);
+	}
+
+	@Override
+	public int deleteEmailInbox(Map<String, Object> param) {
+		return emailDao.deleteEmailInbox(param);
+	}
+	
+	@Override
+	public int deleteFile(int fileNo) {
+		return emailDao.deleteFile(fileNo);
+	}
+
+	@Override
+	public int deleteDraft(int emailNo) {
+		return emailDao.deleteDraft(emailNo);
+	}
+
+	@Override
+	public int deleteEmailSent(Map<String, Object> param) {
+		return emailDao.deleteEmailSent(param);
+	}
+
+	@Override
+	public int deleteEmailDrafts(Map<String, Object> param) {
+		return emailDao.deleteEmailDrafts(param);
+	}
+
+
+	@Override
+	public int getTotalInboxEmail(String id) {
+		return emailDao.getTotalInboxEmail(id);
+	}
+
+	@Override
+	public int getTotalSentEmail(String id) {
+		return emailDao.getTotalSentEmail(id);
+	}
+
+	@Override
+	public int getTotalDraftsEmail(String id) {
+		return emailDao.getTotalDraftsEmail(id);
 	}
 }

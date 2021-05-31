@@ -2,9 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
+
+    
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	<bean id="securtiyDaoBean" class="com.kh.floworks.security.dao.SecurityDao">
@@ -22,11 +26,15 @@
 		
 		
 		<security:intercept-url pattern="/" access="permitAll"/>		
-		<security:intercept-url pattern="/home/**" access="isAuthenticated()"/>		
+		<security:intercept-url pattern="/home" access="isAuthenticated()"/>		
 		<security:intercept-url pattern="/email/**" access="isAuthenticated()"/>		
 		<security:intercept-url pattern="/member/**" access="isAuthenticated()"/>		
 		<security:intercept-url pattern="/board/**" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/approval/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/address/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/leave/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/search/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/attendance/**" access="isAuthenticated()"/>
 		
 		<security:form-login login-page="/login"
 		                     login-processing-url="/login"
@@ -52,5 +60,5 @@
 		</security:authentication-provider>
 		
 	</security:authentication-manager>
-	
+ 
 </beans>

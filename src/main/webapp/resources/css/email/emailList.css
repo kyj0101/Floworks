@@ -8,9 +8,14 @@ section{
     
 }
 
+a{
+	color: black;
+}
+
 .search-div {
-    background-color: rgb(226, 213, 255);
+ /*    background-color: rgb(226, 213, 255); */
     width: 1070px;
+    margin-bottom: 20px;
 }
 
 .email-table{
@@ -36,4 +41,8 @@ section{
 
 .on{
 	color: gold;
+}
+
+#del-btn{
+	margin-right: 20px;
 }

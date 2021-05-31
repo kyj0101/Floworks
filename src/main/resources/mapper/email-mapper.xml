@@ -4,19 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="email">
 
-	<resultMap type="map" id="fileMap">
-	
-		<id column="file_no" property="fileNo" />
-		
-		<result column="file_renamed1" property="fileRenamed1" />
-		<result column="file_originalname1" property="fileOriginalname1" />
-		<result column="file_renamed2" property="fileRenamed2" />
-		<result column="file_originalname2" property="fileOriginalname2" />
-		<result column="file_renamed3" property="fileRenamed3" />
-		<result column="file_originalname3" property="fileOriginalname3" />
-	
-	</resultMap>
-
 	<insert id="insertEmailFile">
 		insert into
 			email_file
@@ -96,14 +83,49 @@
 		)
 	</insert>
 	
+	<insert id="insertDraftEmail">
+		insert into
+			email_drafts
+		values(
+			seq_email_no.nextval,			
+			#{id},
+			#{recipient},			
+			#{externalRecipient},
+			#{emailCC},			
+			#{emailBCC},
+			#{subject},	
+			#{emailContent},
+			
+			<choose>
+				<when test="fileNo != 0">
+					#{fileNo},	
+				</when>
+				<otherwise>
+					null,
+				</otherwise>
+			</choose>
+			
+			default,
+			default
+		)
+	</insert>
+	
 	<select id="selectRecipientList" resultType="string">
 		select
-    		*
+            u.id || ' ' || name || ' ' || '[' || department_name || ']' || position
 		from
-    		floworks_user
-		where
-    		id like '%' || #{searchKeyword} || '%'
+    		floworks_user u
+                join member m 
+                    on u.id = m.id
+                join department d
+                    on d.department_code = m.department_code
+        where
+        	u.id != #{id}
+    		and u.id like '%' || #{searchKeyword} || '%'
     		and workspace_id = #{workspaceId}
+        	and quit_yn = 'N'
+        order by
+        	name
 	</select> 
 	
 	<select id="selectInboxList" resultType="email">
@@ -136,7 +158,9 @@
 		select
 			*
 		from
-			email
+			email e
+		        join floworks_user f
+		            on e.id = f.id
 		where
 			email_no = #{emailNo}
 	</select>
@@ -154,10 +178,14 @@
 		select
 		    *
 		from
-		    email e join email_inbox i
-		    on e.email_no = i.email_no
+		    floworks_user f
+                join email e 
+                    on f.id = e.id
+                join email_inbox i
+                    on e.email_no = i.email_no
 		where
-		    e.email_no = #{emailNo}
+		    del_yn = 'N'
+		    and e.email_no = #{emailNo}
 		    and recipient_id = #{id}
 	</select>
 	
@@ -165,38 +193,15 @@
 		select
 		    *
 		from
-		    email e join email_sent i
-		    on e.email_no = i.email_no
+		    floworks_user f
+		        join email e 
+		            on f.id = e.id
+		        join email_sent i
+		            on e.email_no = i.email_no
 		where
-		    e.email_no = #{emailNo}
+			del_yn = 'N'
+		    and e.email_no = #{emailNo}
 	</select>
-	
-	<insert id="insertDraftEmail">
-		insert into
-			email_drafts
-		values(
-			seq_email_no.nextval,			
-			#{id},
-			#{recipient},			
-			#{externalRecipient},
-			#{emailCC},			
-			#{emailBCC},
-			#{subject},	
-			#{emailContent},
-			
-			<choose>
-				<when test="fileNo != 0">
-					#{fileNo},	
-				</when>
-				<otherwise>
-					null,
-				</otherwise>
-			</choose>
-			
-			default,
-			default
-		)
-	</insert>
 	
 	<select id="selectDraftList" resultType="email">
 		select
@@ -218,6 +223,55 @@
 		where
 			email_no = #{emailNo}
 	</select>
+	
+	<select id="selectFileList" resultMap="renameList">
+		select 
+		    file_renamed1,
+		    file_renamed2,
+		    file_renamed3
+		from 
+    		email_file
+	</select>
+	
+		<select id="getTotalInboxEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email_inbox
+		where
+		    recipient_id = #{id}
+		    and del_yn = 'N'
+	</select>
+	
+	<select id="getTotalSentEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email e join email_sent s
+            on e.email_no = s.email_no
+		where
+		    id = #{id}
+            and del_yn = 'N'
+	</select>
+	
+	<select id="getTotalDraftsEmail" resultType="int">
+		select
+		    count(*)
+		from
+		    email_drafts
+		where
+		    id = #{id}
+            and del_yn = 'N'
+	</select>
+	
+	<select id="selectProfileRename" resultType="string">
+		select
+		    profile_file_rename
+		from
+		    member
+		where
+		    id = #{id}
+	</select>
 
 	<update id="updateDraftFile">
 		update
@@ -232,28 +286,6 @@
 		where
 			file_no = #{fileNo}
 	</update>
-	
-	<select id="selectFileList" resultMap="renameList">
-		select 
-		    file_renamed1,
-		    file_renamed2,
-		    file_renamed3
-		from 
-    		email_file
-	</select>
-	
-	<resultMap type="map" id="renameList">
-		<result column="file_renamed1" property="fileRenamed1" />
-		<result column="file_renamed2" property="fileRenamed2" />
-		<result column="file_renamed3" property="fileRenamed3" />
-	</resultMap>
-	
-	<delete id="deleteFile">
-		delete from
-			email_file
-		where
-			file_no = #{fileNo}
-	</delete>
 	
 	<update id="updateDraft">
 		update
@@ -279,14 +311,7 @@
 			email_no = #{emailNo}
 	</update>
 	
-	<delete id="deleteDraft">
-		delete from
-			email_drafts
-		where
-			email_no = #{emailNo}
-	</delete>
-	
-	<update id="updateStarredEmailInbox">
+		<update id="updateStarredEmailInbox">
 		update
 		    email_inbox
 		set 
@@ -304,6 +329,79 @@
 		where
 		    email_no = #{emailNo}
 	</update>
+
+	<update id="deleteEmailInbox">	
+		update
+			email_inbox
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+		
+	<update id="deleteEmailSent">	
+		update
+			email_sent
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+
+	<update id="deleteEmailDrafts">	
+		update
+			email_drafts
+		set
+			del_yn = 'Y'
+		where 
+			email_no in		
+			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+				#{item}
+			</foreach>
+	</update>
+	
+	<delete id="deleteFile">
+		delete from
+			email_file
+		where
+			file_no = #{fileNo}
+	</delete>
+	
+	<delete id="deleteDraft">
+		delete from
+			email_drafts
+		where
+			email_no = #{emailNo}
+	</delete>
+	
+	<resultMap type="email" id="userAndEmail">
+		<result column="name" property="name" />	
+	</resultMap>
+	
+	<resultMap type="map" id="fileMap">	
+		<id column="file_no" property="fileNo" />
+		
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_originalname1" property="fileOriginalname1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_originalname2" property="fileOriginalname2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+		<result column="file_originalname3" property="fileOriginalname3" />
+	
+	</resultMap>
+	
+		
+	<resultMap type="map" id="renameList">
+		<result column="file_renamed1" property="fileRenamed1" />
+		<result column="file_renamed2" property="fileRenamed2" />
+		<result column="file_renamed3" property="fileRenamed3" />
+	</resultMap>
 	
 
 </mapper>

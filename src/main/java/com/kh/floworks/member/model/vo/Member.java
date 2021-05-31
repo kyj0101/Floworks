@@ -5,22 +5,26 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-
 import lombok.Data;
+
 
 @Data
 public class Member extends User implements UserDetails{
+
+	private static final long serialVersionUID = 1L;
 	
 	private String departmentCode;
 	private String position;
-	private Date hireDate;
+	private Date hireDate;	
 	private String resign;
 	private String department;
+	private String profileFileOrinalname;
+	private String profileFileRename;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -110,5 +114,7 @@ public class Member extends User implements UserDetails{
 	public String getWorkspaceId() {
 		return super.getWorkspaceId();
 	}
+	
+	
 
 }

@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * 메인페이지,
- * 로그인,
- * 로그아웃,
- * 회원 가입,
- * 워크스페이스 홈페이지,
+ * 메인페이지
+ * 로그인
+ * 로그아웃
+ * 회원 가입
+ * 비밀번호 찾기
+ * 워크스페이스 홈페이지
  * 
  * 컨트롤러
  * 
@@ -24,12 +25,7 @@ public class MainPageController {
 	public String main(Model model) {
 		return "mainPage";
 	}
-	
-	@GetMapping("/home")
-	public String home() {
-		return "/home";
-	}
-	
+
 	@GetMapping("/mainPage")
 	public String indexPage() {
 		return "/member/mainPage";
@@ -55,5 +51,9 @@ public class MainPageController {
 		return "/member/createWorkspace"; 
 	}
 	
-	
+	@GetMapping("/find/password")
+	public String findPassword() {
+		return "/member/findPassword";
+	}
+
 }
