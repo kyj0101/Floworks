@@ -7,7 +7,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
-<jsp:include page="/WEB-INF/views/common/mainHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/mainHeader.jsp">
+<jsp:param value="워크스페이스 생성하기" name="title"/>
+</jsp:include>
 
 <!-- css -->        
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/createWorkspace.css">

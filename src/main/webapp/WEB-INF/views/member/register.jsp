@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js" integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- js -->
-<script src="${pageContext.request.contextPath }/resources/js/member/register.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/member/profileThumbnail.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
 <section>
@@ -81,7 +81,7 @@
 				<div class="form-label-group">
 					<input type="text" name="workspaceId" id="inputWorkspace" class="form-control workspace" placeholder="workspace">
 					<label for="inputWorkspace">워크스페이스 ID</label>
-					<p class="input-warning">잘못된 주소 입니다.</p>
+					<p class="input-warning">잘못된 아이디 입니다.</p>
 				</div>
 				
 				<div class="form-check">

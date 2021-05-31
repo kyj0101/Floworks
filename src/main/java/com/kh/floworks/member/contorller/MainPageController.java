@@ -1,4 +1,4 @@
-package com.kh.floworks.member.contorller;
+ package com.kh.floworks.member.contorller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
