@@ -18,7 +18,7 @@
 				<hr>
 
 				<li class="nav-item">
-					<hr class="line-hr"> <a class="nav-link " href="${pageContext.request.contextPath}/member/mypage"> 개인 정보 수정 </a>
+					<hr class="line-hr"> <a class="nav-link " href="${pageContext.request.contextPath}/member/mypage?id=<sec:authentication property="principal.id"/>"> 개인 정보 수정 </a>
 					<hr class="line-hr">
 				</li>
 

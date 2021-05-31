@@ -104,8 +104,11 @@
 <jsp:include page="/WEB-INF/views/common/myPageFooter.jsp"></jsp:include>
 
 <script>
+const profileRename = "<sec:authentication property='principal.profileFileOrinalname'/>";
 
-
+if(profileRename == "null"){
+	$(".custom-file-label").text("기본사진");
+}
 $("#email-btn").click(function(){
 	
 	const csrfHeaderName = "${_csrf.headerName}";

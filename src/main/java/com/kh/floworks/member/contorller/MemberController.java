@@ -46,15 +46,8 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
-	
-	
-	@GetMapping("/mainPage")
-	public String indexPage() {
-		return "/member/mainPage";
-	}
 
-	@GetMapping(value={"/mypage","/mypage/update"})
+	@GetMapping("/mypage")
 	public String memberUpdate(String id, Model model) {
 		
 		//스프링 시큐리티 태그를 사용하면 글자가 깨져서 직접 model에 member객체를 전달한다.
