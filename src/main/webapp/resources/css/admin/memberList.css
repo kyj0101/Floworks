@@ -17,3 +17,10 @@ td{
 .table-id {
 	width: 50px;
 }
+
+#board-list {
+	
+	width: 80%;
+	margin: 0 auto;
+	padding-top: 50px;
+}
