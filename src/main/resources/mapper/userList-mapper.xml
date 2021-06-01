@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">
+
+	<select id="selectUserList" resultType="string">
+		select
+		    *
+		from
+		    (select f.workspace_id, m.id, f.name, d.department_name, m.position, m.hire_date, f.quit_yn
+		    from member m
+		        left join department d
+		            on m.department_code = d.department_code
+		        left join floworks_user f
+		            on m.id = f.id) u
+		    where
+		        workspace_id = #{workspaceId}
+		    order
+		        by hire_date;
+	</select>
+
+</mapper>
