@@ -14,7 +14,7 @@
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
 	<section>
-
+a
 	<div id="board-list">
 	    <table class="table table-striped table-centered mb-0">
 	        <thead>
