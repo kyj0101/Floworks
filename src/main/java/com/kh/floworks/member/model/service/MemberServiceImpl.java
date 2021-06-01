@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.kh.floworks.member.model.dao.MemberDao;
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -30,6 +34,7 @@ public class MemberServiceImpl implements MemberService {
 	public int insertWorkspace(Map<String, String> param) {
 		return memberDao.insertWorkspace(param);
 	}
+
 
 	@Override
 	public boolean selectIdDuplicate(String id) {
@@ -96,6 +101,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectOneMember(id);
 	}
 
+
 	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
 		return memberDao.updateUserWorkspaceId(param);
@@ -115,10 +121,4 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePassword(Map<String, Object> param) {
 		return memberDao.updatePassword(param);
 	}
-
-	@Override
-	public int updateQuitMember(String id) {
-		return memberDao.updateQuitMember(id);
-	}
-
 }
