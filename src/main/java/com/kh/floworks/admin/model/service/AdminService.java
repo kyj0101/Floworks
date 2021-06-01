@@ -15,5 +15,41 @@ public interface AdminService {
 	int getTotalContents(String workspace);
 
 	List<AttendList> selectAttendList();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===================== 강유정 근태 설정 ========================
+	
+	int updateAttendanceSystem(Map<String, Object> param);
 
 }

@@ -34,4 +34,59 @@
 		    workspace_id = #{workspace}
 	</select>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- ===================== 강유정 근태 설정 ========================  -->
+	<update id="updateAttendanceSystem"> 
+		update
+			attendance_system
+		set
+			office_in_time = #{officeInTime},
+			office_off_time = #{officeOffTime},
+			lunch_time_start = #{lunchTimeStart},
+			lunch_time_end = #{lunchTimeEnd},
+			flex_time_yn = #{flexTimeYn},
+			memo = #{memo}
+		where
+			workspace_id = #{workspaceId}
+	</update>
 </mapper>

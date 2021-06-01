@@ -10,5 +10,59 @@ public interface AdminDao {
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
 
 	int getTotalContents(String workspace);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===================== 강유정 근태 설정 ========================
+	
+	int updateAttendanceSystem(Map<String, Object> param);
 
 }

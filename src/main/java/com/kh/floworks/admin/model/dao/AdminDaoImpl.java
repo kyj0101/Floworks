@@ -37,4 +37,56 @@ public class AdminDaoImpl implements AdminDao {
 	public int getTotalContents(String workspace) {
 		return session.selectOne("admin.getTotalContents", workspace);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===================== 강유정 근태 설정 ========================
+	
+	@Override
+	public int updateAttendanceSystem(Map<String, Object> param) {
+		return session.update("admin.updateAttendanceSystem", param);
+	}
 }
