@@ -59,14 +59,14 @@
 						</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="text" class="form-control" name="name" id="inputname" placeholder="이름" value="<sec:authentication property="principal.name"/>" required/>
+							<input type="text" class="form-control register-form-control" name="name" id="inputname" placeholder="이름" value="<sec:authentication property="principal.name"/>" required/>
 							<label for="inputname">이름</label>
 							<p class="input-warning">올바른 이름이 아닙니다.</p>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="email" class="form-control" name="email" id="email" value="${member.email}" required/>
+							<input type="email" class="form-control register-form-control" name="email" id="email" value="${member.email}" required/>
 							<label for="inputEmail">이메일</label>
 							<p class="input-warning">이메일 형식이 올바르지 않습니다.</p>
 							<p class="email-p">이메일 인증이 완료되었습니다.</p>
@@ -76,14 +76,14 @@
 
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="tel" class="form-control" name="phone" id="phone" placeholder="전화번호" maxlength="12" value="${member.phone}" required/>
+							<input type="tel" class="form-control register-form-control" name="phone" id="phone" placeholder="전화번호" maxlength="12" value="${member.phone}" required/>
 							<label for="inputuserame">전화 번호 ('-'를 빼고 입력해주세요.)</label>
 							<p class="input-warning">잘못된 전화번호 입니다.</p>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="text" class="form-control" name="address" id="inputAddress" placeholder="주소" value="<sec:authentication property="principal.address"/>" required/>
+							<input type="text" class="form-control register-form-control" name="address" id="inputAddress" placeholder="주소" value="<sec:authentication property="principal.address"/>" required/>
 							<label for="inputAddress">주소</label>
 							<p class="input-warning">잘못된 주소 입니다.</p>
 						</div>
@@ -104,8 +104,11 @@
 <jsp:include page="/WEB-INF/views/common/myPageFooter.jsp"></jsp:include>
 
 <script>
+const profileRename = "<sec:authentication property='principal.profileFileOrinalname'/>";
 
-
+if(profileRename == "null"){
+	$(".custom-file-label").text("기본사진");
+}
 $("#email-btn").click(function(){
 	
 	const csrfHeaderName = "${_csrf.headerName}";
@@ -249,9 +252,8 @@ $("#submit-btn").click(function(){
 	
 	const originalEmail = "${member.email}";
 	const updateEmail = $("input[name=email]").val().trim();
-	console.log(originalEmail);
-	console.log(updateEmail);
-	if(!warningCheck()){
+
+	if(!warningCheck() || !inputNullCheck()){
 		return false;
 	
 	}else if(originalEmail != updateEmail && !emailAuthCheck()){

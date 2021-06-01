@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 <jsp:param value="직원목록 조회" name="title"/>
 </jsp:include>
@@ -13,11 +14,6 @@
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
 	<section>
-	<!-- 직원 목록 관리 창 -->
-	<div class="page-header" >
-	    <h1>직원 정보 조회</h1>
-	    <hr class="my-4">
-	</div>
 
 	<div id="board-list">
 	    <table class="table table-striped table-centered mb-0">
@@ -27,10 +23,7 @@
                 <th scope="col" class="table-name">직원명</th>
                 <th scope="col" class="table-depart">부서</th>
                 <th scope="col" class="table-positon">직급</th>
-                <th scope="col" class="table-phone">연락처</th>
-                <th scope="col" class="table-addr">주소</th>
                 <th scope="col" class="table-hire">입사일</th>
-                <th scope="col" class="table-resign">퇴사일</th>
                 <th scope="col" class="table-resignYN">퇴사여부</th>
               </tr>
             </thead>
@@ -43,10 +36,7 @@
 					<td>${users.name}</td>
 					<td>${users.depart}</td>
 					<td>${users.position}</td>
-					<td>${users.phone}</td>
-					<td>${users.address}</td>
 					<td><fmt:formatDate value="${users.hireDate}" pattern="yy/MM/dd"/></td>
-					<td><fmt:formatDate value="${users.resignDate}" pattern="yy/MM/dd"/></td>
 					<td>${users.resignYN}</td>
 				</tr>
 				</c:if>

@@ -72,7 +72,7 @@
                                         </div>
                                         <input type="text" class="form-control" id="input-search" aria-label="" placeholder="검색어를 입력하세요.">
                                     </div>
-                                    <button class="btn btn-outline-secondary search-btn" type="button">
+                                    <button class="btn btn-outline-secondary search-btn header-search-btn" type="button">
                                     	검색
                                     </button>
                                 </form>
@@ -95,8 +95,7 @@
 									href="${pageContext.request.contextPath}/member/mypage?id=<sec:authentication property="principal.id"/>">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="${pageContext.request.contextPath}/address/list?owner=<sec:authentication property="principal.id"/>">주소록</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#" id="logout-a">로그아웃</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="logout-a">로그아웃</a></li>
 							</ul>
 						</div>
 
@@ -210,7 +209,7 @@ $(function(){
 	});
 	
 	
-	$(".search-btn").click(function(){
+	$(".header-search-btn").click(function(){
 
 		const type = $("#select-search").text();
 		const keyword = $("#input-search").val();
