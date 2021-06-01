@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.floworks.authentication.email.model.service.EmailAuthenticationService;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.member.model.service.MemberService;
 import com.kh.floworks.member.model.vo.Member;
@@ -40,11 +42,13 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/member")
 @Slf4j
-@SessionAttributes(value = {"loginMember", "anotherValue"})
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private EmailAuthenticationService emailAuthService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -166,6 +170,7 @@ public class MemberController {
 	@PostMapping("/delete")
 	public String memberDelete(String id, 
 			                   String password,
+			                   String email,
 			                   RedirectAttributes redirectAttr,
 			                   HttpServletRequest request,
 			                   HttpSession session) {
@@ -173,8 +178,11 @@ public class MemberController {
 		Member member = memberService.selectOneMember(id);
 		
 		if(bcryptPasswordEncoder.matches(password, member.getPassword())) {
-		
+			
+			//이메일 인증 기록도 삭제한다.
+			emailAuthService.deleteEmailAuth(email);
 			memberService.updateQuitMember(id);
+			
 			SecurityContextHolder.clearContext();
 			redirectAttr.addFlashAttribute("msg", "정상적으로 탈퇴 되었습니다.");
 			
