@@ -29,9 +29,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@GetMapping("/userList")
-//	public void userList() {}
-
 	@GetMapping("/userList")
 	public void userList(@RequestParam(defaultValue = "1") int cPage,
 			@RequestParam String workspace, 
@@ -75,6 +72,7 @@ public class AdminController {
 
 	}
 
+
 	
 	
 	
@@ -88,9 +86,7 @@ public class AdminController {
 		//3. jsp처리 위임
 			
 			model.addAttribute("attendList", attendList);
-
 	}
-	
 
 	
 }
