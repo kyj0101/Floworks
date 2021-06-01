@@ -274,7 +274,7 @@ public class BoardController {
 
 	
 	
-	@GetMapping("/postDelete")
+	@PostMapping("/postDelete")
 	public String postDelete(@RequestParam int postNo, 
 							@RequestParam int boardNo, 
 							RedirectAttributes redirectAttr) {
@@ -311,7 +311,7 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/commentDelete")
+	@PostMapping("/commentDelete")
 	public String commentDelete(@RequestParam int postNo,
 								@RequestParam int commentNo, 
 								RedirectAttributes redirectAttr) {

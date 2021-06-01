@@ -101,8 +101,6 @@ public class MemberDaoImpl implements MemberDao{
 		return session.update("member.updatePassword",param);
 	}
 
-	@Override
-	public int updateQuitMember(String id) {
-		return session.update("member.updateQuitMember", id);
-	}
+ 
+
 }
