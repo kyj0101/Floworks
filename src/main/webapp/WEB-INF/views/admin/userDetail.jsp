@@ -19,7 +19,10 @@
 </div>
 
 <div class="container">
-    <form name="f" method="post">
+    <form:form 
+    	name="f"
+    	action="${pageContext.request.contextPath}/admin/userDetail"
+    	method="post">
  
     	<div class="col-sm-12 pt-3">
             <div class="card">
@@ -31,37 +34,37 @@
                             <tr style="line-height:32px;">
                                 <td>ID</td>
                                 <td>
-                                    <input type="text" name="user_id" class="form-control" value="i123" readonly>
+                                    <input type="text" name="user_id" class="form-control" value="${userList.id}" readonly>
                                 </td>
                                 <td>직원명</td>
                                 <td>
-                                    <input type="text" name="user_name" class="form-control" value="김옥순">
+                                    <input type="text" name="user_name" class="form-control" value="${userList.name}" readonly>
                                 </td>                        
                             </tr>
                             <tr>
                                 <td>부서</td>
                                 <td>
-                                    <input type="text" name="department" class="form-control" maxlength="10" value="개발부">                                    
+                                    <input type="text" name="department" class="form-control" maxlength="10" value="">                                    
                                 </td>
                                 <td>직급</td>
                                 <td>
-                                    <input type="text" name="position" class="form-control" maxlength="10" value="대리">                                    
+                                    <input type="text" name="position" class="form-control" maxlength="10" value="">                                    
                                 </td>
                             </tr>  
                             <tr>
                                 <td>연락처</td>
                                 <td>
-                                    <input type="tel" name="phone" class="form-control" value="01034546123">
+                                    <input type="tel" name="phone" class="form-control" value="">
                                 </td>
                                 <td>Email</td>
                                 <td>
-                                    <input type="email" name="email" class="form-control" value="i123@gmail.com">
+                                    <input type="email" name="email" class="form-control" value="">
                                 </td>
                             </tr>
                             <tr>
                                 <td>주소</td>
                                 <td colspan="3">
-                                    <input type="text" id="address" name="address" class="form-control" value="경기도 광명시 xxx">
+                                    <input type="text" id="address" name="address" class="form-control" value="">
                                 </td>
                                 
                                 
@@ -70,7 +73,7 @@
                                 <td>입사일</td>
                                 <td>
                                     
-                                    <input type="date" name="hire_date" class="form-control" value="21/05/26" readonly> 
+                                    <input type="date" name="hire_date" class="form-control" value="" readonly> 
                                 </td>
                                 <td>퇴사 여부</td>
                                 <td>
@@ -90,7 +93,7 @@
 	        <button type="submit" class="btn btn-success">수정</button>
 	        <button type="reset" class="btn btn-info">취소</button>
 	    </div>    
-    </form>
+    </form:form>
 
 
 </div>

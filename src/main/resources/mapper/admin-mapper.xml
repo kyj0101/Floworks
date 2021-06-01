@@ -34,9 +34,32 @@
 		    workspace_id = #{workspace}
 	</select>
 
+	<select id="selectOneUserCollection" resultMap="userCollectionMap">
+		SELECT
+		    *    
+		FROM
+		    (select m.id, f.name, d.department_name, m.position, f.phone, f.email, f.address, m.hire_date, f.quit_yn
+		    from member m
+		        left join department d
+		            on m.department_code = d.department_code
+		        left join floworks_user f
+		            on m.id = f.id) u
+		WHERE
+		    id = #{id}
+	</select>
 
-
-
+	<resultMap type="userList" id="userCollectionMap">
+		<id column="user_id" property="userId"/>
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="address" property="address"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="quit_yn" property="quitYN"/>
+	</resultMap>
 
 
 
