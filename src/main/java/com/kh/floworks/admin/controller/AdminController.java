@@ -29,6 +29,9 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+//	@GetMapping("/userList")
+//	public void userList() {}
+
 	@GetMapping("/userList")
 	public void userList(@RequestParam(defaultValue = "1") int cPage,
 			@RequestParam String workspace, 
@@ -47,18 +50,20 @@ public class AdminController {
 		log.info("userList = {}", userList);
 		
 		//b. pagebar영역
-		int totalContents = adminService.getTotalContents(workspace);
-		String url = request.getRequestURI() + "?workspace=" + workspace;
-		log.info("totalContents = {}", totalContents);
-		log.info("url = {}", url);
-		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
-		
+//		int totalContents = adminService.getTotalContents(workspace);
+//		String url = request.getRequestURI() + "?workspace=" + workspace;
+//		log.info("totalContents = {}", totalContents);
+//		log.info("url = {}", url);
+//		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+//		
 		
 		//3. jsp처리 위임
 		model.addAttribute("userList", userList);
-		model.addAttribute("pageBar", pageBar);
+//		model.addAttribute("pageBar", pageBar);
+
 	}
 	
+
 	
 	@GetMapping("/userDetail")
 	public void memberDetail(Model model) {
@@ -67,6 +72,7 @@ public class AdminController {
 		//List<UserDetail> userDetail = adminService.selectOneDetail();
 		//3. jsp처리 위임
 		//model.addAttribute("userList", userDetail);
+
 	}
 
 	

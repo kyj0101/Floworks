@@ -1,8 +1,7 @@
 .ap-doc-table {
     border-top: 3px solid black;
     border-bottom: 3px solid black;
-    margin: auto;
-    width: 80%;
+    width: 90%;
 }
 
 .ap-doc-table th {
@@ -22,7 +21,7 @@ tr, td, th {
     text-align: center;
 }
 
-.back-to-list, .approval-btn {
+.back-to-list, .approval-btn, .delete-btn, .update-btn {
     margin: 20px 10px;
     width: 100px !important;
 }
