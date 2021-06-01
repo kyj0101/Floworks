@@ -1,5 +1,6 @@
 package com.kh.floworks.member.model.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -11,11 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Data
 @ToString
-public class Member extends User implements UserDetails{
+public class Member extends User implements Serializable, UserDetails{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,8 +33,13 @@ public class Member extends User implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
+		String userRole = super.getRole().trim();
+	
+		if(userRole.equals("ADMIN")) {
+			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));			
+		}
 		
-		authList.add(new SimpleGrantedAuthority(super.getRole()));
+		authList.add(new SimpleGrantedAuthority("ROLE_USER"));
 		
 		return authList;
 	}

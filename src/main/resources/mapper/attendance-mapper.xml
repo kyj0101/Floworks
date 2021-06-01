@@ -46,6 +46,7 @@
 		where
 			id = #{id}
 		    and day between #{startOfWeek} and #{endOfWeek}
+		    and office_off is not null
 	</select>
 	
 	<select id="selectmonthOfficeHours" resultType="attendance">
