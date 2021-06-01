@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.floworks.admin.model.dao.AdminDao;
+import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
@@ -27,6 +28,12 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public List<UserDetail> selectOneDetail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AttendList> selectAttendList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -6,18 +6,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="직원목록 조회" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
 
 	<section>
-	<!-- 직원 목록 관리 창 -->
-	<div class="page-header" >
-	    <h1>직원 정보 조회</h1>
-	    <hr class="my-4">
-	</div>
-
+a
 	<div id="board-list">
 	    <table class="table table-striped table-centered mb-0">
 	        <thead>
@@ -48,6 +46,7 @@
 	        </tbody>
 	    </table>
 	</div>
+<<<<<<< HEAD
 
 	
 <section>
@@ -89,4 +88,8 @@
 </div>
 
 </section>
+=======
+
+	</section>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

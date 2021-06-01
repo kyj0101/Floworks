@@ -1,6 +1,5 @@
 package com.kh.floworks.member.contorller;
 
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -8,7 +7,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -56,10 +57,19 @@ public class MemberController {
 
 		model.addAttribute("member", member);
 		
-		model.addAttribute("loginMember", authentication.getPrincipal());
-		
+		return "/member/memberUpdate";
 	}
-
+	
+	@GetMapping("/delete")
+	public String memberDelete() {		
+		return "/member/memberDelete";
+	}
+	
+	@GetMapping("/update/password")
+	public String updatePassword() {	
+		return "/member/memberUpdatePassword";
+	}
+	
 	@PostMapping("/update")
 	public String memberUpdate(User updateUser, 
                                Member updateMember, 
@@ -95,6 +105,7 @@ public class MemberController {
 															oldAuthentication.getAuthorities()
 															);	
 			
+			//업로드된 프로필 사진이 있는지 없는지 검사한다.
 			if(multipartFiles != null && multipartFiles[0].getOriginalFilename().length() > 0) {
 
 				String saveDirectory = request.getServletContext().getRealPath(FileUtils.PROFILE_SAVEDIRECTORY);
@@ -120,16 +131,7 @@ public class MemberController {
 		return "redirect:/member/mypage?id=" + updateMember.getId();
 	}
 
-	@GetMapping("/delete")
-	public String memberDelete() {		
-		return "/member/memberDelete";
-	}
-	
-	@GetMapping("/update/password")
-	public String updatePassword() {	
-		return "/member/memberUpdatePassword";
-	}
-	
+
 	@PostMapping("/update/password")
 	public String updatePassword(String id,
 			                     String password,
@@ -159,6 +161,31 @@ public class MemberController {
 			throw new RuntimeException();
 		}
 
+	}
+	
+	@PostMapping("/delete")
+	public String memberDelete(String id, 
+			                   String password,
+			                   RedirectAttributes redirectAttr,
+			                   HttpServletRequest request,
+			                   HttpSession session) {
+		
+		Member member = memberService.selectOneMember(id);
+		
+		if(bcryptPasswordEncoder.matches(password, member.getPassword())) {
+		
+			memberService.updateQuitMember(id);
+			SecurityContextHolder.clearContext();
+			redirectAttr.addFlashAttribute("msg", "정상적으로 탈퇴 되었습니다.");
+			
+			return "redirect:/";
+		
+		}else {
+			
+			redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않으므로 회원 탈퇴를 하실 수 없습니다..");
+			
+			return "redirect:/member/delete";
+		}	
 	}
 	
 	@InitBinder
