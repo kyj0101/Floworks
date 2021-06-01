@@ -17,16 +17,12 @@
     <title>${param.title}</title>
     
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/main.css">
-	
-	<!-- jquery -->    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     
-    <!-- bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-	
-	<!-- icon -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     
     <!--특정 아이콘 추가 : https://fontawesome.com/icons?d=gallery&p=2 메일박스, 메시지-->
@@ -72,7 +68,7 @@
                                         </div>
                                         <input type="text" class="form-control" id="input-search" aria-label="" placeholder="검색어를 입력하세요.">
                                     </div>
-                                    <button class="btn btn-outline-secondary search-btn header-search-btn" type="button">
+                                    <button class="btn btn-outline-secondary search-btn" type="button">
                                     	검색
                                     </button>
                                 </form>
@@ -92,10 +88,11 @@
 							<ul class="dropdown-menu" role="menu"
 								aria-labelledby="dropdownMenu1">
 								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="${pageContext.request.contextPath}/member/mypage?id=<sec:authentication property="principal.id"/>">마이페이지</a></li>
+									href="${pageContext.request.contextPath}/member/mypage">마이페이지</a></li>
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="${pageContext.request.contextPath}/address/list?owner=<sec:authentication property="principal.id"/>">주소록</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="logout-a">로그아웃</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1"
+									href="#" id="logout-a">로그아웃</a></li>
 							</ul>
 						</div>
 
@@ -185,7 +182,7 @@ $(function(){
 		alert("${msg}");
 	}
 	
-	$(".menu-btn").click(function(){
+	$(".dropdown-item").click(function(){
 		const type = $(this).text();
 		const $inputSearch = $("#input-search");
 		
@@ -209,7 +206,7 @@ $(function(){
 	});
 	
 	
-	$(".header-search-btn").click(function(){
+	$(".search-btn").click(function(){
 
 		const type = $("#select-search").text();
 		const keyword = $("#input-search").val();
@@ -251,6 +248,8 @@ const ws = new SockJS("http://" + location.host + "${pageContext.request.context
 var payload;
 var alarmList;
 var alarm_count=0;
+var email_count=0;
+
 var id;
 //헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
 ws.onopen = e => {
@@ -277,28 +276,36 @@ ws.onmessage = e => {
 	console.log("payload:",payload," count:",alarm_count," alarmList: ",alarmList," id:",id);
 	
 	const $badge =$("#alarm_badge");
+	const $ebadge =$("#badge_for_email");
+	
 	var $modal_for_alarm = $("#modal_body_for_alarm");
 	
 	$badge.text(alarm_count);
+	
 	if(alarm_count ==0){
 		$badge.css("visibility","hidden");
+		$ebadge.css("visibility","hidden");
 		$modal_for_alarm.html("");
 	}
 	else{
 		$badge.css("visibility","visible");
-		
+		$ebadge.css("visibility","visible");
 		
 		for(var i=0; i < alarm_count;i++){
 			
+			if(alarmList[i].category=="e-mail"){
+				email_count+=1;
+			}
+			
 			var tmp="";
-			tmp = tmp+'<a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">';
+			tmp = tmp+'<a href="${pageContext.request.contextPath}/'+alarmList[i].alarmLink+'" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase(event)">';
 			tmp+='<div class="row">';
 			tmp+='<div class="col-md-1">';
 			tmp+='<i class="fas fa-user-circle" style="color: pink;"></i>';
 			tmp+='</div>';
 			tmp+='<div class="col-md-11">';
 			tmp+='<div class="d-flex w-100 align-items-center justify-content-between">';
-			tmp+='<strong class="mb-1">'+alarmList[i].fromId+'</strong>';
+			tmp+='<strong class="mb-1">'+'From : '+alarmList[i].fromId+'</strong>';
 			tmp+='<small>'+alarmList[i].alarmTime+'</small>';
 			tmp+='</div>';
 			tmp+='<div class="col-10 mb-1 small">'+alarmList[i].title+'</div>';
@@ -307,7 +314,9 @@ ws.onmessage = e => {
 			tmp+='</a>';
 			$modal_for_alarm.append(tmp);
 		}
-	
+		
+		$ebadge.text(email_count);
+		
 	}
 	
 }
@@ -320,6 +329,21 @@ ws.onerror = e => {
 ws.onclose = e => {
 	console.log("onclose : ", e);
 }
+
+function AlarmErase(event){
+	var url=""
+	
+	$.ajax({
+        type:"POST",
+        url:url,
+        dataType : "html",
+        success: 
+        error: function(xhr, status, error) {
+            alert(error);
+        }  
+    });	
+}
+
 
 /* $("#sendBtn").click(() => {
 	const $message = $("#message");
