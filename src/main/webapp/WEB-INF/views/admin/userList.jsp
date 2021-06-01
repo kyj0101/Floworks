@@ -40,7 +40,18 @@
 					<td>${users.departmentName}</td>
 					<td>${users.position}</td>
 					<td><fmt:formatDate value="${users.hireDate}" pattern="yy-MM-dd"/></td>
-					<td>${users.quitYN}</td>
+					<c:set var="quit" value="N" />
+					<td>
+					<c:choose>
+						<c:when test="${quit eq 'N'} ">
+							근무중
+						</c:when>
+						<c:otherwise>
+							퇴사
+						</c:otherwise>
+					</c:choose>
+					</td>
+					${users.quitYN}
 				</tr>
 			  </c:forEach>
 		    </c:if>
