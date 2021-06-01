@@ -21,7 +21,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/memberList.do")
+	@GetMapping("/memberList")
 	public void memberList(Authentication authentication, @AuthenticationPrincipal Member member, Model model) {
 			
 			//1. 사용자입력값
@@ -33,7 +33,8 @@ public class AdminController {
 			model.addAttribute("loginMember", authentication.getPrincipal());
 	}
 	
-	@GetMapping("/attendList.do")
+
+	@GetMapping("/attendList")
 	public void attendanceList(Authentication authentication, @AuthenticationPrincipal Member member, Model model) {
 			
 			//1. 사용자입력값
@@ -46,3 +47,4 @@ public class AdminController {
 	}
 	
 }
+

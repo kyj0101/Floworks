@@ -8,9 +8,9 @@ function postUpdate(postNo){
 
 function postDelete(postNo, boardNo){
 	if(confirm(`${postNo}번 게시글을 삭제하시겠습니까?`)){
-		location.href = `postDelete?postNo=${postNo}&boardNo=${boardNo}`;		
-	console.log(postNo, boardNo);
+		return true;
 	}
+	return false;
 }
 
 function commentValidate(){
@@ -22,11 +22,11 @@ function commentValidate(){
 	return true;
 }
 
-function commentDelete(postNo, commentNo){
+function cmtDelete(postNo, commentNo){
 	if(confirm(`${commentNo}번 댓글을 삭제하시겠습니까?`)){
-		console.log(postNo, commentNo)
-		location.href = `commentDelete?postNo=${postNo}&commentNo=${commentNo}`;		
+		return true;
 	}
+	return false;
 }
 
 
