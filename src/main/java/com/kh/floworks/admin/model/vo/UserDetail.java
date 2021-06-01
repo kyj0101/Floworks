@@ -7,16 +7,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class UserDetail {
 
-
-	private String workspaceId;
 	private String id;
 	private String name;
-	private String department;
+	private String departmentName;
 	private String position;
+	private String phone;
+	private String address;
+	private String email;
 	private String hireDate;
-	private String resignDate;
-	private char resignYN;
+	private char quitYn;
+	private String role;
 	
 }
