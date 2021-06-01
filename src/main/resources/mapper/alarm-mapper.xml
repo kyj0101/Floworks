@@ -8,7 +8,23 @@
 		select
 			*
 		from
-			alarm		
+			alarm
+		where 
+			to_id=#{id}		
 	</select>
+	
+	<insert id="insertAlarm">
+		insert into 
+			alarm
+		values(
+			#{fromId},
+			#{toId},			
+			sysdate,
+			#{title},			
+			#{category},	
+			#{isChecked},
+			#{alarmLink}
+		)	
+	</insert>
 
 </mapper>
