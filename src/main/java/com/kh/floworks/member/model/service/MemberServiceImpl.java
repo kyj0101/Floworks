@@ -35,6 +35,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertWorkspace(param);
 	}
 
+
 	@Override
 	public boolean selectIdDuplicate(String id) {
 
@@ -100,6 +101,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectOneMember(id);
 	}
 
+
 	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
 		return memberDao.updateUserWorkspaceId(param);
@@ -119,8 +121,4 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePassword(Map<String, Object> param) {
 		return memberDao.updatePassword(param);
 	}
-
-
-
-
 }

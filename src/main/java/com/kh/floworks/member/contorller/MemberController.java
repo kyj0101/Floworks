@@ -1,5 +1,6 @@
 package com.kh.floworks.member.contorller;
 
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -55,9 +56,10 @@ public class MemberController {
 
 		model.addAttribute("member", member);
 		
-		return "/member/memberUpdate";
+		model.addAttribute("loginMember", authentication.getPrincipal());
+		
 	}
-	
+
 	@PostMapping("/update")
 	public String memberUpdate(User updateUser, 
                                Member updateMember, 
