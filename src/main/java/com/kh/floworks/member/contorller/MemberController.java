@@ -2,17 +2,19 @@ package com.kh.floworks.member.contorller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.floworks.authentication.email.model.service.EmailAuthenticationService;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.member.model.service.MemberService;
 import com.kh.floworks.member.model.vo.Member;
@@ -38,68 +42,45 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/member")
 @Slf4j
-@SessionAttributes(value = {"loginMember", "anotherValue"})
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
+	private EmailAuthenticationService emailAuthService;
+	
+	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
-	
-	
-	@GetMapping("/mainPage")
-	public String indexPage() {
-		return "/member/mainPage";
-	}
-	
-	@GetMapping(value={"/mypage","/mypage/update"})
-	public String mypage() {		
+
+	@GetMapping("/mypage")
+	public String memberUpdate(String id, Model model) {
+		
+		//스프링 시큐리티 태그를 사용하면 글자가 깨져서 직접 model에 member객체를 전달한다.
+		Member member = memberService.selectOneMember(id);
+
+		model.addAttribute("member", member);
+		
 		return "/member/memberUpdate";
 	}
-
-	@GetMapping("/memberDetail.do")
-	public void memberDetail(Model model) {
-
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
-		model.addAttribute("loginMember", authentication.getPrincipal());
-		
-	}
-
-	@GetMapping("/memberUpdate.do")
-	public void memberDetail(Authentication authentication, @AuthenticationPrincipal Member member, Model model) {
-		//1.security context holder bean
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		//2. handler의 매개인자로 authentication객체 요청
-		// UsernamePasswordAuthenticationToken
-		log.debug("authentication = {}", authentication); 
-		log.debug("member = {}", authentication.getPrincipal());
-		
-		//3. @AuthenticationPrincipal Member member
-		log.debug("member = {}", member);
-		
-		model.addAttribute("loginMember", authentication.getPrincipal());
-		
+	
+	@GetMapping("/delete")
+	public String memberDelete() {		
+		return "/member/memberDelete";
 	}
 	
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
-	
-		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
+	@GetMapping("/update/password")
+	public String updatePassword() {	
+		return "/member/memberUpdatePassword";
 	}
 	
-	//이메일 변경시 이메일 재인증 기능은 아직 없음.
-	@PostMapping("/memberUpdate.do")
+	@PostMapping("/update")
 	public String memberUpdate(User updateUser, 
                                Member updateMember, 
                                Authentication oldAuthentication, 
                                RedirectAttributes redirectAttr,
                                HttpServletRequest request,
-                               @RequestParam(value="profile", required = false) MultipartFile multipartFile) {
+                               @RequestParam(value="profile", required = false) MultipartFile[] multipartFiles) {
 		
 
 		try {
@@ -128,10 +109,10 @@ public class MemberController {
 															oldAuthentication.getAuthorities()
 															);	
 			
-			if(multipartFile != null) {
-				
+			//업로드된 프로필 사진이 있는지 없는지 검사한다.
+			if(multipartFiles != null && multipartFiles[0].getOriginalFilename().length() > 0) {
+
 				String saveDirectory = request.getServletContext().getRealPath(FileUtils.PROFILE_SAVEDIRECTORY);
-				MultipartFile[] multipartFiles = {multipartFile};
 				Map<String, String> fileMap = FileUtils.getFileMap(multipartFiles, saveDirectory);
 				
 				if(!updateMember.getProfileFileRename().equals("default.png")){
@@ -139,9 +120,10 @@ public class MemberController {
 				}
 				
 				updateMember.setProfileFileRename(fileMap.get("reNamed1"));
+				updateMember.setProfileFileOrinalname(fileMap.get("originalName1"));
 				memberService.updateProfile(updateMember);
 			}
-			
+
 			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 			memberService.updateMember(updateMember);		
 			redirectAttr.addFlashAttribute("msg", "사용자 정보 수정 성공");
@@ -149,22 +131,77 @@ public class MemberController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+	
+		return "redirect:/member/mypage?id=" + updateMember.getId();
+	}
 
+
+	@PostMapping("/update/password")
+	public String updatePassword(String id,
+			                     String password,
+                                 @RequestParam(value="original-password") String originalPassword,
+                                 RedirectAttributes redirectAttr) {	
+		try {
+			
+			Member member = memberService.selectOneMember(id);
+			
+			if(bcryptPasswordEncoder.matches(originalPassword, member.getPassword())) {
+				
+				Map<String, Object> param = new HashMap<>();
+				
+				param.put("id", id);
+				param.put("password", bcryptPasswordEncoder.encode(password));
+				
+				memberService.updatePassword(param);
+				redirectAttr.addFlashAttribute("msg", "정상적으로 비밀번호가 변경되었습니다.");
+			
+			}else {
+				redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않으므로 비밀번호를 변경할 수 없습니다.");
+			}
+			
+			return "redirect:/member/update/password";
+			
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
+	}
+	
+	@PostMapping("/delete")
+	public String memberDelete(String id, 
+			                   String password,
+			                   String email,
+			                   RedirectAttributes redirectAttr,
+			                   HttpServletRequest request,
+			                   HttpSession session) {
 		
-		return "redirect:/member/memberUpdate.do";
+		Member member = memberService.selectOneMember(id);
+		
+		if(bcryptPasswordEncoder.matches(password, member.getPassword())) {
+			
+			//이메일 인증 기록도 삭제한다.
+			emailAuthService.deleteEmailAuth(email);
+			memberService.updateQuitMember(id);
+			
+			SecurityContextHolder.clearContext();
+			redirectAttr.addFlashAttribute("msg", "정상적으로 탈퇴 되었습니다.");
+			
+			return "redirect:/";
+		
+		}else {
+			
+			redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않으므로 회원 탈퇴를 하실 수 없습니다..");
+			
+			return "redirect:/member/delete";
+		}	
 	}
 	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
 	
-	@GetMapping("/delete")
-	public String memberDelete() {		
-		return "/member/memberDelete";
-	}
-	
-	@GetMapping("/updatePwd")
-	public String updatePassword() {	
-		return "/member/updatePassword";
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
 }

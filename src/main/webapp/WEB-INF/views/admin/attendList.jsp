@@ -10,11 +10,43 @@
 	<section>
 		<!-- 직원 근태 목록 -->
 		<div class="page-header" >
-		    <h1>직원 근태 목록</h1>
+		    <h1>직원 근태 조회</h1>
 		    <hr class="my-4">
 		</div>
 		
-		<div class="container">
-		</div>
+		<table class="table table-striped table-centered mb-0">
+        <thead>
+            <tr>
+                <th>직원번호</th>
+                <th>직원명</th>
+                <th>부서</th>
+                <th>직급</th>
+                <th>연락처</th>
+                <th>출근 내역</th>
+                <th>퇴근 내역</th>
+                <th>연차 내역</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            <%-- <%
+		        for( memberList member : memberList){
+		    %>  
+	        <tr>
+	            <td><%=memberList.getId() %></td>
+	            <td><%=memberList.getPassword() %></td>
+	            <td><%=memberList.getName() %></td>
+	            <td><%=memberList.getGender() %></td>
+	            <td><%=memberList.getBirthyy() %></td>
+	            <td><%=memberList.getMail1() %></td>
+	            <td><%=memberList.getPhone() %></td>
+	            <td><%=memberList.getAddress() %></td>
+	            <td><%=memberList.getReg() %></td>
+	        </tr>
+		    <%} %> --%>
+
+        </tbody>
+    </table>
 	</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

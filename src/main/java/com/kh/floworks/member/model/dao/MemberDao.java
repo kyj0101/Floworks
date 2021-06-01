@@ -7,12 +7,13 @@ import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
 public interface MemberDao {
+	
+	int insertUser(User user);
+	
+	int insertMember(Member member);
 
-	//Member selectOneMember(String username);
+	int insertWorkspace(Map<String, String> param);
 
-//	User selectOneUser(String id);
-//
-//	Object updateMember(User user);
 	int selectIdDuplicate(String id);
 
 	int selectEmailDuplicate(String email);
@@ -22,9 +23,7 @@ public interface MemberDao {
 	int selectWorkSpaceIdExist(String workSpaceId);
 	
 	int selectworkspaceIdDuplicate(String id);
-
-	int insertUser(User user);
-
+	
 	List<Map<String, String>> selectDeptNameList();
 
 	List<String> selectPositionList();
@@ -32,10 +31,8 @@ public interface MemberDao {
 	String selectWorkspacePassword(String workSpaceId);
 	
 	String selectWorkspaceOwner(String workspaceId);
-
-	int insertMember(Member member);
-
-	int insertWorkspace(Map<String, String> param);
+	
+	Member selectOneMember(String id);
 
 	int updateUserWorkspaceId(Map<String, String> param);
 
@@ -43,4 +40,7 @@ public interface MemberDao {
 
 	int updateProfile(Member updateMember);
 
+	int updatePassword(Map<String, Object> param);
+
+	int updateQuitMember(String id);
 }

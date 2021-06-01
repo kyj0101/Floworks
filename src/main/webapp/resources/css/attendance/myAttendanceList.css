@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+section{
+	padding-top: 35px;
+}
+
+.attendance-search-div{
+ 	justify-content: flex-end;
+}
+
+.table{
+	text-align: center;
+}
+
+.pagination{
+	margin-top: 50px;
+}
+
+.attendance-search-btn{
+    height: 39px;
+    width: 76px;
+}
