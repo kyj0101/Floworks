@@ -1,6 +1,5 @@
 package com.kh.floworks.alarm.model.dao;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.floworks.alarm.model.vo.Alarm;
-import com.kh.floworks.email.model.vo.Email;
+import com.kh.floworks.alarm.model.vo.AlarmYN;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
@@ -28,6 +26,14 @@ public class AlarmDaoImpl implements AlarmDao{
 	@Override
 	public List<Alarm> selectAlarmList(String id) {
 		return session.selectList("alarm.selectList",id);
+	}
+	
+	@Override
+	public int changeView(AlarmYN alarmYN) {
+		
+		log.info("\n\n\n\n\talarmYN={}\n\n\n\n",alarmYN);
+		
+		return session.update("alarm.updateAlarm",alarmYN);
 	}
 
 

@@ -13,7 +13,6 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.security.auth.Subject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kh.floworks.alarm.controller.Collector;
 import com.kh.floworks.common.Exception.NoMemberException;
 import com.kh.floworks.common.utils.EmailUtils;
 import com.kh.floworks.common.utils.FileUtils;
@@ -55,6 +55,10 @@ import lombok.extern.slf4j.Slf4j;
 public class EmailController {
 
 	private final int numPerPage = 15;
+	
+	@Autowired
+	private Collector collector;
+	
 	
 	@Autowired
 	private ServletContext servletContext;
@@ -159,7 +163,7 @@ public class EmailController {
 	 * 
 	 * @param emailNo
 	 * @param model
-	 * @param listType : 이메일 리스트의 유형. 보낸이메일|받은이메일|임시저장이메일
+	 * @param listType : �씠硫붿씪 由ъ뒪�듃�쓽 �쑀�삎. 蹂대궦�씠硫붿씪|諛쏆��씠硫붿씪|�엫�떆���옣�씠硫붿씪
 	 * @return
 	 */
 	@GetMapping("/detail")
@@ -293,7 +297,8 @@ public class EmailController {
 
 			log.info("email={}", email);
 			log.info("InsertResult = {}", result);
-
+			
+			collector.Emailtoss(email);
 			return "redirect:/email/sent?id=" + email.getId();
 
 		} catch (IllegalStateException e) {
@@ -304,7 +309,7 @@ public class EmailController {
 
 		} catch (NoMemberException e) {
 
-			redirectAttr.addFlashAttribute("msg", "수신자[" + e.getMessage() + "]가 존재하지 않습니다. 이메일을 임시보관합니다.");
+			redirectAttr.addFlashAttribute("msg", "�닔�떊�옄[" + e.getMessage() + "]媛� 議댁옱�븯吏� �븡�뒿�땲�떎. �씠硫붿씪�쓣 �엫�떆蹂닿��빀�땲�떎.");
 
 			saveDraft(email);
 
@@ -376,10 +381,10 @@ public class EmailController {
 
 	/**
 	 * 
-	 * @param uploadFile        : 새로 업로드 된 파일
-	 * @param uploadFileReName  : 기존의 업로드된 파일 rename값
-	 * @param uploadFileOriName : 기존의 업로드된 파일 originalName값
-	 * @param fileNo            : 기존에 DB에 저장된 파일넘버값. DB에 저장하지 않았다면 0이다.
+	 * @param uploadFile        : �깉濡� �뾽濡쒕뱶 �맂 �뙆�씪
+	 * @param uploadFileReName  : 湲곗〈�쓽 �뾽濡쒕뱶�맂 �뙆�씪 rename媛�
+	 * @param uploadFileOriName : 湲곗〈�쓽 �뾽濡쒕뱶�맂 �뙆�씪 originalName媛�
+	 * @param fileNo            : 湲곗〈�뿉 DB�뿉 ���옣�맂 �뙆�씪�꽆踰꾧컪. DB�뿉 ���옣�븯吏� �븡�븯�떎硫� 0�씠�떎.
 	 * @return
 	 * @throws Exception
 	 */
@@ -391,7 +396,7 @@ public class EmailController {
 
 			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 
-			// 업로드된 파일 & 기존파일이 없다면 원래의 파일을 삭제함.
+			// �뾽濡쒕뱶�맂 �뙆�씪 & 湲곗〈�뙆�씪�씠 �뾾�떎硫� �썝�옒�쓽 �뙆�씪�쓣 �궘�젣�븿.
 			if (uploadFile.length == 0 && uploadFileReName == null) {
 
 				emailService.deleteFile(fileNo);
@@ -400,10 +405,10 @@ public class EmailController {
 
 			} else {
 
-				// 업로드된 파일이 있다면 새 파일을 저장함.
+				// �뾽濡쒕뱶�맂 �뙆�씪�씠 �엳�떎硫� �깉 �뙆�씪�쓣 ���옣�븿.
 				Map<String, String> fileMap = FileUtils.getFileMap(uploadFile, saveDirectory);
 
-				// 새로 저장된 파일의 이름값을 DB에 저장함.
+				// �깉濡� ���옣�맂 �뙆�씪�쓽 �씠由꾧컪�쓣 DB�뿉 ���옣�븿.
 				if (fileNo == 0) {
 
 					emailService.insertFile(fileMap);
@@ -413,7 +418,7 @@ public class EmailController {
 
 				} else {
 
-					// 업로드된 파일 & 기존파일이 있다면 update함.
+					// �뾽濡쒕뱶�맂 �뙆�씪 & 湲곗〈�뙆�씪�씠 �엳�떎硫� update�븿.
 					int length = uploadFile.length + 1;
 
 					for (int i = 0; i < uploadFileReName.length; i++) {
@@ -435,7 +440,7 @@ public class EmailController {
 				}
 			}
 
-			// 파일 삭제
+			// �뙆�씪 �궘�젣
 			List<Map<String, String>> renameFileMapList = emailService.selectFileList();
 			List<String> renameList = new ArrayList<>();
 
@@ -458,7 +463,7 @@ public class EmailController {
 		}
 	}
 
-	// 백신프로그램때문에 오류날수도있음.
+	// 諛깆떊�봽濡쒓렇�옩�븣臾몄뿉 �삤瑜섎궇�닔�룄�엳�쓬.
 	public void sendMail(Email email, Map<String, File> ckFiles, Map<String, File> attachFiles)
 			throws MessagingException {
 
@@ -494,7 +499,7 @@ public class EmailController {
 						.unescapeJava(EmailUtils.addCidToTag(email.getEmailContent(), cidList).replace("\"", "'"));
 				helper.setText(content, true);
 
-				// setText에 cid값을 추가한 후 addInline을 해야한다.
+				// setText�뿉 cid媛믪쓣 異붽��븳 �썑 addInline�쓣 �빐�빞�븳�떎.
 				for (String key : ckKeySet) {
 					helper.addInline(key, ckFiles.get(key));
 				}
