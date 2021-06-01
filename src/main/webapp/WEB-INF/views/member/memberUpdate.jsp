@@ -26,8 +26,9 @@
 <section>
 	<div class="section-div">
 		<div class="update-div">
-			<form:form  class="member-update-frm" action="${pageContext.request.contextPath}/member/update" method="post"  enctype="multipart/form-data">
+      <form:form  class="member-update-frm" action="${pageContext.request.contextPath}/member/update" method="post"  enctype="multipart/form-data">
 				<h3 class="">개인 정보 수정하기</h1>
+
 				 
 				<!-- 모든 필드값을 가져오지 않으면 null값이 되므로 모든 값을 가져옴. -->
 				 
