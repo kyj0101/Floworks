@@ -46,9 +46,6 @@ a
 	        </tbody>
 	    </table>
 	</div>
-<<<<<<< HEAD
-
-	
 <section>
 <!-- 직원 목록 관리 창 -->
 <div class="page-header" >
@@ -86,10 +83,6 @@ a
         </tbody>
     </table>
 </div>
-
 </section>
-=======
 
-	</section>
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
