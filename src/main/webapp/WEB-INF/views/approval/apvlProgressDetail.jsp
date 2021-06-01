@@ -52,28 +52,17 @@
             </tr>
             <tr>
                 <th rowspan="3">첨부파일</th>
-                <td>
-                    <div class="ap-detail-filesection">
-                        <label for="ap-detail-file">파일첨부 1</label>
-                        <input type="file" class="form-control-file" id="ap-detail-file1">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="ap-detail-filesection">
-                        <label for="ap-detail-file">파일첨부 2</label>
-                        <input type="file" class="form-control-file" id="ap-detail-file2">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="ap-detail-filesection">
-                        <label for="ap-detail-file">파일첨부 3</label>
-                        <input type="file" class="form-control-file" id="ap-detail-file3">
-                    </div>
-                </td>
+                <c:forEach items="${approval.afList}" var="af">
+                	<td>
+	                    <div class="ap-detail-filesection">
+							<button type="button" 
+									class="btn btn-success"
+									onclick="fileDownload(${af.idx});">
+								첨부파일 - ${af.originalFileName}
+							</button>
+	                    </div>
+	                </td>
+				</c:forEach>
             </tr>
         </table>
     </div>
@@ -81,24 +70,57 @@
         <button type="button" class="btn btn-secondary btn-lg back-to-list" id="back-to-list">
             목록
         </button>
-        <sec:authentication property="principal" var="loginId"/>
-        <% // TODO 결재 버튼 (로그인 계정 == 작성자 -> 수정, 삭제 / 로그인 계정 == 결재선 -> 결재 버튼) 수정 필요. (Test 통과가 안되고 있음) %>
-        <c:if test="${loginId.id eq approval.writer}">
-	        <button type="button" class="btn btn-info btn-lg update-btn" id="update-btn">
+        <sec:authentication property="principal" var="loginid"/>
+        
+       	<c:if test="${fn:trim(loginid.id) eq fn:trim(approval.writer)}">
+       		<button type="button" class="btn btn-info btn-lg update-btn" id="update-btn">
 	            수정
 	        </button>
 	        <button type="button" class="btn btn-danger btn-lg delete-btn" id="delete-btn">
 	            삭제
 	        </button>
-        </c:if>
-        <button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
-            ${approval.writer}
-        </button>
-        <button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
-            ${loginId.id}
-        </button>
+       	</c:if>
+       	
+       	<c:if test="${!empty approval.approver1}">
+       		<c:if test="${fn:trim(loginid.id) eq fn:trim(approval.approver1)}">
+	       		<button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
+		            결재
+		        </button>
+	        </c:if>
+       	</c:if>
+       	<c:if test="${!empty approval.approver2}">
+       		<c:if test="${fn:trim(loginid.id) eq fn:trim(approval.approver2)}">
+	       		<button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
+		            결재
+		        </button>
+	        </c:if>
+       	</c:if>
+       	<c:if test="${!empty approval.approver3}">
+       		<c:if test="${fn:trim(loginid.id) eq fn:trim(approval.approver3)}">
+	       		<button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal">
+		            결재
+		        </button>
+	        </c:if>
+       	</c:if>
+       	<c:if test="${!empty approval.approver4}">
+       		<c:if test="${fn:trim(loginid.id) eq fn:trim(approval.approver4)}">
+	       		<button type="button" class="btn btn-primary btn-lg approval-btn" id="approval-btn" data-toggle="modal" data-target="#approval-modal" onclick="approve();">
+		            결재
+		        </button>
+	        </c:if>
+       	</c:if>
+        
     </div>
-
+    
+    <% // TODO 안된다면 모달 밖에 input:hidden두는걸로 %>
+	<div>
+		<form id="processFrm"
+			  action="${pageContext.request.contextPath}/approval/apvlProgressDetail/process" 
+			  method="post">
+			<sec:csrfInput/>
+		</form>
+	</div>
+	
     <!-- Modal -->
     <div class="modal fade" id="approval-modal" tabindex="-1" aria-labelledby="approval-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -111,35 +133,85 @@
                 </div>
                 <div class="modal-body">
                     <!-- 모달창 바디 -->
-                    <!-- <p>결재 모달창입니다.</p> -->
-                    <form action="" method="" class="approval-modal-form" id="approval-modal-form">
-                        <div class="ap-txn" id="ap-txn">
-                            <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
-                                <input class="form-check-input approval-radio" type="radio" name="apRadios" id="approval-radio" value="approval" checked>
-                                <label class="form-check-label" for="approval-radio">
-                                    결재
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
-                                <input class="form-check-input reject-radio" type="radio" name="apRadios" id="reject-radio" value="reject">
-                                <label class="form-check-label" for="reject-radio">
-                                    반려
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group ap-comment">
-                            <label for="ap-comment-txtarea">코멘트</label>
-                            <textarea class="form-control ap-comment-txtarea" id="ap-comment-txtarea" rows="3"></textarea>
-                        </div>
-                    </form>
+               		<form>
+               			<sec:csrfInput/>
+               			<input type="hidden" name="apvlId" value="${approval.apvlId}" id="mod-apvlId" />
+	                   	<input type="hidden" name="approver" value='<sec:authentication property="principal.id"/>' id="mod-approver" />
+	                    <div class="ap-txn" id="ap-txn">
+	                        <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
+	                            <input class="form-check-input approval-radio" type="radio" name="status" id="approval-radio" value="approval" checked>
+	                            <label class="form-check-label" for="approval-radio">
+	                                결재
+	                            </label>
+	                        </div>
+	                        <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
+	                            <input class="form-check-input reject-radio" type="radio" name="status" id="reject-radio" value="reject">
+	                            <label class="form-check-label" for="reject-radio">
+	                                반려
+	                            </label>
+	                        </div>
+	                    </div>
+	                    <div class="form-group ap-comment">
+	                        <label for="ap-comment-txtarea">코멘트</label>
+	                        <textarea class="form-control ap-comment-txtarea" id="ap-comment-txtarea" name="comment" rows="3"></textarea>
+	                    </div>
+	                    <!-- <input type="submit" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" value="확인" /> -->
+               		</form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary ap-submit-btn" id="ap-submit-btn">확인</button>
+                    <button type="button" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" onclick="processVal();">확인</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+function fileDownload(idx){
+	location.href = "${pageContext.request.contextPath}/approval/fileDownload?idx=" + idx;
+}
+
+function validateForm() {
+	return true;
+}
+
+function testSend() {
+	$('#processFrm').submit();
+}
+
+function processVal() {
+	let apvlid = document.getElementById('mod-apvlId');
+	let approver = document.getElementById('mod-approver');
+	let statusArr = document.getElementsByName('status');
+	let status = '';
+	let comment = document.getElementById('ap-comment-txtarea');
+	let html = '';
+	/* $apvlId = $('#mod-apvlId');
+	$approver = $('#mod-approver');
+	$statusArr = $('input[name=status]');
+	$status = '';
+	$comment = $('#ap-comment-txtarea'); */
+	
+	html += ("<input type='hidden' name=apvlId value='" + apvlid.value + "'/>");
+	html += ("<input type='hidden' name=approver value='" + approver.value + "'/>");
+	console.log(apvlid.value);
+	console.log(approver.value);
+	for (let i of statusArr) {
+		if (i.checked) {
+			html += ("<input type='hidden' name=status value='" + i.value + "'/>");
+			console.log(i.value);
+		}
+	}
+	console.log(comment.value);
+	html += ("<input type='hidden' name=comment value='" + comment.value + "'/>");
+	
+	document.getElementById("processFrm").innerHTML += html;
+	
+	$('#processFrm').submit();	
+	$('.modal').modal("hide");
+}
+
+</script>	
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

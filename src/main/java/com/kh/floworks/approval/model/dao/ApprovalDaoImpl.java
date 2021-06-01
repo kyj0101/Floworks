@@ -75,4 +75,14 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.selectOne("approval.selectDueDate", year);
 	}
 
+	@Override
+	public Approval selectOneApprovalCollection(String apvlId) {
+		return session.selectOne("approval.selectOneApprovalCollection", apvlId);
+	}
+
+	@Override
+	public ApvlFile selectOneAttachment(int idx) {
+		return session.selectOne("approval.selectOneAttachment", idx);
+	}
+
 }

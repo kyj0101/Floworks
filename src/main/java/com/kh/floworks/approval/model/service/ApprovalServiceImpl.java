@@ -69,4 +69,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return apvlDao.selectDueDate(year);
 	}
 
+	@Override
+	public Approval selectOneApprovalCollection(String apvlId) {
+		return apvlDao.selectOneApprovalCollection(apvlId);
+	}
+
+	@Override
+	public ApvlFile selectOneAttachment(int idx) {
+		return apvlDao.selectOneAttachment(idx);
+	}
+
 }

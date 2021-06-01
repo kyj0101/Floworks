@@ -7,6 +7,7 @@ import java.util.Map;
 import com.kh.floworks.approval.model.vo.Approval;
 import com.kh.floworks.approval.model.vo.Approver;
 import com.kh.floworks.approval.model.vo.ApvlDoc;
+import com.kh.floworks.approval.model.vo.ApvlFile;
 
 public interface ApprovalService {
 
@@ -25,5 +26,9 @@ public interface ApprovalService {
 	int insertApproval(ApvlDoc apvlDoc);
 
 	Date selectDueDate(int year);
+
+	Approval selectOneApprovalCollection(String apvlId);
+
+	ApvlFile selectOneAttachment(int idx);
 
 }

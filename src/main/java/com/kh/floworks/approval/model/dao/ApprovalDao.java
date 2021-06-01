@@ -29,4 +29,8 @@ public interface ApprovalDao {
 
 	Date selectDueDate(int year);
 
+	Approval selectOneApprovalCollection(String apvlId);
+
+	ApvlFile selectOneAttachment(int idx);
+
 }

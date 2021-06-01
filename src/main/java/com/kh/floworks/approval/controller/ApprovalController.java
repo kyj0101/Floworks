@@ -2,16 +2,22 @@ package com.kh.floworks.approval.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +34,7 @@ import com.kh.floworks.approval.model.vo.Approval;
 import com.kh.floworks.approval.model.vo.Approver;
 import com.kh.floworks.approval.model.vo.ApvlDoc;
 import com.kh.floworks.approval.model.vo.ApvlFile;
+import com.kh.floworks.approval.model.vo.ApvlHistory;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.common.utils.PageBarUtils;
 
@@ -45,6 +52,12 @@ public class ApprovalController {
 	
 	@Autowired
 	private ApprovalService apvlService;
+	
+	@Autowired
+	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private ServletContext servletContext;
 	
 	@GetMapping("/apvlWrite")
 	public void apvlWrite(@RequestParam String workspaceId, Model model) {
@@ -76,7 +89,7 @@ public class ApprovalController {
 		log.info("Category={}", category);
 		apvlDoc.setCategory(category);
 		
-		// c. TODO 보존연한
+		// c. 보존연한
 		Date dueDate = apvlService.selectDueDate(year);
 		log.info("dueDate={}", dueDate);
 		apvlDoc.setDueDate(dueDate);
@@ -194,7 +207,7 @@ public class ApprovalController {
 		log.info("apvlProgressDetail_apvlId = {}", apvlId);
 		
 		// 결재문서 정보 조회
-		Approval approval = apvlService.selectOneApproval(apvlId);
+		Approval approval = apvlService.selectOneApprovalCollection(apvlId);
 		log.info("apvlProgressDetail_approval = {}", approval);
 		
 		// 결재선 조회 Approver List
@@ -222,11 +235,51 @@ public class ApprovalController {
 	}
 	
 	
-	@GetMapping("/apvlDetail")
-	public void apvlDetail() {
-		
-	}
-	
+	//fileDownload
+   @GetMapping(
+         value = "/fileDownload", 
+         produces = "application/octet-stream;charset=utf-8"
+      )
+   @ResponseBody
+   public Resource fileDownload(@RequestParam int idx, HttpServletResponse response) 
+         throws UnsupportedEncodingException {
+      
+      ApvlFile attach = apvlService.selectOneAttachment(idx);
+      log.info("attach = {}", attach);
+   
+      String originalFileName = attach.getOriginalFileName();
+      String renamedFileName = attach.getRenamedFileName();
+      
+      String saveDirectory = servletContext.getRealPath("/resources/upload/approval");
+      File downFile = new File(saveDirectory, renamedFileName);
+      String location = "file:" + downFile;
+      log.info("location = {}", location);
+      Resource resource = new FileSystemResource(downFile);
+      
+      originalFileName = new String(originalFileName.getBytes("utf-8"), "iso-8859-1");
+      response.setContentType("application/octet-stream;charset=utf-8");
+      response.addHeader("Content-Disposition", "attachment;filename=\"" + originalFileName + "\"");
+      
+      return resource;
+   }
+   
+   // TODO 여기가 값이 안넘어오는 곳입니다.
+   @PostMapping("/apvlProgressDetail/process")
+   public String apvlProcess(
+		   				@ModelAttribute ApvlHistory apvlHistory,
+		   				@RequestParam String apvlId,
+		   				@RequestParam String approver,
+		   				@RequestParam String status,
+		   				RedirectAttributes redirectAttr,
+					    HttpServletRequest request) {
+	   // @ModelAttribute ApvlHistory apvlHistory,
+	   log.info("apvlProcess_apvlId=", apvlId);
+	   log.info("apvlProcess_approver=", approver);
+	   log.info("apvlProcess_status=", status);
+	   
+	   return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
+   }
+   
 	
 	@GetMapping("/checkProgress")
 	@ResponseBody
