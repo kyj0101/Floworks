@@ -7,6 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<<<<<<< HEAD
 </jsp:include>
 
 <!-- css -->
@@ -96,3 +97,83 @@
 </div>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+=======
+
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberDetail.css">
+	
+<section>
+<!-- 직원 정보 관리 창 -->
+<div class="page-header" >
+    <h1>직원정보 상세조회</h1>
+    <hr class="my-4">
+</div>
+
+<div class="container">
+    <form name="f" method="post">
+ 
+    	<div class="col-sm-12 pt-3">
+            <div class="card">
+                
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            <tr style="line-height:32px;">
+                                <td>ID</td>
+                                <td>
+                                    <input type="text" name="user_id" class="form-control" value="i123" readonly>
+                                </td>
+                                <td>직원명</td>
+                                <td>
+                                    <input type="text" name="user_name" class="form-control" value="김옥순">
+                                </td>                        
+                            </tr>
+                            <tr>
+                                <td>부서</td>
+                                <td>
+                                    <input type="text" name="department" class="form-control" maxlength="10" value="개발부">                                    
+                                </td>
+                                <td>직급</td>
+                                <td>
+                                    <input type="text" name="position" class="form-control" maxlength="10" value="대리">                                    
+                                </td>
+                            </tr>  
+                            <tr>
+                                <td>연락처</td>
+                                <td>
+                                    <input type="tel" name="phone" class="form-control" value="0">
+                                </td>
+                                <td>Email</td>
+                                <td>
+                                    <input type="email" name="email" class="form-control" value="i123@gmail.com">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>입사일</td>
+                                <td>
+                                    <input type="date" name="hire_date" size="5" class="form-control" readonly value="21/05/26" style="display:inline-block;width:100px;"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>퇴사 여부</td>
+                                <td>
+                                	<input>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+ 
+        </div>
+	    <div class="text-center mt-3">
+	        <button type="submit" class="btn btn-success">수정</button>
+	        <button type="reset" class="btn btn-info">취소</button>
+	    </div>    
+    </form>
+ 
+    
+</div>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git

@@ -123,7 +123,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateQuitMember(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.updateQuitMember(id);
 	}
 }

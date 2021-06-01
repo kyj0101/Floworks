@@ -179,6 +179,15 @@
 			id = #{id}
 	</update>
 	
+	<update id="updateQuitMember">
+		update
+			floworks_user
+		set
+			quit_yn = 'Y'
+		where
+			id = #{id}
+	</update>
+	
 	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
 		

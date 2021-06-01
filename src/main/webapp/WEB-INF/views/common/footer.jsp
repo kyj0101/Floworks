@@ -12,7 +12,7 @@
 		</a></li>
 		<li class="nav-item"><a class="nav-link " href="#sidebarEmail"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarDashboards"> <i class="bi bi-envelope"></i>이메일<span
+			aria-controls="sidebarDashboards"> <i class="bi bi-envelope"></i>이메일<span id="badge_for_email"
 				class="badge badge-pill badge-danger">0</span>
 		</a>
 			<div class="collapse hide" id="sidebarEmail"
@@ -89,9 +89,9 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress" class="nav-link">진행중인 결재</a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
+									<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
+					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
@@ -117,12 +117,12 @@
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/memberList" class="nav-link "> 직원 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attend/setting" class="nav-link "> 근태 설정</a></li>
 				</ul>
 			</div></li>
 		<hr>
 	</ul>
 </aside>
-<footer> </footer>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 .jumbotron {
     margin-bottom: 1rem !important;
-    padding: 2rem !important;
+    padding: 1.5rem !important;
 }
 
 /* ap-info-head, middle */
@@ -16,6 +16,7 @@
 .ap-info-head {
     width: 45%;
     display: table-cell;
+    vertical-align: middle;
 }
 
 .ap-info-head a {
@@ -30,6 +31,7 @@
 .ap-info-middle {
     width: 20%;
     display: table-cell;
+    vertical-align: middle;
 }
 
 .ap-info-end {
@@ -61,25 +63,7 @@
 }
 
 .process-circle {
-    margin: 20px;
+    margin: 10px 20px;
     margin-bottom: 30px;
 }
 
-.process-circle1 {
-    /* green : #27ce79 */
-    /* red : #fa2626 */
-    /* yellow : #efc719 */
-    color: #27ce79;
-}
-
-.process-circle2 {
-    color: #27ce79;
-}
-
-.process-circle3 {
-    color: #efc719;
-}
-
-.process-circle4 {
-    color: #fa2626;
-}
