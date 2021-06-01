@@ -49,7 +49,7 @@ function emailAuthCheck(){
 
 function inputNullCheck(){
 	
-	const inputs = $(".form-control");
+	const inputs = $(".register-form-control");
 	
 	for(input of inputs){
 	
@@ -75,7 +75,7 @@ $(() => {
     });
     
     $("input[name=password]").change(function(){
-	
+
 		const $input = $("input[name=password]");
 		const password = $input.val();
 		const warningP = $input.next().next();

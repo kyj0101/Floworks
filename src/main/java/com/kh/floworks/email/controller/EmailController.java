@@ -54,7 +54,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmailController {
 
-	private final String directory = "/resources/upload/email";
 	private final int numPerPage = 15;
 	
 	@Autowired
@@ -69,16 +68,14 @@ public class EmailController {
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
-	@RequestMapping("/list")
-	public String emailList() {
-		return "/email/emailList";
-	}
-
 	@GetMapping("/compose")
-	public String emailCompose() {
+	public String emailCompose(@RequestParam(required = false) String defaultRecipient,
+								Model model) {
+		
+		model.addAttribute("defaultRecipient", defaultRecipient);
+		
 		return "/email/emailCompose";
 	}
-
 
 	@RequestMapping("/sent")
 	public String emailSentList(String id,
@@ -176,16 +173,17 @@ public class EmailController {
 		
 		if(listType.equals("inbox")) {
 		
-			email = emailService.selectOneEmailInbox(param); 
-			
+			email = emailService.selectOneEmailInbox(param);
+
 			model.addAttribute("fileRename", emailService.selectProfileRename(email.getId()));
 	
 		}else {
 			email = emailService.selectOneEmailSent(emailNo);			
 		}
 		
+		
 		Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
-
+		log.info("email{}",email);
 		model.addAttribute("email", email);
 		model.addAttribute("listType", listType);
 		model.addAttribute("fileMap", fileMap);
@@ -238,12 +236,13 @@ public class EmailController {
 	}
 
 	@GetMapping("/getRecipientList")
-	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId) {
+	public ResponseEntity<List<String>> getRecipientList(String searchKeyword, String workspaceId, String id) {
 
 		Map<String, String> param = new HashMap<>();
 
 		param.put("searchKeyword", searchKeyword);
 		param.put("workspaceId", workspaceId);
+		param.put("id", id);
 
 		List<String> recipientList = emailService.selectRecipientList(param);
 
@@ -257,7 +256,7 @@ public class EmailController {
 			throws IOException {
 		try {
 
-			String saveDirectory = servletContext.getRealPath(directory);
+			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 			Map<String, String> fileMap = FileUtils.getFileMap(uploadFile, saveDirectory);
 
 			emailService.insertFile(fileMap);
@@ -279,13 +278,12 @@ public class EmailController {
 
 			if (email.getExternalRecipient() != null && !email.getExternalRecipient().equals("")) {
 
-				String attachDirectory = servletContext.getRealPath(directory);
+				String attachDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 				String ckDirectory = servletContext.getRealPath("/resources/upload/editorEmailFile");
 
-				log.info("email ={}", email);
+
 				Map<String, String> fileMap = emailService.selectFile(email.getFileNo());
 				Map<String, File> attachFiles = FileUtils.getAttachFiles(fileMap, attachDirectory);
-
 				Map<String, File> ckFiles = FileUtils.getAttachFiles(EmailUtils.getFileNames(email.getEmailContent()),ckDirectory);
 				
 				sendMail(email, ckFiles, attachFiles);
@@ -320,7 +318,7 @@ public class EmailController {
 
 		try {
 
-			String saveDirectory = servletContext.getRealPath(directory);
+			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 			File downloadFile = new File(saveDirectory, fileReName);
 			Resource resource = resourceLoader.getResource("file:" + downloadFile);
 
@@ -367,7 +365,7 @@ public class EmailController {
 
 		try {
 
-			int result = emailService.insertDraftEmail(email);
+			emailService.insertDraftEmail(email);
 
 			return "redirect:/email/drafts?id=" + email.getId();
 
@@ -391,7 +389,7 @@ public class EmailController {
 
 		try {
 
-			String saveDirectory = servletContext.getRealPath(directory);
+			String saveDirectory = servletContext.getRealPath(EmailUtils.EMAIL_DIRECTORY);
 
 			// 업로드된 파일 & 기존파일이 없다면 원래의 파일을 삭제함.
 			if (uploadFile.length == 0 && uploadFileReName == null) {

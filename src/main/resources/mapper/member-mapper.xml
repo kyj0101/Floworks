@@ -4,6 +4,52 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 
+	<insert id="insertUser">
+		insert into
+			floworks_user
+		values(
+               #{id},
+		       #{workspaceId}, 
+		       #{password}, 
+		       #{name}, 
+		       #{email}, 
+		       #{phone},
+		       #{address}, 
+		       default,
+		       default
+		       )
+	</insert>
+	
+	<insert id="insertMember">
+		insert into
+		    member
+		values(
+			    #{id},
+			    default,
+			    default,
+			    #{position},
+			    #{departmentCode},
+			    #{profileFileOrinalname},
+			    <if test="profileFileRename == null">
+			    	default
+			    </if>
+			    <if test="profileFileRename != null">
+			    	 #{profileFileRename}
+			    </if>
+			    )
+	</insert>
+	
+	<insert id="insertWorkspace">
+		insert into
+			workspace
+		values(
+				#{workspaceId},
+				#{workspaceName},
+				#{password},
+				#{userId}
+				)
+	</insert>
+
 	<select id="selectOneMember" resultMap="memberMap">
 		select
     		*
@@ -15,30 +61,7 @@
     		and m.resign = 'N'
     		and m.id = #{id}
 	</select>
-	
-	<resultMap type="member" id="memberMap" extends="userMap">	
-		<id column="id" property="id"/>
-		
-		<result column="hire_date" property="hireDate"/>
-		<result column="resign" property="resign"/>
-		<result column="position" property="position"/>
-		<result column="department_code" property="departmentCode"/>		
-		<result column="department_name" property="department"/>
-	</resultMap>
-	
-	<resultMap type="user" id="userMap">	
-		<id column="id" property="id"/>
-		
-		<result column="workspace_id" property="workspaceId"/>
-		<result column="password" property="password"/>
-		<result column="name" property="name"/>
-		<result column="email" property="email"/>
-		<result column="phone" property="phone"/>
-		<result column="address" property="address"/>
-		<result column="quit_yn" property="quitYn"/>
-		<result column="role" property="role"/>		
-	</resultMap>
-	
+
 	<select id="selectIdDuplicate"  resultType="int">
 		select
 		    count(*)
@@ -92,23 +115,7 @@
 		where
 		    workspace_id = #{id}
 	</select>
-	
-	<insert id="insertUser">
-		insert into
-			floworks_user
-		values(
-               #{id},
-		       #{workspaceId}, 
-		       #{password}, 
-		       #{name}, 
-		       #{email}, 
-		       #{phone},
-		       #{address}, 
-		       default,
-		       default
-		       )
-	</insert>
-	
+		
 	<select id="selectDeptNameList" resultMap="deptMap">
 		select
 		    *
@@ -122,42 +129,7 @@
 		from
 		    position
 	</select>
-	
-	<resultMap type="map" id="deptMap">
-		<id column="DEPARTMENT_CODE" property="departmentCode"/>
-		<result column="DEPARTMENT_NAME" property="departmentName"/>
-	</resultMap>
-	
-	<insert id="insertMember">
-		insert into
-		    member
-		values(
-			    #{id},
-			    default,
-			    default,
-			    #{position},
-			    #{departmentCode},
-			    #{profileFileOrinalname},
-			    <if test="profileFileRename == null">
-			    	default
-			    </if>
-			    <if test="profileFileRename != null">
-			    	 #{profileFileRename}
-			    </if>
-			    )
-	</insert>
-	
-	<insert id="insertWorkspace">
-		insert into
-			workspace
-		values(
-				#{workspaceId},
-				#{workspaceName},
-				#{password},
-				#{userId}
-				)
-	</insert>
-	
+
 	<select id="selectWorkspaceOwner" resultType="string">
 		select
 			owner
@@ -166,7 +138,7 @@
 		where
 			workspace_id = #{workspaceId}
 	</select>
-	
+		
 	<update id="updateUserWorkspaceId"> 
 		update
 			floworks_user
@@ -187,5 +159,54 @@
 		where
 			id = #{id}
 	</update>
+	
+	<update id="updateProfile">
+		update
+			member
+		set
+			profile_file_rename = #{profileFileRename},
+			profile_file_orinalname = #{profileFileOrinalname}
+		where
+			id = #{id}
+	</update>
+	
+	<update id="updatePassword">
+		update
+			floworks_user
+		set
+			password = #{password}
+		where
+			id = #{id}
+	</update>
+	
+	<resultMap type="member" id="memberMap" extends="userMap">	
+		<id column="id" property="id"/>
+		
+		<result column="hire_date" property="hireDate"/>
+		<result column="resign" property="resign"/>
+		<result column="position" property="position"/>
+		<result column="department_code" property="departmentCode"/>		
+		<result column="department_name" property="department"/>
+	</resultMap>
+	
+	<resultMap type="user" id="userMap">	
+		<id column="id" property="id"/>
+		
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="address" property="address"/>
+		<result column="quit_yn" property="quitYn"/>
+		<result column="role" property="role"/>		
+	</resultMap>
+	
+	<resultMap type="map" id="deptMap">
+		<id column="DEPARTMENT_CODE" property="departmentCode"/>
+		
+		<result column="DEPARTMENT_NAME" property="departmentName"/>
+	</resultMap>
+	
 
 </mapper>

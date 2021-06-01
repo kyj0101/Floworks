@@ -9,15 +9,16 @@ import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
 
-public interface MemberService extends UserDetailsService {
+public interface MemberService{
 	
 	String ROLE_USER = "USER";
 	String ROLE_ADMIN = "ADMIN";
 	
-//	User selectOneUser(String id);
-//
-//	int updateMember(User user);
+	int insertUser(User user);
 
+	int insertMember(Member member);
+
+	int insertWorkspace(Map<String, String> param);
 	
 	boolean selectIdDuplicate(String id);
 
@@ -36,14 +37,16 @@ public interface MemberService extends UserDetailsService {
 	List<String> selectPositionList();
 
 	String selectWorkspaceOwner(String workspaceId);
-
-	int insertUser(User user);
-
-	int insertMember(Member member);
-
-	int insertWorkspace(Map<String, String> param);
+	
+	Member selectOneMember(String id);
 
 	int updateUserWorkspaceId(Map<String, String> param);
 
 	int updateMember(Member updateMember);
+
+	int updateProfile(Member updateMember);
+
+	int updatePassword(Map<String, Object> param);
+
+	
 }

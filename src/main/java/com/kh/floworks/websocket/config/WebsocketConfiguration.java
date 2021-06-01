@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 @Configuration
 @EnableWebSocket
-public class WebsocketConfiguratio implements WebSocketConfigurer {
+public class WebsocketConfiguration implements WebSocketConfigurer {
 	
 	@Autowired
 	SocketHandler socketHandler;
@@ -16,7 +16,7 @@ public class WebsocketConfiguratio implements WebSocketConfigurer {
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry
-			.addHandler(socketHandler, "/mmm")
+			.addHandler(socketHandler, "/alarm_for_member")
 			.withSockJS();
 	}
 

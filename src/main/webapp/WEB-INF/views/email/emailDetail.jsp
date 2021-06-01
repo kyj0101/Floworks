@@ -24,7 +24,7 @@
 			<li>
 				<div class="box">
 					<c:if test="${listType == 'sent'}" >
-						<img class="profile" src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" >
+						<img class="profile" src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>">
 					</c:if>
 					
 					<c:if test="${listType == 'inbox'}" >
@@ -34,7 +34,7 @@
 			</li>
 			<li>
 				<p>
-					<strong>${email.id}</strong>
+					<strong>${email.name} : ${email.id}</strong>
                     <br>
                     to : ${email.recipient}
 				</p>
@@ -122,19 +122,18 @@ $(() => {
         	updateStarredEmail("N");
         }
     });
-    
-    })
-    
-    
+
     if("${email.emailStarred}" == 'true'){
     	$(".fa-star").addClass('on');
     }
+    
+	$(".file-a").click(function(){
+		const renamedFile = $(this).attr("href");
+	});
 
 }); 
 
-$(".file-a").click(function(){
-	const renamedFile = $(this).attr("href");
-});
+
 
 function updateStarredEmail(value){
 	

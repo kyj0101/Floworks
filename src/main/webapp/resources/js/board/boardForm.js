@@ -19,12 +19,54 @@ $(() => {
 			$label.text("파일을 선택하세요.");
 		else 
 			$label.text(f.name);
+		
+		if($addFileBtn.val()){
+			//파일을 선택한 경우 #delFile체크
+			$("#delFile").prop("checked", true);
+		}
+		else {
+			//파일선택을 취소한 경우 #delFile체크해제
+			$("#delFile").prop("checked", false);
+		}
 
 	});
 	
 });
 
+$(() => {
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	const deleteNo = $("[name=deleteBtn]").val();
+	
+	/*
+	$("[name=deleteBtn]").click(e => {	
+		deleteNo = $(e.target).val();
+		console.log(deleteNo);
+		  
+		
+	});
+	*/
+	
+	$.ajax({
+	        type:"post",
+	        url:"${pageContext.request.contextPath}/fileDelete",
+	        data: {deleteNo},
+	        //토큰 처리
+	        beforeSend(xhr){
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+	        
+	        success(no){
+	          
+	        },
+	        
+	        error(xhr,status,error){
+				console.log(xhr,status,error);
+	            alert("파일 삭제 중 에러가 발생했습니다.");
+	        },
+	    });//end of ajax 
 
+});
 
 
 

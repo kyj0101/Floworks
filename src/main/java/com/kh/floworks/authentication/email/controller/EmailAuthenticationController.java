@@ -113,4 +113,19 @@ public class EmailAuthenticationController {
 			new RuntimeException();
 		}
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("/update")
+	public void emailUpdateAuth(String originalEmail, String updateEmail, HttpServletRequest request) {
+		
+		try {
+			
+			emailAuthService.deleteEmailAuth(updateEmail);
+			sendEmailAuth(updateEmail, request);
+			
+		} catch (Exception e) {
+			new RuntimeException();
+		}
+	}
 }

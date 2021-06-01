@@ -16,7 +16,7 @@ public class PostComment {
 	private int commentLevel;
 	private String commentContent;
 	private Date commentDate;
-	private String id;
+	private String cmId;
 	private int postNo;
 	private int postCommentNo;
 	private boolean commentDel;

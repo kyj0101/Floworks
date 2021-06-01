@@ -10,7 +10,7 @@
 	        (select count(*) from post_comment where post_no = k.post_no  and comment_del = 'N') comment_count,
 	        k.*
 		from 
-			(select p.* ,d.department_name, f.name
+			(select p.* ,d.department_name, f.name, f.workspace_id
 	        from post p 
 	            left join floworks_user f
 	                on p.id = f.id
@@ -20,36 +20,12 @@
 	                on m.department_code = d.department_code) k
 	    where 
 	    	board_no = #{boardNo} and
-            post_del = 'N' 
-		order 
-			by post_no desc
-	</select>
-	
-	<select id="selectdeptList" resultMap="postMap">
-		select 
-			(select count(*) from post_file where post_no = k.post_no) file_count,
-	        (select count(*) from post_comment where post_no = k.post_no  and comment_del = 'N') comment_count,
-	        k.*
-		from 
-			(select p.* ,d.department_name, f.name
-	        from post p 
-	            left join floworks_user f
-	                on p.id = f.id
-	            left join member m
-	                on f.id = m.id
-	            left join department d
-	                on m.department_code = d.department_code) k
-	    where 
-	    	board_no = 1 and
             post_del = 'N' and
             department_name like '%' || #{dept}
 		order 
 			by post_no desc
 	</select>
-	
-	
-	
-	
+
 	<resultMap type="hashmap" id="postMap">
 		<id column="post_no" property="postNo"/>
 		<result column="board_no" property="boardNo"/>
@@ -62,14 +38,16 @@
 		<result column="department_name" property="departmentName"/>
 		<result column="name" property="name"/>
 		<result column="file_count" property="fileCount"/>
-		<result column="comment_count" property="commentCount"/>	
+		<result column="comment_count" property="commentCount"/>
+		<result column="workspace_id" property="workspaceId"/>	
 	</resultMap>
+
 
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
 		from 
-			(select p.* ,d.department_name, f.name
+			(select p.* ,d.department_name, f.name, f.workspace_id
 	        from post p 
 	            left join floworks_user f
 	                on p.id = f.id
@@ -78,7 +56,8 @@
 	            left join department d
 	                on m.department_code = d.department_code) 
 	    where board_no = #{boardNo}  and
-     		  post_del = 'N'
+     		  post_del = 'N' and
+              department_name like '%' || #{dept}
 	</select>
 	
 	<insert id="insertPost">
@@ -115,7 +94,7 @@
 	
 	
 	<select id="selectOnePostCollection" resultMap="postCollectionMap">
-		select a.*, f.*, pc.*, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
+		select a.*, f.*,  pc.id cmid, pc.post_comment_no, pc.comment_no, pc.comment_level, pc.comment_content, pc.comment_date, pc.post_no, pc.comment_del, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
 		from (select (select count(*) from post_file where post_no = #{postNo}) file_count,
 		        (select count(*) from post_comment where post_no = #{postNo}  and comment_del = 'N') comment_count,
 		        k.*
@@ -171,7 +150,7 @@
 			<result column="comment_level" property="commentLevel"/>
 			<result column="comment_content" property="commentContent"/>
 			<result column="comment_date" property="commentDate"/>
-			<result column="id" property="id"/>
+			<result column="cmid" property="cmId"/>
 			<result column="post_no" property="postNo"/>
 			<result column="post_comment_no" property="postCommentNo"/>
 			<result column="comment_del" property="commentDel" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
@@ -196,6 +175,14 @@
 			<result column="post_renamed_filename" property="postRenamedFileName"/>
 	</resultMap>
 	
+	<delete id="deleteFile">
+	 delete from
+	 	post_file
+	 where
+	 	post_file = #{deleteNo}
+	</delete>
+	
+	
 	
 	<update id="updatePost" >
 	 update
@@ -206,31 +193,9 @@
 	 where
 	 	post_no = #{postNo}
 	</update>
-	<!-- 
-	<update id="updatePostFile">
-	 <foreach item="postFile" index="index" collection="List">
-	 	update
-			post_file
-		set
-			post_file = seq_post_file_post_file.nextval,
-			post_original_fileName = #{postFile.postOriginalFileName},
-			post_renamed_fileName = #{postFile.postRenamedFileName}
-		where
-			post_no = #{postFile.postNo}	 
-	 </foreach>
-	</update>	
-	 -->
 
-	<update id="updatePostFile" >
-	 	update
-			post_file
-		set
-			post_original_fileName = #{postOriginalFileName},
-			post_renamed_fileName = #{postRenamedFileName}
-		where
-			post_no = #{postNo}	 
-	</update>	
-	
+
+
 	<update id="updateDelPost">
 		update
 				post
@@ -257,7 +222,7 @@
 			#{commentLevel}, 
 			#{commentContent}, 
 			default, 
-			#{id}, 
+			#{cmId}, 
 			#{postNo}, 
 			#{postCommentNo}, 
 			default)
@@ -273,23 +238,31 @@
 	</update>
 	
 	<select id="selectMainList" resultMap="postMap">
-	select *
-	from (select a.*, rank() OVER (ORDER BY post_no DESC) rank
-	        from 
-	            (select p.* ,d.department_name, f.name
-	            from post p 
-	                left join floworks_user f
-	                    on p.id = f.id
-	                left join member m
-	                    on f.id = m.id
-	                left join department d
-	                    on m.department_code = d.department_code) a
-	        where board_no=1 and
-	              post_del = 'N') 
-	where    
-	    rank <![CDATA[<=]]> 3
+	select p.* ,d.department_name, f.name, f.workspace_id
+	from post p 
+	    left join floworks_user f
+	        on p.id = f.id
+	    left join member m
+	        on f.id = m.id
+	    left join department d
+	        on m.department_code = d.department_code
+	where board_no=1 and
+	      post_del = 'N'
+	order by post_no desc
 	</select>
-
+	
+	<insert id="reInsertFile">
+		<foreach item="item" index="index" collection="list">
+		insert into
+			post_file
+		values(
+			seq_post_file_post_file.nextval,
+			#{item.postNo},
+			#{item.postOriginalFileName},
+			#{item.postRenamedFileName}
+		)
+		</foreach>
+	</insert>
 
 
 </mapper>

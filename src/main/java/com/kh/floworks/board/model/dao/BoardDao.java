@@ -10,9 +10,9 @@ import com.kh.floworks.board.model.vo.PostList;
 
 public interface BoardDao {
 
-	List<PostList> selectPostList(Map<String, Object> param,  int boardNo);
+	List<PostList> selectPostList(Map<String, Object> param,  Map<String, Object> search);
 
-	int getTotalContents(int boardNo);
+	int getTotalContents(Map<String, Object> search);
 
 	int insertPost(Post post);
 
@@ -24,8 +24,6 @@ public interface BoardDao {
 
 	int updatePost(PostList postList);
 
-	int updatePostFile(PostFile pFile);
-
 	int updateDelPost(int postNo);
 
 	Object rdCountPost(int postNo);
@@ -34,11 +32,11 @@ public interface BoardDao {
 
 	int commentDelete(int commentNo);
 
-
-	List<PostList> selectdeptList(String dept);
-
 	List<Post> selectMainList();
 
+	void deletePost(int deleteNo);
+	
+	int insertPostFile(List<PostFile> pFList);
 
 
 }
