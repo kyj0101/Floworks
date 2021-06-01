@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Calendar {
 	
-	private int calendarNo;
-	private String calendarId;
-	private String subject;
+	private String id;
+	private String title;
 	private String startDate;
 	private String endDate;
-	private String memo; //메모안에 장소도 적을 수 있음
 	
 }
