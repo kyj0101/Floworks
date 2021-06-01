@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.floworks.alarm.model.dao.AlarmDao;
 import com.kh.floworks.alarm.model.vo.Alarm;
+import com.kh.floworks.email.model.vo.Email;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,8 +25,8 @@ public class AlarmServiceImpl implements AlarmService{
 
 	@Override
 	public List<Alarm> selectAlarmList(String id) {
-		System.out.println("alarmserviceÅë°ú");
 		return alarmDao.selectAlarmList(id);
 	}
+
 
 }
