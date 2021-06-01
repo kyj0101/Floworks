@@ -48,5 +48,7 @@ public interface MemberService{
 
 	int updatePassword(Map<String, Object> param);
 
+	int updateQuitMember(String id);
+
 	
 }
