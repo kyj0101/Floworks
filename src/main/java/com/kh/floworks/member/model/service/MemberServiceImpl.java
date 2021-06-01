@@ -19,6 +19,22 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Override
+	public int insertUser(User user) {
+		return memberDao.insertUser(user);
+	}
+
+	@Override
+	public int insertMember(Member member) {
+		return memberDao.insertMember(member);
+	}
+
+	@Override
+	public int insertWorkspace(Map<String, String> param) {
+		return memberDao.insertWorkspace(param);
+	}
+
 
 	@Override
 	public boolean selectIdDuplicate(String id) {
@@ -61,11 +77,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int insertUser(User user) {
-		return memberDao.insertUser(user);
-	}
-
-	@Override
 	public List<Map<String, String>> selectDeptNameList() {
 		return memberDao.selectDeptNameList();
 	}
@@ -81,24 +92,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int insertMember(Member member) {
-		return memberDao.insertMember(member);
-	}
-
-	@Override
-	public int insertWorkspace(Map<String, String> param) {
-		return memberDao.insertWorkspace(param);
-	}
-
-	@Override
 	public String selectWorkspaceOwner(String workspaceId) {
 		return memberDao.selectWorkspaceOwner(workspaceId);
 	}
-
+	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return null;
-  }
+	public Member selectOneMember(String id) {
+		return memberDao.selectOneMember(id);
+	}
+
 
 	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
@@ -116,11 +118,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member selectOneMember(String id) {
-		return memberDao.selectOneMember(id);
+	public int updatePassword(Map<String, Object> param) {
+		return memberDao.updatePassword(param);
 	}
-
-
-
-
 }

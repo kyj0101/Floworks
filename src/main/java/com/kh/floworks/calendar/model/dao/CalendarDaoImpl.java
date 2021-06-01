@@ -1,6 +1,6 @@
 package com.kh.floworks.calendar.model.dao;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,11 @@ import org.springframework.stereotype.Repository;
 public class CalendarDaoImpl implements CalendarDao{
 
 	@Autowired
-	private SqlSession session;
+	private SqlSessionTemplate session;
+
+	@Override
+	public int insertCal(String dateList) {
+		return session.insert("calendar.insertCal",dateList);
+	}
+	
 }

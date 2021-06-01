@@ -75,6 +75,11 @@ public class MemberDaoImpl implements MemberDao{
 	public String selectWorkspaceOwner(String workspaceId) {
 		return session.selectOne("member.selectWorkspaceOwner", workspaceId);
 	}
+	
+	@Override
+	public Member selectOneMember(String id) {
+		return session.selectOne("member.selectOneMember", id);
+	}
 
 	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
@@ -92,9 +97,10 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public Member selectOneMember(String id) {
-		return session.selectOne("member.selectOneMember", id);
+	public int updatePassword(Map<String, Object> param) {
+		return session.update("member.updatePassword",param);
 	}
 
+ 
 
 }

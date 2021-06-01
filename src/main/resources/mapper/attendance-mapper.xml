@@ -88,6 +88,28 @@
 		    id = #{id}
 	</select>
 	
+	<select id="selectListAttendance" resultType="attendance">
+		select
+			*
+		from
+			attendance
+		where
+			id = #{id}
+		order by
+			day desc
+	</select>
+	
+	<select id="getTotalAttendance" resultType="int">
+		select
+			count(*)
+		from
+			attendance
+		where
+			id = #{id}
+		order by
+			day desc
+	</select>
+	
 	<update id="updateAttendanceOfficeOff">
 		update
 			attendance

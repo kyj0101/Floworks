@@ -3,6 +3,7 @@ package com.kh.floworks.attendance.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,11 +52,6 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	}
 
 	@Override
-	public int updateAttendanceOfficeOff(Map<String, Object> param) {
-		return session.update("attendance.updateAttendanceOfficeOff", param);
-	}
-
-	@Override
 	public List<String> selectAttendanceYear(String id) {
 		return session.selectList("attendance.selectAttendanceYear", id);
 	}
@@ -65,6 +61,27 @@ public class AttendanceDaoImpl implements AttendanceDao{
 		return session.selectList("attendance.selectAttendanceMonth", id);
 	}
 
+	@Override
+	public List<Attendance> selectListAttendance(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("attendance.selectListAttendance", param.get("id"), rowBounds);
+	}
+
+	@Override
+	public int updateAttendanceOfficeOff(Map<String, Object> param) {
+		return session.update("attendance.updateAttendanceOfficeOff", param);
+	}
+
+	@Override
+	public int getTotalAttendance(String id) {
+		return session.selectOne("attendance.getTotalAttendance", id);
+	}
 
 
 }

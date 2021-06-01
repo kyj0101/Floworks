@@ -4,8 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.floworks.attendance.model.service.AttendanceService;
 import com.kh.floworks.attendance.model.vo.Attendance;
 import com.kh.floworks.common.utils.AttendanceUtils;
+import com.kh.floworks.common.utils.PageBarUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +51,7 @@ public class AttendanceController {
 
 			//일주일의 시작이 일요일 기준이기 때문에 추가적인 처리를 해야한다.
 			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+			SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 			
 			if(dayOfWeek == 1) {
 				calendar.add(Calendar.DATE, -7); //월요일
@@ -56,7 +61,7 @@ public class AttendanceController {
 				param.put("endOfWeek", new Date(calendar.getTimeInMillis()));
 			
 			}else {
-				calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); //월요일
+				calendar.set(Calendar.DAY_OF_WEEK, (Calendar.MONDAY-1)); //월요일
 				param.put("startOfWeek", new Date(calendar.getTimeInMillis()));
 
 				calendar.add(Calendar.DAY_OF_WEEK, 7); //일요일
@@ -69,6 +74,10 @@ public class AttendanceController {
 			Map<String, Object> attendanceSystem = attendanceService.selectAttendanceSystem(workspaceId);
 			List<Attendance> weekOfficeAttendance = attendanceService.selectweekOfficeHours(param);
 			List<Attendance> monthOfficeAttendance = attendanceService.selectmonthOfficeHours(param);
+			
+			for(Attendance a : weekOfficeAttendance) {
+				log.info("{}",a);
+			}
 			
 			String lunchTimeStart = (String)attendanceSystem.get("lunchTimeStart");
 			String lunchTimeEnd = (String)attendanceSystem.get("lunchTimeEnd");
@@ -147,13 +156,29 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("/list")
-	public String attendanceList(String id, Model model) {
+	public String attendanceList(String id,
+			                     @RequestParam(defaultValue = "1") int cPage,	
+			                     HttpServletRequest request,
+			                     Model model) {
+		int numPerPage = 10;
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("id", id);
+		
+		int totalContents = attendanceService.getTotalAttendance(id);
+		String url = request.getRequestURI() + "?id=" + id;
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 		
 		List<String> yearList = attendanceService.selectAttendanceYear(id);
 		List<String> monthList = attendanceService.selectAttendanceMonth(id);
+		List<Attendance> attendanceList = attendanceService.selectListAttendance(param);
 		
 		model.addAttribute("yearList", yearList);
 		model.addAttribute("monthList", monthList);
+		model.addAttribute("attendanceList", attendanceList);
+		model.addAttribute("pageBar", pageBar);
 		
 		return "/attendance/myAttendanceList";
 	}
