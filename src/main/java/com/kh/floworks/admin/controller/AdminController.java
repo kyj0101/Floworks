@@ -29,7 +29,6 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@GetMapping("/memberList")
-
 	public void memberList(@RequestParam(defaultValue = "1") int cPage,			 
 			Model model,
 			HttpServletRequest request) {
@@ -47,7 +46,6 @@ public class AdminController {
 		
 		//3. jsp처리 위임
 		model.addAttribute("userList", userList);
-
 	}
 	
 	@GetMapping("/memberDetail")
@@ -59,6 +57,7 @@ public class AdminController {
 		model.addAttribute("userList", userDetail);
 	}
 
+
 	@GetMapping("/attendList")
 	public void attendanceList(Model model) {
 			
@@ -69,9 +68,7 @@ public class AdminController {
 		//3. jsp처리 위임
 			
 			model.addAttribute("attendList", attendList);
-
 	}
-	
 
 	
 }
