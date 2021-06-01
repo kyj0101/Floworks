@@ -24,23 +24,6 @@
 	<!-- font --> 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
-	<script>
-	function goLogin(){
-		location.href="${pageContext.request.contextPath}/login";
-	}
-	function goRegister(){
-		location.href="${pageContext.request.contextPath}/register";
-	}
-	function goWorksapace(){
-		location.href="${pageContext.request.contextPath}/register/registerWorkspace";
-	}
-	function goHome(){
-		location.href="${pageContext.request.contextPath}/home";
-	}
-	
-	
-	</script>
 </head>
 
 <body>	
@@ -74,3 +57,22 @@
 	</div>
 </body>
 </html>
+
+<script>
+function goLogin(){
+	location.href="${pageContext.request.contextPath}/login";
+}
+function goRegister(){
+	location.href="${pageContext.request.contextPath}/register";
+}
+function goWorksapace(){
+	location.href="${pageContext.request.contextPath}/register/registerWorkspace";
+}
+function goHome(){
+	location.href="${pageContext.request.contextPath}/home";
+}
+	
+if("${msg}" != ""){
+	alert("${msg}");
+}
+</script>
