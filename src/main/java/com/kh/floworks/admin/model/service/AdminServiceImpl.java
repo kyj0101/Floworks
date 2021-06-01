@@ -1,6 +1,7 @@
 package com.kh.floworks.admin.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,24 +20,32 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminDao adminDao;
 
-	
 	@Override
-	public List<UserList> selectUserList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserList> selectUserList(Map<String, Object> param, String workspace) {
+		return adminDao.selectUserList(param, workspace);
 	}
-	
+
 	@Override
-	public List<UserDetail> selectOneDetail() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getTotalContents(String workspace) {
+		return adminDao.getTotalContents(workspace);
+		
 	}
+
+	
 
 	@Override
 	public List<AttendList> selectAttendList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
+
+
+
+
 
 	
 }

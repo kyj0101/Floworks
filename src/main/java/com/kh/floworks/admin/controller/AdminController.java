@@ -17,6 +17,7 @@ import com.kh.floworks.admin.model.service.AdminService;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+import com.kh.floworks.common.utils.PageBarUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +29,9 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/memberList")
-	public void memberList(@RequestParam(defaultValue = "1") int cPage,			 
+	@GetMapping("/userList")
+	public void userList(@RequestParam(defaultValue = "1") int cPage,
+			@RequestParam String workspace, 
 			Model model,
 			HttpServletRequest request) {
 		
@@ -41,23 +43,39 @@ public class AdminController {
 		param.put("cPage", cPage);
 		
 		//2. 업무로직
-		List<UserList> userList = adminService.selectUserList();
+		List<UserList> userList = adminService.selectUserList(param, workspace);
 		log.info("userList = {}", userList);
+		
+		//b. pagebar영역
+//		int totalContents = adminService.getTotalContents(workspace);
+//		String url = request.getRequestURI() + "?workspace=" + workspace;
+//		log.info("totalContents = {}", totalContents);
+//		log.info("url = {}", url);
+//		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+//		
 		
 		//3. jsp처리 위임
 		model.addAttribute("userList", userList);
+//		model.addAttribute("pageBar", pageBar);
+
 	}
 	
-	@GetMapping("/memberDetail")
+
+	
+	@GetMapping("/userDetail")
 	public void memberDetail(Model model) {
 		
 		//2. 업무로직
-		List<UserDetail> userDetail = adminService.selectOneDetail();
+		//List<UserDetail> userDetail = adminService.selectOneDetail();
 		//3. jsp처리 위임
-		model.addAttribute("userList", userDetail);
+		//model.addAttribute("userList", userDetail);
+
 	}
 
 
+	
+	
+	
 	@GetMapping("/attendList")
 	public void attendanceList(Model model) {
 			

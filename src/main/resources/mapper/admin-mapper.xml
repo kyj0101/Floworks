@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<select id="selecUserList" resultType="userList">
+		select f.id, f.workspace_id, f.name, f.quit_yn, f.role, m.hire_date , m.position, d.department_name
+		from floworks_user f join member m
+		        on f.id = m.id
+		     join department d
+		        on m.department_code = d.department_code
+		where workspace_id = #{workspace}
+		order by hire_date
+	</select>
+
+	<resultMap type="hashmap" id="userList">
+		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="name" property="name"/>
+		<result column="department_Name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="role" property="role"/>
+		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+	</resultMap>
+
+
+
+
+</mapper>
