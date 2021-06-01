@@ -42,7 +42,6 @@
 		<header>
 			<nav class="navbar navbar-default" style="padding: 0px;">
 				<div class="container-fluid" style="padding: 0px;">
-<h1><sec:authentication property="principal.role"/></h1>
 					<div class="mainHeader">
 						<nav class="navbar" style="padding: 0px;">
 							<!-- 로고 & 프젝명 -->
