@@ -36,7 +36,7 @@ public class AdminController {
          HttpServletRequest request) {
       
       //1. 사용자입력값
-      int numPerPage = 10;
+      int numPerPage = 15;
       log.info("cPage = {}", cPage);
       Map<String, Object> param = new HashMap<>();
       param.put("numPerPage", numPerPage);
@@ -47,32 +47,27 @@ public class AdminController {
       log.info("userList = {}", userList);
       
       //b. pagebar영역
-//      int totalContents = adminService.getTotalContents(workspace);
-//      String url = request.getRequestURI() + "?workspace=" + workspace;
-//      log.info("totalContents = {}", totalContents);
-//      log.info("url = {}", url);
-//      String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
-//      
+      int totalContents = adminService.getTotalContents(workspace);
+      String url = request.getRequestURI() + "?workspace=" + workspace;
+      log.info("totalContents = {}", totalContents);
+      log.info("url = {}", url);
+      String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+      
       
       //3. jsp처리 위임
       model.addAttribute("userList", userList);
-//      model.addAttribute("pageBar", pageBar);
+      model.addAttribute("pageBar", pageBar);
 
    }
    
 
    
    @GetMapping("/userDetail")
-   public void memberDetail(Model model) {
-      
-      //2. 업무로직
-      //List<UserDetail> userDetail = adminService.selectOneDetail();
-      //3. jsp처리 위임
-      //model.addAttribute("userList", userDetail);
+   public void boardForm(@RequestParam String userId,Model model) {
+		model.addAttribute("userId", userId);
+	}	
 
-   }
-
-
+   
    
    
    

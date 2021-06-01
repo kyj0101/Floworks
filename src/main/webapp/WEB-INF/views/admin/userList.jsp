@@ -14,6 +14,8 @@
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
 
+<!-- js -->
+<script src="${pageContext.request.contextPath}/resources/js/admin/userList.js"></script>
 	<section>
 
 	<div id="board-list">
@@ -32,7 +34,7 @@
 	        <tbody>
 	        <c:if test="${userList != null}">
               <c:forEach items="${userList}" var="users">
-				<tr>
+				<tr data-id>
 					<td>${users.id}</td>
 					<td>${users.name}</td>
 					<td>${users.departmentName}</td>
@@ -44,9 +46,10 @@
 		    </c:if>
 	        </tbody>
 	    </table>
+	    
+	    <br>
+	    ${pageBar}
 	</div>
-
-
 
 </section>
 

@@ -51,7 +51,7 @@
                             <tr>
                                 <td>연락처</td>
                                 <td>
-                                    <input type="tel" name="phone" class="form-control" value="0">
+                                    <input type="tel" name="phone" class="form-control" value="01034546123">
                                 </td>
                                 <td>Email</td>
                                 <td>
@@ -59,17 +59,26 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>입사일</td>
-                                <td>
-                                    <input type="date" name="hire_date" size="5" class="form-control" readonly value="21/05/26" style="display:inline-block;width:100px;"> 
+                                <td>주소</td>
+                                <td colspan="3">
+                                    <input type="text" id="address" name="address" class="form-control" value="경기도 광명시 xxx">
                                 </td>
+                                
+                                
                             </tr>
                             <tr>
+                                <td>입사일</td>
+                                <td>
+                                    
+                                    <input type="date" name="hire_date" class="form-control" value="21/05/26" readonly> 
+                                </td>
                                 <td>퇴사 여부</td>
                                 <td>
-                                	<input>
+                                	<input type="radio" name="quit_yn" checked="checked" value="N">근무
+                                	<input type="radio" name="quit_yn" value="Y">퇴사
                                 </td>
                             </tr>
+                            
                             </tbody>
                         </table>
                     </div>
@@ -82,6 +91,5 @@
 	        <button type="reset" class="btn btn-info">취소</button>
 	    </div>    
     </form>
- 
-    
+
 </div>
