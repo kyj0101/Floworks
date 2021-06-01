@@ -24,12 +24,10 @@ public class SecurityService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = securityDao.selectOneMember(username);
-		
+
 		if(member == null) {
 			throw new UsernameNotFoundException(username + "not fount");
 		}
-
-		log.info("Role{}", member.getRole());
 		
 		return member;
 	}

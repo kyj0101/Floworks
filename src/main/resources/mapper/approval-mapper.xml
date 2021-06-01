@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="approval">
+
+	<select id="selectApvlList" resultMap="apvlMap">
+		select
+		    A.*,
+		    H.apver1_timelog,
+		    H.apver2_timelog,
+		    H.apver3_timelog,
+		    H.apver4_timelog,
+		    H.apver1_comment,
+		    H.apver2_comment,
+		    H.apver3_comment,
+		    H.apver4_comment,
+		    H.apver1_status,
+		    H.apver2_status,
+		    H.apver3_status,
+		    H.apver4_status
+		from
+		    approval A
+		  left outer join
+		    apvl_history H 
+		    on A.apvl_id = H.apvl_id
+		where
+			A.workspace_id = #{workspaceId}
+		and
+			A.apvl_due_date >= sysdate
+		order
+			by A.apvl_request_date desc
+	</select>
+	
+	<select id="selectOneApproval" resultMap="apvlMap">
+		select
+		    A.*,
+		    H.apver1_timelog,
+		    H.apver2_timelog,
+		    H.apver3_timelog,
+		    H.apver4_timelog,
+		    H.apver1_comment,
+		    H.apver2_comment,
+		    H.apver3_comment,
+		    H.apver4_comment,
+		    H.apver1_status,
+		    H.apver2_status,
+		    H.apver3_status,
+		    H.apver4_status
+		from
+		    approval A
+		  left outer join
+		    apvl_history H 
+		    on A.apvl_id = H.apvl_id
+		where
+			A.apvl_id = #{apvlId}
+		and
+			A.del_yn = 'N'
+	</select>
+	
+	<resultMap type="approval" id="apvlMap">
+		<id column="apvl_id" property="apvlId"/>
+		<result column="apvl_category" property="category"/>
+		<result column="approver1" property="approver1"/>
+		<result column="approver2" property="approver2"/>
+		<result column="approver3" property="approver3"/>
+		<result column="approver4" property="approver4"/>
+		<result column="apvl_title" property="title"/>
+		<result column="apvl_content" property="content"/>
+		<result column="apvl_request_date" property="reqDate"/>
+		<result column="apvl_due_date" property="dueDate"/>
+		<result column="apvl_writer" property="writer"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="apver1_timelog" property="timelog1"/>
+		<result column="apver2_timelog" property="timelog2"/>
+		<result column="apver3_timelog" property="timelog3"/>
+		<result column="apver4_timelog" property="timelog4"/>
+		<result column="apver1_comment" property="comment1"/>
+		<result column="apver2_comment" property="comment2"/>
+		<result column="apver3_comment" property="comment3"/>
+		<result column="apver4_comment" property="comment4"/>
+		<result column="apver1_status" property="status1"/>
+		<result column="apver2_status" property="status2"/>
+		<result column="apver3_status" property="status3"/>
+		<result column="apver4_status" property="status4"/>
+	</resultMap>
+
+
+	<select id="selectOneApprovalCollection" resultMap="ApprovalCollectionMap">
+		select
+		    A.*,
+		    H.apver1_timelog,
+		    H.apver2_timelog,
+		    H.apver3_timelog,
+		    H.apver4_timelog,
+		    H.apver1_comment,
+		    H.apver2_comment,
+		    H.apver3_comment,
+		    H.apver4_comment,
+		    H.apver1_status,
+		    H.apver2_status,
+		    H.apver3_status,
+		    H.apver4_status,
+            F.APVL_FILE_IDX,
+            F.APVL_ID,
+            F.APVL_ORIGINAL_FILENAME,
+            F.APVL_RENAMED_FILENAME,
+            F.APVL_FILEUPLOAD_DATE,
+            F.APVL_FILE_STATUS
+		from
+		    approval A
+		left outer join
+		    apvl_history H 
+		    on A.apvl_id = H.apvl_id
+        left outer join
+            apvl_files F
+            on A.apvl_id = F.apvl_id
+        where
+			A.apvl_id = #{apvlId}
+	</select>
+
+	<resultMap type="approval" id="ApprovalCollectionMap">
+		<id column="apvl_id" property="apvlId"/>
+		<result column="apvl_category" property="category"/>
+		<result column="approver1" property="approver1"/>
+		<result column="approver2" property="approver2"/>
+		<result column="approver3" property="approver3"/>
+		<result column="approver4" property="approver4"/>
+		<result column="apvl_title" property="title"/>
+		<result column="apvl_content" property="content"/>
+		<result column="apvl_request_date" property="reqDate"/>
+		<result column="apvl_due_date" property="dueDate"/>
+		<result column="apvl_writer" property="writer"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="del_yn" property="delYn"/>
+		<result column="apver1_timelog" property="timelog1"/>
+		<result column="apver2_timelog" property="timelog2"/>
+		<result column="apver3_timelog" property="timelog3"/>
+		<result column="apver4_timelog" property="timelog4"/>
+		<result column="apver1_comment" property="comment1"/>
+		<result column="apver2_comment" property="comment2"/>
+		<result column="apver3_comment" property="comment3"/>
+		<result column="apver4_comment" property="comment4"/>
+		<result column="apver1_status" property="status1"/>
+		<result column="apver2_status" property="status2"/>
+		<result column="apver3_status" property="status3"/>
+		<result column="apver4_status" property="status4"/>
+		<collection property="afList" ofType="apvlfile">
+			<id column="APVL_FILE_IDX" property="idx"/>
+			<result column="APVL_ID" property="approvalID"/>
+			<result column="APVL_ORIGINAL_FILENAME" property="originalFileName"/>
+			<result column="APVL_RENAMED_FILENAME" property="renamedFileName"/>
+			<result column="APVL_FILEUPLOAD_DATE" property="uploadDate"/>
+			<result column="APVL_FILE_STATUS" property="status" typeHandler="ynBooleanTypeHandler"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			approval A
+		left outer join
+		    apvl_history H
+		on
+			A.apvl_id = H.apvl_id
+		where
+			A.workspace_id = #{workspaceId}
+		and
+			A.apvl_due_date >= sysdate
+		and
+			A.del_yn = 'N'
+	</select>
+	 
+	 <select id="selectApprover" resultMap="approverMap">
+	 	select
+	 		F.id,
+	 		F.name,
+	 		d.department_name,
+	 		M.position
+ 		from
+			floworks_user F
+		left join
+ 			member M
+		on
+			F.id = M.id
+ 		left join
+ 			department D
+ 		on
+ 			M.department_code = D.department_code
+ 		where
+ 			F.id = #{approverId}
+	 </select>
+	 
+	 <select id="selectApproverList" resultMap="approverMap">
+	 	select
+	 		F.id,
+	 		F.name,
+	 		d.department_name,
+	 		M.position
+ 		from
+			floworks_user F
+		left join
+ 			member M
+		on
+			F.id = M.id
+ 		left join
+ 			department D
+ 		on
+ 			M.department_code = D.department_code
+ 		where
+ 			F.workspace_id = #{workspaceId}
+	 </select>
+	 
+	 <resultMap type="approver" id="approverMap">
+	 	<result column="id" property="userId" />
+	 	<result column="name" property="name" />
+	 	<result column="department_name" property="dept" />
+	 	<result column="position" property="position" />
+	 </resultMap>
+	 
+
+	 <insert id="insertApproval">
+	 	insert into 
+    		APPROVAL (APVL_ID, 
+    				  APVL_CATEGORY, 
+    				  APPROVER1, 
+    				  APPROVER2, 
+    				  APPROVER3, 
+    				  APPROVER4, 
+    				  APVL_TITLE, 
+    				  APVL_CONTENT, 
+    				  APVL_REQUEST_DATE, 
+    				  APVL_DUE_DATE, 
+    				  APVL_WRITER, 
+    				  WORKSPACE_ID, 
+    				  DEL_YN)
+		values (
+		    #{apvlId},
+		    #{category},
+		    #{approver1},
+		    #{approver2},
+		    #{approver3},
+		    #{approver4},
+		    #{title},
+		    #{content},
+		    systimestamp,
+		    #{dueDate},
+		    #{writer},
+		    #{workspaceId},
+		    default
+		)
+	 		
+	 </insert>
+	 
+	 <insert id="insertAttachment">
+	 	insert into
+	 		apvl_files
+	 	values (
+			seq_apvl_file_idx.nextval,
+			#{approvalID},
+			#{originalFileName},
+			#{renamedFileName},
+			default,
+			default
+		)
+
+	 </insert>
+	 
+	 <select id="selectDueDate" resultType="date">
+	 	select
+	 		sysdate + (365 * #{year})
+	 	from
+	 		dual
+	 </select>
+	 
+	 <select id="selectOneAttachment" resultMap="apvlfileMap">
+		select
+			*
+		from
+			apvl_files
+		where
+			APVL_FILE_IDX = #{idx}
+	</select>
+	
+	<resultMap type="apvlfile" id="apvlfileMap">
+		<id column="APVL_FILE_IDX" property="idx"/>
+		<result column="APVL_ID" property="approvalID"/>
+		<result column="APVL_ORIGINAL_FILENAME" property="originalFileName"/>
+		<result column="APVL_RENAMED_FILENAME" property="renamedFileName"/>
+		<result column="APVL_FILEUPLOAD_DATE" property="uploadDate"/>
+		<result column="APVL_FILE_STATUS" property="status" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+	</resultMap>
+	
+</mapper>
