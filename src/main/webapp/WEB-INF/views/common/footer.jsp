@@ -89,7 +89,7 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+									<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
 					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
@@ -117,12 +117,12 @@
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/memberList" class="nav-link "> 직원 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attend/setting" class="nav-link "> 근태 설정</a></li>
 				</ul>
 			</div></li>
 		<hr>
 	</ul>
 </aside>
-<footer> </footer>
 </div>
 </body>
 </html>
