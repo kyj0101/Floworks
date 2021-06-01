@@ -31,7 +31,6 @@ public class MainPageController {
 		return "/login/login";
 	}
 	
-	
 	@PostMapping("/login") //로그인 처리 X  | 로그인 실패 후 POST 요청 처리 O 
 	public String loginFail() {
 		return "/login/login";
