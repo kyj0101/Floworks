@@ -33,14 +33,15 @@
 			</p>
 			<br />
 			<p>
-			점심시간 : ${attendanceSystem.lunchTimeStart} ~ ${attendanceSystem.lunchTimeEnd}
+				점심시간 : ${attendanceSystem.lunchTimeStart} ~ ${attendanceSystem.lunchTimeEnd}
 			</p>
 			<p class="info-div-memo">
 				${attendanceSystem.memo}
-				
+			</p>
+			<p>					
 				<c:if test="${attendanceSystem.flexTimeYn == 'Y'}">
 					<br>
-					자율근무제
+					*자율근무제 실시중
 				</c:if>
 			</p>
 		</div>
