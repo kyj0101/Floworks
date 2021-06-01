@@ -11,13 +11,14 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebsocketConfiguration implements WebSocketConfigurer {
 	
 	@Autowired
-	SocketHandler socketHandler;
+	SocketHandler socketHandlerForAlarm;
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry
-			.addHandler(socketHandler, "/alarm_for_member")
+			.addHandler(socketHandlerForAlarm, "/alarm_for_member")
 			.withSockJS();
+		
 	}
 
 }

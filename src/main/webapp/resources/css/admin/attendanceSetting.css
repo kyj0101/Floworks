@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.time-setting{
+    width: 85%;
+    height: 800px;
+    margin: 60px auto 0 auto;
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.attendance-setting-submit-btn{
+    margin: 100px auto 0 auto;
+    text-align: center;
+}

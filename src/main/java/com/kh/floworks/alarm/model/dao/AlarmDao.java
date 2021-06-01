@@ -3,6 +3,7 @@ package com.kh.floworks.alarm.model.dao;
 import java.util.List;
 
 import com.kh.floworks.alarm.model.vo.Alarm;
+import com.kh.floworks.email.model.vo.Email;
 
 public interface AlarmDao {
 

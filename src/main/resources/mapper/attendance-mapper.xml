@@ -58,7 +58,8 @@
 		    attendance
 		where
 		    id = #{id}
-		    and  extract(month from day) = #{month}
+		    and extract(month from day) = #{month}
+		    and office_off is not null
 	</select>
 	
 	<select id="selectOneAttendance" resultType="attendance">
@@ -122,7 +123,7 @@
 	</update>
 	
 	<resultMap type="map" id="attendanceSystemMap">
-	
+		<id column="WORKSPACE_ID" property="workspaceId"/>
 		<result column="FLEX_TIME_YN" property="flexTimeYn"/>
 		<result column="OFFICE_IN_TIME" property="officeInTime"/>
 		<result column="OFFICE_OFF_TIME" property="officeOffTime"/>
