@@ -26,8 +26,8 @@
         </thead>
         <tbody>
         <c:if test="">
-        	<c:forEach items="${ }">
-        	<tr>
+        	<c:forEach items="${ }" var="">
+        	<tr data-no="${ }">
         		<td></td>
         		
         	</tr>

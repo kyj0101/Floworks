@@ -16,7 +16,7 @@ public interface AdminDao {
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
 
 	int getTotalContents(String workspace);
-
+	
 	UserDetail selectOneUserDetail(String userId);
 	
 	
