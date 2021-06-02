@@ -140,4 +140,14 @@ public class AdminDaoImpl implements AdminDao {
 		return session.update("admin.updateAttendanceSystem", param);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return session.selectList("admin.selectLeaveSystem", workspaceId);
+	}
+
+	@Override
+	public int updateLeaveSystem(Map<String, Object> param) {
+		return session.update("admin.updateLeaveSystem", param);
+	}
+
 }

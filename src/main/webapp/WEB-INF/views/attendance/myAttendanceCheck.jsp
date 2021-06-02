@@ -26,10 +26,10 @@
 		</div>
 		<div class="card-body">
 			<p>
-				출근 : ${attendanceSystem.officeInTime}
+				출근 ${attendanceSystem.officeInTime} ~ 퇴근 ${attendanceSystem.officeOffTime}
 			</p>
 			<p class="mb-0">
-				퇴근 : ${attendanceSystem.officeOffTime}
+				근무 시간 : ${attendanceSystem.workingTime}시간
 			</p>
 			<br />
 			<p>

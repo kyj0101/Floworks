@@ -116,6 +116,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return adminDao.selectLeaveSystem(workspaceId);
+	}
+
+	@Override
+	public int updateLeaveSystem(Map<String, Object> param) {
+		return adminDao.updateLeaveSystem(param);
+	}
+
+
 
 	
 }
