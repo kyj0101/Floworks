@@ -198,7 +198,7 @@
 		where
 			workspace_id = #{workspaceId}
 	</update>
-	
+
 	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
 		select
 		    position,
