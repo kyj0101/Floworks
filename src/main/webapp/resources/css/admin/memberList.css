@@ -3,13 +3,24 @@
 table{
     margin-left:auto; 
     margin-right:auto;
-    border:3px solid skyblue;
 }
-        
+
+thead{
+	text-align: center;
+}
+
 td{
-    border:1px solid skyblue
+    text-align: center;
 }
         
-#title{
-    background-color:skyblue
+
+.table-id {
+	width: 50px;
+}
+
+#board-list {
+	
+	width: 80%;
+	margin: 0 auto;
+	padding-top: 50px;
 }

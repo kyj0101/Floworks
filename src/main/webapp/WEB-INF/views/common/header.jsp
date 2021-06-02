@@ -251,6 +251,8 @@ const ws = new SockJS("http://" + location.host + "${pageContext.request.context
 var payload;
 var alarmList;
 var alarm_count=0;
+var email_count=0;
+
 var id;
 //헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
 ws.onopen = e => {
@@ -277,28 +279,36 @@ ws.onmessage = e => {
 	console.log("payload:",payload," count:",alarm_count," alarmList: ",alarmList," id:",id);
 	
 	const $badge =$("#alarm_badge");
+	const $ebadge =$("#badge_for_email");
+	
 	var $modal_for_alarm = $("#modal_body_for_alarm");
 	
 	$badge.text(alarm_count);
+	
 	if(alarm_count ==0){
 		$badge.css("visibility","hidden");
+		$ebadge.css("visibility","hidden");
 		$modal_for_alarm.html("");
 	}
 	else{
 		$badge.css("visibility","visible");
-		
+		$ebadge.css("visibility","visible");
 		
 		for(var i=0; i < alarm_count;i++){
 			
+			if(alarmList[i].category=="e-mail"){
+				email_count+=1;
+			}
+			
 			var tmp="";
-			tmp = tmp+'<a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">';
+			tmp = tmp+'<a href="${pageContext.request.contextPath}/'+alarmList[i].alarmLink+'" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase(event)">';
 			tmp+='<div class="row">';
 			tmp+='<div class="col-md-1">';
 			tmp+='<i class="fas fa-user-circle" style="color: pink;"></i>';
 			tmp+='</div>';
 			tmp+='<div class="col-md-11">';
 			tmp+='<div class="d-flex w-100 align-items-center justify-content-between">';
-			tmp+='<strong class="mb-1">'+alarmList[i].fromId+'</strong>';
+			tmp+='<strong class="mb-1">'+'From : '+alarmList[i].fromId+'</strong>';
 			tmp+='<small>'+alarmList[i].alarmTime+'</small>';
 			tmp+='</div>';
 			tmp+='<div class="col-10 mb-1 small">'+alarmList[i].title+'</div>';
@@ -307,7 +317,9 @@ ws.onmessage = e => {
 			tmp+='</a>';
 			$modal_for_alarm.append(tmp);
 		}
-	
+		
+		$ebadge.text(email_count);
+		
 	}
 	
 }
@@ -319,6 +331,20 @@ ws.onerror = e => {
 }
 ws.onclose = e => {
 	console.log("onclose : ", e);
+}
+
+function AlarmErase(event){
+	var url=""
+	
+	$.ajax({
+        type:"POST",
+        url:url,
+        dataType : "html",
+        success: 
+        error: function(xhr, status, error) {
+            alert(error);
+        }  
+    });	
 }
 
 /* $("#sendBtn").click(() => {

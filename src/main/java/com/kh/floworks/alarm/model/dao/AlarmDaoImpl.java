@@ -1,5 +1,6 @@
 package com.kh.floworks.alarm.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -21,7 +22,7 @@ public class AlarmDaoImpl implements AlarmDao{
 
 	@Override
 	public List<Alarm> selectAlarmList(String id) {
-		System.out.println("Dao±îÁö´Â ¿È session¿¡¼­ °¡Á®¿À±â");
+		System.out.println("Daoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ sessionï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		return session.selectList("alarm.selectList",id);
 	}
 

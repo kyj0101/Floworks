@@ -64,7 +64,8 @@ a {
 }
 #view-btn{
     position: relative;
-    display: inline-block;
+    display: flex;
+    margin-top : 2px;
 }
 #postCm{
 	 position: relative;
@@ -80,4 +81,7 @@ a {
 }
 section .btn{
 	margin-right: 2px;
+}
+#postDelBtn{
+	position: relative;
 }

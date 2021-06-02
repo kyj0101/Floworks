@@ -74,6 +74,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			$("#eventModal").find("#endDate").val(info.event.endStr);
 			
 			console.log(info);
+			
+    	  $("#eventModal").modal("show");
+          var date = info.dateStr
+          $("#startDate").val(date);
+          $("#endDate").val(date);
+          var lectureName = $("#lectureName").val();
+          $("#title").val(lectureName);
+          $('#close').on('click', function(){
+      		$("#eventModal").modal("hide");
+      		});
+      },
+      
+      eventClick: function(info){
+  		$("#eventModal").modal("show");
+		console.log(info);
       },
       //연월 표기 한국어 설정
       titleFormat : function(date) {
@@ -145,6 +160,7 @@ $.datepicker.setDefaults({
 	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 	dayNamesMin: ['일','월','화','수','목','금','토'],
 	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+
 });
 $("#startDate").datepicker();
 $("#endDate").datepicker();
@@ -225,7 +241,7 @@ $("#endDate").datepicker('setDate', 'today');
      <div class="row form-group justify-content-end">
 		<div class="col-sm-auto">
 		<!--밸류 넣기, json으로 값가져오기 -->
-		<form:form action="${pageContext.request.contextPath}/calendar/calendarMain.do"
+		<form:form action="${pageContext.request.contextPath}/calendar/calendarMain"
 			method="POST"
 			id="calAddFrm">
 			<input type="hidden" name="dateList"/>

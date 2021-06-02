@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.hire_date {
+	display: inherit !important;
+	width: 100% !important;
+	
+}
+
+#address {
+	width: 100%;
+}

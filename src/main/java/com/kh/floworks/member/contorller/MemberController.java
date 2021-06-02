@@ -8,7 +8,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.floworks.authentication.email.model.service.EmailAuthenticationService;
+import com.kh.floworks.authentication.email.model.vo.EmailAuthentication;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.member.model.service.MemberService;
 import com.kh.floworks.member.model.vo.Member;
@@ -39,11 +43,13 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/member")
 @Slf4j
-@SessionAttributes(value = {"loginMember", "anotherValue"})
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private EmailAuthenticationService emailAuthService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -57,6 +63,16 @@ public class MemberController {
 		model.addAttribute("member", member);
 		
 		return "/member/memberUpdate";
+	}
+	
+	@GetMapping("/delete")
+	public String memberDelete() {		
+		return "/member/memberDelete";
+	}
+	
+	@GetMapping("/update/password")
+	public String updatePassword() {	
+		return "/member/memberUpdatePassword";
 	}
 	
 	@PostMapping("/update")
@@ -94,6 +110,7 @@ public class MemberController {
 															oldAuthentication.getAuthorities()
 															);	
 			
+			//업로드된 프로필 사진이 있는지 없는지 검사한다.
 			if(multipartFiles != null && multipartFiles[0].getOriginalFilename().length() > 0) {
 
 				String saveDirectory = request.getServletContext().getRealPath(FileUtils.PROFILE_SAVEDIRECTORY);
@@ -119,16 +136,7 @@ public class MemberController {
 		return "redirect:/member/mypage?id=" + updateMember.getId();
 	}
 
-	@GetMapping("/delete")
-	public String memberDelete() {		
-		return "/member/memberDelete";
-	}
-	
-	@GetMapping("/update/password")
-	public String updatePassword() {	
-		return "/member/memberUpdatePassword";
-	}
-	
+
 	@PostMapping("/update/password")
 	public String updatePassword(String id,
 			                     String password,
@@ -158,6 +166,35 @@ public class MemberController {
 			throw new RuntimeException();
 		}
 
+	}
+	
+	@PostMapping("/delete")
+	public String memberDelete(String id, 
+			                   String password,
+			                   String email,
+			                   RedirectAttributes redirectAttr,
+			                   HttpServletRequest request,
+			                   HttpSession session) {
+		
+		Member member = memberService.selectOneMember(id);
+		
+		if(bcryptPasswordEncoder.matches(password, member.getPassword())) {
+			
+			//이메일 인증 기록도 삭제한다.
+			emailAuthService.deleteEmailAuth(email);
+		//	memberService.updateQuitMember(id);
+			
+			SecurityContextHolder.clearContext();
+			redirectAttr.addFlashAttribute("msg", "정상적으로 탈퇴 되었습니다.");
+			
+			return "redirect:/";
+		
+		}else {
+			
+			redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않으므로 회원 탈퇴를 하실 수 없습니다..");
+			
+			return "redirect:/member/delete";
+		}	
 	}
 	
 	@InitBinder

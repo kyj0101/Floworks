@@ -24,6 +24,12 @@ public class CalendarServiceImpl implements CalendarService{
 		return 0;
 	}
 
+	@Override
+	public int insertCal(String dateList) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 //	@Override
 //	public int insertCal(Map<String, Object> calendarDate) {
 //		

@@ -3,7 +3,6 @@ package com.kh.floworks.calendar.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,13 +53,13 @@ public class CalendarController {
 			log.error("일정 등록 실패!", e);	
 			throw e;
 		}
-				
-		return "redirect:/calendar/calendarMain.do";
+		return null;
 	}
-	
+
+
 //	@PostMapping("/calendarInsert")
 //    public String calendarInsert(@RequestParam String dateList) {
-//        log.info("dateList = {}", dateList);
+//        log.info("dateList = {}", dateList);ß
 //
 //        Gson gson = new Gson();
 //        Map<String, String>[] dateMapList = gson.fromJson(dateList, Map[].class);
@@ -71,6 +70,8 @@ public class CalendarController {
 //
 //        return "redirect:/calendar/calendarMain.do";
 //    }
+
+
 
 	
 

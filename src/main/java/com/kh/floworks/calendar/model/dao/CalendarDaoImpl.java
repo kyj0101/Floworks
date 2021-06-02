@@ -15,6 +15,13 @@ public class CalendarDaoImpl implements CalendarDao{
 	@Override
 	public int insertCal(Map<String, Object> calendarDate) {
 		return session.insert("calendar.insertCal",calendarDate);
+	
+	}
+
+	@Override
+	public int insertCal(String dateList) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

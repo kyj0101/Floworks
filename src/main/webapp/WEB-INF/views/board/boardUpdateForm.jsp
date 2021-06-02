@@ -25,8 +25,9 @@
 
  
 
- 
 <section>
+<sec:authentication property="principal" var="loginId"/>
+<c:if test="${loginId.id eq postList.id || loginId.position eq '대표'}"> 
 
     <div id="board-write">
         <form:form
@@ -85,7 +86,13 @@
             <input id="update-btn" type="submit" class="btn btn-primary float-right" value="수정하기" >
         </form:form>
     </div>
-    
+</c:if>
+<c:if test="${loginId.id ne postList.id && loginId.position ne '대표'}"> 
+<script>
+alert('잘못된 접근입니다');
+document.location.href="${pageContext.request.contextPath }/home";
+</script>
+</c:if>
 </section>			 
  
  
