@@ -81,15 +81,21 @@ public class AdminController {
 
    
    @GetMapping("/attendList")
-   public void attendanceList(Model model) {
-         
+   public void attendanceList(@RequestParam String workspaceId, Model model) {
+      
+	 //모델에는 딱히 값이 없다....(값을 받는다기 보다 jsp로 값을 보내주는게 주 역할)
+	      
       //1. 사용자입력값
+     
+	   log.info("\n\n\n\n\tworkspaceId={}\n\n\n\n",workspaceId);
       
       //2. 업무로직
-      List<AttendList> attendList = adminService.selectAttendList();
+      List<AttendList> attendList = adminService.selectAttendList(workspaceId);
+      
+      log.info("\n\n\n\nattendList={}\n\n\n\n",attendList);
+      
       //3. jsp처리 위임
-         
-         model.addAttribute("attendList", attendList);
+      model.addAttribute("attendList", attendList);
    }
 
 
