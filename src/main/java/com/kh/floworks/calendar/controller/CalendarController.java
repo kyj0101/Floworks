@@ -2,6 +2,8 @@ package com.kh.floworks.calendar.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,24 +32,46 @@ public class CalendarController {
 	}
 	
 	@PostMapping("/calendarInsert")
-	public String calendarInsert(@RequestParam String dateList, RedirectAttributes redirectAttr) {
-		log.info("dateList = {}", dateList);
+	public String calendarInsert(@RequestParam Map<String, Object> calendarDate, 
+								 HttpServletRequest request, 
+								 RedirectAttributes redirectAttr) {
+		log.debug("calendarDate = {}", calendarDate);
 		
 		Gson gson = new Gson();
-		Map<String, String>[] dateMapList = gson.fromJson(dateList, Map[].class);
-		
-		int result = calendarService.insertCal(dateList);
-		String msg = result > 0 ? "일정 입력 성공!" : "일정 입력 실패! 다시 입력 해주세요.";
-		log.info("dateMapList = {}", dateMapList);
-		for(Map<String, String> date : dateMapList)
-			log.info("date = {}", date);
-		
-		//2. 리다이렉트 및 사용자 피드백
-		redirectAttr.addFlashAttribute("msg", msg);
+	
+		try {
+			//44번째 fromJson에서부터 막혀서 여기부터 51번째줄까지 주석처리했습니다!
+//			Map<String, Object>[] dateMapList = gson.fromJson(calendarDate, Map[].class);
+//			log.info("dateMapList = {}", dateMapList);
+			
+//			int result = calendarService.insertCal(calendarDate);
+//			String msg = result > 0 ? "일정 입력 성공!" : "일정 입력 실패! 다시 입력해주세요";
+			
+//			for(Map<String, Object> date : dateMapList)
+//				log.info("date = {}", date);
+				//map.put("msg", "")
+		} catch(Exception e){
+			log.error("일정 등록 실패!", e);	
+			throw e;
+		}
 				
 		return "redirect:/calendar/calendarMain.do";
 	}
 	
+//	@PostMapping("/calendarInsert")
+//    public String calendarInsert(@RequestParam String dateList) {
+//        log.info("dateList = {}", dateList);
+//
+//        Gson gson = new Gson();
+//        Map<String, String>[] dateMapList = gson.fromJson(dateList, Map[].class);
+//
+//        log.info("dateMapList = {}", dateMapList);
+//        for(Map<String, String> date : dateMapList)
+//            log.info("date = {}", date);
+//
+//        return "redirect:/calendar/calendarMain.do";
+//    }
+
 	
 
 }
