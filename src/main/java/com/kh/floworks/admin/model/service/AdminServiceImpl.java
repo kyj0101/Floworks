@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private AdminDao adminDao;
@@ -112,9 +112,6 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateAttendanceSystem(param);
 	}
 
-	
-
-
 	@Override
 	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
 		return adminDao.selectLeaveSystem(workspaceId);
@@ -124,6 +121,7 @@ public class AdminServiceImpl implements AdminService {
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return adminDao.updateLeaveSystem(param);
 	}
+
 
 
 

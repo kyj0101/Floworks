@@ -156,6 +156,4 @@ public class AdminDaoImpl implements AdminDao {
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return session.update("admin.updateLeaveSystem", param);
 	}
-
-
 }
