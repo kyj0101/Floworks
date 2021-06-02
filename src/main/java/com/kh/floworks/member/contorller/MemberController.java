@@ -47,19 +47,18 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-
+	
 	@GetMapping("/mypage")
 	public String memberUpdate(String id, Model model) {
-		
+
 		//스프링 시큐리티 태그를 사용하면 글자가 깨져서 직접 model에 member객체를 전달한다.
 		Member member = memberService.selectOneMember(id);
 
 		model.addAttribute("member", member);
 		
-		model.addAttribute("loginMember", authentication.getPrincipal());
-		
+		return "/member/memberUpdate";
 	}
-
+	
 	@PostMapping("/update")
 	public String memberUpdate(User updateUser, 
                                Member updateMember, 
