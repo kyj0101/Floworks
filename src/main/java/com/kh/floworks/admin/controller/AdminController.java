@@ -77,12 +77,11 @@ public class AdminController {
 	}	
 
    
+   //근태 목록 조회
    @GetMapping("/attendList")
-   public void attendanceList(Model model) {
+   public void attendList(@RequestParam String userId, Model model) {
          
-      //1. 사용자입력값
-      
-      //2. 업무로직
+      //1. 업무로직
       List<AttendList> attendList = adminService.selectAttendList();
       //3. jsp처리 위임
          

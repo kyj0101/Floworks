@@ -13,8 +13,6 @@ public interface AdminService {
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
 
 	int getTotalContents(String workspace);
-
-	List<AttendList> selectAttendList();
 	
 	UserDetail selectOneUserCollection(String userId);
 	

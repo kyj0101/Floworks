@@ -30,21 +30,13 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.getTotalContents(workspace);
 		
 	}
-
-	
-	@Override
-	public List<AttendList> selectAttendList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 	@Override
 	public UserDetail selectOneUserCollection(String userId) {
 		return adminDao.selectOneUserCollection(userId);
 	}
 	
-	
+
 	
 	
 	
@@ -82,6 +74,8 @@ public class AdminServiceImpl implements AdminService {
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return adminDao.updateAttendanceSystem(param);
 	}
+
+	
 
 	
 

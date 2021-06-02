@@ -17,35 +17,22 @@
 		<table class="table table-striped table-centered mb-0">
         <thead>
             <tr>
-                <th>직원번호</th>
-                <th>직원명</th>
-                <th>부서</th>
-                <th>직급</th>
-                <th>연락처</th>
-                <th>출근 내역</th>
-                <th>퇴근 내역</th>
-                <th>연차 내역</th>
-                
-                
+            	<th scope="col" class="table-id">ID</th>
+	           	<th scope="col" class="table-depart">일자</th>
+	           	<th scope="col" class="table-positon">출근 시간</th>
+	           	<th scope="col" class="table-hire">퇴근 시간</th>
+	           	<th scope="col" class="table-resignYN">지각 여부</th>
             </tr>
         </thead>
         <tbody>
-            <%-- <%
-		        for( memberList member : memberList){
-		    %>  
-	        <tr>
-	            <td><%=memberList.getId() %></td>
-	            <td><%=memberList.getPassword() %></td>
-	            <td><%=memberList.getName() %></td>
-	            <td><%=memberList.getGender() %></td>
-	            <td><%=memberList.getBirthyy() %></td>
-	            <td><%=memberList.getMail1() %></td>
-	            <td><%=memberList.getPhone() %></td>
-	            <td><%=memberList.getAddress() %></td>
-	            <td><%=memberList.getReg() %></td>
-	        </tr>
-		    <%} %> --%>
-
+        <c:if test="">
+        	<c:forEach items="${ }">
+        	<tr>
+        		<td></td>
+        		
+        	</tr>
+        	</c:forEach>
+        </c:if>
         </tbody>
     </table>
 	</section>
