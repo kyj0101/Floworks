@@ -39,11 +39,56 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.getTotalContents", workspace);
 	}
 
-	
 	@Override
 	public UserDetail selectOneUserDetail(String userId) {
 		return session.selectOne("admin.selectOneUserDetail", userId);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 	
 	
@@ -94,6 +139,5 @@ public class AdminDaoImpl implements AdminDao {
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return session.update("admin.updateAttendanceSystem", param);
 	}
-
 
 }

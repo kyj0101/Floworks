@@ -29,48 +29,42 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 
-
-   @Autowired
-   private AdminService adminService;
-   
-   @Autowired
-   private AttendanceService attendanceService;
-   
-   //직원 전체 목록
-   @GetMapping("/userList")
-   public void userList(@RequestParam(defaultValue = "1") int cPage,
-         @RequestParam String workspace, 
-         Model model,
-         HttpServletRequest request) {
-      
-      //1. 사용자입력값
-      int numPerPage = 15;
-      log.info("cPage = {}", cPage);
-      Map<String, Object> param = new HashMap<>();
-      param.put("numPerPage", numPerPage);
-      param.put("cPage", cPage);
-      
-      //2. 업무로직
-      List<UserList> userList = adminService.selectUserList(param, workspace);
-      log.info("userList = {}", userList);
-      
-      //b. pagebar영역
-      int totalContents = adminService.getTotalContents(workspace);
-      String url = request.getRequestURI() + "?workspace=" + workspace;
-      log.info("totalContents = {}", totalContents);
-      log.info("url = {}", url);
-      String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
-      
-      
-      //3. jsp처리 위임
-      model.addAttribute("userList", userList);
-      model.addAttribute("pageBar", pageBar);
-
-	}
-
-
+	@Autowired
+	private AdminService adminService;
 	
+	@Autowired
+	private AttendanceService attendanceService;
 	
+	//직원 전체 목록
+	@GetMapping("/userList")
+	public void userList(@RequestParam(defaultValue = "1") int cPage,
+	@RequestParam String workspace, Model model,
+	HttpServletRequest request) {
+	      
+	      //1. 사용자입력값
+	      int numPerPage = 15;
+	      log.info("cPage = {}", cPage);
+	      Map<String, Object> param = new HashMap<>();
+	      param.put("numPerPage", numPerPage);
+	      param.put("cPage", cPage);
+	      
+	      //2. 업무로직
+	      List<UserList> userList = adminService.selectUserList(param, workspace);
+	      log.info("userList = {}", userList);
+	      
+	      //b. pagebar영역
+	      int totalContents = adminService.getTotalContents(workspace);
+	      String url = request.getRequestURI() + "?workspace=" + workspace;
+	      log.info("totalContents = {}", totalContents);
+	      log.info("url = {}", url);
+	      String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+	      
+	      
+	      //3. jsp처리 위임
+	      model.addAttribute("userList", userList);
+	      model.addAttribute("pageBar", pageBar);
+
+		}
    
 
    //직원정보 상세보기 + 수정하기
@@ -83,7 +77,6 @@ public class AdminController {
 	   model.addAttribute("userDetail", userDetail);
 	}	
 
-   
    
    @GetMapping("/attendList")
    public void attendanceList(Model model) {
@@ -134,11 +127,11 @@ public class AdminController {
 	public String attendanceSettingView(String workspaceId, Model model) {
 
 		try {
-//
-//			Map<String, Object> attendanceSystemMap = attendanceService.selectAttendanceSystem(workspaceId);
-//
-//			model.addAttribute("attendanceSystem", attendanceSystemMap);
-//			model.addAttribute("workspaceId", workspaceId);
+
+			Map<String, Object> attendanceSystemMap = attendanceService.selectAttendanceSystem(workspaceId);
+
+			model.addAttribute("attendanceSystem", attendanceSystemMap);
+			model.addAttribute("workspaceId", workspaceId);
 
 			return "/admin/attendanceSetting";
 
@@ -171,5 +164,12 @@ public class AdminController {
 		}
 	}
 	
+	
+	
+	
+	
 }
-
+	
+	
+	
+	

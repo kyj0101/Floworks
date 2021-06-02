@@ -18,12 +18,36 @@ public interface AdminService {
 
 	List<AttendList> selectAttendList();
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
 	
 	
 	
@@ -55,6 +79,5 @@ public interface AdminService {
 	int updateAttendanceSystem(Map<String, Object> param);
 
 	
-
 
 }
