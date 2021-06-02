@@ -40,95 +40,59 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.getTotalContents", workspace);
 	}
 
+	
 	@Override
 	public UserDetail selectOneUserDetail(String userId) {
 		return session.selectOne("admin.selectOneUserDetail", userId);
 	}
+	
+	
+	//--강준혁 근태관리 리스트 쭉 뽑아오기
+	@Override
+	public List<AttendList> selectAttendList(String workspaceId) {
+		log.info("\n\n\n\nDao까지는 왔어요\n\n\n\n");
+		return session.selectList("admin.selectAttendanceList",workspaceId);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	//===================== 강유정 근태 설정 ========================
@@ -138,18 +102,6 @@ public class AdminDaoImpl implements AdminDao {
 		return session.update("admin.updateAttendanceSystem", param);
 	}
 
-
-
-
-	@Override
-	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
-		return session.selectList("admin.selectLeaveSystem", workspaceId);
-	}
-
-	@Override
-	public int updateLeaveSystem(Map<String, Object> param) {
-		return session.update("admin.updateLeaveSystem", param);
-	}
 
 
 }
