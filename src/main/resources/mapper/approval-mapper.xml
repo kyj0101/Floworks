@@ -6,56 +6,28 @@
 
 	<select id="selectApvlList" resultMap="apvlMap">
 		select
-		    A.*,
-		    H.apver1_timelog,
-		    H.apver2_timelog,
-		    H.apver3_timelog,
-		    H.apver4_timelog,
-		    H.apver1_comment,
-		    H.apver2_comment,
-		    H.apver3_comment,
-		    H.apver4_comment,
-		    H.apver1_status,
-		    H.apver2_status,
-		    H.apver3_status,
-		    H.apver4_status
+		    *
 		from
-		    approval A
-		  left outer join
-		    apvl_history H 
-		    on A.apvl_id = H.apvl_id
+		    approval
 		where
-			A.workspace_id = #{workspaceId}
+			workspace_id = #{workspaceId}
 		and
-			A.apvl_due_date >= sysdate
+			apvl_due_date >= sysdate
+		and
+			del_yn = 'N'
 		order
-			by A.apvl_request_date desc
+			by apvl_request_date desc
 	</select>
 	
 	<select id="selectOneApproval" resultMap="apvlMap">
 		select
-		    A.*,
-		    H.apver1_timelog,
-		    H.apver2_timelog,
-		    H.apver3_timelog,
-		    H.apver4_timelog,
-		    H.apver1_comment,
-		    H.apver2_comment,
-		    H.apver3_comment,
-		    H.apver4_comment,
-		    H.apver1_status,
-		    H.apver2_status,
-		    H.apver3_status,
-		    H.apver4_status
+		    *
 		from
-		    approval A
-		  left outer join
-		    apvl_history H 
-		    on A.apvl_id = H.apvl_id
+		    approval
 		where
-			A.apvl_id = #{apvlId}
+			apvl_id = #{apvlId}
 		and
-			A.del_yn = 'N'
+			del_yn = 'N'
 	</select>
 	
 	<resultMap type="approval" id="apvlMap">
@@ -89,18 +61,6 @@
 	<select id="selectOneApprovalCollection" resultMap="ApprovalCollectionMap">
 		select
 		    A.*,
-		    H.apver1_timelog,
-		    H.apver2_timelog,
-		    H.apver3_timelog,
-		    H.apver4_timelog,
-		    H.apver1_comment,
-		    H.apver2_comment,
-		    H.apver3_comment,
-		    H.apver4_comment,
-		    H.apver1_status,
-		    H.apver2_status,
-		    H.apver3_status,
-		    H.apver4_status,
             F.APVL_FILE_IDX,
             F.APVL_ID,
             F.APVL_ORIGINAL_FILENAME,
@@ -109,9 +69,6 @@
             F.APVL_FILE_STATUS
 		from
 		    approval A
-		left outer join
-		    apvl_history H 
-		    on A.apvl_id = H.apvl_id
         left outer join
             apvl_files F
             on A.apvl_id = F.apvl_id
@@ -159,17 +116,13 @@
 		select
 			count(*)
 		from
-			approval A
-		left outer join
-		    apvl_history H
-		on
-			A.apvl_id = H.apvl_id
+			approval
 		where
-			A.workspace_id = #{workspaceId}
+			workspace_id = #{workspaceId}
 		and
-			A.apvl_due_date >= sysdate
+			apvl_due_date >= sysdate
 		and
-			A.del_yn = 'N'
+			del_yn = 'N'
 	</select>
 	 
 	 <select id="selectApprover" resultMap="approverMap">
@@ -291,5 +244,69 @@
 		<result column="APVL_FILEUPLOAD_DATE" property="uploadDate"/>
 		<result column="APVL_FILE_STATUS" property="status" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
 	</resultMap>
+	
+	<update id="updateApvlStatusFirst">
+		update
+			approval
+		set
+			APVER1_TIMELOG = systimestamp,
+			APVER1_COMMENT = #{comment1},
+			APVER1_STATUS = #{status1}
+		where
+			apvl_id = #{apvlId}
+	</update>
+	
+	<update id="updateApvlStatusSecond">
+		update
+			approval
+		set
+			APVER2_TIMELOG = systimestamp,
+			APVER2_COMMENT = #{comment2},
+			APVER2_STATUS = #{status2}
+		where
+			apvl_id = #{apvlId}
+	</update>
+	
+	<update id="updateApvlStatusThird">
+		update
+			approval
+		set
+			APVER3_TIMELOG = systimestamp,
+			APVER3_COMMENT = #{comment3}, 
+			APVER3_STATUS = #{status3}
+		where
+			apvl_id = #{apvlId}
+	</update>
+	
+	<update id="updateApvlStatusFourth">
+		update
+			approval
+		set
+			APVER4_TIMELOG = systimestamp,
+			APVER4_COMMENT = #{comment4}, 
+			APVER4_STATUS = #{status4}
+		where
+			apvl_id = #{apvlId}
+	</update>
+	
+	<update id="deleteApproval">
+		update
+			approval
+		set
+			DEL_YN = 'Y'
+		where
+			APVL_ID = #{apvlId}
+	</update>
+	
+	<update id="updateApproval">
+		update
+			approval
+		set
+			APVL_TITLE = #{title},
+			APVL_CONTENT = #{content}
+		where
+			APVL_ID = #{apvlId}
+			
+	</update>
 	
 </mapper>
