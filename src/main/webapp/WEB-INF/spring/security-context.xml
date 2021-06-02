@@ -25,8 +25,10 @@
 	<security:http auto-config="true" use-expressions="true">
 		
 		<security:intercept-url pattern="/" access="permitAll"/>
+		
 		<security:intercept-url pattern="/login" access="isAnonymous()"/>
 		<security:intercept-url pattern="/login.do" access="isAnonymous()"/>
+		
 		<security:intercept-url pattern="/home" access="isAuthenticated()"/>		
 		<security:intercept-url pattern="/email/**" access="isAuthenticated()"/>		
 		<security:intercept-url pattern="/member/**" access="isAuthenticated()"/>		
@@ -36,6 +38,8 @@
 		<security:intercept-url pattern="/leave/**" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/search/**" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/attendance/**" access="isAuthenticated()"/>
+		
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />	 
 		
 		<security:form-login login-page="/login"
 		                     login-processing-url="/login"

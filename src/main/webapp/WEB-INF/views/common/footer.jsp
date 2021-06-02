@@ -12,8 +12,8 @@
 		</a></li>
 		<li class="nav-item"><a class="nav-link " href="#sidebarEmail"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarDashboards"> <i class="bi bi-envelope"></i>이메일<span
-				class="badge badge-pill badge-danger">0</span>
+			aria-controls="sidebarDashboards"> <i class="bi bi-envelope"></i>이메일<span id="badge_for_email"
+				class="badge badge-pill badge-danger"></span>
 		</a>
 			<div class="collapse hide" id="sidebarEmail"
 				style="padding-left: 35px;">
@@ -89,7 +89,11 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
+<<<<<<< HEAD
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+=======
+									<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
 					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
@@ -108,6 +112,8 @@
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
 			</div></li>
+			
+		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarAdmin"> <i class="bi bi-gear"></i>관리자 설정
@@ -115,14 +121,16 @@
 			<div class="collapse hide" id="sidebarAdmin"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/memberList" class="nav-link "> 직원 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList?workspace=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 직원 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 연차 설정</a></li>
 				</ul>
 			</div></li>
+		</sec:authorize>
 		<hr>
 	</ul>
 </aside>
-<footer> </footer>
 </div>
 </body>
 </html>

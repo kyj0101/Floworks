@@ -1,5 +1,7 @@
 package com.kh.floworks.admin.model.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +14,12 @@ public class UserList {
 	private String workspaceId;
 	private String id;
 	private String name;
-	private String department;
+	private String role;
+	private String departmentName;
 	private String position;
-	private String hireDate;
-	private char resignYN;
+	private Date hireDate;
+	private boolean quitYN;
 	
+
 }
+

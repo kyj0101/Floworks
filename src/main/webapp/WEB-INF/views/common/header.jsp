@@ -29,6 +29,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    
     <!--특정 아이콘 추가 : https://fontawesome.com/icons?d=gallery&p=2 메일박스, 메시지-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     
@@ -164,8 +168,7 @@
 
 						<div class="mainHeader">
 							<!-- 로그인한 사용자의 프로필 -->
-							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle"
-								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
+							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle"								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
 							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
 					</div>
@@ -247,10 +250,14 @@ $(function(){
 <script>
 
 //WebsocketConfiguration 함수랑 연결
+
+//알람 업로드
 const ws = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_member");
 var payload;
 var alarmList;
 var alarm_count=0;
+var email_count=0;
+
 var id;
 //헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
 ws.onopen = e => {
@@ -262,9 +269,11 @@ ws.onopen = e => {
 	</sec:authorize>
 		
 	console.log("접속 id :", login_id);	
+	sessionStorage.setItem('id',login_id);
 	ws.send(login_id);
 	
-};
+}
+
 ws.onmessage = e => {
 	console.log("onmessage : ", e);
 	const obj = JSON.parse(e.data);
@@ -277,28 +286,38 @@ ws.onmessage = e => {
 	console.log("payload:",payload," count:",alarm_count," alarmList: ",alarmList," id:",id);
 	
 	const $badge =$("#alarm_badge");
+	const $ebadge =$("#badge_for_email");
+	
 	var $modal_for_alarm = $("#modal_body_for_alarm");
 	
 	$badge.text(alarm_count);
+	
 	if(alarm_count ==0){
 		$badge.css("visibility","hidden");
+		$ebadge.css("visibility","hidden");
 		$modal_for_alarm.html("");
 	}
 	else{
 		$badge.css("visibility","visible");
-		
+		$ebadge.css("visibility","visible");
 		
 		for(var i=0; i < alarm_count;i++){
 			
+			if(alarmList[i].category=="e-mail"){
+				email_count+=1;
+			}
+			
+			var a_tag='<a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase('
+			
 			var tmp="";
-			tmp = tmp+'<a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">';
+			tmp = tmp+a_tag+"'"+alarmList[i].alarmLink+"'"+');">'
 			tmp+='<div class="row">';
 			tmp+='<div class="col-md-1">';
 			tmp+='<i class="fas fa-user-circle" style="color: pink;"></i>';
 			tmp+='</div>';
 			tmp+='<div class="col-md-11">';
 			tmp+='<div class="d-flex w-100 align-items-center justify-content-between">';
-			tmp+='<strong class="mb-1">'+alarmList[i].fromId+'</strong>';
+			tmp+='<strong class="mb-1">'+'From : '+alarmList[i].fromId+'</strong>';
 			tmp+='<small>'+alarmList[i].alarmTime+'</small>';
 			tmp+='</div>';
 			tmp+='<div class="col-10 mb-1 small">'+alarmList[i].title+'</div>';
@@ -307,7 +326,9 @@ ws.onmessage = e => {
 			tmp+='</a>';
 			$modal_for_alarm.append(tmp);
 		}
-	
+		
+		$ebadge.text(email_count);
+		
 	}
 	
 }
@@ -317,18 +338,33 @@ ws.onerror = e => {
 	
 	console.log("onerror : ", e);
 }
+
 ws.onclose = e => {
 	console.log("onclose : ", e);
 }
 
-/* $("#sendBtn").click(() => {
-	const $message = $("#message");
-	$message.val() != '' && sendMessage();
-});
+function AlarmErase(link){
+	
+	
+	const ws_change = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_changeView");
+	
+	ws_change.onopen = e => {
+		var login_id = null;
+		
+		<sec:authorize access="isAuthenticated()">
+			login_id = '<sec:authentication property="Principal.id"/>';
+		</sec:authorize>
+		
+		sessionStorage.setItem('id',login_id);
+		
+		console.log("접속 id :", login_id);	
+		ws_change.send(login_id+"$"+link);
+		
+	}
+	
+	location.href="${pageContext.request.contextPath}/"+link;
+		
+};
 
-function sendMessage(){
-	const $message = $("#message");
-	ws.send($message.val());
-	$message.val('');
-}  */
+
 </script>

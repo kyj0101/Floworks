@@ -8,7 +8,34 @@
 		select
 			*
 		from
-			alarm		
+			alarm
+		where 
+			to_id=#{id}	and
+			is_checked='N'
 	</select>
-
+	
+	<insert id="insertAlarm">
+		insert into 
+			alarm
+		values(
+			#{fromId},
+			#{toId},			
+			sysdate,
+			#{title},			
+			#{category},	
+			#{isChecked},
+			#{alarmLink}
+		)	
+	</insert>
+	
+	<update id="updateAlarm">
+		update
+			alarm
+		set
+			is_checked = #{YN}
+		where
+	 		to_id = #{toId} and
+	 		alarm_Link=#{alarmLink}		
+	</update>
+	
 </mapper>

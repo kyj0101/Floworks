@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<select id="selecUserList" resultType="userList">
+		select f.id, f.workspace_id, f.name, f.quit_yn, f.role, m.hire_date , m.position, d.department_name
+		from floworks_user f join member m
+		        on f.id = m.id
+		     join department d
+		        on m.department_code = d.department_code
+		where workspace_id = #{workspace}
+		order by hire_date
+	</select>
+
+	<resultMap type="hashmap" id="userList">
+		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="name" property="name"/>
+		<result column="department_Name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="role" property="role"/>
+		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+	</resultMap>
+
+
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			floworks_user
+		where
+		    workspace_id = #{workspace}
+	</select>
+
+	<select id="selectOneUserDetail" resultMap="userDetail">
+		select m.id, f.name, d.department_name, m.position, 
+		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role
+		from member m
+		        left join department d
+		            on m.department_code = d.department_code
+		        left join floworks_user f
+		            on m.id = f.id
+		WHERE
+		    m.id = #{userId}
+	</select>
+
+	<resultMap type="userDetail" id="userDetail">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="address" property="address"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="quit_yn" property="quitYn" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+		<result column="role" property="role"/>
+	</resultMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- ===================== 강유정 근태 설정 ========================  -->
+	<update id="updateAttendanceSystem"> 
+		update
+			attendance_system
+		set
+			office_in_time = #{officeInTime},
+			office_off_time = #{officeOffTime},
+			lunch_time_start = #{lunchTimeStart},
+			lunch_time_end = #{lunchTimeEnd},
+			working_time = #{workingTime},
+			flex_time_yn = #{flexTimeYn},
+			memo = #{memo}
+		where
+			workspace_id = #{workspaceId}
+	</update>
+	
+	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
+		select
+		    position,
+		    leave_day
+		from
+		    leave_system
+		where
+		    workspace_id = #{workspaceId}
+	</select>
+	
+	<update id="updateLeaveSystem">
+		update
+			leave_system
+		set
+			leave_day = #{leaveDay}
+		where
+			workspace_id = #{workspaceId}
+			and position = #{position}
+	</update>
+	
+	<resultMap type="map" id="leaveSystemMap">
+		<result column="position" property="position"/>
+		<result column="leave_day" property="leaveDay"/>
+	</resultMap>
+
+</mapper>

@@ -3,7 +3,6 @@ package com.kh.floworks.approval.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -248,7 +247,7 @@ public class ApprovalController {
 		 */
 		int result = 0;
 		String stVal = "";
-		
+	
 		if (status.equals("approve")) {
 			stVal = "y";
 		} else if (status.equals("reject")) {

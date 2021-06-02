@@ -67,6 +67,10 @@
                     <label for="ap-line"><b>결재선</b></label>
                 </td>
                 <td>
+<<<<<<< HEAD
+=======
+                    <!-- <a href="#" data-toggle="modal" class="ap-add-line" data-target="#memberlist">추가하기</a> -->
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 					<button type="button" class="btn btn-secondary ap-add-line" id="ap-add-line" data-toggle="modal" data-target="#memberlist">
 	                	추가하기
 	                </button>
@@ -146,6 +150,7 @@
                     <div class="ap-write-filesection">
                         <label for="ap-upFile1">파일첨부 1</label>
                         <input type="file" class="form-control-file" name="upFile" id="ap-upFile1">
+<<<<<<< HEAD
                     </div>
                 </td>
             </tr>
@@ -154,12 +159,25 @@
                     <div class="ap-write-filesection">
                         <label for="ap-upFile2">파일첨부 2</label>
                         <input type="file" class="form-control-file" name="upFile" id="ap-upFile2">
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="ap-write-filesection">
+<<<<<<< HEAD
+=======
+                        <label for="ap-upFile2">파일첨부 2</label>
+                        <input type="file" class="form-control-file" name="upFile" id="ap-upFile2">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="ap-write-filesection">
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
                         <label for="ap-upFile3">파일첨부 3</label>
                         <input type="file" class="form-control-file" name="upFile" id="ap-upFile3">
                     </div>
@@ -194,12 +212,20 @@ function apverSubmit() {
 	document.getElementById("ap-line-selected").innerHTML = '';
 	let html = '';
 	let hiddenInput = ''
+<<<<<<< HEAD
 	let cnt=1;
 	for (let i = 0; i < apverArr.length; i++) {
 		if (apverArr[i].checked) {
 			html += ("<li>" + apverArr[i].value + "</li>");
 			html += ("<input type='hidden' name='approver" + cnt + "' value='" + apverArr[i].value + "'/>");
 			cnt++;
+=======
+	
+	for (let i = 0; i < apverArr.length; i++) {
+		if (apverArr[i].checked) {
+			html += ("<li>" + apverArr[i].value + "</li>");
+			html += ("<input type='hidden' name=approver" + i + " value='" + apverArr[i].value + "'/>");
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 		}
 	}
 	

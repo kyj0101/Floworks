@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.floworks.alarm.model.vo.Alarm;
+import com.kh.floworks.alarm.model.vo.AlarmYN;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
+@Slf4j
 public class AlarmDaoImpl implements AlarmDao{
-
+	
 	@Autowired
 	private SqlSession session;
 	
@@ -21,9 +25,17 @@ public class AlarmDaoImpl implements AlarmDao{
 
 	@Override
 	public List<Alarm> selectAlarmList(String id) {
-		System.out.println("Dao까지는 옴 session에서 가져오기");
 		return session.selectList("alarm.selectList",id);
 	}
+	
+	@Override
+	public int changeView(AlarmYN alarmYN) {
+		
+		log.info("\n\n\n\n\talarmYN={}\n\n\n\n",alarmYN);
+		
+		return session.update("alarm.updateAlarm",alarmYN);
+	}
+
 
 
 }

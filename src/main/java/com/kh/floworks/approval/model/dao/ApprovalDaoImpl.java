@@ -114,5 +114,5 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int updateApproval(Approval approval) {
 		return session.update("approval.updateApproval", approval);
 	}
-
+	
 }

@@ -1,5 +1,6 @@
 package com.kh.floworks.member.contorller;
 
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -52,10 +53,10 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-
+	
 	@GetMapping("/mypage")
 	public String memberUpdate(String id, Model model) {
-		
+
 		//스프링 시큐리티 태그를 사용하면 글자가 깨져서 직접 model에 member객체를 전달한다.
 		Member member = memberService.selectOneMember(id);
 
@@ -181,7 +182,7 @@ public class MemberController {
 			
 			//이메일 인증 기록도 삭제한다.
 			emailAuthService.deleteEmailAuth(email);
-			memberService.updateQuitMember(id);
+		//	memberService.updateQuitMember(id);
 			
 			SecurityContextHolder.clearContext();
 			redirectAttr.addFlashAttribute("msg", "정상적으로 탈퇴 되었습니다.");
