@@ -164,7 +164,7 @@
 
 						<div class="mainHeader">
 							<!-- 로그인한 사용자의 프로필 -->
-							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle"
+							<%-- <img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" --%>
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
 							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
@@ -247,6 +247,8 @@ $(function(){
 <script>
 
 //WebsocketConfiguration 함수랑 연결
+
+//알람 업로드
 const ws = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_member");
 var payload;
 var alarmList;
@@ -264,9 +266,11 @@ ws.onopen = e => {
 	</sec:authorize>
 		
 	console.log("접속 id :", login_id);	
+	sessionStorage.setItem('id',login_id);
 	ws.send(login_id);
 	
-};
+}
+
 ws.onmessage = e => {
 	console.log("onmessage : ", e);
 	const obj = JSON.parse(e.data);
@@ -300,8 +304,10 @@ ws.onmessage = e => {
 				email_count+=1;
 			}
 			
+			var a_tag='<a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase('
+			
 			var tmp="";
-			tmp = tmp+'<a href="${pageContext.request.contextPath}/'+alarmList[i].alarmLink+'" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase(event)">';
+			tmp = tmp+a_tag+"'"+alarmList[i].alarmLink+"'"+');">'
 			tmp+='<div class="row">';
 			tmp+='<div class="col-md-1">';
 			tmp+='<i class="fas fa-user-circle" style="color: pink;"></i>';
@@ -329,32 +335,33 @@ ws.onerror = e => {
 	
 	console.log("onerror : ", e);
 }
+
 ws.onclose = e => {
 	console.log("onclose : ", e);
 }
 
-function AlarmErase(event){
-	var url=""
+function AlarmErase(link){
 	
-	$.ajax({
-        type:"POST",
-        url:url,
-        dataType : "html",
-        success: 
-        error: function(xhr, status, error) {
-            alert(error);
-        }  
-    });	
-}
+	
+	const ws_change = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_changeView");
+	
+	ws_change.onopen = e => {
+		var login_id = null;
+		
+		<sec:authorize access="isAuthenticated()">
+			login_id = '<sec:authentication property="Principal.id"/>';
+		</sec:authorize>
+		
+		sessionStorage.setItem('id',login_id);
+		
+		console.log("접속 id :", login_id);	
+		ws_change.send(login_id+"$"+link);
+		
+	}
+	
+	location.href="${pageContext.request.contextPath}/"+link;
+		
+};
 
-/* $("#sendBtn").click(() => {
-	const $message = $("#message");
-	$message.val() != '' && sendMessage();
-});
 
-function sendMessage(){
-	const $message = $("#message");
-	ws.send($message.val());
-	$message.val('');
-}  */
 </script>

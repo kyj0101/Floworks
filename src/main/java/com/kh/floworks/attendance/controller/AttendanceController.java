@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.floworks.attendance.model.dao.AttendanceDao;
 import com.kh.floworks.attendance.model.service.AttendanceService;
 import com.kh.floworks.attendance.model.vo.Attendance;
 import com.kh.floworks.common.utils.AttendanceUtils;
@@ -134,12 +136,31 @@ public class AttendanceController {
 	@PostMapping("/office/off")
 	public String  officeOff(String id,
                              String workspaceId,
+                             @RequestParam(value = "workingTime") int workingTimeSystem,
                              @RequestParam(value = "officeInTime") String officeInTimeSystem,
+                             RedirectAttributes redirectAttr,
                              Model model) throws Exception {
 		try {
 			
+			String returnUrl = "redirect:/attendance/view?workspaceId=" + workspaceId + "&id=" + id;
+			
 			Calendar calendar = Calendar.getInstance();
 			Date now = new Date(calendar.getTimeInMillis());
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+			
+			Attendance attendacne = attendanceService.selectOneAttendance(id);
+			String officeInTime = timeFormat.format(attendacne.getOfficeIn());
+			String officeOffTime = timeFormat.format(now);
+			
+			double workingTimeDouble = AttendanceUtils.getTimeDifference(officeInTime, officeOffTime);
+			int workingTime = (int)workingTimeDouble / 1000 / 60 / 60;
+			
+			if(workingTime < workingTimeSystem) {
+				
+				redirectAttr.addFlashAttribute("msg", "잔여 근무 시간이 있으므로, 퇴근 하실 수 없습니다.");
+				
+				return returnUrl;
+			}
 			
 			Map<String, Object> param = new HashMap<>();
 			param.put("now", now);
@@ -147,7 +168,7 @@ public class AttendanceController {
 		
 			attendanceService.updateAttendanceOfficeOff(param);
 			
-			return "redirect:/attendance/view?workspaceId=" + workspaceId + "&id=" + id;
+			return returnUrl;
 			
 		} catch (NullPointerException e) {
 			throw e;

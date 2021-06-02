@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.kh.floworks.alarm.model.service.AlarmService;
 import com.kh.floworks.alarm.model.vo.Alarm;
+import com.kh.floworks.alarm.model.vo.AlarmYN;
 import com.kh.floworks.email.model.vo.Email;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ public class Collector {
 	AlarmService alarmService;
 	
 	Alarm alarm = new Alarm();
+	AlarmYN alarmYN= new AlarmYN();
+	
 	
 	public void Emailtoss(Email email) {
 		String alarmLink = "email/detail?emailNo="+email.getEmailNo()+"&listType=sent&id="+email.getId();
@@ -41,6 +44,19 @@ public class Collector {
 		
 		
 		
+		
+	}
+
+	public void alarmYNToss(String[] information) {
+		alarmYN.setYN("Y");
+		alarmYN.setToId(information[0]);
+		alarmYN.setAlarmLink(information[1]);
+		
+		alarmService.changeView(alarmYN);
+		
+	}
+	
+	public void approvalAlarmToss() {
 		
 	}
 

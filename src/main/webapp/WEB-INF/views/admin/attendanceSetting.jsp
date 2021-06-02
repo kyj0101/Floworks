@@ -53,6 +53,13 @@
 					점심 시간 종료는 최소 오전 12시 최대 오후 5시 입니다.
 				</small>
 			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">점심 시간 종료</label>
+				<input type="" class="form-control time-input" name="lunchTimeEnd" value="${attendanceSystem.lunchTimeEnd}">
+				<small class="form-text text-muted">
+					점심 시간 종료는 최소 오전 12시 최대 오후 5시 입니다.
+				</small>
+			</div>
 			<div class="form-group form-check">
 				<input type="checkbox" class="form-check-input" name="flexTimeYn" ${attendanceSystem.flexTimeYn == 'Y' ? 'checked' : ''}>
 				<label class="form-check-label" for="exampleCheck1">

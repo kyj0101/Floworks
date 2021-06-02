@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserList {
 
-
 	private String workspaceId;
 	private String id;
 	private String name;
@@ -21,4 +20,6 @@ public class UserList {
 	private Date hireDate;
 	private boolean quitYN;
 	
+
 }
+

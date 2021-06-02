@@ -169,6 +169,7 @@
 			<input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />
 			<input type="hidden" name="flexTimeYn" value="${attendanceSystem.flexTimeYn}" />
 			<input type="hidden" name="officeInTime" value="${attendanceSystem.officeInTime}" />
+			<input type="hidden" name="workingTime" value="${attendanceSystem.workingTime}" />
 				
 			<c:if test="${attendance.officeIn == null}">								
 				<button class="btn btn-primary attendance-btn" type="submit">
