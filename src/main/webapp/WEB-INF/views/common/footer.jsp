@@ -108,6 +108,8 @@
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
 				</ul>
 			</div></li>
+			
+		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarAdmin"> <i class="bi bi-gear"></i>관리자 설정
@@ -115,11 +117,12 @@
 			<div class="collapse hide" id="sidebarAdmin"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/memberList" class="nav-link "> 직원 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList" class="nav-link "> 직원 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attend/setting" class="nav-link "> 근태 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
 				</ul>
 			</div></li>
+		</sec:authorize>
 		<hr>
 	</ul>
 </aside>
