@@ -18,6 +18,7 @@ import com.kh.floworks.admin.model.service.AdminService;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+
 import com.kh.floworks.attendance.model.service.AttendanceService;
 import com.kh.floworks.common.utils.PageBarUtils;
 
@@ -65,20 +66,24 @@ public class AdminController {
       model.addAttribute("userList", userList);
       model.addAttribute("pageBar", pageBar);
 
+	}
 
-   }
+
+	
+	
    
 
    //직원정보 상세보기 + 수정하기
    @GetMapping("/userDetail")
    public void userDetail(@RequestParam String userId, Model model) {
 	   //1. 업무로직
-	   UserDetail userDetail = adminService.selectOneUserCollection(userId);
+	   UserDetail userDetail = adminService.selectOneUserDetail(userId);
 	   
 	   //2. jsp처리 위임
 	   model.addAttribute("userDetail", userDetail);
 	}	
 
+   
    
    @GetMapping("/attendList")
    public void attendanceList(Model model) {
@@ -94,6 +99,7 @@ public class AdminController {
 
 
    
+
 
 
 	
@@ -128,11 +134,11 @@ public class AdminController {
 	public String attendanceSettingView(String workspaceId, Model model) {
 
 		try {
-
-			Map<String, Object> attendanceSystemMap = attendanceService.selectAttendanceSystem(workspaceId);
-
-			model.addAttribute("attendanceSystem", attendanceSystemMap);
-			model.addAttribute("workspaceId", workspaceId);
+//
+//			Map<String, Object> attendanceSystemMap = attendanceService.selectAttendanceSystem(workspaceId);
+//
+//			model.addAttribute("attendanceSystem", attendanceSystemMap);
+//			model.addAttribute("workspaceId", workspaceId);
 
 			return "/admin/attendanceSetting";
 
