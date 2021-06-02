@@ -177,6 +177,7 @@
 			office_off_time = #{officeOffTime},
 			lunch_time_start = #{lunchTimeStart},
 			lunch_time_end = #{lunchTimeEnd},
+			working_time = #{workingTime},
 			flex_time_yn = #{flexTimeYn},
 			memo = #{memo}
 		where

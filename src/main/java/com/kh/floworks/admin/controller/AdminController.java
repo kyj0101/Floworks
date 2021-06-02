@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.admin.model.service.AdminService;
 import com.kh.floworks.admin.model.vo.AttendList;
@@ -141,8 +142,15 @@ public class AdminController {
 	}
 
 	@PostMapping("/attendance/setting")
-	public String attendanceSettingView(String officeInTime, String officeOffTime, String lunchTimeStart,
-			String lunchTimeEnd, String flexTimeYn, String memo, String workspaceId) {
+	public String attendanceSettingView(String officeInTime, 
+			                            String officeOffTime,
+			                            String lunchTimeStart,
+			                            String lunchTimeEnd,
+			                            String workingTime,
+			                            String flexTimeYn,
+			                            String memo,
+			                            String workspaceId,
+			                            RedirectAttributes redirectAttr) {
 		try {
 
 			Map<String, Object> param = new HashMap<>();
@@ -151,12 +159,14 @@ public class AdminController {
 			param.put("officeOffTime", officeOffTime);
 			param.put("lunchTimeStart", lunchTimeStart);
 			param.put("lunchTimeEnd", lunchTimeEnd);
+			param.put("workingTime", workingTime);
 			param.put("flexTimeYn", "on".equals(flexTimeYn) ? "Y" : "N");
 			param.put("memo", memo);
 			param.put("workspaceId", workspaceId);
 
 			adminService.updateAttendanceSystem(param);
-
+			redirectAttr.addFlashAttribute("msg", "수정되었습니다.");
+			
 			return "redirect:/admin/attendance/setting?workspaceId=" + workspaceId;
 
 		} catch (Exception e) {
