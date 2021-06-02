@@ -37,18 +37,19 @@
             <p id="info-p">
                 서버에 오류가 발생했습니다.
             </p>
-			
-			<a href="">
-				문의 메일 작성하기
-			</a>
-            
+			            
             <p id="info-p-small">
                 이용에 불편을 드려 죄송합니다.
             </p>
-
+ 
+ 			<a href="">
+				문의 메일 작성하기
+			</a>
+			           
             <button type="button" class="btn btn-light btn-lg" onclick="location.href=${pageContext.request.contextPath }/">
                 메인페이지로 돌아가기
             </button>
+ 
         </div>
         
         <div>
@@ -56,3 +57,14 @@
         </div>       
     </div>
 </body>
+
+<style>
+a{
+	text-decoration: underline;
+	color: white;
+	display:block;
+	margin-top: 30px;
+	font-size: 18px;
+}
+
+</style>

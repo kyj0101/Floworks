@@ -86,11 +86,12 @@ public class AdminController {
    
    
    @GetMapping("/attendList")
+
    public void attendanceList(@RequestParam(defaultValue = "1") int cPage, 
 		   @RequestParam String workspaceId, 
 		   Model model,
 		   HttpServletRequest request) {
-      
+
 	   //모델에는 딱히 값이 없다....(값을 받는다기 보다 jsp로 값을 보내주는게 주 역할)
 	      
 	   //1. 사용자입력값
@@ -100,6 +101,7 @@ public class AdminController {
 		     
       //2. 업무로직
       List<AttendList> attendList = adminService.selectAttendList(workspaceId);
+
       log.info("\n\n\n\nattendList={}\n\n\n\n",attendList);
       
       //b. pagebar영역
@@ -109,11 +111,17 @@ public class AdminController {
       log.info("url = {}", url);
       String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
       log.info("pageBar={}",pageBar);
+
+      
+      log.info("\n\n\n\nattendList={}\n\n\n\n",attendList);
+
       
       //3. jsp처리 위임
       model.addAttribute("attendList", attendList);
+
       model.addAttribute("pageBar", pageBar);
           
+
    }
 
 

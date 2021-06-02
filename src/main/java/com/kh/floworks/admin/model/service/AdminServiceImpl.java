@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private AdminDao adminDao;
@@ -89,7 +89,7 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateAttendanceSystem(param);
 	}
 
-	
+
 
 
 

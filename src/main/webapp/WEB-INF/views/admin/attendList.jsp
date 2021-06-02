@@ -38,9 +38,17 @@
         </c:if>
         </tbody>
     </table>
+<<<<<<< HEAD
     
     <br>
     ${pageBar}
 </div>
 </section>
+=======
+	</section>
+	
+	<script>
+	
+	</script>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

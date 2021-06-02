@@ -67,16 +67,24 @@
         </table>
     </div>
     <div class="ap-doc-footer" id="ap-doc-footer">
-        <button type="button" class="btn btn-secondary btn-lg back-to-list" id="back-to-list">
+        <sec:authentication property="principal" var="loginid"/>
+        <form action="${pageContext.request.contextPath}/approval/apvlProgressDetail/delete"
+        	  method="post"
+        	  id="deleteFrm">
+        	<sec:csrfInput/>
+        	<input type="hidden" name="apvlId" value="${approval.apvlId}" />
+        	<input type="hidden" name="workspaceId" value='<sec:authentication property="principal.workspaceId"/>' />
+        </form>
+        <button type="button" class="btn btn-secondary btn-lg back-to-list" id="back-to-list" onclick="location.href = '${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=${approval.workspaceId}'">
             목록
         </button>
-        <sec:authentication property="principal" var="loginid"/>
-        
        	<c:if test="${fn:trim(loginid.id) eq fn:trim(approval.writer)}">
-       		<button type="button" class="btn btn-info btn-lg update-btn" id="update-btn">
+       		<button type="button" class="btn btn-info btn-lg update-btn" id="update-btn"  
+       				onclick="location.href = '${pageContext.request.contextPath}/approval/apvlUpdate?apvlId=${approval.apvlId}&workspaceId=<sec:authentication property="principal.workspaceId"/>'">
 	            수정
 	        </button>
-	        <button type="button" class="btn btn-danger btn-lg delete-btn" id="delete-btn">
+	        <button type="button" class="btn btn-danger btn-lg delete-btn" id="delete-btn" 
+	        		onclick="deleteApvl();">
 	            삭제
 	        </button>
        	</c:if>
@@ -133,6 +141,35 @@
                 </div>
                 <div class="modal-body">
                     <!-- 모달창 바디 -->
+<<<<<<< HEAD
+                    <form action="${pageContext.request.contextPath}/approval/apvlProgressDetail/process" 
+	                      method="POST" 
+	                      class="processFrm" 
+	                      id="processFrm">
+                    	<sec:csrfInput/>
+                    	<input type="hidden" name="apvlId" value="${approval.apvlId}" />
+                    	<input type="hidden" name="approver" value='<sec:authentication property="principal.id"/>' />
+                        <div class="ap-txn" id="ap-txn">
+                            <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
+                                <input class="form-check-input approval-radio" type="radio" name="status" id="approval-radio" value="approve" checked>
+                                <label class="form-check-label" for="approval-radio">
+                                    결재
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
+                                <input class="form-check-input reject-radio" type="radio" name="status" id="reject-radio" value="reject">
+                                <label class="form-check-label" for="reject-radio">
+                                    반려
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group ap-comment">
+                            <label for="ap-comment-txtarea">코멘트</label>
+                            <textarea class="form-control ap-comment-txtarea" id="ap-comment-txtarea" name="comment" rows="3"></textarea>
+                        </div>
+                        <!-- <input type="submit" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" value="확인" /> -->
+                    </form>
+=======
                		<form>
                			<sec:csrfInput/>
                			<input type="hidden" name="apvlId" value="${approval.apvlId}" id="mod-apvlId" />
@@ -157,10 +194,15 @@
 	                    </div>
 	                    <!-- <input type="submit" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" value="확인" /> -->
                		</form>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+<<<<<<< HEAD
+                    <button type="button" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" onclick="approve();">확인</button>
+=======
                     <button type="button" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" onclick="processVal();">확인</button>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
                 </div>
             </div>
         </div>
@@ -172,6 +214,15 @@ function fileDownload(idx){
 	location.href = "${pageContext.request.contextPath}/approval/fileDownload?idx=" + idx;
 }
 
+<<<<<<< HEAD
+function approve() {
+	$('#processFrm').submit();	
+	$('.modal').modal("hide");
+}
+
+function deleteApvl() {
+	$('#deleteFrm').submit();
+=======
 function validateForm() {
 	return true;
 }
@@ -210,6 +261,7 @@ function processVal() {
 	
 	$('#processFrm').submit();	
 	$('.modal').modal("hide");
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 }
 
 </script>	
