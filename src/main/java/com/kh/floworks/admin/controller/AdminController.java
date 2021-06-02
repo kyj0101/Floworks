@@ -3,6 +3,7 @@ package com.kh.floworks.admin.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.admin.model.service.AdminService;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
-
 import com.kh.floworks.attendance.model.service.AttendanceService;
 import com.kh.floworks.common.utils.PageBarUtils;
 
@@ -137,20 +138,20 @@ public class AdminController {
 			return "/admin/attendanceSetting";
 
 		} catch (Exception e) {
-			throw new RuntimeException();
+			throw e;
 		}
 	}
 
 	@PostMapping("/attendance/setting")
-	public String attendanceSettingView(String officeInTime, 
-			                            String officeOffTime,
-			                            String lunchTimeStart,
-			                            String lunchTimeEnd,
-			                            String workingTime,
-			                            String flexTimeYn,
-			                            String memo,
-			                            String workspaceId,
-			                            RedirectAttributes redirectAttr) {
+	public String attendanceSettingUpdate(String officeInTime, 
+			                              String officeOffTime,
+			                              String lunchTimeStart,
+			                              String lunchTimeEnd,
+			                              String workingTime,
+			                              String flexTimeYn,
+			                              String memo,
+			                              String workspaceId,
+			                              RedirectAttributes redirectAttr) {
 		try {
 
 			Map<String, Object> param = new HashMap<>();
@@ -170,11 +171,45 @@ public class AdminController {
 			return "redirect:/admin/attendance/setting?workspaceId=" + workspaceId;
 
 		} catch (Exception e) {
-			throw new RuntimeException();
+			throw e;
 		}
 	}
 	
+	@GetMapping("/leave/setting")
+	public String leaveSettingView(String workspaceId, Model model) {
+		
+		try {
+			
+			List<Map<String, Object>> leaveSystemMapList = adminService.selectLeaveSystem(workspaceId); 
+
+			model.addAttribute("leaveSystemMapList", leaveSystemMapList);
+			model.addAttribute("workspaceId", workspaceId);
+			
+			return "/admin/leaveSetting";
+			
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 	
+	@ResponseBody
+	@PostMapping("/leave/setting")
+	public void leaveSettingUpdate(String workspaceId, String position, int leaveDay) {
+		
+		try {
+			
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("workspaceId", workspaceId);
+			param.put("position", position);
+			param.put("leaveDay", leaveDay);
+			
+			adminService.updateLeaveSystem(param);
+			
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 	
 	
 	
