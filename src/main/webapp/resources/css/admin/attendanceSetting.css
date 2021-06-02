@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+section{
+	height: 1200px;
+}
+
+aside{
+	height: 1200px;
+}
+
 .time-setting{
     width: 85%;
     height: 800px;

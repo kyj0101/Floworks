@@ -124,13 +124,14 @@
 	
 	<resultMap type="map" id="attendanceSystemMap">
 		<id column="WORKSPACE_ID" property="workspaceId"/>
+		
 		<result column="FLEX_TIME_YN" property="flexTimeYn"/>
 		<result column="OFFICE_IN_TIME" property="officeInTime"/>
 		<result column="OFFICE_OFF_TIME" property="officeOffTime"/>
 		<result column="MEMO" property="memo"/>
 		<result column="lunch_time_start" property="lunchTimeStart"/>
 		<result column="lunch_time_end" property="lunchTimeEnd"/>
-		
+		<result column="working_time" property="workingTime"/>
 	</resultMap>
 
 </mapper>

@@ -112,6 +112,77 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<!-- ===================== 강유정 근태 설정 ========================  -->
 	<update id="updateAttendanceSystem"> 
 		update
@@ -121,12 +192,13 @@
 			office_off_time = #{officeOffTime},
 			lunch_time_start = #{lunchTimeStart},
 			lunch_time_end = #{lunchTimeEnd},
+			working_time = #{workingTime},
 			flex_time_yn = #{flexTimeYn},
 			memo = #{memo}
 		where
 			workspace_id = #{workspaceId}
 	</update>
-	
+
 	<resultMap type="map" id="attendanceSystemMap">
       <id column="WORKSPACE_ID" property="workspaceId"/>
       
@@ -138,8 +210,31 @@
       <result column="lunch_time_end" property="lunchTimeEnd"/>
       <result column="working_time" property="workingTime"/>
    </resultMap>
+
+	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
+		select
+		    position,
+		    leave_day
+		from
+		    leave_system
+		where
+		    workspace_id = #{workspaceId}
+	</select>
 	
+	<update id="updateLeaveSystem">
+		update
+			leave_system
+		set
+			leave_day = #{leaveDay}
+		where
+			workspace_id = #{workspaceId}
+			and position = #{position}
+	</update>
 	
-	
+	<resultMap type="map" id="leaveSystemMap">
+		<result column="position" property="position"/>
+		<result column="leave_day" property="leaveDay"/>
+	</resultMap>
+
 
 </mapper>

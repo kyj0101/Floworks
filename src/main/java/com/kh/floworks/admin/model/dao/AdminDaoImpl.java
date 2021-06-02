@@ -40,7 +40,6 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.getTotalContents", workspace);
 	}
 
-	
 	@Override
 	public UserDetail selectOneUserDetail(String userId) {
 		return session.selectOne("admin.selectOneUserDetail", userId);
@@ -95,6 +94,52 @@ public class AdminDaoImpl implements AdminDao {
 
 	
 	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//===================== 강유정 근태 설정 ========================
 	
 	@Override
@@ -102,6 +147,15 @@ public class AdminDaoImpl implements AdminDao {
 		return session.update("admin.updateAttendanceSystem", param);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return session.selectList("admin.selectLeaveSystem", workspaceId);
+	}
+
+	@Override
+	public int updateLeaveSystem(Map<String, Object> param) {
+		return session.update("admin.updateLeaveSystem", param);
+	}
 
 
 }
