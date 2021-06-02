@@ -16,8 +16,8 @@ public interface AdminService {
 	
 	UserDetail selectOneUserDetail(String userId);
 
-	List<AttendList> selectAttendList();
 	
+	List<AttendList> selectAttendList(String workspaceId);
 
 	
 	
@@ -53,6 +53,9 @@ public interface AdminService {
 	//===================== 강유정 근태 설정 ========================
 	
 	int updateAttendanceSystem(Map<String, Object> param);
+
+	
+	
 
 	
 
