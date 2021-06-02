@@ -38,11 +38,31 @@
                             <tr>
                                 <td>부서</td>
                                 <td>
-                                    <input type="text" name="department" class="form-control" maxlength="10" value="">                                    
+                                    <input type="text" name="department" class="form-control" list="department">
+                                    	<datalist id="department">
+                                    		<option value="기획부">
+                                    		<option value="개발부">
+                                    		<option value="총무부">
+                                    		<option value="국내영업부">
+                                    		<option value="마케팅부">
+                                    		<option value="회계관리부">
+                                    	</datalist>                               
                                 </td>
                                 <td>직급</td>
                                 <td>
-                                    <input type="text" name="position" class="form-control" maxlength="10" value="">                                    
+                                    <input type="text" name="position" class="form-control" list="position">
+                                    <datalist id="position">
+                                    	<option value="인턴">
+                                    	<option value="사원">
+                                    	<option value="주임">
+                                    	<option value="대리">
+                                    	<option value="팀장">
+                                    	<option value="차장">
+                                    	<option value="부장">
+                                    	<option value="이사">
+                                    	<option value="사장">
+                                    	<option value="대표">
+                                    </datalist>                                    
                                 </td>
                             </tr>  
                             <tr>
