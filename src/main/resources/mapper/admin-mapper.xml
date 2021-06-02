@@ -59,9 +59,24 @@
 		<result column="quit_yn" property="quitYn" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
 		<result column="role" property="role"/>
 	</resultMap>
+	
+	
+	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
+	<select id="selectAttendanceList" resultType="attendList">
+		select 
+    		* 
+		from 
+    		attendance 
+		where id in(
+			select 
+				id 
+			from 
+				floworks_user 
+			where workspace_id=#{workspaceId}
+			)
+		order by office_in desc
 
-
-
+	</select>  
 
 
 
@@ -183,7 +198,19 @@
 		where
 			workspace_id = #{workspaceId}
 	</update>
-	
+
+	<resultMap type="map" id="attendanceSystemMap">
+      <id column="WORKSPACE_ID" property="workspaceId"/>
+      
+      <result column="FLEX_TIME_YN" property="flexTimeYn"/>
+      <result column="OFFICE_IN_TIME" property="officeInTime"/>
+      <result column="OFFICE_OFF_TIME" property="officeOffTime"/>
+      <result column="MEMO" property="memo"/>
+      <result column="lunch_time_start" property="lunchTimeStart"/>
+      <result column="lunch_time_end" property="lunchTimeEnd"/>
+      <result column="working_time" property="workingTime"/>
+   </resultMap>
+
 	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
 		select
 		    position,
@@ -208,5 +235,6 @@
 		<result column="position" property="position"/>
 		<result column="leave_day" property="leaveDay"/>
 	</resultMap>
+
 
 </mapper>

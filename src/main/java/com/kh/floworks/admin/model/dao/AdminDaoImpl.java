@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
@@ -45,6 +46,12 @@ public class AdminDaoImpl implements AdminDao {
 	}
 	
 	
+	//--강준혁 근태관리 리스트 쭉 뽑아오기
+	@Override
+	public List<AttendList> selectAttendList(String workspaceId) {
+		log.info("\n\n\n\nDao까지는 왔어요\n\n\n\n");
+		return session.selectList("admin.selectAttendanceList",workspaceId);
+	}
 	
 	
 	
@@ -84,7 +91,7 @@ public class AdminDaoImpl implements AdminDao {
 	
 	
 	
-	
+
 	
 	
 	
@@ -149,5 +156,6 @@ public class AdminDaoImpl implements AdminDao {
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return session.update("admin.updateLeaveSystem", param);
 	}
+
 
 }

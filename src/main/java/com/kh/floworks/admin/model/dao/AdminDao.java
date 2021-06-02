@@ -3,7 +3,7 @@ package com.kh.floworks.admin.model.dao;
 import java.util.List;
 import java.util.Map;
 
-
+import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
@@ -15,7 +15,8 @@ public interface AdminDao {
 	
 	UserDetail selectOneUserDetail(String userId);
 	
-	
+	//--강준혁 관리자 근태관리 리스트 뽑아오기
+	List<AttendList> selectAttendList(String workspaceId);
 	
 	
 	
@@ -70,6 +71,7 @@ public interface AdminDao {
 	List<Map<String, Object>> selectLeaveSystem(String workspaceId);
 
 	int updateLeaveSystem(Map<String, Object> param);
+
 
 	
 
