@@ -51,9 +51,10 @@ public class BoardController {
 	private ServletContext servletContext; 
 	
 	
-	@GetMapping("/boardList")
+	@GetMapping(value="/boardList", produces="application/json;charset=UTF-8")
 	public void boardList(@RequestParam(defaultValue = "1") int cPage,  
-			@RequestParam int boardNo, 
+				@RequestParam int boardNo, 
+				@RequestParam String dept, 
 				Model model,
 				HttpServletRequest request) {
 		//1. 사용자입력값
@@ -63,14 +64,18 @@ public class BoardController {
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 		
+		Map<String, Object> search = new HashMap<>();
+		search.put("boardNo", boardNo);
+		search.put("dept", dept);
+		
 		//2. 업무로직
 		//a. contents영역 : mybatis의 RowBounds
-		List<PostList> list = boardService.selectPostList(param, boardNo);
+		List<PostList> list = boardService.selectPostList(param, search);
 		log.info("list = {}", list);
 		
 		//b. pagebar영역
-		int totalContents = boardService.getTotalContents(boardNo);
-		String url = request.getRequestURI() + "?boardNo=" + boardNo;
+		int totalContents = boardService.getTotalContents(search);
+		String url = request.getRequestURI() + "?boardNo=" + boardNo + "&dept=" + dept;
 		log.info("totalContents = {}", totalContents);
 		log.info("url = {}", url);
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
@@ -79,25 +84,10 @@ public class BoardController {
 		//3. jsp처리 위임
 		model.addAttribute("list", list);
 		model.addAttribute("pageBar", pageBar);
+		model.addAttribute("boardNo", boardNo);
 	}
 	
 
-	@GetMapping("/serchboard")
-	public void selectdeptList(Model model,
-								@RequestParam String dept, 
-								HttpServletRequest request) {
-		log.info("dept = {}", dept);
-
-		//2. 업무로직
-		List<PostList> list = boardService.selectdeptList(dept);
-		log.info("deptlist = {}", list);
-		
-
-		//3. jsp처리 위임
-		model.addAttribute("list", list);
-	}
-	
-	
 	
 	
 	@GetMapping({"/boardView", "/boardUpdateForm"})
@@ -177,7 +167,7 @@ public class BoardController {
 			throw e;
 		}
 
-		return "redirect:/board/boardList?boardNo=" + boardNo;
+		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=";
 	}
 	
 	
@@ -213,14 +203,23 @@ public class BoardController {
 		return resource;
 	}
 	
+	
+	
 	@PostMapping("/postModify")
 	public String postUpdate(@ModelAttribute("postList") PostList postList, 
+							 @ModelAttribute("postFile") PostFile postFile, 
 							 RedirectAttributes redirectAttr,
 							 HttpServletRequest request, 
 							 @RequestParam(value="upFile", required = false) MultipartFile[] upFiles) throws Exception{
 								
+		log.info("postList = {}", postList);
+		log.info("postFile = {}", postFile);
+		
+		
 		try {
 			log.info("post = {}", postList);
+			log.info("upFiles = {}", upFiles);
+			
 			//0. 파일 저장 및 Attachment객체 생성
 			//저장경로
 			String saveDirectory = 
@@ -232,7 +231,8 @@ public class BoardController {
 			
 			//복수개의 postFile객체를 담을 list생성
 			List<PostFile> pFList = new ArrayList<>();
-		
+
+			
 			for(MultipartFile upFile : upFiles) {	
 				if(upFile.isEmpty() || upFile.getSize() == 0)
 					continue;
@@ -249,10 +249,12 @@ public class BoardController {
 				PostFile pF = new PostFile();
 				pF.setPostOriginalFileName(upFile.getOriginalFilename());
 				pF.setPostRenamedFileName(renamedFile.getName());
+				pF.setPostNo(postFile.getPostNo());
 				pFList.add(pF);
+
 				log.info("pFList = {}", pFList);
 			}
-			
+
 			//1. 업무로직
 			postList.setPostFileList(pFList);
 			log.info("post = {}", postList);
@@ -267,7 +269,7 @@ public class BoardController {
 			throw e;
 		}
 			
-		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo();
+		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo() + "&dept=";
 	}
 
 	
@@ -284,7 +286,9 @@ public class BoardController {
 		String msg = result > 0 ? "게시글이 삭제되었습니다" : "게시글 삭제에 실패하였습니다";
 		redirectAttr.addFlashAttribute("msg", msg);
 		log.info("boardNo = {}", boardNo);
-		return "redirect:/board/boardList?boardNo=" + boardNo;
+		
+		
+		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=";
 	}
 	
 
@@ -310,7 +314,7 @@ public class BoardController {
 	@GetMapping("/commentDelete")
 	public String commentDelete(@RequestParam int postNo,
 								@RequestParam int commentNo, 
-							RedirectAttributes redirectAttr) {
+								RedirectAttributes redirectAttr) {
 		//1. 업무로직
 		int result = boardService.commentDelete(commentNo);
 		log.info("result = {}", result);
@@ -322,8 +326,13 @@ public class BoardController {
 		return "redirect:/board/boardView?postNo=" + postNo;
 	}
 	
-
-	
+	@PostMapping("/fileDelete")
+	@ResponseBody
+	public void fileDelete(@RequestParam int deleteNo) {
+		log.info("deleteNo = {}", deleteNo);
+		//1. 업무로직
+		boardService.deletePost(deleteNo);
+	}
 	
 	
 	

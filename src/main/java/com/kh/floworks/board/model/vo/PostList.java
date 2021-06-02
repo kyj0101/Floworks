@@ -22,6 +22,7 @@ public class PostList {
 	private boolean postDel;
 	private String departmentName;
 	private String name;
+	private String workspaceId;
 	
 	private String profileFileRename;
 	

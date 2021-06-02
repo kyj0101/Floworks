@@ -87,7 +87,6 @@ public class RegisterController {
 	public String registerUser(User user , @RequestParam(required = false) boolean createWorkspace) {
 
 		try {
-			
 
 			String bcryptPwd = bcryptPasswordEncoder.encode(user.getPassword());
 
@@ -109,7 +108,9 @@ public class RegisterController {
 	}
 	
 	@RequestMapping("/registerWorkspace")
-	public String registerWorkspace(String id, String workspaceId, Model model) {
+	public String registerWorkspace(@RequestParam(required = false) String id, 
+			                        @RequestParam(required = false) String workspaceId,
+			                        Model model) {
 		
 		List<Map<String,String>> deptList = memberService.selectDeptNameList();
 		List<String> positionList = memberService.selectPositionList();
@@ -144,7 +145,7 @@ public class RegisterController {
 			}
 			
 			MultipartFile[] multipartFile = {profile};
-			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/profile");
+			String saveDirectory = request.getServletContext().getRealPath(FileUtils.PROFILE_SAVEDIRECTORY);
 			Map<String, String> fileMap = FileUtils.getFileMap(multipartFile, saveDirectory);
 						
 			member.setProfileFileOrinalname(fileMap.get("originalName1"));

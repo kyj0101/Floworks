@@ -1,5 +1,6 @@
 package com.kh.floworks.board.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,30 +26,24 @@ public class BoardDaoImpl implements BoardDao {
 	private SqlSession session;
 
 	@Override
-	public List<PostList> selectPostList(Map<String, Object> param,  int boardNo) {
+	public List<PostList> selectPostList(Map<String, Object> param, Map<String, Object> search) {
 		int cPage = (int)param.get("cPage");
 		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit; 
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		log.info("boardNo = {}", boardNo);
-		return session.selectList("board.selectPostList", boardNo, rowBounds);
-	}
 
-
-	@Override
-	public List<PostList> selectdeptList(String dept) {
-		return session.selectList("board.selectdeptList", dept);
+		log.info("search = {}", search);
+		return session.selectList("board.selectPostList", search, rowBounds);
 	}
 
 
 	
 	
-	
 	@Override
-	public int getTotalContents(int boardNo) {
-		return session.selectOne("board.getTotalContents", boardNo);
+	public int getTotalContents(Map<String, Object> search) {
+		return session.selectOne("board.getTotalContents", search);
 	}
 
 	@Override
@@ -56,10 +51,17 @@ public class BoardDaoImpl implements BoardDao {
 		return session.insert("board.insertPost", post);
 	}
 
-
 	@Override
 	public int insertPostFile(PostFile pFile) {
+		log.info("pFile = {}", pFile);
 		return session.insert("board.insertFile", pFile);
+	}
+
+
+	@Override
+	public int insertPostFile(List<PostFile>  pFList) {
+		log.info("pFList = {}", pFList);
+		return session.insert("board.reInsertFile", pFList);
 	}
 	
 	
@@ -78,11 +80,6 @@ public class BoardDaoImpl implements BoardDao {
 		return session.update("board.updatePost", postList);
 	}
 
-	@Override
-	public int updatePostFile(PostFile pFile) {
-		log.info("pFile = {}", pFile);
-		return session.update("board.updatePostFile", pFile);
-	}
 
 	@Override
 	public int updateDelPost(int postNo) {
@@ -109,6 +106,19 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Post> selectMainList() {
 		return session.selectList("board.selectMainList");
 	}
+
+
+
+
+	@Override
+	public void deletePost(int deleteNo) {
+		session.delete("board.deleteFile", deleteNo);
+	}
+
+
+
+
+
 
 
 	

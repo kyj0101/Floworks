@@ -17,11 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginTest {
 	@Setter(onMethod_ = @Autowired)
-	private BCryptPasswordEncoder bcry;
-	
+	private BCryptPasswordEncoder bcryptPasswordEncoder; 
 
 	@Test 
 	public void testInsertMember() {
-		log.info("{}", bcry.encode("123456"));
+		String bcryptPwd = bcryptPasswordEncoder.encode("123456");
+		
+		
+		log.info("{}", bcryptPwd);
 	}
 }

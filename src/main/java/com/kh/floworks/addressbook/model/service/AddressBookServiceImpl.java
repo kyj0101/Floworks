@@ -16,11 +16,31 @@ import lombok.extern.slf4j.Slf4j;
 public class AddressBookServiceImpl implements AddressBookService{
 	
 	@Autowired
-	private AddressBookDao addressBoodao;
+	private AddressBookDao addressBookDao;
 
 	@Override
 	public List<Member> selectSearchMemberList(Map<String, Object> param) {
-		return addressBoodao.selectSearchMemberList(param);
+		return addressBookDao.selectSearchMemberList(param);
+	}
+
+	@Override
+	public int insertAddress(Map<String, String> param) {
+		return addressBookDao.insertAddress(param);
+	}
+
+	@Override
+	public int getTotalAddressBook(String owner) {
+		return addressBookDao.getTotalAddressBook(owner);
+	}
+
+	@Override
+	public List<Member> selectAddressMemberList(Map<String, Object> param) {
+		return addressBookDao.selectAddressMemberList(param);
+	}
+
+	@Override
+	public int deleteAddress(Map<String, String> param) {
+		return addressBookDao.deleteAddress(param);
 	}
 
 }

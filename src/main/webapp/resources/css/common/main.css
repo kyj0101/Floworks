@@ -74,3 +74,6 @@ i{
     text-align: inherit;
 }
 
+.btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
+    color: black !important;
+}

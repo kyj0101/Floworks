@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.cards{
+	display: flex;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.btn-div{
+	margin-top: 100px;
+}
+
+.info-div{
+	height: 275px;
+	margin-bottom: 10px;
+}
+
+.info-div-memo{
+	padding-top: 5px;
+}
+
+.attendance-btn{
+	width: 150px; 
+	height: 50px;
+}

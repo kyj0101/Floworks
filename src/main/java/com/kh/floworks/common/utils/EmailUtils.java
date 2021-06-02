@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmailUtils {
 	
+	public static final String EMAIL_DIRECTORY = "/resources/upload/email";
+	
 	public static String addCidToTag(String content, List<String> cid) {
 
 		int srcStrartIndex = content.indexOf("src=\"/");
