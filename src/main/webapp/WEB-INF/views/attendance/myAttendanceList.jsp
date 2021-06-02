@@ -10,47 +10,49 @@
 <jsp:param value="근태 목록" name="title"/>
 </jsp:include>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/attendance/myAttendanceList.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/attendance/myAttendanceList.css" />
 
 <section>
 	<div class="d-flex attendance-search-div">
-	
-		<div class="col-md-3 mb-3">
-	      <select class="custom-select" id="validationTooltip04" required>
-	       	<option value="" selected>선택 안함</option>
-	       		
-	        <c:forEach items="${yearList}" var="year">
-	        	<option value="${year}">${year}년</option>
-			</c:forEach>
+		<form:form action="${pageContext.request.contextPath}/attendance/list/search" >
+			<input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />
+			<div class="col-md-3 mb-3">
 			
-	      </select>
-	    </div>
-	    
-		<div class="col-md-3 mb-3">
-	      <select class="custom-select" id="validationTooltip04" required>
-	      	
-	      	<option value="" selected>선택 안함</option>
-	      	
-	       	<c:forEach items="${monthList}" var="month">
-				<option value="${month}">${month}월</option>
-			</c:forEach>
-			
-	      </select>
-	    </div>
-	    
-	    <div class="col-md-3 mb-3">
-	      <select class="custom-select" id="validationTooltip04" required>
-	      		
-	      		<option value="" selected>선택 안함</option>
-	      		
-	      		<c:forEach var="day" begin="1" end="31">
-	      			<option value="${day}">${day}일</option>
+		      <select class="custom-select" id="validationTooltip04" required>
+		       	<option value="" selected>선택 안함</option>
+		       		
+		        <c:forEach items="${yearList}" var="year">
+		        	<option value="${year}">${year}년</option>
 				</c:forEach>
 				
-	      </select>
-	    </div>
-	    
-		<button type="button" class="btn btn-primary attendance-search-btn">검색</button>
+		      </select>
+		    </div>
+		    
+			<div class="col-md-3 mb-3">
+		      <select class="custom-select" id="validationTooltip04" required>
+		      	
+		      	<option value="" selected>월</option>
+		      	
+		       	<c:forEach items="${monthList}" var="month">
+					<option value="${month}">${month}월</option>
+				</c:forEach>
+				
+		      </select>
+		    </div>
+		    
+		    <div class="col-md-3 mb-3">
+		      <select class="custom-select" id="validationTooltip04" required>
+		      		
+		      		<option value="" selected>일</option>
+		      		
+		      		<c:forEach var="day" begin="1" end="31">
+		      			<option value="${day}">${day}일</option>
+					</c:forEach>
+					
+		      </select>
+		    </div>
+			<button type="submit" class="btn btn-primary attendance-search-btn">검색</button>
+	    </form:form>
 	</div>
 
 
