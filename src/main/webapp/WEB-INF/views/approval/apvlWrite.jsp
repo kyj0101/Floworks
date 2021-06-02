@@ -67,7 +67,6 @@
                     <label for="ap-line"><b>결재선</b></label>
                 </td>
                 <td>
-                    <!-- <a href="#" data-toggle="modal" class="ap-add-line" data-target="#memberlist">추가하기</a> -->
 					<button type="button" class="btn btn-secondary ap-add-line" id="ap-add-line" data-toggle="modal" data-target="#memberlist">
 	                	추가하기
 	                </button>
@@ -151,7 +150,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+            	<td>
                     <div class="ap-write-filesection">
                         <label for="ap-upFile2">파일첨부 2</label>
                         <input type="file" class="form-control-file" name="upFile" id="ap-upFile2">
@@ -195,11 +194,12 @@ function apverSubmit() {
 	document.getElementById("ap-line-selected").innerHTML = '';
 	let html = '';
 	let hiddenInput = ''
-	
+	let cnt=1;
 	for (let i = 0; i < apverArr.length; i++) {
 		if (apverArr[i].checked) {
 			html += ("<li>" + apverArr[i].value + "</li>");
-			html += ("<input type='hidden' name=approver" + i + " value='" + apverArr[i].value + "'/>");
+			html += ("<input type='hidden' name='approver" + cnt + "' value='" + apverArr[i].value + "'/>");
+			cnt++;
 		}
 	}
 	

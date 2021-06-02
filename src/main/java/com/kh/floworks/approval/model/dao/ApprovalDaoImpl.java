@@ -85,4 +85,34 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.selectOne("approval.selectOneAttachment", idx);
 	}
 
+	@Override
+	public int updateApvlStatus1(Approval approval) {
+		return session.update("approval.updateApvlStatusFirst", approval);
+	}
+	
+	@Override
+	public int updateApvlStatus2(Approval approval) {
+		return session.update("approval.updateApvlStatusSecond", approval);
+	}
+	
+	@Override
+	public int updateApvlStatus3(Approval approval) {
+		return session.update("approval.updateApvlStatusThird", approval);
+	}
+	
+	@Override
+	public int updateApvlStatus4(Approval approval) {
+		return session.update("approval.updateApvlStatusFourth", approval);
+	}
+
+	@Override
+	public int deleteApproval(String apvlId) {
+		return session.delete("approval.deleteApproval", apvlId);
+	}
+
+	@Override
+	public int updateApproval(Approval approval) {
+		return session.update("approval.updateApproval", approval);
+	}
+
 }

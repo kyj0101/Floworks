@@ -79,4 +79,34 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return apvlDao.selectOneAttachment(idx);
 	}
 
+	@Override
+	public int updateApvlStatus1(Approval approval) {
+		return apvlDao.updateApvlStatus1(approval);
+	}
+	
+	@Override
+	public int updateApvlStatus2(Approval approval) {
+		return apvlDao.updateApvlStatus2(approval);
+	}
+	
+	@Override
+	public int updateApvlStatus3(Approval approval) {
+		return apvlDao.updateApvlStatus3(approval);
+	}
+	
+	@Override
+	public int updateApvlStatus4(Approval approval) {
+		return apvlDao.updateApvlStatus4(approval);
+	}
+
+	@Override
+	public int deleteApproval(String apvlId) {
+		return apvlDao.deleteApproval(apvlId);
+	}
+
+	@Override
+	public int updateApproval(Approval approval) {
+		return apvlDao.updateApproval(approval);
+	}
+
 }

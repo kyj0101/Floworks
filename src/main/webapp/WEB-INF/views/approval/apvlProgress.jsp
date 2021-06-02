@@ -155,16 +155,16 @@
 										<td>${approver.position}</td>
 										<c:choose>
 											<c:when test="${apr.count eq 1}">
-		                                    	<td>${apvl.timelog1}</td>
+		                                    	<td><fmt:formatDate value="${apvl.timelog1}" pattern="yyyy-MM-dd  HH:mm:ss"/></td>
 		                                 	</c:when>
 		                                 	<c:when test="${apr.count eq 2}">
-		                                    	<td>${apvl.timelog2}</td>
+		                                    	<td><fmt:formatDate value="${apvl.timelog2}" pattern="yyyy-MM-dd  HH:mm:ss"/></td>
 		                                 	</c:when>
 		                                 	<c:when test="${apr.count eq 3}">
-		                                    	<td>${apvl.timelog3}</td>
+		                                    	<td><fmt:formatDate value="${apvl.timelog3}" pattern="yyyy-MM-dd  HH:mm:ss"/></td>
 		                                 	</c:when>
 		                                 	<c:when test="${apr.count eq 4}">
-		                                    	<td>${apvl.timelog4}</td> 
+		                                    	<td><fmt:formatDate value="${apvl.timelog4}" pattern="yyyy-MM-dd  HH:mm:ss"/></td> 
 		                                 	</c:when>
 		                                 	<c:otherwise>
 		                                    	<td>Timelog Error</td>

@@ -3,6 +3,7 @@ package com.kh.floworks.approval.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,7 +35,6 @@ import com.kh.floworks.approval.model.vo.Approval;
 import com.kh.floworks.approval.model.vo.Approver;
 import com.kh.floworks.approval.model.vo.ApvlDoc;
 import com.kh.floworks.approval.model.vo.ApvlFile;
-import com.kh.floworks.approval.model.vo.ApvlHistory;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.common.utils.PageBarUtils;
 
@@ -235,6 +235,123 @@ public class ApprovalController {
 	}
 	
 	
+	@PostMapping("/apvlProgressDetail/process")
+	public String apvlProcess(
+			@RequestParam String apvlId,
+			@RequestParam String status,
+			@RequestParam String comment,
+			@RequestParam String approver,
+			RedirectAttributes redirectAttr) {
+		/*
+			RedirectAttributes redirectAttr,
+			HttpServletRequest request
+		 */
+		int result = 0;
+		String stVal = "";
+		
+		if (status.equals("approve")) {
+			stVal = "y";
+		} else if (status.equals("reject")) {
+			stVal = "n";
+		}
+		
+		Approval approval = apvlService.selectOneApproval(apvlId);
+		if ((approval.getApprover1() != null) && (approval.getApprover1().equals(approver))) {
+			approval.setComment1(comment);
+			approval.setStatus1(stVal);
+			
+			result = apvlService.updateApvlStatus1(approval);
+			
+		} else if ((approval.getApprover2() != null) && (approval.getApprover2().equals(approver))) {
+			approval.setComment2(comment);
+			approval.setStatus2(stVal);
+			
+			result = apvlService.updateApvlStatus2(approval);
+			
+		} else if ((approval.getApprover3() != null) && (approval.getApprover3().equals(approver))) {
+			approval.setComment3(comment);
+			approval.setStatus3(stVal);
+			
+			result = apvlService.updateApvlStatus3(approval);
+			
+		} else if ((approval.getApprover4() != null) && (approval.getApprover4().equals(approver))) {
+			approval.setComment4(comment);
+			approval.setStatus4(stVal);
+			
+			result = apvlService.updateApvlStatus4(approval);
+			
+		}
+		
+		String msg = result > 0 ? "결재 처리 완료" : "결재 처리 실패";
+		log.info("apvlProcess 처리 성공여부 = {}", msg);
+		
+		return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
+	}
+	
+	
+	@GetMapping("/apvlUpdate")
+	public void apvlUpdate(@RequestParam String apvlId, @RequestParam String workspaceId, Model model) {
+		log.info("apvlUpdate_apvlId = {}", apvlId);
+		
+		Approval approval = apvlService.selectOneApproval(apvlId);
+		List<Approver> apverList = apvlService.selectApproverList(workspaceId);
+		Approver approverOne = apvlService.selectApprover(approval.getApprover1());
+		Approver approverSec = apvlService.selectApprover(approval.getApprover2());
+		Approver approverThd = apvlService.selectApprover(approval.getApprover3());
+		Approver approverFth = apvlService.selectApprover(approval.getApprover4());
+		
+		
+		model.addAttribute("approval", approval);
+		model.addAttribute("apverList", apverList);
+		model.addAttribute("approverOne", approverOne);
+		model.addAttribute("approverSec", approverSec);
+		model.addAttribute("approverThd", approverThd);
+		model.addAttribute("approverFth", approverFth);
+		
+		log.info("apvlUpdate_aflist={}", approval.getAfList());
+	}
+	
+	
+	/*
+	 * @ModelAttribute ApvlDoc apvlDoc,
+					  @RequestParam(value="upFile", required = false) MultipartFile[] upFiles,
+					  @RequestParam String category,
+					  @RequestParam int year,
+					  HttpServletRequest request,
+					  RedirectAttributes redirectAttr
+	 */
+	@PostMapping("/apvlUpdate/modify")
+	public String apvlModify(@RequestParam String apvlId,
+							@RequestParam String title,
+							@RequestParam String content,
+							HttpServletRequest request,
+							RedirectAttributes redirectAttr) {
+		log.info("apvlProgressDetail_modify_apvlId = {}", apvlId);
+		log.info("apvlProgressDetail_modify_title = {}", title);
+		log.info("apvlProgressDetail_modify_content = {}", content);
+		
+		Approval approval = apvlService.selectOneApproval(apvlId);
+		approval.setTitle(title);
+		approval.setContent(content);
+		
+		int result = apvlService.updateApproval(approval);
+		
+		return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
+	}
+	
+	@PostMapping("/apvlProgressDetail/delete")
+	public String apvlDelete(@RequestParam String apvlId, @RequestParam String workspaceId, RedirectAttributes redirectAttr) {
+		log.info("apvlProgressDetail_delete_apvlId = {}", apvlId);
+		
+		int result = apvlService.deleteApproval(apvlId);
+		
+		String msg = result > 0 ? "결재 삭제 완료" : "결재 삭제 실패";
+		log.info("apvlDelete 처리 성공여부 = {}", msg);
+		
+		return "redirect:/approval/apvlProgress?workspaceId=" + workspaceId; //TODO apvlId --> workspaceId로 수정하기
+	}
+	
+	
 	//fileDownload
    @GetMapping(
          value = "/fileDownload", 
@@ -263,22 +380,6 @@ public class ApprovalController {
       return resource;
    }
    
-   // TODO 여기가 값이 안넘어오는 곳입니다.
-   @PostMapping("/apvlProgressDetail/process")
-   public String apvlProcess(
-		   				@ModelAttribute ApvlHistory apvlHistory,
-		   				@RequestParam String apvlId,
-		   				@RequestParam String approver,
-		   				@RequestParam String status,
-		   				RedirectAttributes redirectAttr,
-					    HttpServletRequest request) {
-	   // @ModelAttribute ApvlHistory apvlHistory,
-	   log.info("apvlProcess_apvlId=", apvlId);
-	   log.info("apvlProcess_approver=", approver);
-	   log.info("apvlProcess_status=", status);
-	   
-	   return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
-   }
    
 	
 	@GetMapping("/checkProgress")
