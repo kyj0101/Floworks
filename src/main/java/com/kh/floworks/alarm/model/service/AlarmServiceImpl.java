@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.floworks.alarm.model.dao.AlarmDao;
 import com.kh.floworks.alarm.model.vo.Alarm;
-import com.kh.floworks.alarm.model.vo.AlarmYN;
+import com.kh.floworks.email.model.vo.Email;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,14 +27,6 @@ public class AlarmServiceImpl implements AlarmService{
 	public List<Alarm> selectAlarmList(String id) {
 		return alarmDao.selectAlarmList(id);
 	}
-
-	@Override
-	public int changeView(AlarmYN alarmYN) {
-		return alarmDao.changeView(alarmYN);
-	}
-
-	
-	
 
 
 }

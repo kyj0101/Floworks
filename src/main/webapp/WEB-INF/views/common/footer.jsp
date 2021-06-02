@@ -13,7 +13,7 @@
 		<li class="nav-item"><a class="nav-link " href="#sidebarEmail"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarDashboards"> <i class="bi bi-envelope"></i>이메일<span id="badge_for_email"
-				class="badge badge-pill badge-danger"></span>
+				class="badge badge-pill badge-danger">0</span>
 		</a>
 			<div class="collapse hide" id="sidebarEmail"
 				style="padding-left: 35px;">

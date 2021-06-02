@@ -13,18 +13,11 @@ public class WebsocketConfiguration implements WebSocketConfigurer {
 	@Autowired
 	SocketHandler socketHandlerForAlarm;
 	
-	@Autowired
-	SocketHandlerForViewChange socketHandlerForViewChange;
-	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry
 			.addHandler(socketHandlerForAlarm, "/alarm_for_member")
 			.withSockJS();
-		
-		registry
-		.addHandler(socketHandlerForViewChange, "/alarm_for_changeView")
-		.withSockJS();
 		
 	}
 

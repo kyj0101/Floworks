@@ -10,8 +10,7 @@
 		from
 			alarm
 		where 
-			to_id=#{id}	and
-			is_checked='N'
+			to_id=#{id}		
 	</select>
 	
 	<insert id="insertAlarm">
@@ -27,15 +26,5 @@
 			#{alarmLink}
 		)	
 	</insert>
-	
-	<update id="updateAlarm">
-		update
-			alarm
-		set
-			is_checked = #{YN}
-		where
-	 		to_id = #{toId} and
-	 		alarm_Link=#{alarmLink}		
-	</update>
-	
+
 </mapper>
