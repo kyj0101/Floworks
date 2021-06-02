@@ -25,19 +25,83 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectUserList(param, workspace);
 	}
 
+	
+
 	@Override
 	public int getTotalContents(String workspace) {
 		return adminDao.getTotalContents(workspace);
 		
 	}
+	
+	
+	@Override
+	public UserDetail selectOneUserDetail(String userId) {
+		return adminDao.selectOneUserDetail(userId);
+	}
 
 	
 
+	
+	
+
+	
 	@Override
 	public List<AttendList> selectAttendList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===================== 강유정 근태 설정 ========================
+	@Override
+	public int updateAttendanceSystem(Map<String, Object> param) {
+		return adminDao.updateAttendanceSystem(param);
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

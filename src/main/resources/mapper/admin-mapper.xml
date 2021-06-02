@@ -26,6 +26,90 @@
 	</resultMap>
 
 
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			floworks_user
+		where
+		    workspace_id = #{workspace}
+	</select>
 
+	<select id="selectOneUserDetail" resultMap="userDetail">
+		select m.id, f.name, d.department_name, m.position, 
+		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role
+		from member m
+		        left join department d
+		            on m.department_code = d.department_code
+		        left join floworks_user f
+		            on m.id = f.id
+		WHERE
+		    m.id = #{userId}
+	</select>
+
+	<resultMap type="userDetail" id="userDetail">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="address" property="address"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="quit_yn" property="quitYn" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+		<result column="role" property="role"/>
+	</resultMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- ===================== 강유정 근태 설정 ========================  -->
+	<update id="updateAttendanceSystem"> 
+		update
+			attendance_system
+		set
+			office_in_time = #{officeInTime},
+			office_off_time = #{officeOffTime},
+			lunch_time_start = #{lunchTimeStart},
+			lunch_time_end = #{lunchTimeEnd},
+			flex_time_yn = #{flexTimeYn},
+			memo = #{memo}
+		where
+			workspace_id = #{workspaceId}
+	</update>
 
 </mapper>

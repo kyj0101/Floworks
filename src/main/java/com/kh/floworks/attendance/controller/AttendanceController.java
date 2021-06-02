@@ -39,20 +39,18 @@ public class AttendanceController {
 		
 		try {
 			
+			Map<String, Object> param = new HashMap<>();
 			Calendar calendar = Calendar.getInstance();
-			
+			int month  = calendar.get(Calendar.MONTH) + 1;
+			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
 			calendar.set(Calendar.HOUR_OF_DAY, 0);
 			calendar.set(Calendar.MINUTE, 0);
-			
-			Map<String, Object> param = new HashMap<>();
-			
+	
 			param.put("id", id);
-			param.put("month", Calendar.DAY_OF_MONTH );
+			param.put("month", month);
 
-			//일주일의 시작이 일요일 기준이기 때문에 추가적인 처리를 해야한다.
-			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-			SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-			
+			//일주일의 시작이 일요일 기준이기 때문에 추가적인 처리를 해야한다.			
 			if(dayOfWeek == 1) {
 				calendar.add(Calendar.DATE, -7); //월요일
 				param.put("startOfWeek", new Date(calendar.getTimeInMillis()));
@@ -74,11 +72,7 @@ public class AttendanceController {
 			Map<String, Object> attendanceSystem = attendanceService.selectAttendanceSystem(workspaceId);
 			List<Attendance> weekOfficeAttendance = attendanceService.selectweekOfficeHours(param);
 			List<Attendance> monthOfficeAttendance = attendanceService.selectmonthOfficeHours(param);
-			
-			for(Attendance a : weekOfficeAttendance) {
-				log.info("{}",a);
-			}
-			
+
 			String lunchTimeStart = (String)attendanceSystem.get("lunchTimeStart");
 			String lunchTimeEnd = (String)attendanceSystem.get("lunchTimeEnd");
 			
@@ -107,6 +101,7 @@ public class AttendanceController {
 	@PostMapping("/office/in")
 	public String officeIn(String id,
 			               String workspaceId,
+			               String flexTimeYn,
 			               @RequestParam(value = "officeInTime") String officeInTimeSystem,
 			               Model model) {
 	
@@ -116,11 +111,15 @@ public class AttendanceController {
 			Calendar calendar = Calendar.getInstance();
 			Date now = new Date(calendar.getTimeInMillis());
 			
-			//실제 insert에는 아래 코드 사용 
 			String time = timeFormat.format(now);
-
-			double latenessDouble = AttendanceUtils.getTimeDifference(time,officeInTimeSystem);
-			String latenessYn = (latenessDouble / 1000 / 60) > 0 ? "N" : "Y";
+			String latenessYn = "N";
+			
+			//자율출근제가 N이라면 지각인지 아닌지 검사한다.
+			if("N".equals(flexTimeYn)) {
+				
+				double latenessDouble = AttendanceUtils.getTimeDifference(time,officeInTimeSystem);
+				latenessYn = (latenessDouble / 1000 / 60) > 0 ? "N" : "Y";
+			}
 	
 			Attendance attendance = new Attendance(id, now, now, null, latenessYn);
 			attendanceService.insertAttendanceOfficeIn(attendance);

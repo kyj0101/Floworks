@@ -12,41 +12,55 @@
 </jsp:include>
 
 <!-- css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/userList.css">
 
-	<section>
+<!-- js -->
+<script src="${pageContext.request.contextPath}/resources/js/admin/userList.js"></script>
+<section>
 
-	<div id="board-list">
-	    <table class="table table-striped table-centered mb-0">
-	        <thead>
-              <tr>
-                <th scope="col" class="table-id">ID</th>
-                <th scope="col" class="table-name">직원명</th>
-                <th scope="col" class="table-depart">부서</th>
-                <th scope="col" class="table-positon">직급</th>
-                <th scope="col" class="table-hire">입사일</th>
-                <th scope="col" class="table-resignYN">퇴사여부</th>
-              </tr>
-            </thead>
-            
-	        <tbody>
-	        <c:if test="${userList != null}">
-              <c:forEach items="${userList}" var="users">
-				<tr>
-					<td>${users.id}</td>
-					<td>${users.name}</td>
-					<td>${users.departmentName}</td>
-					<td>${users.position}</td>
-					<td><fmt:formatDate value="${users.hireDate}" pattern="yy-MM-dd"/></td>
-					<td>${users.quitYN}</td>
-				</tr>
-			  </c:forEach>
-		    </c:if>
-	        </tbody>
-	    </table>
-	</div>
-
-
+<div id="board-list">
+    <table class="table table-striped table-hover table-centered mb-0">
+        <thead>
+             <tr>
+               <th scope="col" class="table-id">ID</th>
+               <th scope="col" class="table-name">직원명</th>
+               <th scope="col" class="table-depart">부서</th>
+               <th scope="col" class="table-positon">직급</th>
+               <th scope="col" class="table-hire">입사일</th>
+               <th scope="col" class="table-resignYN">퇴사여부</th>
+             </tr>
+           </thead>
+           
+        <tbody>
+        <c:if test="${userList != null}">
+             <c:forEach items="${userList}" var="users">
+			<tr data-no="${users.id}">
+				<td>${users.id}</td>
+				<td>${users.name}</td>
+				<td>${users.departmentName}</td>
+				<td>${users.position}</td>
+				<td><fmt:formatDate value="${users.hireDate}" pattern="yy-MM-dd"/></td>
+				<c:set var="quit" value="${users.quitYN}" />
+				<td>
+				<c:choose>
+					<c:when test="${quit eq 'false'}">
+						근무중
+					</c:when>					
+					<c:otherwise>
+						퇴사
+					</c:otherwise>					
+				</c:choose>
+				</td>
+				
+			</tr>
+		  </c:forEach>
+	    </c:if>
+        </tbody>
+    </table>
+    
+    <br>
+    ${pageBar}
+</div>
 
 </section>
 

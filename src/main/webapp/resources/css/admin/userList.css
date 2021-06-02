@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+table{
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+thead{
+	text-align: center;
+}
+
+td{
+    text-align: center;
+}
+        
+
+.table-id {
+	width: 50px;
+}
+
+#board-list {
+	
+	width: 80%;
+	margin-left : 50px;
+	padding-top: 50px;
+}

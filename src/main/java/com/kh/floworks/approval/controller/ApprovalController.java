@@ -264,19 +264,19 @@ public class ApprovalController {
    }
    
    // TODO 여기가 값이 안넘어오는 곳입니다.
-   @PostMapping("/apvlProgressDetail/process")
+   @RequestMapping("/apvlProgressDetail/process")
    public String apvlProcess(
 		   				@ModelAttribute ApvlHistory apvlHistory,
-		   				@RequestParam String apvlId,
-		   				@RequestParam String approver,
-		   				@RequestParam String status,
+		   				@RequestParam(value = "apvlId", required = false) String apvlId,
+		   				@RequestParam(value = "approver", required = false) String approver,
+		   				@RequestParam(value = "status", required = false)String status,
 		   				RedirectAttributes redirectAttr,
 					    HttpServletRequest request) {
 	   // @ModelAttribute ApvlHistory apvlHistory,
 	   log.info("apvlProcess_apvlId=", apvlId);
 	   log.info("apvlProcess_approver=", approver);
 	   log.info("apvlProcess_status=", status);
-	   
+
 	   return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
    }
    

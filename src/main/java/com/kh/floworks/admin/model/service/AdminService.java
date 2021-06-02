@@ -13,7 +13,48 @@ public interface AdminService {
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
 
 	int getTotalContents(String workspace);
+	
+	UserDetail selectOneUserDetail(String userId);
 
 	List<AttendList> selectAttendList();
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===================== 강유정 근태 설정 ========================
+	
+	int updateAttendanceSystem(Map<String, Object> param);
+
+	
+
 
 }
