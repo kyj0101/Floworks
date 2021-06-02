@@ -9,9 +9,9 @@
 		values(
 			#{id},
 			#{title},
-			to_date(#{startDate}, 'yyyy-mm-dd'),
-			to_date(#{endDate}, 'yyyy-mm-dd')
-
+			#{start},
+			#{end}
+			)
 
 	</insert>
 

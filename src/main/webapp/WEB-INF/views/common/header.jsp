@@ -340,7 +340,7 @@ function AlarmErase(event){
         type:"POST",
         url:url,
         dataType : "html",
-        success: 
+        success:function(){},
         error: function(xhr, status, error) {
             alert(error);
         }  

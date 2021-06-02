@@ -241,10 +241,11 @@ $("#endDate").datepicker('setDate', 'today');
      <div class="row form-group justify-content-end">
 		<div class="col-sm-auto">
 		<!--밸류 넣기, json으로 값가져오기 -->
-		<form:form action="${pageContext.request.contextPath}/calendar/calendarMain"
+		<form:form action="${pageContext.request.contextPath}/calendar/calendarInsert"
 			method="POST"
 			id="calAddFrm">
 			<input type="hidden" name="dateList"/>
+			<input type="hidden" name="id" value="${id}"/>
 			<input class="btn btn-warning btn" type="reset" value="리셋">
 			<input class="btn btn-primary sub" id="insert" type="submit" value="등록 요청">
 		</form:form>

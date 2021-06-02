@@ -1,5 +1,6 @@
 package com.kh.floworks.calendar.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,15 +14,9 @@ public class CalendarDaoImpl implements CalendarDao{
 	private SqlSessionTemplate session;
 
 	@Override
-	public int insertCal(Map<String, Object> calendarDate) {
-		return session.insert("calendar.insertCal",calendarDate);
-	
+	public int insertCal(Map<String, String> param) {
+		return session.insert("calendar.insertCal",param);
 	}
 
-	@Override
-	public int insertCal(String dateList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 }
