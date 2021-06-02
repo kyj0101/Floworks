@@ -26,7 +26,7 @@ public class PostController {
 	public void mainBoardView(Model model) {
 		//1. 업무로직
 		List<Post> mainPostList = boardService.selectMainList();
-		log.info("mainPostList = {}", mainPostList);
+		//log.info("mainPostList = {}", mainPostList);
 
 		//2. jsp위임
 		model.addAttribute("mainPostList", mainPostList);

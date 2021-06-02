@@ -12,14 +12,14 @@
 </jsp:include>
 
 <!-- css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberList.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/userList.css">
 
 <!-- js -->
 <script src="${pageContext.request.contextPath}/resources/js/admin/userList.js"></script>
 <section>
 
 <div id="board-list">
-    <table class="table table-striped table-centered mb-0">
+    <table class="table table-striped table-hover table-centered mb-0">
         <thead>
              <tr>
                <th scope="col" class="table-id">ID</th>
@@ -34,7 +34,7 @@
         <tbody>
         <c:if test="${userList != null}">
              <c:forEach items="${userList}" var="users">
-			<tr data-id>
+			<tr data-no="${users.id}">
 				<td>${users.id}</td>
 				<td>${users.name}</td>
 				<td>${users.departmentName}</td>
@@ -45,12 +45,10 @@
 				<c:choose>
 					<c:when test="${quit eq 'false'}">
 						근무중
-					</c:when>
-					
+					</c:when>					
 					<c:otherwise>
 						퇴사
-					</c:otherwise>
-					
+					</c:otherwise>					
 				</c:choose>
 				</td>
 				
