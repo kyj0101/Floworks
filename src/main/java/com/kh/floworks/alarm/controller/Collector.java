@@ -55,5 +55,9 @@ public class Collector {
 		alarmService.changeView(alarmYN);
 		
 	}
+	
+	public void approvalAlarmToss() {
+		
+	}
 
 }
