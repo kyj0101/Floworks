@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private AdminDao adminDao;
@@ -24,9 +24,7 @@ public class AdminServiceImpl implements AdminService {
 	public List<UserList> selectUserList(Map<String, Object> param, String workspace) {
 		return adminDao.selectUserList(param, workspace);
 	}
-
 	
-
 	@Override
 	public int getTotalContents(String workspace) {
 		return adminDao.getTotalContents(workspace);
@@ -44,11 +42,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 
-	
+	//--강준혁 근태관리 리스트 뽑아오기
 	@Override
-	public List<AttendList> selectAttendList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AttendList> selectAttendList(String workspaceId) {
+		return adminDao.selectAttendList(workspaceId);
 	}
 	
 	
@@ -115,7 +112,6 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateAttendanceSystem(param);
 	}
 
-
 	@Override
 	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
 		return adminDao.selectLeaveSystem(workspaceId);
@@ -125,6 +121,7 @@ public class AdminServiceImpl implements AdminService {
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return adminDao.updateLeaveSystem(param);
 	}
+
 
 
 

@@ -7,6 +7,8 @@ import java.util.Map;
 import com.kh.floworks.attendance.model.vo.Attendance;
 
 public interface AttendanceService {
+	
+	int NUMPER_PAGE = 10;
 
 	int insertAttendanceOfficeIn(Attendance attendance);
 
@@ -26,9 +28,14 @@ public interface AttendanceService {
 
 	List<Attendance> selectListAttendance(Map<String, Object> param);
 
+	List<Attendance> selectListSearchAttendance(Map<String, Object> param);
+
 	int updateAttendanceOfficeOff(Map<String, Object> param);
 
 	int getTotalAttendance(String id);
+
+	int getTotalSearchAttendance(String id);
+
 
 
 

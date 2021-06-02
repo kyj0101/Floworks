@@ -1,3 +1,4 @@
+
 package com.kh.floworks.admin.model.service;
 
 import java.util.List;
@@ -6,6 +7,15 @@ import java.util.Map;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+
+
+import java.util.List;
+import java.util.Map;
+
+import com.kh.floworks.admin.model.vo.AttendList;
+import com.kh.floworks.admin.model.vo.UserDetail;
+import com.kh.floworks.admin.model.vo.UserList;
+
 
 public interface AdminService {
 
@@ -16,9 +26,8 @@ public interface AdminService {
 	
 	UserDetail selectOneUserDetail(String userId);
 
-	List<AttendList> selectAttendList();
-	
-	
+	List<AttendList> selectAttendList(String workspaceId);
+
 	
 	
 	
@@ -82,6 +91,5 @@ public interface AdminService {
 
 	int updateLeaveSystem(Map<String, Object> param);
 
-	
 
 }

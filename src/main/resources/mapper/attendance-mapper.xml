@@ -112,6 +112,42 @@
 			day desc
 	</select>
 	
+	<select id="selectListSearchAttendance" resultType="attendance">
+		select
+			*
+		from
+			attendance
+		where
+			id = #{id}
+			<if test="year != null"> 
+				and extract(year from day) = #{year}
+			</if>
+			<if test="month != null"> 
+				and extract(month from day) = #{month}
+			</if> 
+			<if test="day != null"> 
+				and extract(day from day) = #{day}
+			</if>  
+	</select>
+	
+	<select id="getTotalSearchAttendance" resultType="attendance">
+		select
+			count(*)
+		from
+			attendance
+		where
+			id = #{id}
+			<if test="year != null"> 
+				and extract(year from day) = #{year}
+			</if>
+			<if test="month != null"> 
+				and extract(month from day) = #{month}
+			</if> 
+			<if test="day != null"> 
+				and extract(day from day) = #{day}
+			</if>  
+	</select>
+	
 	<update id="updateAttendanceOfficeOff">
 		update
 			attendance

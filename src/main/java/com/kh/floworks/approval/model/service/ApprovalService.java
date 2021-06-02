@@ -31,4 +31,16 @@ public interface ApprovalService {
 
 	ApvlFile selectOneAttachment(int idx);
 
+	int updateApvlStatus1(Approval approval);
+
+	int updateApvlStatus2(Approval approval);
+	
+	int updateApvlStatus3(Approval approval);
+
+	int updateApvlStatus4(Approval approval);
+
+	int deleteApproval(String apvlId);
+
+	int updateApproval(Approval approval);
+
 }
