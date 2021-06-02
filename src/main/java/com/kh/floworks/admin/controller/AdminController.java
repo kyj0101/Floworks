@@ -32,6 +32,9 @@ public class AdminController {
    @Autowired
    private AdminService adminService;
    
+   @Autowired
+   private AttendanceService attendanceService;
+   
    //직원 전체 목록
    @GetMapping("/userList")
    public void userList(@RequestParam(defaultValue = "1") int cPage,
