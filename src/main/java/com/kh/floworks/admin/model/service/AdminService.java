@@ -13,8 +13,15 @@ public interface AdminService {
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
 
 	int getTotalContents(String workspace);
+
+
 	
-	UserDetail selectOneUserCollection(String userId);
+	UserDetail selectOneUserDetail(String userId);
+
+	List<AttendList> selectAttendList();
+
+	
+
 	
 	
 	
@@ -51,5 +58,6 @@ public interface AdminService {
 	int updateAttendanceSystem(Map<String, Object> param);
 
 	
+
 
 }

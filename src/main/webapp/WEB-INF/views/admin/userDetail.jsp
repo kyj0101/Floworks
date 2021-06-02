@@ -9,15 +9,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <!-- css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/memberDetail.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/userDetail.css">
 	
 <section>
-<!-- 직원 정보 관리 창 -->
-<div class="page-header" >
-    <h1>직원정보 상세조회</h1>
-    <hr class="my-4">
-</div>
-
 <div class="container">
     <form:form 
     	name="f"
@@ -122,4 +116,4 @@
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
-</div>
+
