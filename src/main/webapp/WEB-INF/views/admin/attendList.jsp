@@ -25,14 +25,14 @@
             </tr>
         </thead>
         <tbody>
-        <c:if test="">
+        <%-- <c:if test="">
         	<c:forEach items="${ }" var="">
         	<tr data-no="${ }">
         		<td></td>
         		
         	</tr>
         	</c:forEach>
-        </c:if>
+        </c:if> --%>
         </tbody>
     </table>
 	</section>

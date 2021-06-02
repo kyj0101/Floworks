@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 #container{
     width: 1350px;
     margin: 0 auto;

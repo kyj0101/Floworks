@@ -54,10 +54,11 @@
 				</small>
 			</div>
 			<div class="form-group">
-				<label for="exampleInputPassword1">점심 시간 종료</label>
-				<input type="" class="form-control time-input" name="lunchTimeEnd" value="${attendanceSystem.lunchTimeEnd}">
+				<label for="exampleInputPassword1">근무시간</label>
+				<fmt:parseNumber var="i" type="number" value="${attendanceSystem.workingTime}" />
+				<input type="number" class="form-control time-input" name="workingTime" value="<c:out value="${i}" />" min="3" max="12">
 				<small class="form-text text-muted">
-					점심 시간 종료는 최소 오전 12시 최대 오후 5시 입니다.
+					최소 근무 시간은 3시간 최대 근무시간은 12시간 입니다.
 				</small>
 			</div>
 			<div class="form-group form-check">

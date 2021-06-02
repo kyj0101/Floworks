@@ -70,6 +70,10 @@ public interface AdminDao {
 	
 	int updateAttendanceSystem(Map<String, Object> param);
 
+	List<Map<String, Object>> selectLeaveSystem(String workspaceId);
+
+	int updateLeaveSystem(Map<String, Object> param);
+
 	
 
 	
