@@ -43,4 +43,6 @@ public interface MemberDao {
 	int updatePassword(Map<String, Object> param);
 
 	int updateQuitMember(String id);
+
+	int deleteAddressBook(String id);
 }

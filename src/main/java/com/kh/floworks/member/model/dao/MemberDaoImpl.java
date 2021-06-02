@@ -106,6 +106,11 @@ public class MemberDaoImpl implements MemberDao{
 		return session.update("member.updateQuitMember", id);
 	}
 
+	@Override
+	public int deleteAddressBook(String id) {
+		return session.delete("member.deleteAddressBook", id);
+	}
+
  
 
 }

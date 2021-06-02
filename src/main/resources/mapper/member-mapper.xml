@@ -188,6 +188,13 @@
 			id = #{id}
 	</update>
 	
+	<delete id="deleteAddressBook">
+		delete
+			address_book
+		where
+			id = #{id}	
+	</delete>
+	
 	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
 		

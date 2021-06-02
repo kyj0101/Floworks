@@ -121,4 +121,14 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePassword(Map<String, Object> param) {
 		return memberDao.updatePassword(param);
 	}
+
+	@Override
+	public int updateQuitMember(String id) {
+		return memberDao.updateQuitMember(id);
+	}
+
+	@Override
+	public int deleteAddressBook(String id) {
+		return memberDao.deleteAddressBook(id);
+	}
 }
