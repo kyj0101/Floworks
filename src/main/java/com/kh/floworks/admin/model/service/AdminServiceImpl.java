@@ -25,11 +25,24 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectUserList(param, workspace);
 	}
 
+	
+
 	@Override
 	public int getTotalContents(String workspace) {
 		return adminDao.getTotalContents(workspace);
 		
 	}
+	
+	
+	@Override
+	public UserDetail selectOneUserDetail(String userId) {
+		return adminDao.selectOneUserDetail(userId);
+	}
+
+	
+
+	
+	
 
 	
 	@Override
@@ -39,11 +52,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	
-	@Override
-	public UserDetail selectOneUserCollection(String userId) {
-		return adminDao.selectOneUserCollection(userId);
-	}
-	
+
 	
 	
 	
@@ -83,7 +92,16 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateAttendanceSystem(param);
 	}
 
-	
+
+
+
+
+
+
+
+
+
+
 
 
 

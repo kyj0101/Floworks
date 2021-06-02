@@ -1,11 +1,7 @@
-function goUserDetail(userId){
-	location.href = "userDetail?userId=" + userId;
-}
-
 $(() => {
-	$("tr[data-id]").click(e => {
+	$("tr[data-no]").click(e => {
 		var $tr = $(e.target).parent();
-		var userId = $tr.data("id");
+		var userId = $tr.data("no");
 		
 		location.href = `userDetail?userId=${userId}`;
 	});

@@ -25,6 +25,7 @@
 		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
 	</resultMap>
 
+
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
@@ -34,23 +35,20 @@
 		    workspace_id = #{workspace}
 	</select>
 
-	<select id="selectOneUserCollection" resultMap="userCollectionMap">
-		SELECT
-		    *    
-		FROM
-		    (select m.id, f.name, d.department_name, m.position, f.phone, f.email, f.address, m.hire_date, f.quit_yn
-		    from member m
+	<select id="selectOneUserDetail" resultMap="userDetail">
+		select m.id, f.name, d.department_name, m.position, 
+		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role
+		from member m
 		        left join department d
 		            on m.department_code = d.department_code
 		        left join floworks_user f
-		            on m.id = f.id) u
+		            on m.id = f.id
 		WHERE
-		    id = #{id}
+		    m.id = #{userId}
 	</select>
 
-	<resultMap type="userList" id="userCollectionMap">
-		<id column="user_id" property="userId"/>
-		<result column="id" property="id"/>
+	<resultMap type="userDetail" id="userDetail">
+		<id column="id" property="id"/>
 		<result column="name" property="name"/>
 		<result column="department_name" property="departmentName"/>
 		<result column="position" property="position"/>
@@ -58,7 +56,8 @@
 		<result column="email" property="email"/>
 		<result column="address" property="address"/>
 		<result column="hire_date" property="hireDate"/>
-		<result column="quit_yn" property="quitYN"/>
+		<result column="quit_yn" property="quitYn" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+		<result column="role" property="role"/>
 	</resultMap>
 
 
@@ -112,4 +111,5 @@
 		where
 			workspace_id = #{workspaceId}
 	</update>
+
 </mapper>
