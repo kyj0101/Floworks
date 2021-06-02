@@ -7,33 +7,40 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-	<section>
-		<!-- 직원 근태 목록 -->
-		<div class="page-header" >
-		    <h1>직원 근태 조회</h1>
-		    <hr class="my-4">
-		</div>
-		
-		<table class="table table-striped table-centered mb-0">
+
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/attendList.css">
+
+<section>
+<div id="board-list">
+	<!-- 직원 근태 목록 -->
+	<table class="table table-striped table-centered mb-0">
         <thead>
             <tr>
             	<th scope="col" class="table-id">ID</th>
-	           	<th scope="col" class="table-depart">일자</th>
-	           	<th scope="col" class="table-positon">출근 시간</th>
-	           	<th scope="col" class="table-hire">퇴근 시간</th>
-	           	<th scope="col" class="table-resignYN">지각 여부</th>
+	           	<th scope="col" class="table-day">일자</th>
+	           	<th scope="col" class="table-officeIn">출근 시간</th>
+	           	<th scope="col" class="table-officeOff">퇴근 시간</th>
+	           	<th scope="col" class="table-latenessYn">지각 여부</th>
             </tr>
         </thead>
         <tbody>
-        <%-- <c:if test="">
-        	<c:forEach items="${ }" var="">
-        	<tr data-no="${ }">
-        		<td></td>
-        		
+        <c:if test="${attendList != null}">
+        	<c:forEach items="${attendList}" var="attendList">
+        	<tr data-no="${attendList.id}">
+        		<td>${attendList.id}</td>
+        		<td>${attendList.day}</td>
+        		<td>${attendList.officeIn}</td>
+        		<td>${attendList.officeOff}</td>
+        		<td>${attendList.latenessYn}</td>
         	</tr>
         	</c:forEach>
-        </c:if> --%>
+        </c:if>
         </tbody>
     </table>
-	</section>
+    
+    <br>
+    ${pageBar}
+</div>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
