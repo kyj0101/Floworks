@@ -120,7 +120,8 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList?workspace=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 직원 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 연차 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직급별 연차 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting/member?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직원 연차 설정</a></li>
 				</ul>
 			</div></li>
 		</sec:authorize>
