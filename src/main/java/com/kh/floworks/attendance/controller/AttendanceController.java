@@ -222,8 +222,8 @@ public class AttendanceController {
 			param.put("year", year);
 			param.put("month", month);
 			param.put("day", day);
-			
-			int totalContents = attendanceService.getTotalSearchAttendance(id);
+
+			int totalContents = attendanceService.getTotalSearchAttendance(param);
 			String url = request.getRequestURI() 
 					   + "?id=" + id 
 					   + "&year=" + year

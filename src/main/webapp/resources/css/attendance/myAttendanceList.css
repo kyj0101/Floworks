@@ -4,6 +4,9 @@ section{
 	padding-top: 35px;
 }
 
+form{
+	display: flex;
+}
 .attendance-search-div{
  	justify-content: flex-end;
 }
@@ -19,4 +22,9 @@ section{
 .attendance-search-btn{
     height: 39px;
     width: 76px;
+    margin-left: 20px;
+}
+
+.attendance-select{
+	width: 120px;
 }

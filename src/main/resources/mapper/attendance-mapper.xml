@@ -119,33 +119,35 @@
 			attendance
 		where
 			id = #{id}
-			<if test="year != null"> 
+			<if test="year != null and year != '' "> 
 				and extract(year from day) = #{year}
 			</if>
-			<if test="month != null"> 
+			<if test="month != null and month != '' "> 
 				and extract(month from day) = #{month}
 			</if> 
-			<if test="day != null"> 
+			<if test="day != null and day != '' "> 
 				and extract(day from day) = #{day}
-			</if>  
+			</if>
+		order by
+			day desc
 	</select>
 	
-	<select id="getTotalSearchAttendance" resultType="attendance">
+	<select id="getTotalSearchAttendance" resultType="int">
 		select
 			count(*)
 		from
 			attendance
 		where
 			id = #{id}
-			<if test="year != null"> 
+			<if test="year != null and year != '' "> 
 				and extract(year from day) = #{year}
 			</if>
-			<if test="month != null"> 
+			<if test="month != null and month != '' "> 
 				and extract(month from day) = #{month}
 			</if> 
-			<if test="day != null"> 
+			<if test="day != null and day != '' "> 
 				and extract(day from day) = #{day}
-			</if>  
+			</if>
 	</select>
 	
 	<update id="updateAttendanceOfficeOff">
