@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,10 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.getTotalContents", workspace);
 	}
 	
-	
+	@Override
+	public UserDetail selectOneUserCollection(String userId) {
+		return session.selectOne("admin.selectOneUserCollection", userId);
+	}
 	
 	
 	
@@ -89,4 +93,6 @@ public class AdminDaoImpl implements AdminDao {
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return session.update("admin.updateAttendanceSystem", param);
 	}
+
+	
 }

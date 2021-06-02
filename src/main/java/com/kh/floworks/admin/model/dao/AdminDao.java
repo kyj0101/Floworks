@@ -3,6 +3,7 @@ package com.kh.floworks.admin.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
 public interface AdminDao {
@@ -11,7 +12,7 @@ public interface AdminDao {
 
 	int getTotalContents(String workspace);
 	
-	
+	UserDetail selectOneUserCollection(String userId);
 	
 	
 	
@@ -64,5 +65,7 @@ public interface AdminDao {
 	//===================== 강유정 근태 설정 ========================
 	
 	int updateAttendanceSystem(Map<String, Object> param);
+
+	
 
 }

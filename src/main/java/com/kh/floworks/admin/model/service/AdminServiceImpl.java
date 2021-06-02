@@ -32,7 +32,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	
-
 	@Override
 	public List<AttendList> selectAttendList() {
 		// TODO Auto-generated method stub
@@ -40,7 +39,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	
-	
+	@Override
+	public UserDetail selectOneUserCollection(String userId) {
+		return adminDao.selectOneUserCollection(userId);
+	}
 	
 	
 	
@@ -80,6 +82,8 @@ public class AdminServiceImpl implements AdminService {
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return adminDao.updateAttendanceSystem(param);
 	}
+
+	
 
 
 

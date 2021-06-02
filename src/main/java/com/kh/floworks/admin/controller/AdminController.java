@@ -66,10 +66,14 @@ public class AdminController {
    }
    
 
-   //직원정보 상세보기
+   //직원정보 상세보기 + 수정하기
    @GetMapping("/userDetail")
-   public void boardForm(@RequestParam String userId,Model model) {
-		model.addAttribute("userId", userId);
+   public void userDetail(@RequestParam String userId, Model model) {
+	   //1. 업무로직
+	   UserDetail userDetail = adminService.selectOneUserCollection(userId);
+	   
+	   //2. jsp처리 위임
+	   model.addAttribute("userDetail", userDetail);
 	}	
 
    
