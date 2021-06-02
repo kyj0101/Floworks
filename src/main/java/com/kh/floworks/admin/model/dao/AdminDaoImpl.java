@@ -50,7 +50,6 @@ public class AdminDaoImpl implements AdminDao {
 	//--강준혁 근태관리 리스트 쭉 뽑아오기
 	@Override
 	public List<AttendList> selectAttendList(String workspaceId) {
-		log.info("\n\n\n\nDao까지는 왔어요\n\n\n\n");
 		return session.selectList("admin.selectAttendanceList",workspaceId);
 	}
 	
