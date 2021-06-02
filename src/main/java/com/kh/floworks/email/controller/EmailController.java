@@ -13,7 +13,6 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.security.auth.Subject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kh.floworks.alarm.controller.Collector;
 import com.kh.floworks.common.Exception.NoMemberException;
 import com.kh.floworks.common.utils.EmailUtils;
 import com.kh.floworks.common.utils.FileUtils;
@@ -55,6 +55,9 @@ import lombok.extern.slf4j.Slf4j;
 public class EmailController {
 
 	private final int numPerPage = 15;
+	
+	@Autowired
+	private Collector collector;
 	
 	@Autowired
 	private ServletContext servletContext;
@@ -293,6 +296,8 @@ public class EmailController {
 
 			log.info("email={}", email);
 			log.info("InsertResult = {}", result);
+			
+			collector.Emailtoss(email);
 
 			return "redirect:/email/sent?id=" + email.getId();
 
