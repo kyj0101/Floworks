@@ -75,7 +75,7 @@ public class AdminController {
    public void userDetail(@RequestParam String userId, Model model) {
 	   //1. 업무로직
 	   UserDetail userDetail = adminService.selectOneUserDetail(userId);
-	   
+	   log.info("userDetail = {}", userDetail);
 	   //2. jsp처리 위임
 	   model.addAttribute("userDetail", userDetail);
 	}	
