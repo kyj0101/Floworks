@@ -28,19 +28,13 @@
 					<div class="row">
 						<div class="col-md-9 col-lg-8 mx-auto">
 
-							<h5 class="login-heading mb-4">찾으려는 ID와 등록된 <br> 이메일 주소를 입력하세요.</h5>
+							<h5 class="login-heading mb-4">등록된 이메일 주소를 입력하세요.</h5>
 
 							<form:form method="POST" action="${pageContext.request.contextPath }/find/password/send">
 
 								<div class="form-label-group">
-									<input type="text" id="inputId" name="id" class="form-control" placeholder="ID" required> 
-									<label for="inputId">ID</label>
-									<p class="input-warning id-p">존재하지 않는 아이디 입니다.</p>
-								</div>
 
-								<div class="form-label-group">
-
-									<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Password" required>
+									<input type="email" id="inputEmail" name="email" class="form-control register-form-control" placeholder="Password" required>
 									<label for="inputEmail">Email</label>
 									<p class="input-warning">유효하지 않은 이메일 입니다.</p>
 								</div>
@@ -48,7 +42,7 @@
 								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="send-btn" type="button">
 									이메일 전송
 								</button>
-								<p class="info-p">* 비밀번호 재설정 링크가 발송됩니다.</p>
+								<p class="info-p">* 아이디가 포함된 이메일이 전송됩니다.</p>
 							</form:form>
 
 						</div>
@@ -62,59 +56,18 @@
 </html>
 
 <script>
-$("input[name=id]").change(function(){
-	
-	const $inputId = $("input[name=id]");
-	const id = $inputId.val();
-	const warningP = $(".id-p");
-
-	hideWarning(warningP);
-	
-	if(!idRegExp(id,true)){
-		
-		showWarning(warningP, "아이디는 최소 3자리에서 최대 8자리인 영문자와 숫자의 조합이여야 합니다.");
-		
-		return false;
-	}
-	
-	$.ajax({
-		type:"get",
-		url:"${pageContext.request.contextPath}/register/id/duplicate",
-		data:{"id":id},
-
-		success(result){
-			result === "false" && showWarning(warningP, "존재하지 않는 아이디 입니다.");
-		},
-		
-		error(xhr, status, err){
-			console.log(xhr, status, err);
-		}
-	});
-});
-
 $("input[name=email]").change(function(){
 	
 	const $input = $("input[name=email]");
 	const email = $input.val();
-	const id = $("input[name=id]").val();
 	const warningP = $input.next().next();
 		
 	hideWarning(warningP);
 	
-	if($(".id-p").css("display") == "block"){
-	
-		alert("먼저 올바른 아이디를 입력하세요.");
-		
-		return false;
-		
-	}else if(!exEmailRegExp(email)){
-		return false	
-	}
-	
 	$.ajax({
 		type:"get",
-		url:"${pageContext.request.contextPath}/find/password/user/email/check",
-		data:{"email":email, "id":id},
+		url:"${pageContext.request.contextPath}/find/id/user/email/check",
+		data:{"email":email},
 
 		success(result){
 			result === "false" && showWarning(warningP, "유효하지 않은 이메일 입니다.");	
@@ -141,54 +94,28 @@ function sendEmail(){
 	const csrfHeaderName = "${_csrf.headerName}";
 	const csrfTokenValue = "${_csrf.token}";
 	const email = $("input[name=email]").val();
-	const id = $("input[name=id]").val();
 
 	$.ajax({
 		type:"post",
-		url:"${pageContext.request.contextPath}/find/password/send",
-		data:{"id":id, "email":email},
-		dataType:'text',
+		url:"${pageContext.request.contextPath}/find/id/send",
+		data:{"email":email},
+		dataType : 'text',
 		beforeSend(xhr){
 			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		},
 		
 		success(result){
-			alert(result);			
-		},
-		
-		error(xhr, status, err){
-			
-			if(xhr.responseText === "unique_constraint_violated"){
-				
-				confirm("이미 인증 이메일 발송되었습니다. 인증 이메일을 초기화 하시겠습니까?") && resetEmail();
-			}
-		}
-	});
-}
-
-function resetEmail(){
-	
-	const csrfHeaderName = "${_csrf.headerName}";
-	const csrfTokenValue = "${_csrf.token}";
-	const email = $("input[name=email]").val();
-	const id = $("input[name=id]").val();
-
-	$.ajax({
-		type:"post",
-		url:"${pageContext.request.contextPath}/find/password/reset",
-		data:{"id":id, "email":email},
-		
-		beforeSend(xhr){
-			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		},
-		
-		success(){
-			alert("메일이 재전송 되었습니다.")
+			console.log(result);
+			alert(result);
+			$("#send-btn").attr("disabled", true);
 		},
 		
 		error(xhr, status, err){
 			console.log(xhr, status, err);
 		}
+			
 	});
 }
+
+
 </script>

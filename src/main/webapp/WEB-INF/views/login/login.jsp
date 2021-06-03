@@ -53,8 +53,15 @@
 									</button>
 									
 									<div class="text-center">
-										<a class="small" href="${pageContext.request.contextPath }/find/password">비밀번호를 잊으셨나요?</a>
+										<a class="small" href="${pageContext.request.contextPath }/find/id/view">
+											아이디 찾기
+										</a>
+										<i class="bi bi-pause"></i>
+										<a class="small"href="${pageContext.request.contextPath }/find/password/view">
+											비밀번호 찾기
+										</a> 
 									</div>
+
 
 								</form:form>
 							
@@ -88,7 +95,13 @@
 								</button>
 								
 								<div class="text-center">
-									<a class="small" href="${pageContext.request.contextPath }/find/password">비밀번호를 잊으셨나요?</a>
+									<a class="small" href="${pageContext.request.contextPath }/find/id/view">
+										아이디 찾기
+									</a>
+									<i class="bi bi-pause"></i>
+									<a class="small"href="${pageContext.request.contextPath }/find/password/view">
+										비밀번호 찾기
+									</a> 
 								</div>
 
 								</form:form>

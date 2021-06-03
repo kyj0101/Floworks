@@ -150,6 +150,15 @@
 			</if>
 	</select>
 	
+	<select id="selectMemberLeave" resultType="int">
+		select
+		    leave
+		from
+		    member
+		where
+		    id = #{id}
+	</select>
+	
 	<update id="updateAttendanceOfficeOff">
 		update
 			attendance

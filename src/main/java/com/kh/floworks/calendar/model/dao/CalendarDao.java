@@ -11,8 +11,4 @@ public interface CalendarDao {
 
 	int insertCalendar(Calendar cal);
 
-	
-
-
-
 }
