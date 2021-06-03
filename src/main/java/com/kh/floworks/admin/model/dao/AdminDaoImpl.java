@@ -45,6 +45,18 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectOneUserDetail", userId);
 	}
 	
+
+	//직원 정보수정 테이블이 두개라 두개로 나눔
+	@Override
+	public int userUpdate(UserDetail userDetail) {
+		return session.update("admin.userUpdate", userDetail);
+	}
+	@Override
+	public int memberUpdate(UserDetail userDetail) {
+		return session.update("admin.memberUpdate", userDetail);
+	}
+
+
 	
 	//--강준혁 근태관리 리스트 쭉 뽑아오기
 	@Override
@@ -61,6 +73,7 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	
+
 	
 	
 	
@@ -173,5 +186,7 @@ public class AdminDaoImpl implements AdminDao {
 	public int getTotalAttendContents(String workspaceId) {
 		return session.selectOne("admin.getTotalAttendContents", workspaceId);
 	}
+
+
 
 }
