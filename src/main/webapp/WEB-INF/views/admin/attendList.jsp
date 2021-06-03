@@ -7,6 +7,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
+
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/attendList.css">
+
+
 <section>
 <div id="board-list">
 	<!-- 직원 근태 목록 -->
@@ -34,9 +40,12 @@
         </c:if>
         </tbody>
     </table>
+
     
     <br>
     ${pageBar}
 </div>
 </section>
+
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
