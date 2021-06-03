@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+	width: 1350px;
+    margin: 0 auto;
+}
+
+header{
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+    background-size:100% 100%;
+}
+
+section{
+    height: 650px;
+    background-color: rgb(246, 246, 246);
+}
+h3{
+    color: white;
+    font-weight: 800;
+}
+
+h1{
+    color: rgb(0, 0, 0);
+}
+
+header img {
+    object-fit:cover;
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+}
+
+section{
+    display: flex;
+    justify-content: center;
+
+}
+
+.col-lg-4{
+    margin-top: 100px;
+    text-align: center;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
