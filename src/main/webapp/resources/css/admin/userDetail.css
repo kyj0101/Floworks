@@ -1,11 +1,14 @@
 @charset "UTF-8";
 
-.hire_date {
-	display: inherit !important;
-	width: 100% !important;
-	
+#command{
+	margin : 20px auto;
 }
-
-#address {
-	width: 100%;
+#topLine{
+	border-top: hidden;
+}
+td{
+	vertical-align: inherit !important;
+}
+.nametag{
+	    width: 100px;
 }

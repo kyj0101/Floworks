@@ -45,8 +45,16 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectOneUserDetail", userId);
 	}
 	
-	
-	
+	@Override
+	public int userUpdate(UserDetail userDetail) {
+		return session.update("admin.userUpdate", userDetail);
+	}
+
+	@Override
+	public int memberUpdate(UserDetail userDetail) {
+		return session.update("admin.memberUpdate", userDetail);
+	}
+
 	
 	
 	
@@ -94,6 +102,8 @@ public class AdminDaoImpl implements AdminDao {
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return session.update("admin.updateAttendanceSystem", param);
 	}
+
+
 
 
 }

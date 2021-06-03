@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDetail {
 
+	private String workspaceId;
 	private String id;
 	private String name;
 	private String departmentName;
@@ -19,7 +20,8 @@ public class UserDetail {
 	private String email;
 	private String address;
 	private Date hireDate;
-	private boolean quitYn;
+	private String quitYn;
 	private String role;
+	private String leave;
 	
 }

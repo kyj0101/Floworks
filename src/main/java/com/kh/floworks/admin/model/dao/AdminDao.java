@@ -15,9 +15,9 @@ public interface AdminDao {
 
 	UserDetail selectOneUserDetail(String userId);
 	
+	int userUpdate(UserDetail userDetail);
 	
-	
-	
+	int memberUpdate(UserDetail userDetail);
 	
 	
 	
@@ -66,6 +66,10 @@ public interface AdminDao {
 	//===================== 강유정 근태 설정 ========================
 	
 	int updateAttendanceSystem(Map<String, Object> param);
+
+	
+
+
 
 	
 

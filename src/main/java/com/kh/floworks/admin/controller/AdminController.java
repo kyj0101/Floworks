@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.floworks.admin.model.service.AdminService;
 import com.kh.floworks.admin.model.vo.AttendList;
@@ -20,6 +22,8 @@ import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
 import com.kh.floworks.attendance.model.service.AttendanceService;
+import com.kh.floworks.board.model.vo.PostFile;
+import com.kh.floworks.board.model.vo.PostList;
 import com.kh.floworks.common.utils.PageBarUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +36,9 @@ public class AdminController {
 
    @Autowired
    private AdminService adminService;
+   
+   @Autowired
+   private AttendanceService attendanceService;
    
    //직원 전체 목록
    @GetMapping("/userList")
@@ -66,20 +73,37 @@ public class AdminController {
 	}
 
 
-	
-	
-   
-
-   //직원정보 상세보기 + 수정하기
+   //직원정보 상세보기
    @GetMapping("/userDetail")
    public void userDetail(@RequestParam String userId, Model model) {
 	   //1. 업무로직
 	   UserDetail userDetail = adminService.selectOneUserDetail(userId);
 	   log.info("userDetail = {}", userDetail);
+
 	   //2. jsp처리 위임
 	   model.addAttribute("userDetail", userDetail);
 	}	
 
+   //직원정보수정하기
+   @PostMapping("/userUpdate")
+   public String userUpdate(@ModelAttribute("userDetail") UserDetail userDetail,  
+						    RedirectAttributes redirectAttr) {
+	   //1. 업무로직
+	   int result = adminService.userUpdate(userDetail) 
+			   		+ adminService.memberUpdate(userDetail);
+	   log.info("userDetail = {}", userDetail);
+	   //2. 사용자피드백
+	   String msg = result > 0 ? "해당 직원의 정보가 수정되었습니다" : "해당 직원의 정보 수정에 실패하였습니다";
+	   redirectAttr.addFlashAttribute("msg", msg);
+
+	   return "redirect:/admin/userList?workspace=" + userDetail.getWorkspaceId();
+		
+	}	
+   
+   
+   
+   
+   
    
    
    @GetMapping("/attendList")
