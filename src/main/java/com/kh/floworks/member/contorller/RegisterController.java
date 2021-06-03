@@ -197,12 +197,20 @@ public class RegisterController {
 			}
 			
 			//직급별 기본 연차 가져오기
+<<<<<<< HEAD
 			Map<String, String> param = new HashMap<>();
 			param.put("userId",id);
 			param.put("workspaceId", workspaceId);
 			param.put("position", member.getPosition());
 			
 			int leaveDay = memberService.selectLeaveDay(param);
+=======
+			Map<String, String> paramMapForLeaveDay = new HashMap<>();
+			paramMapForLeaveDay.put("workspaceId", workspaceId);
+			paramMapForLeaveDay.put("position", member.getPosition());
+			
+			int leaveDay = memberService.selectLeaveDay(paramMapForLeaveDay);
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 	
 			//프로필사진 처리 
 			MultipartFile[] multipartFile = {profile};
@@ -214,11 +222,17 @@ public class RegisterController {
 			member.setId(id);
 			member.setLeave(leaveDay);
 			
+<<<<<<< HEAD
 			//member에 추가
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 			memberService.insertMember(member);
+<<<<<<< HEAD
 			
 			//워크스페이스에 등록
 			memberService.updateUserWorkspaceId(param);
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 			redirectAttr.addFlashAttribute("msg", "워크스페이스 등록이 완료되었습니다. 다시 로그인 해주세요.");
 		
 			return "redirect:/login";
