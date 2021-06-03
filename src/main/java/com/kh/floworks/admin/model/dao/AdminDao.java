@@ -13,7 +13,7 @@ public interface AdminDao {
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
 
 	int getTotalContents(String workspace);
-
+	
 	UserDetail selectOneUserDetail(String userId);
 	
 	//--강준혁 관리자 근태관리 리스트 뽑아오기
@@ -72,16 +72,12 @@ public interface AdminDao {
 
 
 
-
 	
 
 	List<Map<String, Object>> selectLeaveSystem(String workspaceId);
 
 
-
-
 	int updateLeaveSystem(Map<String, Object> param);
-
 
 	int getTotalAttendContents(String workspaceId);
 

@@ -78,6 +78,29 @@ public class AdminServiceImpl implements AdminService{
 	
 	
 	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -89,15 +112,16 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.updateAttendanceSystem(param);
 	}
 
-
-
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return adminDao.selectLeaveSystem(workspaceId);
+	}
 
 
 	@Override
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return adminDao.updateLeaveSystem(param);
 	}
-
 
 	@Override
 	public int getTotalAttendContents(String workspaceId) {

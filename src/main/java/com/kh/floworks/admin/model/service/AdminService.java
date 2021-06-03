@@ -27,13 +27,11 @@ public interface AdminService {
 	UserDetail selectOneUserDetail(String userId);
 
 
-
 	
 
 
 	List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId);
 
-
 	
 	
 	
@@ -63,12 +61,6 @@ public interface AdminService {
 	
 	
 
-
-	
-	
-	
-	
-	
 	
 	
 	
@@ -100,7 +92,6 @@ public interface AdminService {
 	int updateAttendanceSystem(Map<String, Object> param);
 
 
-
 	
 	
 
@@ -108,7 +99,7 @@ public interface AdminService {
 
 	List<Map<String, Object>> selectLeaveSystem(String workspaceId);
 
-
+	int updateLeaveSystem(Map<String, Object> param);
 
 	int getTotalAttendContents(String workspaceId);
 
