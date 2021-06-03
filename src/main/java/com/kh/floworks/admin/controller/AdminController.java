@@ -81,22 +81,40 @@ public class AdminController {
 
    
    @GetMapping("/attendList")
-   public void attendanceList(@RequestParam String workspaceId, Model model) {
+   public void attendanceList(@RequestParam(defaultValue = "1") int cPage, 
+		   @RequestParam String workspaceId, 
+		   Model model,
+		   HttpServletRequest request) {
       
-	 //모델에는 딱히 값이 없다....(값을 받는다기 보다 jsp로 값을 보내주는게 주 역할)
+	   //모델에는 딱히 값이 없다....(값을 받는다기 보다 jsp로 값을 보내주는게 주 역할)
 	      
-      //1. 사용자입력값
-     
-	   log.info("\n\n\n\n\tworkspaceId={}\n\n\n\n",workspaceId);
-      
+	   //1. 사용자입력값
+	   int numPerPage = 15;
+	   log.debug("cPage = {}", cPage);
+	   Map<String, Object> param = new HashMap<>();
+	   param.put("numPerPage", numPerPage);
+	   param.put("cPage", cPage);
+		     
       //2. 업무로직
-      List<AttendList> attendList = adminService.selectAttendList(workspaceId);
+      List<AttendList> attendList = adminService.selectAttendList(param,workspaceId);
+
+      log.info("\n\n\n\nattendList={}\n\n\n\n",attendList);
+      
+      //b. pagebar영역
+      int totalContents = adminService.getTotalAttendContents(workspaceId);
+      String url = request.getRequestURI() + "?workspaceId=" + workspaceId;
+      log.info("totalContents = {}", totalContents);
+      log.info("url = {}", url);
+      String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+      log.info("pageBar={}",pageBar);
       
       log.info("\n\n\n\nattendList={}\n\n\n\n",attendList);
       
       //3. jsp처리 위임
       model.addAttribute("attendList", attendList);
-   }
+
+      model.addAttribute("pageBar", pageBar);
+ }
 
 
    

@@ -75,82 +75,16 @@
 			where workspace_id=#{workspaceId}
 			)
 		order by office_in desc
-
 	</select>  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<select id="getTotalAttendContents" resultType="_int">
+		select 
+    		count(*) 
+		from 
+    		attendance 
+		where id in(select id from floworks_user where workspace_id=#{workspaceId})
+	</select>
 
 
 
@@ -198,6 +132,9 @@
 		where
 			workspace_id = #{workspaceId}
 	</update>
+	
+	
+	
 
 	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
 		select
