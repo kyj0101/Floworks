@@ -25,6 +25,10 @@ public interface AdminService {
 	int getTotalContents(String workspace);
 	
 	UserDetail selectOneUserDetail(String userId);
+	
+	//직원 정보수정 테이블이 두개라 두개로 나눔
+	int userUpdate(UserDetail userDetail);
+	int memberUpdate(UserDetail userDetail);
 
 
 	
