@@ -9,7 +9,7 @@
 			floworks_user
 		values(
                #{id},
-		       #{workspaceId}, 
+		       null, 
 		       #{password}, 
 		       #{name}, 
 		       #{email}, 

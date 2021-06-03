@@ -196,13 +196,14 @@ public class RegisterController {
 				return "redirect:/register/registerWorkspace?id=" + id + "&workspaceId=" + workspaceId;
 			}
 			
-			//직급별 기본 연차 가져오기
-			Map<String, String> paramMapForLeaveDay = new HashMap<>();
-			paramMapForLeaveDay.put("workspaceId", workspaceId);
-			paramMapForLeaveDay.put("position", member.getPosition());
+
+			Map<String, String> param = new HashMap<>();
+			param.put("userId",id);
+			param.put("workspaceId", workspaceId);
+			param.put("position", member.getPosition());
 			
-			int leaveDay = memberService.selectLeaveDay(paramMapForLeaveDay);
-	
+			int leaveDay = memberService.selectLeaveDay(param);
+
 			//프로필사진 처리 
 			MultipartFile[] multipartFile = {profile};
 			String saveDirectory = request.getServletContext().getRealPath(FileUtils.PROFILE_SAVEDIRECTORY);
@@ -214,6 +215,8 @@ public class RegisterController {
 			member.setLeave(leaveDay);
 			
 			memberService.insertMember(member);
+			memberService.updateUserWorkspaceId(param);
+
 			redirectAttr.addFlashAttribute("msg", "워크스페이스 등록이 완료되었습니다. 다시 로그인 해주세요.");
 		
 			return "redirect:/login";
