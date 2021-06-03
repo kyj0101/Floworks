@@ -92,7 +92,11 @@
 	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
 	<select id="selectAttendanceList" resultType="attendList">
 		select 
-    		* 
+    		id,
+    		day,
+    		office_In,
+    		office_off,
+    		lateness_yn
 		from 
     		attendance 
 		where id in(
