@@ -45,10 +45,4 @@ public class MainPageController {
 	public String createWorkspace() {
 		return "/register/createWorkspace"; 
 	}
-	
-	@GetMapping("/find/password")
-	public String findPassword() {
-		return "/login/findPassword";
-	}
-
 }
