@@ -19,12 +19,17 @@ public class CalendarServiceImpl implements CalendarService{
 	private CalendarDao calendarDao;
 
 	@Override
-	public int insertCal(Map<String, Object> calendarDate) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertCal(Map<String, String> param) {
+		return calendarDao.insertCal(param);
 	}
 
 	@Override
+	public List<Calendar> selectListCalendar(String id) {
+		// TODO Auto-generated method stub
+		return calendarDao.selectListCalendar(id);
+	}
+
+	
 	public int insertCal(String dateList) {
 		// TODO Auto-generated method stub
 		return 0;

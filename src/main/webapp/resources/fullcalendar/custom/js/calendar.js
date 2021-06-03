@@ -7,6 +7,7 @@ function click_add() {
 };
 
 //datepicker
+/*
 $(function() {
 	$.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd',
@@ -26,6 +27,8 @@ $(function() {
 	$("#startDate").datepicker('setDate', 'today');
 	$("#endDate").datepicker('setDate', 'today');
 });
+
+*/
 
 /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
     var eventId = 1 + Math.floor(Math.random() * 1000);
@@ -75,6 +78,7 @@ $.fn.serializeObject = function(){
     return o;
 };
 
+/*
 function click_ok(){
 
 	var scheduleData = JSON.stringify($('form#scheduleData').serializeObject());
@@ -91,3 +95,4 @@ function click_ok(){
 		}
 	});
 };
+*/
