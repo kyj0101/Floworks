@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/createWorkspace.css">
 
 <!-- js -->   
-<script src="${pageContext.request.contextPath }/resources/js/member/createWorkspace.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/member/register.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 

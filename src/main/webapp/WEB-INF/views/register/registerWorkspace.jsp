@@ -13,6 +13,8 @@
 
 <!-- js -->   
 <script src="${pageContext.request.contextPath }/resources/js/member/profileThumbnail.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/member/register.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common/regExp.js"></script>
 
 <section>
 	<div class="register-div">
@@ -40,7 +42,15 @@
 				</div>
 
 				<div class="form-label-group">
-					<input type="text" name="workspaceId" class="form-control" placeholder="workspaceid" value="${workspaceId}" readonly>
+					<c:if test="${workspaceId != null}">
+						<input type="text" name="workspaceId" class="form-control" placeholder="workspaceid" value="${workspaceId}" readonly>
+					</c:if>
+					
+					<c:if test="${workspaceId == null}">
+						<input type="text" id="workspaceId" name="workspaceId" class="form-control" placeholder="workspaceid" value="" >
+						<label for="workspaceId">워크스페이스 ID</label>
+						<p class="input-warning">잘못된 아이디 입니다.</p>
+					</c:if>
 				</div>
 
 				<div class="form-label-group">
@@ -105,6 +115,9 @@ $("#submit-btn").click(function(){
 	
 	if($("input[name=password]").val() === ""){
 		alert("비밀번호를 입력하세요.");
+		
+	}else if($("input[name=password]").val() === "" || $(".input-warning").css("display") === "block"){
+		alert("올바른 워크스페이스 ID를 입력하세요.");
 	
 	}else if($(".department-default:selected").length == 1){
 		alert("부서를 선택하세요.");
@@ -117,6 +130,33 @@ $("#submit-btn").click(function(){
 	}
 	
 	return false;
-})
+});
+
+$("input[name=workspaceId]").change(function(){
+	
+	const $input = $("input[name=workspaceId]");
+	const workSpaceId = $input.val();
+	const warningP = $input.next().next();
+	console.log(warningP);
+	hideWarning(warningP);
+
+	if (!idRegExp(workSpaceId, true)) {
+		showWarning(warningP, "잘못된 워크스페이스 아이디 입니다.");
+	}
+	
+	$.ajax({
+		type:"get",
+		url:"${pageContext.request.contextPath}/register/workspace/exist",
+		data:{"workSpaceId":workSpaceId},
+
+		success(result){
+			result === "false" && showWarning(warningP, "존재하지 않는 워크스페이스 ID 입니다.");
+		},
+		
+		error(xhr, status, err){
+			console.log(xhr, status, err);
+		}
+	});
+});
 
 </script>
