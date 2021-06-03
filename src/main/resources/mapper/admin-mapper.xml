@@ -36,8 +36,8 @@
 	</select>
 
 	<select id="selectOneUserDetail" resultMap="userDetail">
-		select m.id, f.name, d.department_name, m.position, 
-		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role
+		select m.id, f.name, d.department_name, m.position, f.workspace_id,
+		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role, m.leave
 		from member m
 		        left join department d
 		            on m.department_code = d.department_code
@@ -46,9 +46,12 @@
 		WHERE
 		    m.id = #{userId}
 	</select>
+	
+	
 
 	<resultMap type="userDetail" id="userDetail">
 		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
 		<result column="name" property="name"/>
 		<result column="department_name" property="departmentName"/>
 		<result column="position" property="position"/>
@@ -56,10 +59,35 @@
 		<result column="email" property="email"/>
 		<result column="address" property="address"/>
 		<result column="hire_date" property="hireDate"/>
-		<result column="quit_yn" property="quitYn" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+		<result column="quit_yn" property="quitYn"/>
 		<result column="role" property="role"/>
+		<result column="leave" property="leave"/>
 	</resultMap>
-	
+
+
+	<update id="userUpdate" >
+		 update
+		 	floworks_user
+		 set
+		 	name = #{name},
+		 	phone = #{phone},
+		 	email = #{email},
+		 	address = #{address},
+		 	quit_yn = #{quitYn},
+		 	role = #{role}
+		 where
+		 	id = #{id}
+	</update>
+
+	<update id="memberUpdate" >
+		 update
+		 	member 
+		 set
+		 	department_code = #{departmentName},
+		 	position = #{position}
+		 where
+		 	id = #{id}
+	</update>
 	
 	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
 	<select id="selectAttendanceList" resultType="attendList">
@@ -172,6 +200,7 @@
       <result column="lunch_time_end" property="lunchTimeEnd"/>
       <result column="working_time" property="workingTime"/>
    </resultMap>
+
 
 
 </mapper>

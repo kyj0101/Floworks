@@ -38,6 +38,17 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	
+	@Override
+	public int userUpdate(UserDetail userDetail) {
+		return adminDao.userUpdate(userDetail);
+	}
+
+
+	@Override
+	public int memberUpdate(UserDetail userDetail) {
+		return adminDao.memberUpdate(userDetail);
+	}
+
 
 	
 	
@@ -127,6 +138,9 @@ public class AdminServiceImpl implements AdminService{
 	public int getTotalAttendContents(String workspaceId) {
 		return adminDao.getTotalAttendContents(workspaceId);
 	}
+
+
+
 
 
 
