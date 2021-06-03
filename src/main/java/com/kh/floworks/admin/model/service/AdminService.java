@@ -25,8 +25,16 @@ public interface AdminService {
 	int getTotalContents(String workspace);
 	
 	UserDetail selectOneUserDetail(String userId);
+	
+	//직원 정보수정 테이블이 두개라 두개로 나눔
+	int userUpdate(UserDetail userDetail);
+	int memberUpdate(UserDetail userDetail);
 
-	List<AttendList> selectAttendList(String workspaceId);
+
+	
+
+
+	List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId);
 
 	
 	
@@ -87,9 +95,18 @@ public interface AdminService {
 	
 	int updateAttendanceSystem(Map<String, Object> param);
 
+
+	
+	
+
+	
+
 	List<Map<String, Object>> selectLeaveSystem(String workspaceId);
 
 	int updateLeaveSystem(Map<String, Object> param);
+
+	int getTotalAttendContents(String workspaceId);
+
 
 
 }

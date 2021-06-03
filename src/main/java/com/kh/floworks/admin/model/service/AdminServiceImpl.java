@@ -38,14 +38,25 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	
+	@Override
+	public int userUpdate(UserDetail userDetail) {
+		return adminDao.userUpdate(userDetail);
+	}
+
+
+	@Override
+	public int memberUpdate(UserDetail userDetail) {
+		return adminDao.memberUpdate(userDetail);
+	}
+
 
 	
 	
 
 	//--강준혁 근태관리 리스트 뽑아오기
 	@Override
-	public List<AttendList> selectAttendList(String workspaceId) {
-		return adminDao.selectAttendList(workspaceId);
+	public List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId) {
+		return adminDao.selectAttendList(param,workspaceId);
 	}
 	
 	
@@ -117,10 +128,19 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.selectLeaveSystem(workspaceId);
 	}
 
+
 	@Override
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return adminDao.updateLeaveSystem(param);
 	}
+
+	@Override
+	public int getTotalAttendContents(String workspaceId) {
+		return adminDao.getTotalAttendContents(workspaceId);
+	}
+
+
+
 
 
 
