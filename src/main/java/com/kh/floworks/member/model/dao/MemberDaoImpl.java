@@ -10,7 +10,11 @@ import org.springframework.stereotype.Repository;
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class MemberDaoImpl implements MemberDao{
 	
 	@Autowired
@@ -70,6 +74,18 @@ public class MemberDaoImpl implements MemberDao{
 	public int insertWorkspace(Map<String, String> param) {
 		return session.insert("member.insertWorkspace", param);
 	}
+	
+	@Override
+	public int insertDefaultAttendanceSystem(String workspaceId) {
+		return session.insert("member.insertDefaultAttendanceSystem", workspaceId);
+	}
+	
+	@Override
+	public int insertDefaultLeaveSystem(Map<String, String> param) {
+		return session.insert("member.insertDefaultLeaveSystem", param);
+	}
+
+
 
 	@Override
 	public String selectWorkspaceOwner(String workspaceId) {
@@ -79,6 +95,11 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public Member selectOneMember(String id) {
 		return session.selectOne("member.selectOneMember", id);
+	}
+	
+	@Override
+	public int selectLeaveDay(Map<String, String> param) {
+		return session.selectOne("member.selectLeaveDay", param);
 	}
 
 	@Override
@@ -105,7 +126,21 @@ public class MemberDaoImpl implements MemberDao{
 	public int updateQuitMember(String id) {
 		return session.update("member.updateQuitMember", id);
 	}
+	
+	@Override
+	public int updateWorkspaceOwnerAdmin(Map<String, String> param) {
+		return session.update("member.updateWorkspaceOwnerAdmin", param);
+	}
 
- 
+	@Override
+	public int deleteAddressBook(String id) {
+		return session.delete("member.deleteAddressBook", id);
+	}
+
+	
+
+
+	
+
 
 }

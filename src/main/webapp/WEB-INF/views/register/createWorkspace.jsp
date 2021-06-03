@@ -23,32 +23,32 @@
 	<div class="register-div">
 		<div class="card-body">
 			<h4 class="card-title text-center">워크스페이스 생성하기</h4>
-			<form method="POST" action="${pageContext.request.contextPath }/register/workspaceId/insert" class="form-signin" >
+			<form method="POST" action="${pageContext.request.contextPath }/register/workspace/create/insert" class="form-signin" >
 				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 
 				<input type="hidden" name="userId" value="${id}" />
 				
 				<div class="form-label-group">
-					<input type="text" name="workspaceName" id="inputname" class="form-control" placeholder="Password"> 
+					<input type="text" name="workspaceName" id="inputname" class="form-control register-form-control" placeholder="Password"> 
 					<label for="inputname">워크스페이스 이름</label>
 					<p class="input-warning">잘못된 이름 입니다.</p>
 				</div>
 
 				<div class="form-label-group">
-					<input type="text" name="id" id="inputid" class="form-control" placeholder="Password">
+					<input type="text" name="id" id="inputid" class="form-control register-form-control" placeholder="Password">
 					<label for="inputid">워크스페이스 ID</label>
 					<p class="input-warning">중복된 아이디 입니다.</p>
 				</div>
 
 				<div class="form-label-group">
-					<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
+					<input type="password" name="password" id="inputPassword" class="form-control register-form-control" placeholder="Password">
 					<label for="inputPassword">워크스페이스 비밀번호</label>
 					<p class="input-warning">잘못된 비밀번호 입니다.</p>
 				</div>
 				
 				<div class="form-label-group">
-					<input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password">
+					<input type="password" id="inputConfirmPassword" class="form-control register-form-control" placeholder="Password">
 					<label for="inputConfirmPassword">비밀번호 확인</label>
 					<p class="input-warning">잘못된 비밀번호 입니다.</p>
 				</div>

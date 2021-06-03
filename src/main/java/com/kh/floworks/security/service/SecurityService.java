@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.kh.floworks.common.Exception.MemberNotFountException;
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 import com.kh.floworks.security.dao.SecurityDao;
@@ -22,16 +23,23 @@ public class SecurityService implements UserDetailsService{
 	private SecurityDao securityDao;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member member = securityDao.selectOneMember(username);
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		Member member = securityDao.selectOneMember(userName);
+		User user = selectOneUser(userName);
 		
-		if(member == null) {
-			throw new UsernameNotFoundException(username + "not fount");
+		if(member == null && user != null) {
+			throw new MemberNotFountException("MemberNotFoundException");
+		}
+		
+		if(member == null && user == null ) {
+			throw new UsernameNotFoundException("UserNotFoundException");
 		}
 
-		log.info("Role{}", member.getRole());
-		
 		return member;
+	}
+	
+	public User selectOneUser(String userName) {
+		return securityDao.selectOneUser(userName);
 	}
 
 }

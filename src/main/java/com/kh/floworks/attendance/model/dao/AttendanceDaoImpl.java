@@ -96,8 +96,8 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	}
 
 	@Override
-	public int getTotalSearchAttendance(String id) {
-		return session.selectOne("attendance.getTotalSearchAttendance", id);
+	public int getTotalSearchAttendance(Map<String, Object> param) {
+		return session.selectOne("attendance.getTotalSearchAttendance", param);
 	}
 
 

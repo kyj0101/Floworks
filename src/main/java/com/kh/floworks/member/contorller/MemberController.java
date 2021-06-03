@@ -180,9 +180,10 @@ public class MemberController {
 		
 		if(bcryptPasswordEncoder.matches(password, member.getPassword())) {
 			
-			//이메일 인증 기록도 삭제한다.
+			
 			emailAuthService.deleteEmailAuth(email);
-		//	memberService.updateQuitMember(id);
+			memberService.updateQuitMember(id);
+			memberService.deleteAddressBook(id);
 			
 			SecurityContextHolder.clearContext();
 			redirectAttr.addFlashAttribute("msg", "정상적으로 탈퇴 되었습니다.");

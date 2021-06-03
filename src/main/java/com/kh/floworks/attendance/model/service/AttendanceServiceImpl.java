@@ -78,8 +78,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public int getTotalSearchAttendance(String id) {
-		return attendanceDao.getTotalSearchAttendance(id);
+	public int getTotalSearchAttendance(Map<String, Object> param) {
+		return attendanceDao.getTotalSearchAttendance(param);
 	}
 
 
