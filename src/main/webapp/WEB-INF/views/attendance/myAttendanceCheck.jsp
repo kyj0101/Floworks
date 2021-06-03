@@ -57,7 +57,7 @@
 							<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
 								남은 연차
 							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">18일</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">${memberLeave}일</div>
 						</div>
 						<div class="col-auto">
 						</div>
@@ -179,13 +179,13 @@
 			</c:if>
 		
 			<c:if test="${attendance.officeIn != null && attendance.officeOff != null}">			
-				<button class="btn btn-primary attendance-btn disabled" type="button">
+				<button class="btn btn-primary attendance-btn disabled" type="button" >
 					퇴근
 				</button>				
 			</c:if>
 		</form:form>
 		
-		<button class="btn btn-success attendance-btn" type="button">
+		<button class="btn btn-success attendance-btn" type="button" onclick="location.href='${pageContext.request.contextPath}/leave/request'">
 			휴가신청
 		</button>
 		

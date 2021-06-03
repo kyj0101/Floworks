@@ -67,7 +67,8 @@ public class AttendanceController {
 				calendar.add(Calendar.DAY_OF_WEEK, 7); //일요일
 				param.put("endOfWeek", new Date(calendar.getTimeInMillis()));
 			}
-
+			
+			int memberLeave = attendanceService.selectMemberLeave(id);
 			int latenessCount = attendanceService.selectLatenessCount(param);
 			Attendance attendance = attendanceService.selectOneAttendance(id);
 
@@ -81,7 +82,8 @@ public class AttendanceController {
 			double lunchTime = AttendanceUtils.getTimeDifference(lunchTimeStart, lunchTimeEnd);
 			double weekLunchTime = weekOfficeAttendance.size() * lunchTime;
 			double monthLunchTime = monthOfficeAttendance.size() * lunchTime;
-
+			
+			model.addAttribute("memberLeave", memberLeave);
 			model.addAttribute("attendance", attendance);
 			model.addAttribute("latenessCount", latenessCount);
 			model.addAttribute("attendanceSystem", attendanceSystem);
