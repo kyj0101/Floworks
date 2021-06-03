@@ -45,7 +45,9 @@
 				
 					<button type="button" id="menu" class="btn btn-warning" onclick="goLogin();">로그인</button>
 					<button type="button" id="menu" class="btn btn-warning" onclick="goRegister();">회원가입</button>
-		    	
+		    		
+					<button type="button" id="menu" class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/register/login?url=create'">워크스페이스 생성</button>
+		    		<button type="button" id="menu" class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/register/login?url=member'">워크스페이스 등록</button>
 		    	</div>
 				
 				<div>

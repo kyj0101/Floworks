@@ -18,7 +18,7 @@
 	<div class="register-div">
 		<div class="card-body">
 			<h4 class="card-title text-center">워크스페이스 입장</h4>
-			<form action="${pageContext.request.contextPath }/register/registerWorkspace/insert" method="post" class="form-signin" enctype="multipart/form-data">
+			<form action="${pageContext.request.contextPath }/register/workspace/member/insert" method="post" class="form-signin" enctype="multipart/form-data">
 				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								
@@ -44,7 +44,7 @@
 				</div>
 
 				<div class="form-label-group">
-					<input type="password" name="password" id="inputpassword" class="form-control" placeholder="Password"> 
+					<input type="password" name="password" id="inputpassword" class="form-control register-form-control" placeholder="Password"> 
 					<label for="inputpassword">워크스페이스 비밀번호</label>
 				</div>
 

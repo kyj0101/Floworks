@@ -20,7 +20,7 @@
 	<div class="register-div">
 		<div class="card-body">
 			<h4 class="card-title text-center">회원가입</h4>
-			<form class="form-signin" action="${pageContext.request.contextPath }/register/insert" method="post">
+			<form class="form-signin" action="${pageContext.request.contextPath }/register/user" method="post">
 				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 				
@@ -91,7 +91,7 @@
 				</div>
 				<hr>
  
-				<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase register-form-control" id="submit-btn">
+				<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" id="submit-btn">
 					가입하기
 				</button>
 				<hr />

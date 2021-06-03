@@ -19,6 +19,10 @@ public interface MemberService{
 	int insertMember(Member member);
 
 	int insertWorkspace(Map<String, String> param);
+
+	int insertDefaultAttendanceSystem(String workspaceId);
+	
+	int insertDefaultLeaveSystem(Map<String, String> paramMapForLeaveDay);
 	
 	boolean selectIdDuplicate(String id);
 
@@ -40,6 +44,8 @@ public interface MemberService{
 	
 	Member selectOneMember(String id);
 
+	int selectLeaveDay(Map<String, String> param);
+
 	int updateUserWorkspaceId(Map<String, String> param);
 
 	int updateMember(Member updateMember);
@@ -50,7 +56,15 @@ public interface MemberService{
 
 	int updateQuitMember(String id);
 
+	int updateWorkspaceOwnerAdmin(Map<String, String> param);
+
 	int deleteAddressBook(String id);
+
+
+	
+
+
+
 
 	
 }
