@@ -3,17 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendar">
-	<insert id="insertCal" parameterType="hashmap">
-		insert into
-			calendar
-		values(
-			#{id},
-			#{title},
-			to_date(#{startDate}, 'yyyy-mm-dd'),
-			to_date(#{endDate}, 'yyyy-mm-dd')
-	</insert>
-
-	
 	<select id="selectListCalendar" resultType="calendar">
 		select
 			*
@@ -23,6 +12,15 @@
 			id = #{id}
 	</select>
 
-
+	<insert id="insertCalendar">
+		insert into
+			calendar
+		values(
+			#{id},
+			#{subject},
+			#{startDate},
+			#{endDate}
+		)
+	</insert>
 
 </mapper>
