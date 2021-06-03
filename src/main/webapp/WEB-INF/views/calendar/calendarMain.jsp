@@ -25,7 +25,7 @@
 
 <!-- custom -->
 <link href="${pageContext.request.contextPath }/resources/fullcalendar/custom/css/calendar.css" rel="stylesheet" />	
-<script src='${pageContext.request.contextPath }/resources/fullcalendar/custom/js/calendar.js'></script>
+<%-- <script src='${pageContext.request.contextPath }/resources/fullcalendar/custom/js/calendar.js'></script> --%>
 	
 <script>
 
@@ -36,24 +36,26 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendar = new FullCalendar.Calendar(calendarEl, {
     /* 	plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ], */
     	
-	 /*  headerToolbar: {
+	 headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-      }, */
+        right: 'dayGridMonth,listMonth'
+      },
       themeSystem: 'bootstrap',
       selectable: true,
       initialDate: new Date(),
       locale : "ko",
       navLinks: true, // can click day/week names to navigate views
       businessHours: true, // display business hours
-      editable: true, //수정 가능 여부
+      editable: false, 
       selectable: true,
       dayMaxEvents: true, // allow "more" link when too many events
       dayHeaderContent: function (date) {
           let weekList = ["일", "월", "화", "수", "목", "금", "토"];
               return weekList[date.dow];
           },
+      
+          
       dateClick: function(info) {
 			$("#eventModal").modal("show");
 			var date = info.dateStr
@@ -63,11 +65,12 @@ document.addEventListener('DOMContentLoaded', function() {
 			var calendarName = $("#calendarName").val();
 			$("#title").val(calendarName);
 			$('#close').on('click', function(){
-			$("#eventModal").modal("hide"); 
-			
-			});
+			$("#eventModal").modal("hide");});
       },
-      
+     /*  select: function(info){
+    	  
+      }, */
+     
       eventClick: function(info){
 	  		$("#eventModal").modal("show");
 	  		$("#eventModal").find("#startDate").val(info.event.startStr);
@@ -75,15 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
 			
 			console.log(info);
 			
-    	  $("#eventModal").modal("show");
-          var date = info.dateStr
-          $("#startDate").val(date);
-          $("#endDate").val(date);
-          var lectureName = $("#lectureName").val();
-          $("#title").val(lectureName);
-          $('#close').on('click', function(){
-      		$("#eventModal").modal("hide");
-      		});
+			$("#eventModal").modal("show");
+			var date = info.dateStr
+			$("#startDate").val(date);
+			$("#endDate").val(date);
+			var lectureName = $("#lectureName").val();
+			$("#title").val(lectureName);
+			$('#close').on('click', function(){
+			$("#eventModal").modal("hide");
+		});
       },
       
       eventClick: function(info){
@@ -94,8 +97,17 @@ document.addEventListener('DOMContentLoaded', function() {
       titleFormat : function(date) {
       	return date.date.year +"년 "+(date.date.month +1)+"월";
       }
-    	 });
+    });
     calendar.render();
+    
+    <c:forEach items="${calendarList}" var="cal">
+	    calendar.addEvent({
+	    	id : '${cal.id}',
+			title : '${cal.subject}', 
+			start : '${cal.startDate}', 
+			end : '${cal.endDate}'
+		});
+    </c:forEach>
     
     cal = calendar;
  
@@ -113,7 +125,8 @@ $("#save-event").on('click', function(){
 	end: endDate,
 	allDay: true
 	});
-
+	
+	
     if (startDate > endDate) {
         alert('끝나는 날짜가 앞설 수 없습니다.');
         return false;
@@ -144,6 +157,10 @@ $("#calAddFrm").submit(e => {
 	});
 
 });
+/* 끝나는 날짜가 null이면 시작날짜가 나오게  */
+//if(enddate==null){
+//    enddate=element.startdate;
+//}
 
 //datepicker
 $(function() {
@@ -211,7 +228,7 @@ $("#endDate").datepicker('setDate', 'today');
 	                <div class="row mb-3">
 					    <label for="title" class="col-sm-2 col-form-label">일정명</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="title" name="title" required="required" />
+					      <input type="text" class="form-control" id="title" name="subject" required="required" />
 					    </div>
 				  	</div>
 
@@ -232,8 +249,8 @@ $("#endDate").datepicker('setDate', 'today');
 
 				<!--s modal-footer -->
                 <div class="modal-footer modalBtnContainer-addEvent">
-                    <button type="button" class="btn btn-default" id="close">취소</button>
-                    <button type="button" class="btn btn-primary" id="save-event">저장</button>
+                    <button type="button" class="btn btn-outline-secondary" id="close">취소</button>
+                    <button type="button" class="btn btn-outline-success" id="save-event">저장</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -245,9 +262,9 @@ $("#endDate").datepicker('setDate', 'today');
 			method="POST"
 			id="calAddFrm">
 			<input type="hidden" name="dateList"/>
-			<input type="hidden" name="id" value="${id}"/>
-			<input class="btn btn-warning btn" type="reset" value="리셋">
-			<input class="btn btn-primary sub" id="insert" type="submit" value="등록 요청">
+			<input type="hidden" name="id" value="${param.id}"/>
+			<input class="btn btn-outline-secondary btn" type="reset" value="리셋">
+			<input class="btn btn-outline-success sub" id="insert" type="submit" value="등록 요청">
 		</form:form>
 		 
 		</div>

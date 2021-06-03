@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Calendar {
 	
 	private String id;
-	private String title;
+	private String subject;
 	private String startDate;
 	private String endDate;
 	

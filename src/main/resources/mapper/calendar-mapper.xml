@@ -14,6 +14,15 @@
 			)
 
 	</insert>
+	
+	<select id="selectListCalendar" resultType="calendar">
+		select
+			*
+		from
+			calendar
+		where 
+			id = #{id}
+	</select>
 
 
 </mapper>
