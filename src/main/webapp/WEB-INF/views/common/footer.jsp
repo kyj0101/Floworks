@@ -89,7 +89,11 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
+<<<<<<< HEAD
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+=======
 									<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
 					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
@@ -118,8 +122,10 @@
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList?workspace=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 직원 목록 조회 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직급별 연차 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting/member?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직원 연차 설정</a></li>
 				</ul>
 			</div></li>
 		</sec:authorize>
@@ -128,4 +134,5 @@
 </aside>
 </div>
 </body>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 </html>

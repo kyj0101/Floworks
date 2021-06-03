@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+section {
+	margin-top: 50px;
+}
+
+.table {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}

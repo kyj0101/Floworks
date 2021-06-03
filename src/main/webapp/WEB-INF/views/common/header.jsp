@@ -29,6 +29,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    
     <!--특정 아이콘 추가 : https://fontawesome.com/icons?d=gallery&p=2 메일박스, 메시지-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     
@@ -163,9 +167,13 @@
                         </div>
 
 						<div class="mainHeader">
+
 							<!-- 로그인한 사용자의 프로필 -->
-							<%-- <img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" --%>
+
+
+							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" 
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
+              
 							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
 					</div>

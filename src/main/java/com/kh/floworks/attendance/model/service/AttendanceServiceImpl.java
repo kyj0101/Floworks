@@ -63,6 +63,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
+	public List<Attendance> selectListSearchAttendance(Map<String, Object> param) {
+		return attendanceDao.selectListSearchAttendance(param);
+	}
+
+	@Override
 	public int updateAttendanceOfficeOff(Map<String, Object> param) {
 		return attendanceDao.updateAttendanceOfficeOff(param);
 	}
@@ -71,6 +76,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public int getTotalAttendance(String id) {
 		return attendanceDao.getTotalAttendance(id);
 	}
+
+	@Override
+	public int getTotalSearchAttendance(String id) {
+		return attendanceDao.getTotalSearchAttendance(id);
+	}
+
 
 
 

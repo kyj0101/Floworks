@@ -26,10 +26,10 @@
 		</div>
 		<div class="card-body">
 			<p>
-				출근 : ${attendanceSystem.officeInTime}
+				출근 ${attendanceSystem.officeInTime} ~ 퇴근 ${attendanceSystem.officeOffTime}
 			</p>
 			<p class="mb-0">
-				퇴근 : ${attendanceSystem.officeOffTime}
+				근무 시간 : ${attendanceSystem.workingTime}시간
 			</p>
 			<br />
 			<p>
@@ -169,6 +169,7 @@
 			<input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />
 			<input type="hidden" name="flexTimeYn" value="${attendanceSystem.flexTimeYn}" />
 			<input type="hidden" name="officeInTime" value="${attendanceSystem.officeInTime}" />
+			<input type="hidden" name="workingTime" value="${attendanceSystem.workingTime}" />
 				
 			<c:if test="${attendance.officeIn == null}">								
 				<button class="btn btn-primary attendance-btn" type="submit">
