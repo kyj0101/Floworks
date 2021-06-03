@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
