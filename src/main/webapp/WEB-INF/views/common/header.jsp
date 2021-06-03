@@ -535,6 +535,10 @@ function AlarmErase(link){
                         </div>
 
 						<div class="mainHeader">
+
+							<!-- 로그인한 사용자의 프로필 -->
+
+
 							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" 
 								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
               

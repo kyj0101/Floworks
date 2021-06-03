@@ -8,8 +8,10 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
+
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/attendList.css">
+
 
 <section>
 <div id="board-list">
@@ -38,17 +40,12 @@
         </c:if>
         </tbody>
     </table>
-<<<<<<< HEAD
+
     
     <br>
     ${pageBar}
 </div>
 </section>
-=======
-	</section>
-	
-	<script>
-	
-	</script>
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
+
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

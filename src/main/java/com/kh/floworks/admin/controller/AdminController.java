@@ -86,20 +86,23 @@ public class AdminController {
    
    
    @GetMapping("/attendList")
-
    public void attendanceList(@RequestParam(defaultValue = "1") int cPage, 
 		   @RequestParam String workspaceId, 
 		   Model model,
 		   HttpServletRequest request) {
 
-	   //모델에는 딱히 값이 없다....(값을 받는다기 보다 jsp로 값을 보내주는게 주 역할)
+
 	      
 	   //1. 사용자입력값
 	   int numPerPage = 15;
-	   log.info("cPage = {}", cPage);
-	   log.info("workspaceId={}",workspaceId);
+	   log.debug("cPage = {}", cPage);
+	   Map<String, Object> param = new HashMap<>();
+	   param.put("numPerPage", numPerPage);
+	   param.put("cPage", cPage);
+
 		     
       //2. 업무로직
+
       List<AttendList> attendList = adminService.selectAttendList(workspaceId);
 
       log.info("\n\n\n\nattendList={}\n\n\n\n",attendList);
@@ -119,10 +122,12 @@ public class AdminController {
       //3. jsp처리 위임
       model.addAttribute("attendList", attendList);
 
+
       model.addAttribute("pageBar", pageBar);
           
 
    }
+
 
 
    
