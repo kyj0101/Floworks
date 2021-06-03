@@ -22,10 +22,46 @@
 						<div class="col-md-9 col-lg-8 mx-auto">
 
 							<h3 class="login-heading mb-4">안녕하세요!</h3>
+							<c:if test="${actionUrl != null}">
+								<form:form method="POST" action="${pageContext.request.contextPath}${actionUrl}">
+									
+									<input type="hidden" name="url" value="${url}" />
+									
+									<div class="form-label-group">
+	
+										<input type="text" id="inputEmail" name="username" class="form-control" placeholder="ID" required> 
+										<label for="inputEmail">ID</label>
+									</div>
+	
+									<div class="form-label-group">
+	
+										<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+										<label for="inputPassword">Password</label>
+	
+									</div>
+	
+									<div class="custom-control custom-checkbox mb-3">
+	
+										<input type="checkbox" class="custom-control-input" id="customCheck1" name="remember-me"> 									
+										<input type="checkbox" class="custom-control-input" id="customCheck1" name="remember-me"> 									
+										<label class="custom-control-label" for="customCheck1">로그인 상태 유지</label>
+	
+									</div>
+	
+									<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
+										Sign in
+									</button>
+									
+									<div class="text-center">
+										<a class="small" href="${pageContext.request.contextPath }/find/password">비밀번호를 잊으셨나요?</a>
+									</div>
 
-							<form:form method="POST"
-								action="${pageContext.request.contextPath }/login">
-
+								</form:form>
+							
+							</c:if>
+							
+							<c:if test="${actionUrl == null}">
+								<form:form method="POST" action="${pageContext.request.contextPath }/login">
 								<div class="form-label-group">
 
 									<input type="text" id="inputEmail" name="username" class="form-control" placeholder="ID" required> 
@@ -55,7 +91,8 @@
 									<a class="small" href="${pageContext.request.contextPath }/find/password">비밀번호를 잊으셨나요?</a>
 								</div>
 
-							</form:form>
+								</form:form>
+							</c:if>
 
 						</div>
 					</div>

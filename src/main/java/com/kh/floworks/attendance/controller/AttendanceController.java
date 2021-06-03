@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.floworks.attendance.model.dao.AttendanceDao;
 import com.kh.floworks.attendance.model.service.AttendanceService;
 import com.kh.floworks.attendance.model.vo.Attendance;
 import com.kh.floworks.common.utils.AttendanceUtils;
@@ -134,12 +136,31 @@ public class AttendanceController {
 	@PostMapping("/office/off")
 	public String  officeOff(String id,
                              String workspaceId,
+                             @RequestParam(value = "workingTime") int workingTimeSystem,
                              @RequestParam(value = "officeInTime") String officeInTimeSystem,
+                             RedirectAttributes redirectAttr,
                              Model model) throws Exception {
 		try {
 			
+			String returnUrl = "redirect:/attendance/view?workspaceId=" + workspaceId + "&id=" + id;
+			
 			Calendar calendar = Calendar.getInstance();
 			Date now = new Date(calendar.getTimeInMillis());
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+			
+			Attendance attendacne = attendanceService.selectOneAttendance(id);
+			String officeInTime = timeFormat.format(attendacne.getOfficeIn());
+			String officeOffTime = timeFormat.format(now);
+			
+			double workingTimeDouble = AttendanceUtils.getTimeDifference(officeInTime, officeOffTime);
+			int workingTime = (int)workingTimeDouble / 1000 / 60 / 60;
+			
+			if(workingTime < workingTimeSystem) {
+				
+				redirectAttr.addFlashAttribute("msg", "잔여 근무 시간이 있으므로, 퇴근 하실 수 없습니다.");
+				
+				return returnUrl;
+			}
 			
 			Map<String, Object> param = new HashMap<>();
 			param.put("now", now);
@@ -147,7 +168,7 @@ public class AttendanceController {
 		
 			attendanceService.updateAttendanceOfficeOff(param);
 			
-			return "redirect:/attendance/view?workspaceId=" + workspaceId + "&id=" + id;
+			return returnUrl;
 			
 		} catch (NullPointerException e) {
 			throw e;
@@ -159,16 +180,16 @@ public class AttendanceController {
 			                     @RequestParam(defaultValue = "1") int cPage,	
 			                     HttpServletRequest request,
 			                     Model model) {
-		int numPerPage = 10;
+		
 		Map<String, Object> param = new HashMap<>();
 		
-		param.put("numPerPage", numPerPage);
+		param.put("numPerPage", AttendanceService.NUMPER_PAGE);
 		param.put("cPage", cPage);
 		param.put("id", id);
 		
 		int totalContents = attendanceService.getTotalAttendance(id);
 		String url = request.getRequestURI() + "?id=" + id;
-		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, AttendanceService.NUMPER_PAGE, url);
 		
 		List<String> yearList = attendanceService.selectAttendanceYear(id);
 		List<String> monthList = attendanceService.selectAttendanceMonth(id);
@@ -180,6 +201,52 @@ public class AttendanceController {
 		model.addAttribute("pageBar", pageBar);
 		
 		return "/attendance/myAttendanceList";
+	}
+	
+	@GetMapping("/list/search")
+	public String attendanceListSearch(String id,
+			                           String year,
+			                           String month,
+			                           String day,
+			                           @RequestParam(defaultValue = "1") int cPage,
+			                           HttpServletRequest request,
+			                           Model model) {
+		
+		try {
+			
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("numPerPage", AttendanceService.NUMPER_PAGE);
+			param.put("cPage", cPage);
+			param.put("id", id);
+			param.put("year", year);
+			param.put("month", month);
+			param.put("day", day);
+
+			int totalContents = attendanceService.getTotalSearchAttendance(param);
+			String url = request.getRequestURI() 
+					   + "?id=" + id 
+					   + "&year=" + year
+					   + "&month=" + month
+					   + "&day=" + day;
+			
+			String pageBar = PageBarUtils.getPageBar(totalContents, cPage, AttendanceService.NUMPER_PAGE, url);
+			
+			List<String> yearList = attendanceService.selectAttendanceYear(id);
+			List<String> monthList = attendanceService.selectAttendanceMonth(id);
+			List<Attendance> attendanceList = attendanceService.selectListSearchAttendance(param);
+			
+			model.addAttribute("yearList", yearList);
+			model.addAttribute("monthList", monthList);
+			model.addAttribute("attendanceList", attendanceList);
+			model.addAttribute("pageBar", pageBar);
+			
+			return "/attendance/myAttendanceList";
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
 	}
 } 
 

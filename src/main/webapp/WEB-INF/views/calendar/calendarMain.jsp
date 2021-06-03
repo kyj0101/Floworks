@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var calendarName = $("#calendarName").val();
 			$("#title").val(calendarName);
 			$('#close').on('click', function(){
+<<<<<<< HEAD
 			$("#eventModal").modal("hide");});
       },
      /*  select: function(info){

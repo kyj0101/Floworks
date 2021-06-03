@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private AdminDao adminDao;
@@ -24,32 +24,72 @@ public class AdminServiceImpl implements AdminService {
 	public List<UserList> selectUserList(Map<String, Object> param, String workspace) {
 		return adminDao.selectUserList(param, workspace);
 	}
-
+	
 	@Override
 	public int getTotalContents(String workspace) {
 		return adminDao.getTotalContents(workspace);
 		
 	}
+	
+	
+	@Override
+	public UserDetail selectOneUserDetail(String userId) {
+		return adminDao.selectOneUserDetail(userId);
+	}
 
 	
 	@Override
-	public List<AttendList> selectAttendList() {
-		// TODO Auto-generated method stub
-		return null;
+	public int userUpdate(UserDetail userDetail) {
+		return adminDao.userUpdate(userDetail);
 	}
-	
-	
+
+
 	@Override
-	public UserDetail selectOneUserCollection(String userId) {
-		return adminDao.selectOneUserCollection(userId);
+	public int memberUpdate(UserDetail userDetail) {
+		return adminDao.memberUpdate(userDetail);
+	}
+
+
+	
+	
+
+	//--강준혁 근태관리 리스트 뽑아오기
+	@Override
+	public List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId) {
+		return adminDao.selectAttendList(param,workspaceId);
 	}
 	
 	
+
 	
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 	
 	
@@ -83,9 +123,21 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateAttendanceSystem(param);
 	}
 
-	
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return adminDao.selectLeaveSystem(workspaceId);
+	}
 
 
+	@Override
+	public int updateLeaveSystem(Map<String, Object> param) {
+		return adminDao.updateLeaveSystem(param);
+	}
+
+	@Override
+	public int getTotalAttendContents(String workspaceId) {
+		return adminDao.getTotalAttendContents(workspaceId);
+	}
 
 
 

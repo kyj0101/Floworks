@@ -25,6 +25,7 @@
 		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
 	</resultMap>
 
+
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
@@ -34,23 +35,23 @@
 		    workspace_id = #{workspace}
 	</select>
 
-	<select id="selectOneUserCollection" resultMap="userCollectionMap">
-		SELECT
-		    *    
-		FROM
-		    (select m.id, f.name, d.department_name, m.position, f.phone, f.email, f.address, m.hire_date, f.quit_yn
-		    from member m
+	<select id="selectOneUserDetail" resultMap="userDetail">
+		select m.id, f.name, d.department_name, m.position, f.workspace_id,
+		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role, m.leave
+		from member m
 		        left join department d
 		            on m.department_code = d.department_code
 		        left join floworks_user f
-		            on m.id = f.id) u
+		            on m.id = f.id
 		WHERE
-		    id = #{id}
+		    m.id = #{userId}
 	</select>
+	
+	
 
-	<resultMap type="userList" id="userCollectionMap">
-		<id column="user_id" property="userId"/>
-		<result column="id" property="id"/>
+	<resultMap type="userDetail" id="userDetail">
+		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
 		<result column="name" property="name"/>
 		<result column="department_name" property="departmentName"/>
 		<result column="position" property="position"/>
@@ -58,14 +59,64 @@
 		<result column="email" property="email"/>
 		<result column="address" property="address"/>
 		<result column="hire_date" property="hireDate"/>
-		<result column="quit_yn" property="quitYN"/>
+		<result column="quit_yn" property="quitYn"/>
+		<result column="role" property="role"/>
+		<result column="leave" property="leave"/>
 	</resultMap>
 
 
+	<update id="userUpdate" >
+		 update
+		 	floworks_user
+		 set
+		 	name = #{name},
+		 	phone = #{phone},
+		 	email = #{email},
+		 	address = #{address},
+		 	quit_yn = #{quitYn},
+		 	role = #{role}
+		 where
+		 	id = #{id}
+	</update>
+
+	<update id="memberUpdate" >
+		 update
+		 	member 
+		 set
+		 	department_code = #{departmentName},
+		 	position = #{position}
+		 where
+		 	id = #{id}
+	</update>
+	
+	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
+	<select id="selectAttendanceList" resultType="attendList">
+		select 
+    		id,
+    		day,
+    		office_In,
+    		office_off,
+    		lateness_yn
+		from 
+    		attendance 
+		where id in(
+			select 
+				id 
+			from 
+				floworks_user 
+			where workspace_id=#{workspaceId}
+			)
+		order by office_in desc
+	</select>  
 
 
-
-
+	<select id="getTotalAttendContents" resultType="_int">
+		select 
+    		count(*) 
+		from 
+    		attendance 
+		where id in(select id from floworks_user where workspace_id=#{workspaceId})
+	</select>
 
 
 
@@ -107,9 +158,53 @@
 			office_off_time = #{officeOffTime},
 			lunch_time_start = #{lunchTimeStart},
 			lunch_time_end = #{lunchTimeEnd},
+			working_time = #{workingTime},
 			flex_time_yn = #{flexTimeYn},
 			memo = #{memo}
 		where
 			workspace_id = #{workspaceId}
 	</update>
+	
+	
+	
+
+	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
+		select
+		    position,
+		    leave_day
+		from
+		    leave_system
+		where
+		    workspace_id = #{workspaceId}
+	</select>
+	
+	<update id="updateLeaveSystem">
+		update
+			leave_system
+		set
+			leave_day = #{leaveDay}
+		where
+			workspace_id = #{workspaceId}
+			and position = #{position}
+	</update>
+	
+	<resultMap type="map" id="leaveSystemMap">
+		<result column="position" property="position"/>
+		<result column="leave_day" property="leaveDay"/>
+	</resultMap>
+
+	<resultMap type="map" id="attendanceSystemMap">
+      <id column="WORKSPACE_ID" property="workspaceId"/>
+      
+      <result column="FLEX_TIME_YN" property="flexTimeYn"/>
+      <result column="OFFICE_IN_TIME" property="officeInTime"/>
+      <result column="OFFICE_OFF_TIME" property="officeOffTime"/>
+      <result column="MEMO" property="memo"/>
+      <result column="lunch_time_start" property="lunchTimeStart"/>
+      <result column="lunch_time_end" property="lunchTimeEnd"/>
+      <result column="working_time" property="workingTime"/>
+   </resultMap>
+
+
+
 </mapper>

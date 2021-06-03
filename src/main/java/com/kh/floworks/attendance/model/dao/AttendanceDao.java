@@ -27,9 +27,14 @@ public interface AttendanceDao {
 
 	List<Attendance> selectListAttendance(Map<String, Object> param);
 
+	List<Attendance> selectListSearchAttendance(Map<String, Object> param);
+
 	int updateAttendanceOfficeOff(Map<String, Object> param);
 
 	int getTotalAttendance(String id);
+
+	int getTotalSearchAttendance(Map<String, Object> param);
+
 
 
 

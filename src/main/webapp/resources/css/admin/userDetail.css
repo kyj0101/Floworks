@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+#command{
+	margin : 20px auto;
+}
+#topLine{
+	border-top: hidden;
+}
+td{
+	vertical-align: inherit !important;
+}
+.nametag{
+	    width: 100px;
+}

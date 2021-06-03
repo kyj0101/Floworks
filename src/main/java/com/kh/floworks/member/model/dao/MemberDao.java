@@ -14,6 +14,10 @@ public interface MemberDao {
 
 	int insertWorkspace(Map<String, String> param);
 
+	int insertDefaultAttendanceSystem(String workspaceId);
+	
+	int insertDefaultLeaveSystem(Map<String, String> param);
+
 	int selectIdDuplicate(String id);
 
 	int selectEmailDuplicate(String email);
@@ -34,6 +38,8 @@ public interface MemberDao {
 	
 	Member selectOneMember(String id);
 
+	int selectLeaveDay(Map<String, String> param);
+
 	int updateUserWorkspaceId(Map<String, String> param);
 
 	int updateMember(Member updateMember);
@@ -43,4 +49,8 @@ public interface MemberDao {
 	int updatePassword(Map<String, Object> param);
 
 	int updateQuitMember(String id);
+
+	int updateWorkspaceOwnerAdmin(Map<String, String> param);
+
+	int deleteAddressBook(String id);
 }
