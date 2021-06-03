@@ -12,9 +12,12 @@ import com.kh.floworks.calendar.model.vo.Calendar;
 
 public interface CalendarDao {
 
-	int insertCal(Map<String, Object> calendarDate);
+	int insertCal(Map<String, String> param);
 
-	int insertCal(String dateList);
+	List<Calendar> selectListCalendar(String id);
+
+	
+
 
 
 }

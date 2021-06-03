@@ -218,7 +218,6 @@ $(function(){
 	
 	
 	$(".header-search-btn").click(function(){
-
 		const type = $("#select-search").text();
 		const keyword = $("#input-search").val();
 		const id = "<sec:authentication property='principal.id'/>"
@@ -253,16 +252,13 @@ $(function(){
 </script>
 
 <script>
-
 //WebsocketConfiguration 함수랑 연결
-
 //알람 업로드
 const ws = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_member");
 var payload;
 var alarmList;
 var alarm_count=0;
 var email_count=0;
-
 var id;
 //헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
 ws.onopen = e => {
@@ -278,7 +274,6 @@ ws.onopen = e => {
 	ws.send(login_id);
 	
 }
-
 ws.onmessage = e => {
 	console.log("onmessage : ", e);
 	const obj = JSON.parse(e.data);
@@ -337,17 +332,13 @@ ws.onmessage = e => {
 	}
 	
 }
-
-
 ws.onerror = e => {
 	
 	console.log("onerror : ", e);
 }
-
 ws.onclose = e => {
 	console.log("onclose : ", e);
 }
-
 function AlarmErase(link){
 	
 	
@@ -370,6 +361,4 @@ function AlarmErase(link){
 	location.href="${pageContext.request.contextPath}/"+link;
 		
 };
-
-
 </script>

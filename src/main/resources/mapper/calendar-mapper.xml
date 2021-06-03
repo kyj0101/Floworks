@@ -11,9 +11,18 @@
 			#{title},
 			to_date(#{startDate}, 'yyyy-mm-dd'),
 			to_date(#{endDate}, 'yyyy-mm-dd')
-
-
 	</insert>
+
+	
+	<select id="selectListCalendar" resultType="calendar">
+		select
+			*
+		from
+			calendar
+		where 
+			id = #{id}
+	</select>
+
 
 
 </mapper>
