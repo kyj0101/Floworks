@@ -5,13 +5,16 @@
 
 .tree ul {
     padding-top: 20px; position: relative;
-	
+
+	padding-left: 30px;
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	height: 200px;
 }
-
+.tree {
+	margin-top: 25px;
+}
 .tree li {
 	float: left; text-align: center;
 	list-style-type: none;
@@ -74,7 +77,7 @@ right connector from last child*/
 
 .tree li a{
 	border: 1px solid #ccc;
-	padding: 15px 25px;
+	padding: 8px 25px;
 	text-decoration: none;
 	color: #666;
 	font-family: arial, verdana, tahoma;
@@ -101,5 +104,30 @@ right connector from last child*/
 .tree li a:hover+ul::before, 
 .tree li a:hover+ul ul::before{
 	border-color:  #94a0b4;
+}
+
+.tree>ul>li {
+	padding-bottom: 0;
+}
+
+/* 조직도 직원 목록부분 */
+.table {
+	width: 80%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.table-id {
+	width: 200px;
+}
+
+.table-name {
+	width: 150px;
+}
+.table-depart {
+	width: 200px;
+}
+.table-positon {
+	width: 150px;
 }
 
