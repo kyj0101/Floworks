@@ -38,7 +38,7 @@
 		<security:intercept-url pattern="/leave/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/search/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/attendance/**" access="hasRole('ROLE_USER')"/>
-		
+		<security:intercept-url pattern="/organization/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />	 
 		
 		<security:form-login login-page="/login"
