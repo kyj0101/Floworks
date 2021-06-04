@@ -5,6 +5,7 @@
 
 .tree ul {
     padding-top: 20px; position: relative;
+
 	padding-left: 30px;
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
@@ -129,3 +130,4 @@ right connector from last child*/
 .table-positon {
 	width: 150px;
 }
+

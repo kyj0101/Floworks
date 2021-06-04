@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
 import org.springframework.ui.Model;
+=======
+
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +32,7 @@ public class OrganizationController {
 	private OrganizationService organizationService;
 	
 	@GetMapping("/organizationChart")
+
 	public void organiztionChart(@RequestParam(defaultValue = "1") int cPage,
 			@RequestParam String workspace, Model model,
 			HttpServletRequest request) {
@@ -54,6 +59,7 @@ public class OrganizationController {
 	      //3. jsp처리 위임
 	      model.addAttribute("userList", userList);
 	      model.addAttribute("pageBar", pageBar);
+
 	}
 
 }

@@ -22,6 +22,7 @@
 			<a href="#">대표</a>
 			<ul>
 				<li>
+
 					<a href="organizationChart?dept=기획부">기획부</a>					
 				</li>
 				<li>
@@ -77,3 +78,4 @@
 </section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
