@@ -14,22 +14,22 @@
 
 <section>
 	<div class="d-flex attendance-search-div">
-		<form:form action="${pageContext.request.contextPath}/attendance/list/search" >
+		<form:form action="${pageContext.request.contextPath}/attendance/list/search" method="get">
 			<input type="hidden" name="id" value="<sec:authentication property="principal.id"/>" />
 			<div class="col-md-3 mb-3">
 			
-		      <select class="custom-select" id="validationTooltip04" required>
+		      <select class="custom-select attendance-select" name="year"  id="validationTooltip04">
 		       	<option value="" selected>선택 안함</option>
 		       		
 		        <c:forEach items="${yearList}" var="year">
-		        	<option value="${year}">${year}년</option>
+		        	<option  value="${year}">${year}년</option>
 				</c:forEach>
 				
 		      </select>
 		    </div>
 		    
 			<div class="col-md-3 mb-3">
-		      <select class="custom-select" id="validationTooltip04" required>
+		      <select class="custom-select attendance-select"  name="month" id="validationTooltip04" >
 		      	
 		      	<option value="" selected>월</option>
 		      	
@@ -41,7 +41,7 @@
 		    </div>
 		    
 		    <div class="col-md-3 mb-3">
-		      <select class="custom-select" id="validationTooltip04" required>
+		      <select class="custom-select attendance-select" name="day" id="validationTooltip04">
 		      		
 		      		<option value="" selected>일</option>
 		      		

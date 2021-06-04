@@ -52,12 +52,12 @@ function inputNullCheck(){
 	const inputs = $(".register-form-control");
 	
 	for(input of inputs){
-	
 		if($(input).hasClass("workspace") && $("input[name=createWorkspace]").prop("checked")){
 			continue;
 		}
 		
 		if($(input).val() == ""){
+			console.log($(input));
 			
 			alert("입력하지 않은 곳이 있습니다.");
 			

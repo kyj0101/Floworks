@@ -28,14 +28,23 @@ public class Member extends User implements Serializable, UserDetails{
 	private String department;
 	private String profileFileOrinalname;
 	private String profileFileRename;
+	private int leave;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
 		String userRole = super.getRole().trim();
-	
-		if(userRole.equals("ADMIN")) {
+		String workspaceId = super.getWorkspaceId();
+		
+		if("".equals(workspaceId)) {
+			
+			authList.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+			
+			return authList;
+		}
+		
+		if("ADMIN".equals(userRole)) {
 			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));			
 		}
 		

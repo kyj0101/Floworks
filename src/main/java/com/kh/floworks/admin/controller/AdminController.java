@@ -3,7 +3,7 @@ package com.kh.floworks.admin.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,8 +23,6 @@ import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 import com.kh.floworks.attendance.model.service.AttendanceService;
-import com.kh.floworks.board.model.vo.PostFile;
-import com.kh.floworks.board.model.vo.PostList;
 import com.kh.floworks.common.utils.PageBarUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +86,7 @@ public class AdminController {
    @PostMapping("/userUpdate")
    public String userUpdate(@ModelAttribute("userDetail") UserDetail userDetail,  
 						    RedirectAttributes redirectAttr) {
+
 	   
 	   //1. 업무로직
 	   int result = adminService.userUpdate(userDetail); 
@@ -264,7 +263,3 @@ public class AdminController {
 	
 	
 }
-	
-	
-	
-	

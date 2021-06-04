@@ -57,10 +57,9 @@
 							<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
 								남은 연차
 							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">18일</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">${memberLeave}일</div>
 						</div>
 						<div class="col-auto">
-							<i class="bi bi-clipboard-check text-gray-300"></i>
 						</div>
 					</div>
 				</div>
@@ -78,7 +77,6 @@
 							<div class="h5 mb-0 font-weight-bold text-gray-800">${latenessCount}회</div>
 						</div>
 						<div class="col-auto">
-							<i class="bi bi-exclamation-circle text-gray-300"></i>
 						</div>
 					</div>
 				</div>
@@ -96,14 +94,13 @@
 							<div class="h5 mb-0 font-weight-bold text-gray-800">${weekOfficeHours}</div>
 						</div>
 						<div class="col-auto">
-							<i class="bi bi-alarm text-gray-300"></i>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div class="d-sm-flex col-xl-4 col-md-6 mb-4">
+		<div class="d-sm-flex col-xl-3 col-md-6 mb-4">
 			<div class="card border-left-success h-100 py-2">
 				<div class="card-body">
 					<div class="row no-gutters align-items-center">
@@ -114,8 +111,6 @@
 							<div class="h5 mb-0 font-weight-bold text-gray-800">${monthOfficeHours}</div>
 						</div>
 						<div class="col-auto">
-							<i class="bi bi-calendar-plus fa-2x text-gray-300"
-								style="font-size: 22px;"></i>
 						</div>
 					</div>
 				</div>
@@ -184,13 +179,13 @@
 			</c:if>
 		
 			<c:if test="${attendance.officeIn != null && attendance.officeOff != null}">			
-				<button class="btn btn-primary attendance-btn disabled" type="button">
+				<button class="btn btn-primary attendance-btn disabled" type="button" >
 					퇴근
 				</button>				
 			</c:if>
 		</form:form>
 		
-		<button class="btn btn-success attendance-btn" type="button">
+		<button class="btn btn-success attendance-btn" type="button" onclick="location.href='${pageContext.request.contextPath}/leave/request'">
 			휴가신청
 		</button>
 		
