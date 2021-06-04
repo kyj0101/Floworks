@@ -1,7 +1,6 @@
 package com.kh.floworks.calendar.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +15,13 @@ public class CalendarDaoImpl implements CalendarDao{
 	private SqlSessionTemplate session;
 
 	@Override
-	public int insertCal(Map<String, String> param) {
-		return session.insert("calendar.insertCal",param);
-//	public int insertCal(Map<String, Object> calendarDate) {
-//		return session.insert("calendar.insertCal",calendarDate);
-	
+	public List<Calendar> selectListCalendar(String id) {
+		return session.selectList("calendar.selectListCalendar", id);
 	}
 
 	@Override
-	public List<Calendar> selectListCalendar(String id) {
-		return session.selectList("calendar.selectListCalendar", id);
+	public int insertCalendar(Calendar cal) {
+		return session.insert("calendar.insertCalendar", cal);
 	}
 
 	
