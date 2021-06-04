@@ -114,8 +114,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int selectLeaveDay(Map<String, String> param) {
-		log.info("{}",param.get("workspaceId"));
 		return memberDao.selectLeaveDay(param);
+	}
+	
+	@Override
+	public Map<String, String> selectOneWorkspace(String id) {
+		return memberDao.selectOneWorkspace(id);
 	}
 
 	@Override
@@ -152,6 +156,8 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteAddressBook(String id) {
 		return memberDao.deleteAddressBook(id);
 	}
+
+
 
 
 	

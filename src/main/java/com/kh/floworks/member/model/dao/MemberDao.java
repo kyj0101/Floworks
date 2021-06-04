@@ -40,6 +40,8 @@ public interface MemberDao {
 
 	int selectLeaveDay(Map<String, String> param);
 
+	Map<String, String> selectOneWorkspace(String id);
+
 	int updateUserWorkspaceId(Map<String, String> param);
 
 	int updateMember(Member updateMember);
@@ -53,4 +55,5 @@ public interface MemberDao {
 	int updateWorkspaceOwnerAdmin(Map<String, String> param);
 
 	int deleteAddressBook(String id);
+
 }
