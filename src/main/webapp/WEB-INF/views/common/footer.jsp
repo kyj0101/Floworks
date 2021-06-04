@@ -76,6 +76,7 @@
 			<div class="collapse hide" id="sidebarChart"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
+
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart" class="nav-link active">
 							조직도 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
@@ -132,5 +133,6 @@
 </aside>
 </div>
 </body>
+
 
 </html>
