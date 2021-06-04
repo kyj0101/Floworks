@@ -44,12 +44,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
-	@Override
-	public int memberUpdate(UserDetail userDetail) {
-		return adminDao.memberUpdate(userDetail);
-	}
 
 
+	
+	
 	
 	
 

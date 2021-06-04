@@ -87,7 +87,7 @@
         </form:form>
     </div>
 </c:if>
-<c:if test="${loginId.id ne postList.id && loginId.position ne '대표'}"> 
+<c:if test="${loginId.id ne postList.id}"> 
 <script>
 alert('잘못된 접근입니다');
 document.location.href="${pageContext.request.contextPath }/home";

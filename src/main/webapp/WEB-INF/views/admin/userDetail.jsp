@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/admin/userDetail.css">
 	
 <section>
+<sec:authentication property="principal" var="loginId"/>
 	<form:form 
 		name="userUpdate"
 		action="${pageContext.request.contextPath}/admin/userUpdate"
