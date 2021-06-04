@@ -55,11 +55,23 @@ public class MemberController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@GetMapping("/mypage")
+	public String memberMypage(String id, Model model) {
+
+		Member member = memberService.selectOneMember(id);
+        Map<String, String> workspaceInfoMap = memberService.selectOneWorkspace(id);
+        
+		model.addAttribute("member", member);
+		model.addAttribute("workspaceInfoMap", workspaceInfoMap);
+		
+		return "/member/memberInfo";
+	}
+	
+	@GetMapping("/update")
 	public String memberUpdate(String id, Model model) {
 
 		//스프링 시큐리티 태그를 사용하면 글자가 깨져서 직접 model에 member객체를 전달한다.
 		Member member = memberService.selectOneMember(id);
-
+		
 		model.addAttribute("member", member);
 		
 		return "/member/memberUpdate";
@@ -133,7 +145,7 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	
-		return "redirect:/member/mypage?id=" + updateMember.getId();
+		return "redirect:/member/update?id=" + updateMember.getId();
 	}
 
 

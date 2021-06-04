@@ -1,7 +1,5 @@
 package com.kh.floworks.member.model.vo;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;

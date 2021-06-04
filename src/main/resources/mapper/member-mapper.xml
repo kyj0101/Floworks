@@ -78,14 +78,17 @@
 
 	<select id="selectOneMember" resultMap="memberMap">
 		select
-    		*
+		    *
 		from
-    		member m join floworks_user u
-    		on m.id = u.id
-    	where
-    		u.quit_yn = 'N'
-    		and m.resign = 'N'
-    		and m.id = #{id}
+		    member m 
+		        join floworks_user u
+		            on m.id = u.id
+		        join department d
+		            on m.department_code = d.department_code
+		where
+		    u.quit_yn = 'N'
+		    and m.resign = 'N'
+		    and m.id = #{id}
 	</select>
 
 	<select id="selectIdDuplicate"  resultType="int">
@@ -173,6 +176,17 @@
 		where
 		    position = #{position}
 		    and workspace_id = #{workspaceId}
+	</select>
+	
+	<select id="selectOneWorkspace" resultMap="workspaceMap">
+		select
+		    w.*
+		from
+		    floworks_user f 
+		        join workspace w
+		            on f.workspace_id = w.workspace_id
+		where
+		    f.id = #{id}
 	</select>
 		
 	<update id="updateUserWorkspaceId"> 
@@ -267,6 +281,13 @@
 		<id column="DEPARTMENT_CODE" property="departmentCode"/>
 		
 		<result column="DEPARTMENT_NAME" property="departmentName"/>
+	</resultMap>
+	
+	<resultMap type="map" id="workspaceMap">
+		<id column="workspace_id" property="workspaceId"/>
+		
+		<result column="owner" property="owner"/>
+		<result column="name" property="name"/>
 	</resultMap>
 	
 
