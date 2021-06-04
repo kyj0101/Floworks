@@ -31,7 +31,7 @@
 			</a>
 				<div class="collapse hide" id="sidebarCal" style="padding-left: 35px;">
 					<ul class="nav nav-sm flex-column">
-						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain?id=<sec:authentication property="principal.id"/>" class="nav-link active">일정관리 </a></li>
+						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">일정관리 </a></li>
 						<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
 					</ul>
 				</div>
@@ -76,9 +76,8 @@
 			<div class="collapse hide" id="sidebarChart"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item">
-						<a href="${pageContext.request.contextPath}/organization/info?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link active">조직도</a>
-					</li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link active">
+							조직도 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
 				</ul>
 			</div></li>
@@ -124,6 +123,7 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직급별 연차 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting/member?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직원 연차 설정</a></li>
 				</ul>
 			</div></li>
 		</sec:authorize>
@@ -132,4 +132,5 @@
 </aside>
 </div>
 </body>
+
 </html>
