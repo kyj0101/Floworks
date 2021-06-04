@@ -1,18 +1,19 @@
 package com.kh.floworks.calendar.controller;
 
-import java.util.Map;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.Gson;
 import com.kh.floworks.calendar.model.service.CalendarService;
+import com.kh.floworks.calendar.model.vo.Calendar;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,54 +26,31 @@ public class CalendarController {
 	private CalendarService calendarService;
 	
 	@GetMapping("/calendarMain")
-	public String calendarMain() {
-		log.info("cal컨트롤러 테스트");
-		return "/calendar/calendarMain";
-	}
-	
-	@PostMapping("/calendarInsert")
-	public String calendarInsert(@RequestParam Map<String, Object> calendarDate, 
-								 HttpServletRequest request, 
-								 RedirectAttributes redirectAttr) {
-		log.debug("calendarDate = {}", calendarDate);
+	public void calendarMain(@RequestParam String id, Model model) {
+		log.info("--------------------------------------calendar컨트롤러--------------------------------------");
+		List<Calendar> calendarList = calendarService.selectListCalendar(id);
+		log.debug("calendarList = {}", calendarList);
 		
-		Gson gson = new Gson();
-	
+		model.addAttribute("calendarList", calendarList);
+		
+	}
+
+	@PostMapping("/calendarInsert")
+    public String calendarInsert(@ModelAttribute Calendar cal,
+    								RedirectAttributes redirectAttr) {
 		try {
-			//44번째 fromJson에서부터 막혀서 여기부터 51번째줄까지 주석처리했습니다!
-//			Map<String, Object>[] dateMapList = gson.fromJson(calendarDate, Map[].class);
-//			log.info("dateMapList = {}", dateMapList);
+			log.debug("calInsert = {}", cal);
 			
-//			int result = calendarService.insertCal(calendarDate);
-//			String msg = result > 0 ? "일정 입력 성공!" : "일정 입력 실패! 다시 입력해주세요";
+			int result = calendarService.insertCalendar(cal);
 			
-//			for(Map<String, Object> date : dateMapList)
-//				log.info("date = {}", date);
-				//map.put("msg", "")
-		} catch(Exception e){
-			log.error("일정 등록 실패!", e);	
+			String msg = "일정 등록 성공!";
+			redirectAttr.addFlashAttribute("msg", msg);
+		
+		} catch (Exception e) {
+			log.error("일정 등록 오류!", e);
 			throw e;
 		}
-		return null;
-	}
-
-
-//	@PostMapping("/calendarInsert")
-//    public String calendarInsert(@RequestParam String dateList) {
-//        log.info("dateList = {}", dateList);ß
-//
-//        Gson gson = new Gson();
-//        Map<String, String>[] dateMapList = gson.fromJson(dateList, Map[].class);
-//
-//        log.info("dateMapList = {}", dateMapList);
-//        for(Map<String, String> date : dateMapList)
-//            log.info("date = {}", date);
-//
-//        return "redirect:/calendar/calendarMain.do";
-//    }
-
-
-
+        return "redirect:/calendar/calendarMain.do?id=" + cal.getId();
+    }
 	
-
 }
