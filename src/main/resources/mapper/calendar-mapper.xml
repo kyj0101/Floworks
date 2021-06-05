@@ -3,17 +3,45 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendar">
-	<insert id="insertCal" parameterType="hashmap">
+	<select id="selectListCalendar" resultType="calendar">
+		select
+			*
+		from
+			calendar
+		where 
+			id = #{id}
+	</select>
+
+	<insert id="insertCalendar">
 		insert into
 			calendar
 		values(
+			seq_calendar_no.nextval,
 			#{id},
-			#{title},
-			to_date(#{startDate}, 'yyyy-mm-dd'),
-			to_date(#{endDate}, 'yyyy-mm-dd')
-
-
+			#{subject},
+			#{startDate},
+			#{endDate}
+		)
 	</insert>
-
+	
+	<update id="updateCalendar">
+		update
+			calendar 
+		set
+			subject = #{subject},
+			start_date = #{startDate},
+			end_date = #{endDate}
+		where
+			id = #{id}
+		and
+			cal_no = #{calNo}
+	</update>
+	
+	<delete id="deleteCalendar">
+		delete from
+			calendar
+		where
+			cal_no = #{no}
+	</delete>
 
 </mapper>

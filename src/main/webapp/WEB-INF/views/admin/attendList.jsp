@@ -31,7 +31,7 @@
         	<c:forEach items="${attendList}" var="attendList">
         	<tr data-no="${attendList.id}">
         		<td>${attendList.id}</td>
-        		<td>${attendList.day}</td>
+        		<td><fmt:formatDate value="${attendList.day}" pattern="yy-MM-dd"/></td>        		
         		<td>${attendList.officeIn}</td>
         		<td>${attendList.officeOff}</td>
         		<td>${attendList.latenessYn}</td>

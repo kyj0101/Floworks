@@ -1,17 +1,18 @@
 package com.kh.floworks.calendar.model.service;
 
-import java.util.Map;
-import java.util.List;
 
-import org.springframework.ui.Model;
+import java.util.List;
 
 import com.kh.floworks.calendar.model.vo.Calendar;
 
 public interface CalendarService {
 
-	int insertCal(Map<String, Object> calendarDate);
+	List<Calendar> selectListCalendar(String id);
 
-	int insertCal(String dateList);
+	int insertCalendar(Calendar cal);
 
+	int updateCalendar(Calendar cal);
+
+	int deleteCalendar(int no);
 
 }

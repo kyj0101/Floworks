@@ -31,8 +31,7 @@
 			</a>
 				<div class="collapse hide" id="sidebarCal" style="padding-left: 35px;">
 					<ul class="nav nav-sm flex-column">
-						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">일정관리 </a></li>
-						<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain?id=<sec:authentication property="principal.id"/>" class="nav-link active">일정관리 </a></li>
 					</ul>
 				</div>
 		</li>
@@ -76,26 +75,32 @@
 			<div class="collapse hide" id="sidebarChart"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
+
+
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active">
 							조직도 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAppr"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재
+			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재<span
+				class="badge badge-pill badge-danger">2</span>
 		</a>
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
+
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
+
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
 					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅
+			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅<span
+				class="badge badge-pill badge-danger">36</span>
 		</a>
 			<div class="collapse hide" id="sidebarCat"
 				style="padding-left: 35px;">
@@ -128,4 +133,6 @@
 </aside>
 </div>
 </body>
+
+
 </html>
