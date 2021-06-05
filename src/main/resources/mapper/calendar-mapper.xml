@@ -16,11 +16,34 @@
 		insert into
 			calendar
 		values(
+			seq_calendar_no.nextval,
 			#{id},
 			#{subject},
 			#{startDate},
 			#{endDate}
 		)
 	</insert>
+	
+	<update id="updateCalendar">
+		update
+			calendar 
+		set
+			subject = #{subject},
+			start_date = #{startDate},
+			end_date = #{endDate}
+		where
+			id = #{id}
+		and
+			cal_no = #{calNo}
+			
+			
+	</update>
+	
+	<delete id="deleteCalendar">
+		delete from
+			calendar
+		where
+			cal_no = #{no}
+	</delete>
 
 </mapper>

@@ -11,5 +11,9 @@ public interface CalendarService {
 
 	int insertCalendar(Calendar cal);
 
+	int updateCalendar(Calendar cal);
+
+	int deleteCalendar(int no);
+
 
 }

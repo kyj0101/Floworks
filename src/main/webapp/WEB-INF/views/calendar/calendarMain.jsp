@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
       dayHeaderContent: function (date) {
           let weekList = ["일", "월", "화", "수", "목", "금", "토"];
               return weekList[date.dow];
-          },
+      },
       dateClick: function(info) {
 			$("#eventModal").modal("show");
 			var date = info.dateStr
@@ -66,12 +66,17 @@ document.addEventListener('DOMContentLoaded', function() {
       },
      
       eventClick: function(info){
-	  		$("#eventModal").modal("show");
-	  		$("#eventModal").find("#startDate").val(info.event.startStr);
-			$("#eventModal").find("#endDate").val(info.event.endStr);
+	  		$("#eventUpdateModal").modal("show");
+	  		//$("#eventUpdateModal").find("#startDate").val(info.event.startStr);
+			//$("#eventUpdateModal").find("#endDate").val(info.event.endStr);
+			$("#updateNo").val(info.event.id);
+			$("#deleteNo").val(info.event.id);
+			$("#updateSubject").val(info.event.title);
+			$("#updateStartDate").val(info.event.startStr);
+			$("#updateEndDate").val(info.event.endStr);
 			
 			console.log(info);
-			
+			/* 
 			$("#eventModal").modal("show");
 			var date = info.dateStr
 			$("#startDate").val(date);
@@ -79,13 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			var calendarName = $("#calendarName").val();
 			$("#title").val(calendarName);
 			$('#close').on('click', function(){
-			$("#eventModal").modal("hide");
-		});
-      },
-      
-      eventClick: function(info){
-  		$("#eventModal").modal("show");
-		console.log(info);
+				$("#eventModal").modal("hide");
+			});
+			 */
       },
       //연월 표기 한국어 설정
       titleFormat : function(date) {
@@ -95,15 +96,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <c:forEach items="${calendarList}" var="cal">
 	    calendar.addEvent({
-	    	id : '${cal.id}',
+	    	id : ${cal.calNo},
 			title : '${cal.subject}', 
 			start : '${cal.startDate}', 
-			end : '${cal.endDate}'
+			end : '${cal.endDate}',
+			description : '${cal.id}'
 		});
     </c:forEach>
     
     calendar.render();
     cal = calendar;
+    
+    $('#eventModal').on('hidden.bs.modal', function(){
+		$("#title").val('');
+		$("#startDate").val('');
+		$("#endDate").val('');
+	});
+    
+    $('#eventUpdateModal').on('hidden.bs.modal', function(){
+		$("#updateNo").val('');
+		$("#deleteNo").val('');
+		$("#updateTitle").val('');
+		$("#updateStartDate").val('');
+		$("#updateEndDate").val('');
+	});
  
 /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
 //var eventId = 1 + Math.floor(Math.random() * 1000);
@@ -126,7 +142,12 @@ $("#calAddFrm").submit(e => {
         return false;
     }
 	});
+	
+	$("#update").click(e => {
+		$("#calUpdateFrm").submit();
+	});
 });
+
 
  
  
@@ -135,7 +156,8 @@ $("#calAddFrm").submit(e => {
 //    enddate=element.startdate;
 //}
 
-//datepicker
+//datepicker 
+//달력뜰 수 있게
 $(function() {
 $.datepicker.setDefaults({
 	dateFormat : 'yy-mm-dd',
@@ -154,9 +176,13 @@ $.datepicker.setDefaults({
 });
 $("#startDate").datepicker();
 $("#endDate").datepicker();
+$("#updateStartDate").datepicker();
+$("#updateEndDate").datepicker();
 
 $("#startDate").datepicker('setDate', 'today');
 $("#endDate").datepicker('setDate', 'today');
+$("#updateStartDate").datepicker('setDate', 'today');
+$("#updateEndDate").datepicker('setDate', 'today');
 });
 
 </script>
@@ -226,7 +252,7 @@ $("#endDate").datepicker('setDate', 'today');
 								</div>
 								<!--modal-footer -->
 								<div class="modal-footer modalBtnContainer-addEvent">
-									<button type="button" class="btn btn-outline-secondary" id="close">취소</button>
+									<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
 									<button type="submit" class="btn btn-outline-success" id="save-event">저장</button>
 								</div>
 							</form:form>
@@ -238,6 +264,65 @@ $("#endDate").datepicker('setDate', 'today');
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="eventUpdateModal"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="row form-group justify-content-end">
+						<div class="col-sm-auto">
+							<!--밸류 넣기, json으로 값가져오기 -->
+							<form
+								action="${pageContext.request.contextPath}/calendar/calendarUpdate?${_csrf.parameterName}=${_csrf.token}"
+								method="POST" id="calUpdateFrm">
+							<input type="hidden" id="updateNo" name="no" />
+							<%-- <input type="hidden" name="updateId" value="${param.id}" /> --%>
+							<!-- <input class="btn btn-outline-secondary btn" type="reset" value="리셋">-->
+							<!-- <input class="btn btn-outline-success sub" id="insert" type="submit" value="등록 요청"> -->
+							<!-- modal-header -->
+							<div class="modal-header">
+								<h4 class="modal-title"></h4>
+							</div>
+							<!-- modal-body -->
+							<div class="modal-body">
+								<div class="row mb-3">
+									<label for="title" class="col-sm-2 col-form-label">일정명</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="updateSubject" name="subject" required="required" />
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label for="start" class="col-sm-2 col-form-label">시작</label>
+									<div class="col-sm-10 form-group">
+										<input type="text" class="datepicker form-control" id="updateStartDate" name="startDate" />
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label for="end" class="col-sm-2 col-form-label">끝</label>
+									<div class="col-sm-10 form-group">
+										<input type="text" class="datepicker form-control" id="updateEndDate" name="endDate" />
+									</div>
+								</div>
+							</div>
+							</form>
+							<!--modal-footer -->
+							<form action="${pageContext.request.contextPath}/calendar/calendarDelete?${_csrf.parameterName}=${_csrf.token}"
+											method="POST" id="calDeleteFrm">
+							<div class="modal-footer modalBtnContainer-addEvent">
+								<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
+								<button type="button" class="btn btn-outline-warning" id="update">수정</button>
+								<input type="hidden" id="deleteNo" name="no"/>
+								<button type="submit" class="btn btn-outline-danger" id="delete">삭제</button>
+							</div>
+							</form>
+						</div>		
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+		
 	</section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
