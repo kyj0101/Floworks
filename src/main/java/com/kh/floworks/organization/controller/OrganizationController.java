@@ -42,6 +42,7 @@ public class OrganizationController {
 	      Map<String, Object> param = new HashMap<>();
 	      param.put("numPerPage", numPerPage);
 	      param.put("cPage", cPage);
+	      param.put("workspace", workspace);
 	      
 	      Map<String, Object> search = new HashMap<>();
 	      search.put("dept", dept);
