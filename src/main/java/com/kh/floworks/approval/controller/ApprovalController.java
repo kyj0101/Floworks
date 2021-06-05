@@ -53,9 +53,6 @@ public class ApprovalController {
 	private ApprovalService apvlService;
 	
 	@Autowired
-	private ResourceLoader resourceLoader;
-	
-	@Autowired
 	private ServletContext servletContext;
 	
 	@GetMapping("/apvlWrite")
@@ -282,6 +279,7 @@ public class ApprovalController {
 		}
 		
 		String msg = result > 0 ? "결재 처리 완료" : "결재 처리 실패";
+		redirectAttr.addFlashAttribute("msg", msg);
 		log.info("apvlProcess 처리 성공여부 = {}", msg);
 		
 		return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
@@ -335,6 +333,10 @@ public class ApprovalController {
 		
 		int result = apvlService.updateApproval(approval);
 		
+		String msg = result > 0 ? "결재 수정 완료" : "결재 수정 실패";
+		log.info("apvlModify 처리 성공여부 = {}", msg);
+		redirectAttr.addFlashAttribute("msg", msg);
+		
 		return "redirect:/approval/apvlProgressDetail?apvlId=" + apvlId;
 	}
 	
@@ -346,8 +348,9 @@ public class ApprovalController {
 		
 		String msg = result > 0 ? "결재 삭제 완료" : "결재 삭제 실패";
 		log.info("apvlDelete 처리 성공여부 = {}", msg);
+		redirectAttr.addFlashAttribute("msg", msg);
 		
-		return "redirect:/approval/apvlProgress?workspaceId=" + workspaceId; //TODO apvlId --> workspaceId로 수정하기
+		return "redirect:/approval/apvlProgress?workspaceId=" + workspaceId;
 	}
 	
 	

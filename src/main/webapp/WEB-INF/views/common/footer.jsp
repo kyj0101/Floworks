@@ -63,7 +63,11 @@
 					</li>
 
 					<li class="nav-item">
-						<a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a>
+						<a href="${pageContext.request.contextPath}/leave/request?id=<sec:authentication property='principal.id'/>" class="nav-link "> 휴가신청 </a>
+					</li>
+					
+					<li class="nav-item">
+						<a href="${pageContext.request.contextPath}/leave/list?workspaceId=<sec:authentication property='principal.workspaceId'/>" class="nav-link "> 휴가신청 보관함 </a>
 					</li>
 				</ul>
 			</div>
@@ -89,13 +93,8 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-<<<<<<< HEAD
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
-=======
-									<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
-					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarCat"

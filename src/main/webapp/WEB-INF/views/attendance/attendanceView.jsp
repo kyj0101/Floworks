@@ -106,7 +106,7 @@ $(document).ready(function(){
 	                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="13" readonly>
 	            </div>
 	
-	            <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/leave/request'">연차 사용하기</button>
+	            <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.request.contextPath}/leave/request?id=<sec:authentication property='principal.id'/>'">연차 사용하기</button>
 	            
 	        </div>
 	    </div>
