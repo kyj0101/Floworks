@@ -205,4 +205,12 @@ public class MemberController {
 		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
+	@GetMapping("/memberDetail.do")
+	public void memberDetail(Model model) {
+
+	   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();   
+	   model.addAttribute("loginMember", authentication.getPrincipal());
+	   
+	}
+	
 }

@@ -1,8 +1,12 @@
 package com.kh.floworks.security.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kh.floworks.member.model.vo.Member;
 import com.kh.floworks.member.model.vo.User;
@@ -29,9 +33,11 @@ public class SecurityService implements UserDetailsService{
 			throw new UsernameNotFoundException(username + "not fount");
 		}
 
-		log.info("Role{}", member.getRole());
+		log.info("Role={}", member.getRole());
+		
+		log.info("\n\nmember={}\n\n",member);
 		
 		return member;
 	}
-
+	
 }

@@ -83,8 +83,7 @@
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAppr"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재<span
-				class="badge badge-pill badge-danger">2</span>
+			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재
 		</a>
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
@@ -96,8 +95,7 @@
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅<span
-				class="badge badge-pill badge-danger">36</span>
+			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅
 		</a>
 			<div class="collapse hide" id="sidebarCat"
 				style="padding-left: 35px;">

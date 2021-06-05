@@ -58,7 +58,6 @@
     		on m.id = u.id
     	where
     		u.quit_yn = 'N'
-    		and m.resign = 'N'
     		and m.id = #{id}
 	</select>
 
