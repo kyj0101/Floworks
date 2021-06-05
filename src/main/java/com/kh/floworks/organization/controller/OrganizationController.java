@@ -30,10 +30,11 @@ public class OrganizationController {
 	private OrganizationService organizationService;
 	
 	@GetMapping("/organizationChart")
-
 	public void organiztionChart(@RequestParam(defaultValue = "1") int cPage,
-			@RequestParam String workspace, Model model,
-			HttpServletRequest request) {
+								@RequestParam String workspace,
+								@RequestParam String dept,
+								Model model,
+								HttpServletRequest request) {
 		
 		//1. 사용자입력값
 	      int numPerPage = 10;
@@ -41,14 +42,18 @@ public class OrganizationController {
 	      Map<String, Object> param = new HashMap<>();
 	      param.put("numPerPage", numPerPage);
 	      param.put("cPage", cPage);
+	      param.put("workspace", workspace);
+	      
+	      Map<String, Object> search = new HashMap<>();
+	      search.put("dept", dept);
 	      
 	      //2. 업무로직
-	      List<UserList> userList = organizationService.selectUserList(param, workspace);
+	      List<UserList> userList = organizationService.selectUserList(param, search);
 	      log.info("userList = {}", userList);
 	      
 	      //b. pagebar영역
-	      int totalContents = organizationService.getTotalContents(workspace);
-	      String url = request.getRequestURI() + "?workspace=" + workspace;
+	      int totalContents = organizationService.getTotalContents(search);
+	      String url = request.getRequestURI() + "?workspace=" + workspace + "&dept=" + dept;
 	      log.info("totalContents = {}", totalContents);
 	      log.info("url = {}", url);
 	      String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);

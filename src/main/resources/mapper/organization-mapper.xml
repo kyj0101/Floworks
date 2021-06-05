@@ -12,7 +12,8 @@
 		        on m.department_code = d.department_code
 		     join position p
 		     	on m.position = p.position
-		where workspace_id = #{workspace}
+		where
+			workspace_id = #{workspace} || #{dept}
 		order by
 			REGEXP_REPLACE(POSITION_CODE,'[0-9]'), TO_NUMBER(REGEXP_REPLACE(position_code, '[^0-9]'))
 	</select>
