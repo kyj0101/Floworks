@@ -31,8 +31,7 @@
 			</a>
 				<div class="collapse hide" id="sidebarCal" style="padding-left: 35px;">
 					<ul class="nav nav-sm flex-column">
-						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">일정관리 </a></li>
-						<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain?id=<sec:authentication property="principal.id"/>" class="nav-link active">일정관리 </a></li>
 					</ul>
 				</div>
 		</li>
@@ -77,7 +76,9 @@
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 
+
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active">
+
 							조직도 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
 				</ul>
