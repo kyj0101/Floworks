@@ -1,5 +1,6 @@
 package com.kh.floworks.calendar.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,32 @@ public class CalendarController {
         return "redirect:/calendar/calendarMain.do?id=" + cal.getId();
     }
 	
+	@PostMapping("/calendarUpdate")
+	public String calendarUpate(Calendar cal, RedirectAttributes redirectAttr, Principal principal) {
+		String memberId = principal.getName();
+		cal.setId(memberId);
+		log.info("calUpdate = {}", cal);
+		log.info("id = {}", cal.getId());
+		int result = calendarService.updateCalendar(cal);
+		String msg = result > 0 ? "일정 수정 성공" : "일정 수정 실패";
+		
+		//2. 리다이렉트 및 사용자 피드백
+		redirectAttr.addFlashAttribute("msg", msg);
+		log.debug("memberId = {}", principal.getName());
+		
+		return "redirect:/calendar/calendarMain.do?id=" + memberId;
+	}
+	
+	@PostMapping("/calendarDelete")
+	public String calendarDelete(@RequestParam int no, RedirectAttributes redirectAttr, Principal principal) {		
+		//1. 업무로직
+		log.info("calDelete = {}", no);
+		int result = calendarService.deleteCalendar(no);
+		String msg = result > 0 ? "일정 삭제 성공" : "일정 삭제 실패";
+		//2. 리다이렉트 및 사용자피드백
+		redirectAttr.addFlashAttribute("msg", msg);
+		
+		String memberId = principal.getName();
+		return "redirect:/calendar/calendarMain.do?id=" + memberId;
+	}
 }
