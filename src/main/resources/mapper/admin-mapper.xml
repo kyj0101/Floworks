@@ -14,18 +14,6 @@
 		order by hire_date
 	</select>
 
-	<resultMap type="hashmap" id="userList">
-		<id column="id" property="id"/>
-		<result column="workspace_id" property="workspaceId"/>
-		<result column="name" property="name"/>
-		<result column="department_Name" property="departmentName"/>
-		<result column="position" property="position"/>
-		<result column="hire_date" property="hireDate"/>
-		<result column="role" property="role"/>
-		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
-	</resultMap>
-
-
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
@@ -47,24 +35,160 @@
 		    m.id = #{userId}
 	</select>
 	
+	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
+		select
+		    position,
+		    leave_day
+		from
+		    leave_system
+		where
+		    workspace_id = #{workspaceId}
+	</select>
 	
+	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
+	<select id="selectAttendanceList" resultType="attendList">
+		select 
+    		id,
+    		day,
+    		office_In,
+    		office_off,
+    		lateness_yn
+		from 
+    		attendance 
+		where id in(
+			select 
+				id 
+			from 
+				floworks_user 
+			where workspace_id=#{workspaceId}
+			)
+		order by office_in desc
+	</select>  
 
-	<resultMap type="userDetail" id="userDetail">
-		<id column="id" property="id"/>
-		<result column="workspace_id" property="workspaceId"/>
-		<result column="name" property="name"/>
-		<result column="department_name" property="departmentName"/>
-		<result column="position" property="position"/>
-		<result column="phone" property="phone"/>
-		<result column="email" property="email"/>
-		<result column="address" property="address"/>
-		<result column="hire_date" property="hireDate"/>
-		<result column="quit_yn" property="quitYn"/>
-		<result column="role" property="role"/>
-		<result column="leave" property="leave"/>
-	</resultMap>
-
-
+	<select id="getTotalAttendContents" resultType="_int">
+		select 
+    		count(*) 
+		from 
+    		attendance 
+		where id in(select id from floworks_user where workspace_id=#{workspaceId})
+	</select>
+	
+	<select id="selectAllMemberAttendanceYear" resultType="string">
+		select distinct 
+		    extract(year from day)
+		from
+		    attendance a
+		        join floworks_user f
+		            on a.id = f.id
+		where
+		    f.workspace_id = #{workspaceId}
+		    and f.quit_yn = 'N'
+	</select>
+	
+	<select id="selectAllMemberAttendanceMonth" resultType="string">
+		select distinct 
+		    extract(month from day)
+		from
+		    attendance a
+		        join floworks_user f
+		            on a.id = f.id
+		where
+		    f.workspace_id = #{workspaceId}
+		    and f.quit_yn = 'N'	
+	</select>
+	
+	<select id="selectOneAttend" resultMap="memberAttendanceMap">
+		select
+		    *
+		from 
+		    attendance a
+		        join floworks_user f
+		            on a.id = f.id
+		        join member m
+		            on f.id = m.id
+		        join department d
+		            on m.department_code = d.department_code
+		where
+		    to_char(a.day, 'yy-mm-dd') = #{day}
+		    and a.id = #{id}
+	</select>
+	
+	<select id="selectSearchAttendList" resultType="attendList">
+		select
+			*
+		from
+			attendance a
+				join floworks_user f
+					on a.id = f.id
+		where
+			workspace_id = #{workspaceId}
+			<if test="id != null "> 
+				and a.id like '%' || #{id} || '%'
+			</if>
+			<if test="year != null and year != '' "> 
+				and extract(year from day) = #{year}
+			</if>
+			<if test="month != null and month != '' "> 
+				and extract(month from day) = #{month}
+			</if> 
+			<if test="day != null and day != '' "> 
+				and extract(day from day) = #{day}
+			</if>
+		order by
+			day desc
+	</select>
+	
+	<select id="getTotalSearchAttendContents" resultType="int">
+		select
+			count(*)
+		from
+			attendance a
+				join floworks_user f
+					on a.id = f.id
+		where
+			workspace_id = #{workspaceId}
+			<if test="id != null "> 
+				and a.id like '%' || #{id} || '%'
+			</if>
+			<if test="year != null and year != '' "> 
+				and extract(year from day) = #{year}
+			</if>
+			<if test="month != null and month != '' "> 
+				and extract(month from day) = #{month}
+			</if> 
+			<if test="day != null and day != '' "> 
+				and extract(day from day) = #{day}
+			</if>
+		order by
+			day desc
+	</select>
+	
+	
+	<update id="updateAttendanceSystem"> 
+		update
+			attendance_system
+		set
+			office_in_time = #{officeInTime},
+			office_off_time = #{officeOffTime},
+			lunch_time_start = #{lunchTimeStart},
+			lunch_time_end = #{lunchTimeEnd},
+			working_time = #{workingTime},
+			flex_time_yn = #{flexTimeYn},
+			memo = #{memo}
+		where
+			workspace_id = #{workspaceId}
+	</update>
+	
+	<update id="updateLeaveSystem">
+		update
+			leave_system
+		set
+			leave_day = #{leaveDay}
+		where
+			workspace_id = #{workspaceId}
+			and position = #{position}
+	</update>
+	
 	<update id="userUpdate" >
 		 update
 		 	floworks_user
@@ -89,105 +213,46 @@
 		 	id = #{id}
 	</update>
 	
-	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
-	<select id="selectAttendanceList" resultType="attendList">
-		select 
-    		id,
-    		day,
-    		office_In,
-    		office_off,
-    		lateness_yn
-		from 
-    		attendance 
-		where id in(
-			select 
-				id 
-			from 
-				floworks_user 
-			where workspace_id=#{workspaceId}
-			)
-		order by office_in desc
-	</select>  
-
-
-	<select id="getTotalAttendContents" resultType="_int">
-		select 
-    		count(*) 
-		from 
-    		attendance 
-		where id in(select id from floworks_user where workspace_id=#{workspaceId})
-	</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!-- ===================== 강유정 근태 설정 ========================  -->
-	<update id="updateAttendanceSystem"> 
+	<update id="updateAttend">
 		update
-			attendance_system
+			attendance
 		set
-			office_in_time = #{officeInTime},
-			office_off_time = #{officeOffTime},
-			lunch_time_start = #{lunchTimeStart},
-			lunch_time_end = #{lunchTimeEnd},
-			working_time = #{workingTime},
-			flex_time_yn = #{flexTimeYn},
-			memo = #{memo}
+			office_in = #{officeIn},
+			office_off = #{officeOff},
+			lateness_yn = #{latenessYn}
 		where
-			workspace_id = #{workspaceId}
+			id = #{id}
+			and to_char(day, 'yy/mm/dd') = #{day}
 	</update>
-	
-	
-	
 
-	<select id="selectLeaveSystem" resultMap="leaveSystemMap">
-		select
-		    position,
-		    leave_day
-		from
-		    leave_system
-		where
-		    workspace_id = #{workspaceId}
-	</select>
-	
-	<update id="updateLeaveSystem">
-		update
-			leave_system
-		set
-			leave_day = #{leaveDay}
-		where
-			workspace_id = #{workspaceId}
-			and position = #{position}
-	</update>
-	
+	<resultMap type="hashmap" id="userList">
+		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="name" property="name"/>
+		<result column="department_Name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="role" property="role"/>
+		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+	</resultMap>
+
+
+	<resultMap type="userDetail" id="userDetail">
+		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="name" property="name"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="address" property="address"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="quit_yn" property="quitYn"/>
+		<result column="role" property="role"/>
+		<result column="leave" property="leave"/>
+	</resultMap>
+
+
 	<resultMap type="map" id="leaveSystemMap">
 		<result column="position" property="position"/>
 		<result column="leave_day" property="leaveDay"/>
@@ -204,7 +269,19 @@
       <result column="lunch_time_end" property="lunchTimeEnd"/>
       <result column="working_time" property="workingTime"/>
    </resultMap>
-
+   
+   <resultMap type="map" id="memberAttendanceMap">
+   		<id column="ID" property="id"/>
+   		
+   		<result column="workspace_id" property="workspaceId"/>
+   		<result column="NAME" property="name"/>
+   		<result column="DEPARTMENT_NAME" property="departmentName"/>
+   		<result column="POSITION" property="position"/>
+   		<result column="DAY" property="day"/>
+   		<result column="OFFICE_IN" property="officeIn"/>
+   		<result column="OFFICE_OFF" property="officeOff"/>
+   		<result column="LATENESS_YN" property="latenessYn"/>
+   </resultMap>
 
 
 </mapper>
