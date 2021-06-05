@@ -59,7 +59,7 @@ public class CalendarController {
 		String memberId = principal.getName();
 		cal.setId(memberId);
 		log.info("calUpdate = {}", cal);
-		
+		log.info("id = {}", cal.getId());
 		int result = calendarService.updateCalendar(cal);
 		String msg = result > 0 ? "일정 수정 성공" : "일정 수정 실패";
 		
