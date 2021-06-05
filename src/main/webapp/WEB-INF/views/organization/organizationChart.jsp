@@ -19,11 +19,11 @@
 <div class="tree">
     <ul>
 		<li>
-			<a href="#">대표</a>
+			<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부">대표</a>
 			<ul>
 				<li>
 
-					<a href="organizationChart?dept=기획부">기획부</a>					
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=기획부">기획부</a>					
 				</li>
 				<li>
 					<a href="#">개발부</a>					
@@ -58,14 +58,16 @@
            
         <tbody>
         <c:if test="${userList != null}">
-             <c:forEach items="${userList}" var="users">
-			<tr data-no="${users.id}">
+			<c:forEach items="${userList}" var="users">
+        	<c:if test="${loginId.workspaceId eq users.workspaceId}">
+        	<tr data-no="${users.id}">
 				<td>${users.id}</td>
 				<td>${users.name}</td>
 				<td>${users.departmentName}</td>
 				<td>${users.position}</td>
 			</tr>
-		  </c:forEach>
+        	</c:if>
+			</c:forEach>
 	    </c:if>
 	    
         </tbody>

@@ -12,7 +12,9 @@
 		        on m.department_code = d.department_code
 		     join position p
 		     	on m.position = p.position
-		where workspace_id = #{workspace}
+		where
+			workspace_id = #{workspace} and
+			department_name like '%' || #{dept}
 		order by
 			REGEXP_REPLACE(POSITION_CODE,'[0-9]'), TO_NUMBER(REGEXP_REPLACE(position_code, '[^0-9]'))
 	</select>
@@ -32,8 +34,15 @@
 		select
 			count(*)
 		from
-			floworks_user
+			(select * 
+			from member m
+				left join department d
+					on m.department_code = d.department_code
+				left join floworks_user f
+					on m.id = f.id
+				)
 		where
-		    workspace_id = #{workspace}
+		    workspace_id = #{workspace} and
+		    department_name like '%' || #{dept}
 	</select>
 </mapper>
