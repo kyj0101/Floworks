@@ -14,15 +14,6 @@
 		order by hire_date
 	</select>
 
-	<select id="getTotalContents" resultType="_int">
-		select
-			count(*)
-		from
-			floworks_user
-		where
-		    workspace_id = #{workspace}
-	</select>
-
 	<select id="selectOneUserDetail" resultMap="userDetail">
 		select m.id, f.name, d.department_name, m.position, f.workspace_id,
 		        f.phone, f.email, f.address, m.hire_date, f.quit_yn, f.role, m.leave
@@ -64,14 +55,6 @@
 			)
 		order by office_in desc
 	</select>  
-
-	<select id="getTotalAttendContents" resultType="_int">
-		select 
-    		count(*) 
-		from 
-    		attendance 
-		where id in(select id from floworks_user where workspace_id=#{workspaceId})
-	</select>
 	
 	<select id="selectAllMemberAttendanceYear" resultType="string">
 		select distinct 
@@ -136,6 +119,23 @@
 			</if>
 		order by
 			day desc
+	</select>
+	
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			floworks_user
+		where
+		    workspace_id = #{workspace}
+	</select>
+	
+	<select id="getTotalAttendContents" resultType="_int">
+		select 
+    		count(*) 
+		from 
+    		attendance 
+		where id in(select id from floworks_user where workspace_id=#{workspaceId})
 	</select>
 	
 	<select id="getTotalSearchAttendContents" resultType="int">
@@ -212,7 +212,7 @@
 		 where
 		 	id = #{id}
 	</update>
-	
+		
 	<update id="updateAttend">
 		update
 			attendance
@@ -224,7 +224,7 @@
 			id = #{id}
 			and to_char(day, 'yy/mm/dd') = #{day}
 	</update>
-
+	
 	<resultMap type="hashmap" id="userList">
 		<id column="id" property="id"/>
 		<result column="workspace_id" property="workspaceId"/>

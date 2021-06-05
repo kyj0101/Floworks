@@ -46,15 +46,14 @@ public class AdminDaoImpl implements AdminDao {
 	}
 	
 
-	//직원 정보수정 테이블이 두개라 두개로 나눔
+	//직원 정보수정
 	@Override
 	public int userUpdate(UserDetail userDetail) {
-		return session.update("admin.userUpdate", userDetail);
+		return session.update("admin.userUpdate", userDetail)
+				+ session.update("admin.memberUpdate", userDetail);
 	}
-	@Override
-	public int memberUpdate(UserDetail userDetail) {
-		return session.update("admin.memberUpdate", userDetail);
-	}
+
+
 
 	//--강준혁 근태관리 리스트 쭉 뽑아오기
 	@Override
@@ -124,6 +123,11 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public int getTotalSearchAttendContents(Map<String, Object> param) {
 		return session.selectOne("admin.getTotalSearchAttendContents", param);
+	}
+
+	@Override
+	public int memberUpdate(UserDetail userDetail) {
+		return session.update("admin.memberUpdate", userDetail);
 	}
 
 	

@@ -24,6 +24,17 @@ public class CalendarDaoImpl implements CalendarDao{
 		return session.insert("calendar.insertCalendar", cal);
 	}
 
+	@Override
+	public int updateCalendar(Calendar cal) {
+		return session.update("calendar.updateCalendar",cal);
+	}
+
+	@Override
+	public int deleteCalendar(int no) {
+		return session.delete("calendar.deleteCalendar",no);
+
+	}
+
 	
 	
 }

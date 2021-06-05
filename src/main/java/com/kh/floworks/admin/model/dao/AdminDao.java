@@ -44,4 +44,6 @@ public interface AdminDao {
 
 	int getTotalSearchAttendContents(Map<String, Object> param);
 
+
+
 }

@@ -70,12 +70,12 @@ public class AdminServiceImpl implements AdminService{
 	public int userUpdate(UserDetail userDetail) {
 		return adminDao.userUpdate(userDetail);
 	}
-
-
+	
 	@Override
 	public int memberUpdate(UserDetail userDetail) {
 		return adminDao.memberUpdate(userDetail);
 	}
+
 
 	@Override
 	public int updateAttendanceSystem(Map<String, Object> param) {
@@ -104,5 +104,4 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.getTotalSearchAttendContents(param);
 	}
 
-	
 }

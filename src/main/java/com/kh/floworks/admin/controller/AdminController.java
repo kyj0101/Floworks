@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,12 +64,12 @@ public class AdminController {
 		log.info("url = {}", url);
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 
+
 		// 3. jsp처리 위임
 		model.addAttribute("userList", userList);
 		model.addAttribute("pageBar", pageBar);
-
 	}
-
+	
 	// 직원정보 상세보기
 	@GetMapping("/userDetail")
 	public void userDetail(@RequestParam String userId, Model model) {
