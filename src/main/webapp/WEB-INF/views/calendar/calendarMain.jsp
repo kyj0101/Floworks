@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			
 			var calendarName = $("#calendarName").val();
 			$("#title").val(calendarName);
-			$('#close').on('click', function(){
-			$("#eventModal").modal("hide");});
+			//$('#close').on('click', function(){
+			//$("#eventModal").modal("hide");});
       },
      
       eventClick: function(info){
@@ -73,7 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
 			$("#deleteNo").val(info.event.id);
 			$("#updateSubject").val(info.event.title);
 			$("#updateStartDate").val(info.event.startStr);
-			$("#updateEndDate").val(info.event.endStr);
+			if(!info.event.enddateStr){
+				$("#updateEndDate").val(info.event.startStr);
+			} else {
+				$("#updateEndDate").val(info.event.endStr);				
+			}
+			
 			
 			console.log(info);
 			/* 
@@ -144,6 +149,23 @@ $("#calAddFrm").submit(e => {
 	});
 	
 	$("#update").click(e => {
+		var title = $("#updateTitle").val();
+		var startDate = $("#updateStartDate").val();
+		var endDate = $("#updateEndDate").val();
+		
+		calendar.addEvent({
+			allDay: true
+		});
+		
+		if (startDate > endDate) {
+	        alert('끝나는 날짜가 앞설 수 없습니다.');
+	        return false;
+	    }
+	    if (title === '') {
+	        alert('일정명은 필수입니다.');
+	        return false;
+	    }
+		
 		$("#calUpdateFrm").submit();
 	});
 });
@@ -274,7 +296,7 @@ $("#updateEndDate").datepicker('setDate', 'today');
 							<form
 								action="${pageContext.request.contextPath}/calendar/calendarUpdate?${_csrf.parameterName}=${_csrf.token}"
 								method="POST" id="calUpdateFrm">
-							<input type="hidden" id="updateNo" name="no" />
+							<input type="hidden" id="updateNo" name="calNo" />
 							<%-- <input type="hidden" name="updateId" value="${param.id}" /> --%>
 							<!-- <input class="btn btn-outline-secondary btn" type="reset" value="리셋">-->
 							<!-- <input class="btn btn-outline-success sub" id="insert" type="submit" value="등록 요청"> -->

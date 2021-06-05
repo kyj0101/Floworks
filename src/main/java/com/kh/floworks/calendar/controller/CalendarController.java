@@ -68,11 +68,11 @@ public class CalendarController {
 		log.debug("memberId = {}", principal.getName());
 		
 		return "redirect:/calendar/calendarMain.do?id=" + memberId;
-//		return "redirect:/calendar/calendarMain.do?no=" + cal.getCalNo() ;
 	}
 	
 	@PostMapping("/calendarDelete")
-	public String calendarDelete(@RequestParam int no, RedirectAttributes redirectAttr, Principal principal) {		//1. 업무로직
+	public String calendarDelete(@RequestParam int no, RedirectAttributes redirectAttr, Principal principal) {		
+		//1. 업무로직
 		log.info("calDelete = {}", no);
 		int result = calendarService.deleteCalendar(no);
 		String msg = result > 0 ? "일정 삭제 성공" : "일정 삭제 실패";
