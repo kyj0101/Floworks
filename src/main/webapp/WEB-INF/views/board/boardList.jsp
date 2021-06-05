@@ -37,11 +37,21 @@
         </div>
       </div>
       
+
     <sec:authentication property="principal" var="loginId"/>  
-    <c:if test="${loginId.position eq '대표' || boardNo eq 2}">  
-    <input type="button" class="btn btn-primary d-inline-block float-right"
+    <c:choose>
+    	<c:when test="${boardNo eq 2}">
+    		<input type="button" class="btn btn-primary d-inline-block float-right"
     		value="글쓰기" onclick="goBoardForm(${boardNo});"/>
-    </c:if>		
+    	</c:when>
+    	<c:when test="${boardNo eq 1}">
+			<sec:authorize access="hasRole('ADMIN')">
+				<input type="button" class="btn btn-primary d-inline-block float-right"
+		    		value="글쓰기" onclick="goBoardForm(${boardNo});"/>
+			</sec:authorize> 	
+    	</c:when>
+    </c:choose>
+    	
     		
     <div id="board-list">
         <table class="table table-hover">

@@ -52,7 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
       dayHeaderContent: function (date) {
           let weekList = ["일", "월", "화", "수", "목", "금", "토"];
               return weekList[date.dow];
+<<<<<<< HEAD
       },
+=======
+          },
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
       dateClick: function(info) {
 			$("#eventModal").modal("show");
 			var date = info.dateStr
@@ -142,13 +146,19 @@ $("#calAddFrm").submit(e => {
         return false;
     }
 	});
+<<<<<<< HEAD
 	
 	$("#update").click(e => {
 		$("#calUpdateFrm").submit();
 	});
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
  
  
 /* 끝나는 날짜가 null이면 시작날짜가 나오게  */
@@ -252,7 +262,11 @@ $("#updateEndDate").datepicker('setDate', 'today');
 								</div>
 								<!--modal-footer -->
 								<div class="modal-footer modalBtnContainer-addEvent">
+<<<<<<< HEAD
 									<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
+=======
+									<button type="button" class="btn btn-outline-secondary" id="close">취소</button>
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 									<button type="submit" class="btn btn-outline-success" id="save-event">저장</button>
 								</div>
 							</form:form>
@@ -264,6 +278,7 @@ $("#updateEndDate").datepicker('setDate', 'today');
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
+<<<<<<< HEAD
 		<div class="modal fade" tabindex="-1" role="dialog" id="eventUpdateModal"
 			aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -323,6 +338,8 @@ $("#updateEndDate").datepicker('setDate', 'today');
 		</div>
 		<!-- /.modal -->
 		
+=======
+>>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 	</section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

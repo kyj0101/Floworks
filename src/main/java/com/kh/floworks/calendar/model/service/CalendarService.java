@@ -15,5 +15,4 @@ public interface CalendarService {
 
 	int deleteCalendar(int no);
 
-
 }

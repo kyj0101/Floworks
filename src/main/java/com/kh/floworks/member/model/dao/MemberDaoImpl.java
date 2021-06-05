@@ -100,6 +100,12 @@ public class MemberDaoImpl implements MemberDao{
 	public int selectLeaveDay(Map<String, String> param) {
 		return session.selectOne("member.selectLeaveDay", param);
 	}
+	
+	@Override
+	public Map<String, String> selectOneWorkspace(String id) {
+		return session.selectOne("member.selectOneWorkspace", id);
+	}
+
 
 	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
@@ -136,6 +142,7 @@ public class MemberDaoImpl implements MemberDao{
 		return session.delete("member.deleteAddressBook", id);
 	}
 
+	
 	
 
 

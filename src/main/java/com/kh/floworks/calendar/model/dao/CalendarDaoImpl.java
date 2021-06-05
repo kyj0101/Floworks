@@ -32,6 +32,7 @@ public class CalendarDaoImpl implements CalendarDao{
 	@Override
 	public int deleteCalendar(int no) {
 		return session.delete("calendar.deleteCalendar",no);
+
 	}
 
 	

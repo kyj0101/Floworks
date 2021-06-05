@@ -35,8 +35,6 @@
 			id = #{id}
 		and
 			cal_no = #{calNo}
-			
-			
 	</update>
 	
 	<delete id="deleteCalendar">
