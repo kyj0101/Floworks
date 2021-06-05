@@ -87,7 +87,6 @@
 		            on m.department_code = d.department_code
 		where
 		    u.quit_yn = 'N'
-		    and m.resign = 'N'
 		    and m.id = #{id}
 	</select>
 
@@ -258,7 +257,6 @@
 		<id column="id" property="id"/>
 		
 		<result column="hire_date" property="hireDate"/>
-		<result column="resign" property="resign"/>
 		<result column="position" property="position"/>
 		<result column="department_code" property="departmentCode"/>		
 		<result column="department_name" property="department"/>
