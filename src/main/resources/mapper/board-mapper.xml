@@ -216,12 +216,10 @@
 			post_comment 
 		values(
 			seq_post_comment_comment_no.nextval, 
-			#{commentLevel}, 
 			#{commentContent}, 
 			default, 
 			#{cmId}, 
 			#{postNo}, 
-			#{postCommentNo}, 
 			default)
 	</insert>
 	

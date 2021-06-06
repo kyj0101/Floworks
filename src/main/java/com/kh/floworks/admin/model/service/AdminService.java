@@ -9,6 +9,7 @@ import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 import com.kh.floworks.admin.model.vo.Workspace;
 
+
 public interface AdminService {
 
 	List<UserList> selectUserList(Map<String, Object> param, String workspace);
@@ -32,9 +33,72 @@ public interface AdminService {
 	//직원 정보수정
 	int userUpdate(UserDetail userDetail);
 
-	int memberUpdate(UserDetail userDetail);
 
 	int updateWsPw(Workspace workspace);
+
+	int memberUpdate(UserDetail userDetail);
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===================== 강유정 근태 설정 ========================
+	
 
 	int updateAttendanceSystem(Map<String, Object> param);
 
@@ -47,5 +111,7 @@ public interface AdminService {
 	int getTotalContents(String workspace);
 
 	int getTotalSearchAttendContents(Map<String, Object> param);
+
+
 
 }

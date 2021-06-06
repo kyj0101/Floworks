@@ -46,6 +46,7 @@ public class AdminController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+
 	@GetMapping("/userList")
 	public void userList(@RequestParam(defaultValue = "1") int cPage, @RequestParam String workspace, Model model,
 			HttpServletRequest request) {
@@ -84,7 +85,8 @@ public class AdminController {
 
 	// 직원정보수정하기
 	@PostMapping("/userUpdate")
-	public String userUpdate(@ModelAttribute("userDetail") UserDetail userDetail, RedirectAttributes redirectAttr) {
+	public String userUpdate(@ModelAttribute("userDetail") UserDetail userDetail, 
+							RedirectAttributes redirectAttr) {
 		// 1. 업무로직
 		int result = adminService.userUpdate(userDetail) + adminService.memberUpdate(userDetail);
 
@@ -128,9 +130,11 @@ public class AdminController {
 	
 	}	
    
+
 	@GetMapping("/attendList")
 	public void attendanceList(@RequestParam(defaultValue = "1") int cPage, @RequestParam String workspaceId,
 			Model model, HttpServletRequest request) {
+
 
 		// 모델에는 딱히 값이 없다....(값을 받는다기 보다 jsp로 값을 보내주는게 주 역할)
 
