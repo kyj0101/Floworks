@@ -97,6 +97,7 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
 				</ul>
 			</div></li>
+
 		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
 			data-toggle="collapse" role="button" aria-expanded="true"
@@ -116,6 +117,5 @@
 		<hr>
 	</ul>
 </aside>
-</div>
 </body>
 </html>
