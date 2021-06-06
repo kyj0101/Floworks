@@ -37,8 +37,8 @@
 		<priority value="warn" />
 		<appender-ref ref="console" />
 	</root>
-	<!-- #10.3.log4jdbc-remix 관련 logger 시작 -->
-	<!-- Query Loggers  -->
+
+	<!-- Query Loggers  
 	<logger name="jdbc.sqlonly" additivity="=true">
 		<level value="INFO" />
 		<appender-ref ref="sqlLogger"/>
@@ -46,5 +46,5 @@
 	<logger name="jdbc.resultsettable" additivity="true">
 		<level value="INFO" />
 		<appender-ref ref="sqlLogger"/>
-	</logger>
+	</logger>-->
 </log4j:configuration>
