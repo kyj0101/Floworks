@@ -120,6 +120,15 @@
 		order by
 			day desc
 	</select>
+		
+	<select id="selectOneWorkspace" resultType="workspace">
+		select
+			workspace_id, password
+		from
+			workspace
+		where
+		    workspace_id = #{workspaceId}
+	</select>
 	
 	<select id="getTotalContents" resultType="_int">
 		select
@@ -128,15 +137,6 @@
 			floworks_user
 		where
 		    workspace_id = #{workspace}
-	</select>
-	
-	<select id="selectOneWorkspace" resultType="workspace">
-		select
-			workspace_id, password
-		from
-			workspace
-		where
-		    workspace_id = #{workspaceId}
 	</select>
 	
 	<select id="getTotalAttendContents" resultType="_int">
@@ -171,15 +171,6 @@
 		order by
 			day desc
 	</select>
-	
-	<select id="getTotalAttendContents" resultType="_int">
-		select 
-    		count(*) 
-		from 
-    		attendance 
-		where id in(select id from floworks_user where workspace_id=#{workspaceId})
-	</select>
-	
  	
 	<update id="updateAttendanceSystem"> 
 		update
