@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 메인페이지
  * 로그인
@@ -16,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 워크스페이스 홈페이지
  * 
  * 컨트롤러
- * 
  */
+@Slf4j
 @Controller
 public class MainPageController {
 	
@@ -28,11 +31,13 @@ public class MainPageController {
 
 	@GetMapping("/login")
 	public String login() {
+		
 		return "/login/login";
 	}
 	
 	@PostMapping("/login") //로그인 처리 X  | 로그인 실패 후 POST 요청 처리 O 
 	public String loginFail() {
+		
 		return "/login/login";
 	}
 	

@@ -20,12 +20,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private OrganizationDao organizationDao;
 
 	@Override
-	public List<UserList> selectUserList(Map<String, Object> param, String workspace) {
-		return organizationDao.selectUserList(param, workspace);
+	public List<UserList> selectUserList(Map<String, Object> param) {
+		return organizationDao.selectUserList(param);
 	}
 
 	@Override
-	public int getTotalContents(String workspace) {
-		return organizationDao.getTotalContents(workspace);
+	public int getTotalContents(Map<String, Object> param) {
+		return organizationDao.getTotalContents(param);
 	}
 }

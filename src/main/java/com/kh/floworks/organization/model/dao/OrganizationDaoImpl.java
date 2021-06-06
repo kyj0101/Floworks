@@ -21,7 +21,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
 	private SqlSession session;
 
 	@Override
-	public List<UserList> selectUserList(Map<String, Object> param, String workspace) {
+	public List<UserList> selectUserList(Map<String, Object> param) {
 		int cPage = (int)param.get("cPage");
 		
 		int limit = (int)param.get("numPerPage");
@@ -29,13 +29,13 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		log.info("workspace = {}", workspace);
-		return session.selectList("organization.selecUserList", workspace, rowBounds);
+		log.info("workspace = {}", param);
+		return session.selectList("organization.selecUserList", param, rowBounds);
 	}
 
 	@Override
-	public int getTotalContents(String workspace) {
-		return session.selectOne("organization.getTotalContents", workspace);
+	public int getTotalContents(Map<String, Object> param) {
+		return session.selectOne("organization.getTotalContents", param);
 	}
 	
 	

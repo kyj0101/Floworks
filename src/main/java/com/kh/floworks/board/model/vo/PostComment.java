@@ -13,12 +13,10 @@ import lombok.NoArgsConstructor;
 public class PostComment {
 
 	private int commentNo;
-	private int commentLevel;
 	private String commentContent;
 	private Date commentDate;
 	private String cmId;
 	private int postNo;
-	private int postCommentNo;
 	private boolean commentDel;
 	private String cmtName;
 	private String cmtDeptName;
