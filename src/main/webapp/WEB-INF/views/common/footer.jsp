@@ -62,24 +62,6 @@
 					</li>
 
 					<li class="nav-item">
-						<a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a>
-					</li>
-				</ul>
-			</div>
-		</li>			
-			
-		<li class="nav-item"><a class="nav-link" href="#sidebarChart"
-			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarChart"> <i class="bi bi-diagram-3"></i>조직도
-		</a>
-			<div class="collapse hide" id="sidebarChart"
-				style="padding-left: 35px;">
-				<ul class="nav nav-sm flex-column">
-
-
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active"> 조직도 </a></li>
-
-					<li class="nav-item">
 						<a href="${pageContext.request.contextPath}/leave/request?id=<sec:authentication property='principal.id'/>" class="nav-link "> 휴가신청 </a>
 					</li>
 					
@@ -97,11 +79,15 @@
 			<div class="collapse hide" id="sidebarChart"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							조직도 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
+
+
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active"> 조직도 </a></li>
+
+					
 				</ul>
-			</div></li>
+			</div>
+		</li>			
+			
 		<li class="nav-item"><a class="nav-link" href="#sidebarAppr"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재<span
