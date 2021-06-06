@@ -27,7 +27,7 @@
 
 <section>
 <sec:authentication property="principal" var="loginId"/>
-<c:if test="${loginId.id eq postList.id || loginId.position eq '대표'}"> 
+<c:if test="${loginId.id eq postList.id}"> 
 
     <div id="board-write">
         <form:form
@@ -39,7 +39,7 @@
             <input type="text" class="form-control mb-3" value="${postList.postTitle}"  name="postTitle" id="title">
             <input type="hidden" class="form-control mb-3" value="${postList.postNo}"  name="postNo">
             <input type="hidden" class="form-control mb-3" value="${postList.boardNo}"  name="boardNo">
-            
+            <input type="hidden" name="workspaceId" value="<sec:authentication property="principal.workspaceId"/>"/>
             <c:forEach items="${postList.postFileList}" var="pfList">
          	<c:if test="${pfList.postOriginalFileName != null}">
             <div class="btn-group btn-group-toggle" data-toggle="buttons" id="fileButton">

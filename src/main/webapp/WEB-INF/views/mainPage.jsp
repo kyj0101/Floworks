@@ -48,11 +48,13 @@
 							Home
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="${pageContext.request.contextPath}/login">
-							Login
-						</a>
-					</li>
+					<sec:authorize access="isAnonymous()">
+						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.request.contextPath}/login">
+								Login
+							</a>
+						</li>
+					</sec:authorize>
 				</ul>
 			</div>
 		</div>

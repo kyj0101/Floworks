@@ -14,7 +14,6 @@
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js"crossorigin="anonymous"></script>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <section>
 	<div class="section-div">

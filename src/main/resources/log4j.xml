@@ -37,5 +37,14 @@
 		<priority value="warn" />
 		<appender-ref ref="console" />
 	</root>
-	
+
+	<!-- Query Loggers  
+	<logger name="jdbc.sqlonly" additivity="=true">
+		<level value="INFO" />
+		<appender-ref ref="sqlLogger"/>
+	</logger>
+	<logger name="jdbc.resultsettable" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="sqlLogger"/>
+	</logger>-->
 </log4j:configuration>

@@ -109,6 +109,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member selectOneMember(String id) {
+		log.info("{}==========================================",id);
 		return memberDao.selectOneMember(id);
 	}
 	
