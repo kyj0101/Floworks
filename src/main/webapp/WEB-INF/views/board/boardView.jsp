@@ -102,7 +102,7 @@
          <div id="comment-list">
              <table  class="table" id="tb-comment">  
              <c:forEach items="${postList.postCommentList}" var="cmt">
-	           	<c:if test="${cmt.commentNo != null && cmt.commentDel == false}">
+	           	<c:if test="${cmt.commentNo != 0 && cmt.commentDel == false}">
 	                 <tr class=level1>
 	                     <td>
 	                         <label id="commentName">${cmt.cmtName}(${cmt.cmtDeptName})</label>
@@ -172,6 +172,9 @@
 		 	</form:form>
 
          </div>
+         <br>
+         <br>
+         <br>
      </div>      
          
 

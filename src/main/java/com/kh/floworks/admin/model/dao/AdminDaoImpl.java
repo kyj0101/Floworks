@@ -105,6 +105,7 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectOneWorkspace", workspace);
 	}
 
+
 	@Override
 	public int memberUpdate(UserDetail userDetail) {
 		return session.update("admin.memberUpdate", userDetail);
