@@ -81,6 +81,7 @@ public class AdminServiceImpl implements AdminService{
 	public int userUpdate(UserDetail userDetail) {
 		return adminDao.userUpdate(userDetail);
 	}
+
 	
 	@Override
 	public int memberUpdate(UserDetail userDetail) {
