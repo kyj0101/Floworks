@@ -15,6 +15,6 @@ public class AttendList {
 	private Date day;
 	private String officeIn;
 	private String officeOff;
-	private char latenessYn;
+	private String latenessYn;
 	
 }

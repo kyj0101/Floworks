@@ -41,7 +41,6 @@ public class SecurityService implements UserDetailsService{
 
 		return member;
 	}
-	
 
 	public User selectOneUser(String userName) {
 		return securityDao.selectOneUser(userName);
