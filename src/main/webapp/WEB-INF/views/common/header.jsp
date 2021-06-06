@@ -7,6 +7,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <!--tablib-->
 
+<%	
+
+	session.setAttribute("id","dog");
+%>
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -254,10 +258,15 @@ $(function(){
 });
 </script>
 
+
 <script>
+var login_id = null;
+
+<sec:authorize access="isAuthenticated()">
+	login_id = '<sec:authentication property="Principal.id"/>';
+</sec:authorize>
 
 //WebsocketConfiguration 함수랑 연결
-
 //알람 업로드
 const ws = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_member");
 var payload;
@@ -269,19 +278,14 @@ var id;
 //헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
 ws.onopen = e => {
 	console.log("onopen : ", e);
-	var login_id = null;
-	
-	<sec:authorize access="isAuthenticated()">
-		login_id = '<sec:authentication property="Principal.id"/>';
-	</sec:authorize>
-		
+			
 	console.log("접속 id :", login_id);	
-	sessionStorage.setItem('id',login_id);
 	ws.send(login_id);
 	
 }
 
 ws.onmessage = e => {
+	email_count=0;
 	console.log("onmessage : ", e);
 	const obj = JSON.parse(e.data);
 	console.log(obj);
@@ -294,7 +298,7 @@ ws.onmessage = e => {
 	
 	const $badge =$("#alarm_badge");
 	const $ebadge =$("#badge_for_email");
-	
+	$ebadge.text(0);
 	var $modal_for_alarm = $("#modal_body_for_alarm");
 	
 	$badge.text(alarm_count);

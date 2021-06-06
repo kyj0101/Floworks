@@ -218,4 +218,3 @@ public class MemberController {
 		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
-}
