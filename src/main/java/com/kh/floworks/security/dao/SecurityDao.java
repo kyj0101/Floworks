@@ -19,8 +19,12 @@ public class SecurityDao {
 	
 	private SqlSession session;
 
-	public Member selectOneMember(String username) {
-		return session.selectOne("member.selectOneMember", username);
+	public Member selectOneMember(String userName) {
+		return session.selectOne("member.selectOneMember", userName);
+	}
+
+	public User selectOneUser(String userName) {
+		return session.selectOne("user.selectOneUser", userName);
 	}
 	
 	

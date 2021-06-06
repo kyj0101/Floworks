@@ -138,12 +138,14 @@
                                                 <button class="btn btn-outline-secondary col-md-3" type="button">                                                
                                                     메일
                                                 </button>
+                                                
+                                                
                                             </div>
-
+											
                                         </div>
                                         <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+	                                    	<span aria-hidden="true">&times;</span>
+	                                   	</button>
                                     </div>
 
                             <!--------------------Modal Body : ------------------------------------------------------------->
@@ -167,8 +169,13 @@
                         </div>
 
 						<div class="mainHeader">
+
 							<!-- 로그인한 사용자의 프로필 -->
-							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle"								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
+
+
+							<img src="${pageContext.request.contextPath }/resources/upload/profile/<sec:authentication property="principal.profileFileRename"/>" alt="프로필사진" class="img-circle" 
+								style="width: 45px; height: 45px; margin: 15px auto; border-radius: 50%;">
+              
 							<p style="margin: 30px 5px; width: 50px;"><sec:authentication property="principal.name"/></p>
 						</div>
 					</div>
@@ -365,6 +372,7 @@ function AlarmErase(link){
 	location.href="${pageContext.request.contextPath}/"+link;
 		
 };
+
 
 
 </script>

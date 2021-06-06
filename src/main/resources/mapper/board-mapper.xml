@@ -47,12 +47,10 @@
 		select
 			count(*)
 		from 
-			(select p.* ,d.department_name, f.name, f.workspace_id
+			(select *
 	        from post p 
-	            left join floworks_user f
-	                on p.id = f.id
 	            left join member m
-	                on f.id = m.id
+	                on p.id = m.id
 	            left join department d
 	                on m.department_code = d.department_code) 
 	    where board_no = #{boardNo}  and

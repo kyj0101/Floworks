@@ -150,7 +150,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+            	<td>
                     <div class="ap-write-filesection">
                         <label for="ap-upFile2">파일첨부 2</label>
                         <input type="file" class="form-control-file" name="upFile" id="ap-upFile2">

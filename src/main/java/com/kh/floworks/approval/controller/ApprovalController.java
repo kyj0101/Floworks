@@ -351,6 +351,7 @@ public class ApprovalController {
 		redirectAttr.addFlashAttribute("msg", msg);
 		
 		return "redirect:/approval/apvlProgress?workspaceId=" + workspaceId;
+
 	}
 	
 	

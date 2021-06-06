@@ -1,9 +1,10 @@
+
 package com.kh.floworks.admin.model.dao;
 
 import java.util.List;
 import java.util.Map;
 
-
+import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
@@ -15,9 +16,15 @@ public interface AdminDao {
 	
 	UserDetail selectOneUserDetail(String userId);
 	
+	//직원 정보수정
+	int userUpdate(UserDetail userDetail);	
+
+
+	//--강준혁 관리자 근태관리 리스트 뽑아오기
+	List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId);
 	
 	
-	
+
 	
 	
 	
@@ -67,12 +74,23 @@ public interface AdminDao {
 	
 	int updateAttendanceSystem(Map<String, Object> param);
 
+
+
+
+
+
+	
+
+	
+
 	List<Map<String, Object>> selectLeaveSystem(String workspaceId);
+
 
 	int updateLeaveSystem(Map<String, Object> param);
 
-	
+	int getTotalAttendContents(String workspaceId);
 
-	
+
+
 
 }

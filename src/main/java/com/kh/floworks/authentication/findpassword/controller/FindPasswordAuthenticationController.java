@@ -44,9 +44,15 @@ public class FindPasswordAuthenticationController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	@GetMapping("/view")
+	public String findPassword() {
+		return "/login/findPassword";
+	}
+
 
 	@PostMapping("/send")
-	public ResponseEntity<String> findPassword(String id, String email) throws MessagingException,UnsupportedEncodingException {
+	public ResponseEntity<String> send(String id, String email) throws MessagingException,UnsupportedEncodingException {
 		
 		try {
 
@@ -95,7 +101,7 @@ public class FindPasswordAuthenticationController {
 		try {
 			
 			findPwdAuthService.deleteFindPasswordAuth(id);
-			findPassword(id, email);
+			send(id, email);
 			
 			return "이메일이 재전송 되었습니다.";
 			
@@ -114,6 +120,7 @@ public class FindPasswordAuthenticationController {
 		param.put("email", email);
 		
 		boolean result = findPwdAuthService.selectUserEmail(param);
+		
 		return result ? "true" : "false";
 	}
 	

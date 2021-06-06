@@ -40,7 +40,7 @@ public class EmailAuthenticationController {
 	
 	@ResponseBody
 	@PostMapping("/send")
-	public void sendEmailAuth(String email, HttpServletRequest request) {
+	public void sendEmailAuth(String email, HttpServletRequest request) throws Exception {
 		
 		try {
 			
@@ -65,7 +65,7 @@ public class EmailAuthenticationController {
 			mailSender.send(message);
 			
 		} catch (UnsupportedEncodingException | MessagingException e) {
-			new RuntimeException();
+			throw e;
 		}
 	}
 	

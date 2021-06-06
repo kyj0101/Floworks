@@ -29,16 +29,16 @@
 		<security:intercept-url pattern="/login" access="isAnonymous()"/>
 		<security:intercept-url pattern="/login.do" access="isAnonymous()"/>
 		
-		<security:intercept-url pattern="/home" access="isAuthenticated()"/>		
-		<security:intercept-url pattern="/email/**" access="isAuthenticated()"/>		
-		<security:intercept-url pattern="/member/**" access="isAuthenticated()"/>		
-		<security:intercept-url pattern="/board/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/approval/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/address/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/leave/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/search/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/attendance/**" access="isAuthenticated()"/>
-		
+		<security:intercept-url pattern="/home" access="hasRole('ROLE_USER')"/>		
+		<security:intercept-url pattern="/email/**" access="hasRole('ROLE_USER')"/>		
+		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_USER')"/>		
+		<security:intercept-url pattern="/board/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/approval/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/address/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/leave/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/search/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/attendance/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/organization/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />	 
 		
 		<security:form-login login-page="/login"

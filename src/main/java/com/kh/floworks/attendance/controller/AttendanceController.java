@@ -67,7 +67,8 @@ public class AttendanceController {
 				calendar.add(Calendar.DAY_OF_WEEK, 7); //일요일
 				param.put("endOfWeek", new Date(calendar.getTimeInMillis()));
 			}
-
+			
+			int memberLeave = attendanceService.selectMemberLeave(id);
 			int latenessCount = attendanceService.selectLatenessCount(param);
 			Attendance attendance = attendanceService.selectOneAttendance(id);
 
@@ -81,7 +82,8 @@ public class AttendanceController {
 			double lunchTime = AttendanceUtils.getTimeDifference(lunchTimeStart, lunchTimeEnd);
 			double weekLunchTime = weekOfficeAttendance.size() * lunchTime;
 			double monthLunchTime = monthOfficeAttendance.size() * lunchTime;
-
+			
+			model.addAttribute("memberLeave", memberLeave);
 			model.addAttribute("attendance", attendance);
 			model.addAttribute("latenessCount", latenessCount);
 			model.addAttribute("attendanceSystem", attendanceSystem);
@@ -180,16 +182,16 @@ public class AttendanceController {
 			                     @RequestParam(defaultValue = "1") int cPage,	
 			                     HttpServletRequest request,
 			                     Model model) {
-		int numPerPage = 10;
+		
 		Map<String, Object> param = new HashMap<>();
 		
-		param.put("numPerPage", numPerPage);
+		param.put("numPerPage", AttendanceService.NUMPER_PAGE);
 		param.put("cPage", cPage);
 		param.put("id", id);
 		
 		int totalContents = attendanceService.getTotalAttendance(id);
 		String url = request.getRequestURI() + "?id=" + id;
-		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, AttendanceService.NUMPER_PAGE, url);
 		
 		List<String> yearList = attendanceService.selectAttendanceYear(id);
 		List<String> monthList = attendanceService.selectAttendanceMonth(id);
@@ -201,6 +203,52 @@ public class AttendanceController {
 		model.addAttribute("pageBar", pageBar);
 		
 		return "/attendance/myAttendanceList";
+	}
+	
+	@GetMapping("/list/search")
+	public String attendanceListSearch(String id,
+			                           String year,
+			                           String month,
+			                           String day,
+			                           @RequestParam(defaultValue = "1") int cPage,
+			                           HttpServletRequest request,
+			                           Model model) {
+		
+		try {
+			
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("numPerPage", AttendanceService.NUMPER_PAGE);
+			param.put("cPage", cPage);
+			param.put("id", id);
+			param.put("year", year);
+			param.put("month", month);
+			param.put("day", day);
+
+			int totalContents = attendanceService.getTotalSearchAttendance(param);
+			String url = request.getRequestURI() 
+					   + "?id=" + id 
+					   + "&year=" + year
+					   + "&month=" + month
+					   + "&day=" + day;
+			
+			String pageBar = PageBarUtils.getPageBar(totalContents, cPage, AttendanceService.NUMPER_PAGE, url);
+			
+			List<String> yearList = attendanceService.selectAttendanceYear(id);
+			List<String> monthList = attendanceService.selectAttendanceMonth(id);
+			List<Attendance> attendanceList = attendanceService.selectListSearchAttendance(param);
+			
+			model.addAttribute("yearList", yearList);
+			model.addAttribute("monthList", monthList);
+			model.addAttribute("attendanceList", attendanceList);
+			model.addAttribute("pageBar", pageBar);
+			
+			return "/attendance/myAttendanceList";
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
 	}
 } 
 

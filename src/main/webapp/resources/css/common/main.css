@@ -81,3 +81,28 @@ i{
 .btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
     color: black !important;
 }
+
+/* 알림 모달창 부분 */
+.row {
+	min-width: 260px;
+}
+
+.col-md-3 {
+	max-width: 63px;
+}
+
+/* @media screen and (min-width:690px) and (max-width:768px) {
+	.col-md-7 {
+     max-width: 40%!important;
+	}
+} */
+@media screen and (min-width:769px) and (max-width:892px) {
+	.col-md-7 {
+     max-width: 40%!important;
+	}
+}
+/* @media screen and (min-width:803px) and (max-width:892px) {
+	.col-md-7 {
+     max-width: 40%!important;
+	}
+} */

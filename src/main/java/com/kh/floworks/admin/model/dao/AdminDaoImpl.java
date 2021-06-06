@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
 
@@ -44,12 +45,38 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectOneUserDetail", userId);
 	}
 	
+
+	//직원 정보수정
+	@Override
+	public int userUpdate(UserDetail userDetail) {
+		return session.update("admin.userUpdate", userDetail)
+				+ session.update("admin.memberUpdate", userDetail);
+	}
+
+
 	
 	
 	
 	
+
+
 	
+	//--강준혁 근태관리 리스트 쭉 뽑아오기
+	@Override
+	public List<AttendList> selectAttendList(Map<String, Object> param,String workspaceId) {
+		int cPage = (int)param.get("cPage");
+		
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit; 
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		
+		return session.selectList("admin.selectAttendanceList",workspaceId,rowBounds);
+	}
+
 	
+
 	
 	
 	
@@ -92,6 +119,10 @@ public class AdminDaoImpl implements AdminDao {
 	
 	
 	
+
+	
+	
+
 	
 	
 	
@@ -131,6 +162,7 @@ public class AdminDaoImpl implements AdminDao {
 	
 	
 	
+
 	
 	
 	//===================== 강유정 근태 설정 ========================
@@ -145,9 +177,19 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectList("admin.selectLeaveSystem", workspaceId);
 	}
 
+
+
+
 	@Override
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return session.update("admin.updateLeaveSystem", param);
 	}
+
+	@Override
+	public int getTotalAttendContents(String workspaceId) {
+		return session.selectOne("admin.getTotalAttendContents", workspaceId);
+	}
+
+
 
 }

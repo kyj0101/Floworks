@@ -181,8 +181,8 @@ function approve() {
 
 function deleteApvl() {
 	$('#deleteFrm').submit();
-
 }
+
 
 </script>	
 

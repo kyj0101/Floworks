@@ -74,6 +74,24 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	}
 
 	@Override
+	public List<Attendance> selectListSearchAttendance(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("attendance.selectListSearchAttendance", param, rowBounds);
+	}
+	
+	@Override
+	public int selectMemberLeave(String id) {
+		return session.selectOne("attendance.selectMemberLeave", id);
+	}
+
+
+	@Override
 	public int updateAttendanceOfficeOff(Map<String, Object> param) {
 		return session.update("attendance.updateAttendanceOfficeOff", param);
 	}
@@ -82,6 +100,13 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	public int getTotalAttendance(String id) {
 		return session.selectOne("attendance.getTotalAttendance", id);
 	}
+
+	@Override
+	public int getTotalSearchAttendance(Map<String, Object> param) {
+		return session.selectOne("attendance.getTotalSearchAttendance", param);
+	}
+
+	
 
 
 }
