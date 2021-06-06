@@ -85,7 +85,6 @@ public class EmailAuthenticationController {
 		try {
 			
 			int index = email.indexOf("@");
-			String url = "/notice/" + email.substring(0, index);
 			EmailAuthentication emailAuth = new EmailAuthentication(email, authKey, "Y");
 			int result = emailAuthService.updateEmailAuthStatus(emailAuth);
 
@@ -93,6 +92,8 @@ public class EmailAuthenticationController {
 				throw new IllegalArgumentException();
 			}
 			
+			String url = "/notice/" + email.substring(0, index);
+
 			simpMessagingTemplate.convertAndSend(url, "인증완료");
 
 		} catch (Exception e) {
