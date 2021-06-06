@@ -65,10 +65,11 @@
 
                    <tr>
                        <td class="nametag">지각 여부</td>
+                       	
                        <td  colspan="4">
                        	<select class="form-control" name="latenessYn">
-                       	 	<option value="Y" ${latennessYn eq 'Y' ? 'selected' : ''} >O</option>
-		 					<option value="N" ${latennessYn eq 'N' ? 'selected' : ''}>X</option>
+                       	 	<option value="Y" ${attendMap.latenessYn eq 'Y' ? 'selected' : ''} >O</option>
+		 					<option value="N" ${attendMap.latenessYn eq 'N' ? 'selected' : ''}>X</option>
                        	</select>
                        </td>
                    </tr>                   
