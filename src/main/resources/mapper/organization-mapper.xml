@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="organization">
+	
+	<select id="selecUserList" resultType="userList">
+		select f.id, f.workspace_id, f.name, f.quit_yn, f.role, m.hire_date , m.position, d.department_name
+		from floworks_user f join member m
+		        on f.id = m.id
+		     join department d
+		        on m.department_code = d.department_code
+		     join position p
+		     	on m.position = p.position
+		where
+			workspace_id = #{workspace} 
+			and d.department_name like '%' || #{dept} || '%'
+		order by
+			REGEXP_REPLACE(POSITION_CODE,'[0-9]'), TO_NUMBER(REGEXP_REPLACE(position_code, '[^0-9]'))
+	</select>
+	
+	<resultMap type="hashmap" id="userList">
+		<id column="id" property="id"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="name" property="name"/>
+		<result column="department_Name" property="departmentName"/>
+		<result column="position" property="position"/>
+		<result column="hire_date" property="hireDate"/>
+		<result column="role" property="role"/>
+		<result column="quit_yn" property="quitYN" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+	</resultMap>
+	
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			floworks_user
+		where
+		    workspace_id = #{workspace}
+	</select>
+</mapper>

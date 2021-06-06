@@ -27,21 +27,31 @@
           부서
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownboardButton" id="dropdowndept">
-          <a class="dropdown-item" href="boardList?dept=기획부&boardNo=${boardNo}">기획부</a>
-          <a class="dropdown-item" href="boardList?dept=개발부&boardNo=${boardNo}">개발부</a>
-          <a class="dropdown-item" href="boardList?dept=총무부&boardNo=${boardNo}">총무부</a>
-          <a class="dropdown-item" href="boardList?dept=국내영업부&boardNo=${boardNo}">국내영업부</a>
-          <a class="dropdown-item" href="boardList?dept=마케팅부&boardNo=${boardNo}">마케팅부</a>
-          <a class="dropdown-item" href="boardList?dept=회계관리부&boardNo=${boardNo}">회계관리부</a>
-          <a class="dropdown-item" href="boardList?dept=부&boardNo=${boardNo}">전체보기</a>
+          <a class="dropdown-item" href="boardList?dept=기획부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">기획부</a>
+          <a class="dropdown-item" href="boardList?dept=개발부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">개발부</a>
+          <a class="dropdown-item" href="boardList?dept=총무부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">총무부</a>
+          <a class="dropdown-item" href="boardList?dept=국내영업부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">국내영업부</a>
+          <a class="dropdown-item" href="boardList?dept=마케팅부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">마케팅부</a>
+          <a class="dropdown-item" href="boardList?dept=회계관리부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">회계관리부</a>
+          <a class="dropdown-item" href="boardList?dept=부&boardNo=${boardNo}&workspaceId=<sec:authentication property="principal.workspaceId"/>">전체보기</a>
         </div>
       </div>
       
+
     <sec:authentication property="principal" var="loginId"/>  
-    <c:if test="${loginId.position eq '대표' || boardNo eq 2}">  
-    <input type="button" class="btn btn-primary d-inline-block float-right"
+    <c:choose>
+    	<c:when test="${boardNo eq 2}">
+    		<input type="button" class="btn btn-primary d-inline-block float-right"
     		value="글쓰기" onclick="goBoardForm(${boardNo});"/>
-    </c:if>		
+    	</c:when>
+    	<c:when test="${boardNo eq 1}">
+			<sec:authorize access="hasRole('ADMIN')">
+				<input type="button" class="btn btn-primary d-inline-block float-right"
+		    		value="글쓰기" onclick="goBoardForm(${boardNo});"/>
+			</sec:authorize> 	
+    	</c:when>
+    </c:choose>
+    	
     		
     <div id="board-list">
         <table class="table table-hover">
@@ -59,7 +69,9 @@
             <tbody>
             <c:if test="${list != null}">
               <c:forEach items="${list}" var="post">
+              <!-- 
               	<c:if test="${loginId.workspaceId eq post.workspaceId}"> 
+               -->
 				<tr data-no="${post.postNo}">
 					<td>${post.postNo}</td>
 					<td>${post.departmentName}</td>
@@ -76,7 +88,9 @@
 					<td><fmt:formatDate value="${post.postDate}" pattern="yy/MM/dd"/></td>
 					<td>${post.postReadCount}</td>
 				</tr>
+				  <!-- 
 				</c:if>
+				   -->
 			  </c:forEach>
 		    </c:if>
             </tbody>

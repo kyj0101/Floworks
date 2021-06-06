@@ -14,6 +14,7 @@ import com.kh.floworks.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -33,6 +34,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertWorkspace(Map<String, String> param) {
 		return memberDao.insertWorkspace(param);
+	}
+	
+	@Override
+	public int insertDefaultAttendanceSystem(String workspaceId) {
+		return memberDao.insertDefaultAttendanceSystem(workspaceId);
+	}
+	
+	@Override
+	public int insertDefaultLeaveSystem(Map<String, String> param) {
+		return memberDao.insertDefaultLeaveSystem(param); 
 	}
 
 
@@ -98,9 +109,19 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member selectOneMember(String id) {
+		log.info("{}==========================================",id);
 		return memberDao.selectOneMember(id);
 	}
-
+	
+	@Override
+	public int selectLeaveDay(Map<String, String> param) {
+		return memberDao.selectLeaveDay(param);
+	}
+	
+	@Override
+	public Map<String, String> selectOneWorkspace(String id) {
+		return memberDao.selectOneWorkspace(id);
+	}
 
 	@Override
 	public int updateUserWorkspaceId(Map<String, String> param) {
@@ -121,4 +142,30 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePassword(Map<String, Object> param) {
 		return memberDao.updatePassword(param);
 	}
+
+	@Override
+	public int updateQuitMember(String id) {
+		return memberDao.updateQuitMember(id);
+	}
+
+	@Override
+	public int updateWorkspaceOwnerAdmin(Map<String, String> param) {
+		return memberDao.updateWorkspaceOwnerAdmin(param);
+	}
+
+	@Override
+	public int deleteAddressBook(String id) {
+		return memberDao.deleteAddressBook(id);
+	}
+
+
+
+
+	
+
+	
+
+
+
+	
 }

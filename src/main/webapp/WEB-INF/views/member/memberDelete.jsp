@@ -4,7 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<title>탈퇴하기</title>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+<jsp:param value="탈퇴 하기" name="title"/>
+</jsp:include>
 
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/memberDelete.css">
@@ -12,7 +14,6 @@
 <!-- icon -->
 <script src="https://kit.fontawesome.com/d37b4c8496.js"crossorigin="anonymous"></script>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <section>
 	<div class="section-div">

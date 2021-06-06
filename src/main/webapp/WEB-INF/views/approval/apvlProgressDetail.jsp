@@ -120,15 +120,6 @@
         
     </div>
     
-    <% // TODO 안된다면 모달 밖에 input:hidden두는걸로 %>
-	<div>
-		<form id="processFrm"
-			  action="${pageContext.request.contextPath}/approval/apvlProgressDetail/process" 
-			  method="post">
-			<sec:csrfInput/>
-		</form>
-	</div>
-	
     <!-- Modal -->
     <div class="modal fade" id="approval-modal" tabindex="-1" aria-labelledby="approval-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -141,7 +132,6 @@
                 </div>
                 <div class="modal-body">
                     <!-- 모달창 바디 -->
-<<<<<<< HEAD
                     <form action="${pageContext.request.contextPath}/approval/apvlProgressDetail/process" 
 	                      method="POST" 
 	                      class="processFrm" 
@@ -169,40 +159,10 @@
                         </div>
                         <!-- <input type="submit" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" value="확인" /> -->
                     </form>
-=======
-               		<form>
-               			<sec:csrfInput/>
-               			<input type="hidden" name="apvlId" value="${approval.apvlId}" id="mod-apvlId" />
-	                   	<input type="hidden" name="approver" value='<sec:authentication property="principal.id"/>' id="mod-approver" />
-	                    <div class="ap-txn" id="ap-txn">
-	                        <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
-	                            <input class="form-check-input approval-radio" type="radio" name="status" id="approval-radio" value="approval" checked>
-	                            <label class="form-check-label" for="approval-radio">
-	                                결재
-	                            </label>
-	                        </div>
-	                        <div class="form-check form-check-inline ap-txn-category" id="ap-txn-category">
-	                            <input class="form-check-input reject-radio" type="radio" name="status" id="reject-radio" value="reject">
-	                            <label class="form-check-label" for="reject-radio">
-	                                반려
-	                            </label>
-	                        </div>
-	                    </div>
-	                    <div class="form-group ap-comment">
-	                        <label for="ap-comment-txtarea">코멘트</label>
-	                        <textarea class="form-control ap-comment-txtarea" id="ap-comment-txtarea" name="comment" rows="3"></textarea>
-	                    </div>
-	                    <!-- <input type="submit" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" value="확인" /> -->
-               		</form>
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-<<<<<<< HEAD
                     <button type="button" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" onclick="approve();">확인</button>
-=======
-                    <button type="button" class="btn btn-primary ap-submit-btn" id="ap-submit-btn" onclick="processVal();">확인</button>
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
                 </div>
             </div>
         </div>
@@ -214,7 +174,6 @@ function fileDownload(idx){
 	location.href = "${pageContext.request.contextPath}/approval/fileDownload?idx=" + idx;
 }
 
-<<<<<<< HEAD
 function approve() {
 	$('#processFrm').submit();	
 	$('.modal').modal("hide");
@@ -222,47 +181,8 @@ function approve() {
 
 function deleteApvl() {
 	$('#deleteFrm').submit();
-=======
-function validateForm() {
-	return true;
 }
 
-function testSend() {
-	$('#processFrm').submit();
-}
-
-function processVal() {
-	let apvlid = document.getElementById('mod-apvlId');
-	let approver = document.getElementById('mod-approver');
-	let statusArr = document.getElementsByName('status');
-	let status = '';
-	let comment = document.getElementById('ap-comment-txtarea');
-	let html = '';
-	/* $apvlId = $('#mod-apvlId');
-	$approver = $('#mod-approver');
-	$statusArr = $('input[name=status]');
-	$status = '';
-	$comment = $('#ap-comment-txtarea'); */
-	
-	html += ("<input type='hidden' name=apvlId value='" + apvlid.value + "'/>");
-	html += ("<input type='hidden' name=approver value='" + approver.value + "'/>");
-	console.log(apvlid.value);
-	console.log(approver.value);
-	for (let i of statusArr) {
-		if (i.checked) {
-			html += ("<input type='hidden' name=status value='" + i.value + "'/>");
-			console.log(i.value);
-		}
-	}
-	console.log(comment.value);
-	html += ("<input type='hidden' name=comment value='" + comment.value + "'/>");
-	
-	document.getElementById("processFrm").innerHTML += html;
-	
-	$('#processFrm').submit();	
-	$('.modal').modal("hide");
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
-}
 
 </script>	
 

@@ -142,12 +142,14 @@
                                                 <button class="btn btn-outline-secondary col-md-3" type="button">                                                
                                                     메일
                                                 </button>
+                                                
+                                                
                                             </div>
-
+											
                                         </div>
                                         <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+	                                    	<span aria-hidden="true">&times;</span>
+	                                   	</button>
                                     </div>
 
                             <!--------------------Modal Body : ------------------------------------------------------------->

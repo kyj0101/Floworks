@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Calendar {
-	
+	private int calNo;
 	private String id;
-	private String title;
+	private String subject;
 	private String startDate;
 	private String endDate;
 	

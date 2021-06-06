@@ -147,15 +147,13 @@ function sendEmail(){
 		type:"post",
 		url:"${pageContext.request.contextPath}/find/password/send",
 		data:{"id":id, "email":email},
-		
+		dataType:'text',
 		beforeSend(xhr){
 			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		},
 		
 		success(result){
-			console.log(result);
-			alert(result);
-			
+			alert(result);			
 		},
 		
 		error(xhr, status, err){

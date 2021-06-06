@@ -1,5 +1,7 @@
 package com.kh.floworks.admin.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class AttendList {
 
 	private String id;
-	private String day;
+	private Date day;
 	private String officeIn;
 	private String officeOff;
-	private char latenessYn;
+	private String latenessYn;
 	
 }

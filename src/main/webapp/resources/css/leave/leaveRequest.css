@@ -54,3 +54,32 @@ section{
 .leave-request-btn{
     width: 150px;
 }
+
+.lv-info-head {
+    width: 30%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.lv-info-head a {
+    color: black;
+}
+
+.lv-info-head a:hover {
+    color: rgb(65, 65, 65);
+    text-decoration: none;
+}
+
+.lv-info-end {
+	width: 15%;
+    display: table-cell;
+}
+
+.lv-info-end {
+    text-align: center;
+    /* vertical-align: middle; */
+}
+
+.lv-info-end > i {
+    margin: 20px;
+}

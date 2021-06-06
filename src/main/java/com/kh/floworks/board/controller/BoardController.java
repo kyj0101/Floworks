@@ -55,10 +55,11 @@ public class BoardController {
 	public void boardList(@RequestParam(defaultValue = "1") int cPage,  
 				@RequestParam int boardNo, 
 				@RequestParam String dept, 
+				@RequestParam String workspaceId, 
 				Model model,
 				HttpServletRequest request) {
 		//1. 사용자입력값
-		int numPerPage = 10;
+		int numPerPage = 15;
 		log.info("cPage = {}", cPage);
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
@@ -67,6 +68,7 @@ public class BoardController {
 		Map<String, Object> search = new HashMap<>();
 		search.put("boardNo", boardNo);
 		search.put("dept", dept);
+		search.put("workspaceId", workspaceId);
 		
 		//2. 업무로직
 		//a. contents영역 : mybatis의 RowBounds
@@ -75,7 +77,7 @@ public class BoardController {
 		
 		//b. pagebar영역
 		int totalContents = boardService.getTotalContents(search);
-		String url = request.getRequestURI() + "?boardNo=" + boardNo + "&dept=" + dept;
+		String url = request.getRequestURI() + "?boardNo=" + boardNo + "&dept=" + dept + "&workspaceId=" + workspaceId;
 		log.info("totalContents = {}", totalContents);
 		log.info("url = {}", url);
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
@@ -113,6 +115,7 @@ public class BoardController {
 	public String boardEnroll(Post post,
 							  @RequestParam String id,
 							  @RequestParam int boardNo,
+							  @RequestParam String workspaceId, 
 							  RedirectAttributes redirectAttr,
 							  @RequestParam(value="upFile", required = false) MultipartFile[] upFiles,
 							  HttpServletRequest request) throws Exception {
@@ -167,7 +170,7 @@ public class BoardController {
 			throw e;
 		}
 
-		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=";
+		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=" + "&workspaceId=" + workspaceId;
 	}
 	
 	
@@ -208,6 +211,7 @@ public class BoardController {
 	@PostMapping("/postModify")
 	public String postUpdate(@ModelAttribute("postList") PostList postList, 
 							 @ModelAttribute("postFile") PostFile postFile, 
+							 @RequestParam String workspaceId, 
 							 RedirectAttributes redirectAttr,
 							 HttpServletRequest request, 
 							 @RequestParam(value="upFile", required = false) MultipartFile[] upFiles) throws Exception{
@@ -269,7 +273,7 @@ public class BoardController {
 			throw e;
 		}
 			
-		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo() + "&dept=";
+		return "redirect:/board/boardList?boardNo=" + postList.getBoardNo()  + "&workspaceId=" + workspaceId + "&dept=";
 	}
 
 	
@@ -277,6 +281,7 @@ public class BoardController {
 	@PostMapping("/postDelete")
 	public String postDelete(@RequestParam int postNo, 
 							@RequestParam int boardNo, 
+							@RequestParam String workspaceId, 
 							RedirectAttributes redirectAttr) {
 		//1. 업무로직
 		int result = boardService.updateDelPost(postNo);
@@ -288,7 +293,7 @@ public class BoardController {
 		log.info("boardNo = {}", boardNo);
 		
 		
-		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=";
+		return "redirect:/board/boardList?boardNo=" + boardNo + "&workspaceId=" + workspaceId + "&dept=" ;
 	}
 	
 

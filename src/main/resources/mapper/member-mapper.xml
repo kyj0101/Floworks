@@ -9,7 +9,7 @@
 			floworks_user
 		values(
                #{id},
-		       #{workspaceId}, 
+		       null, 
 		       #{password}, 
 		       #{name}, 
 		       #{email}, 
@@ -31,11 +31,12 @@
 			    #{departmentCode},
 			    #{profileFileOrinalname},
 			    <if test="profileFileRename == null">
-			    	default
+			    	default,
 			    </if>
 			    <if test="profileFileRename != null">
-			    	 #{profileFileRename}
+			    	 #{profileFileRename},
 			    </if>
+			    #{leave}
 			    )
 	</insert>
 	
@@ -49,16 +50,44 @@
 				#{userId}
 				)
 	</insert>
+	
+	<insert id="insertDefaultAttendanceSystem">
+		insert  into
+   			attendance_system
+		values(
+				#{workspaceId},
+				default,
+				default,
+				null,
+				default,
+				default,
+				default,
+				default
+				)
+	</insert>
+	
+	<insert id="insertDefaultLeaveSystem">
+		insert into
+			leave_system
+		values(
+		        #{workspaceId},
+		        #{position},
+		        default
+		        )
+	</insert>
 
 	<select id="selectOneMember" resultMap="memberMap">
 		select
-    		*
+		    *
 		from
-    		member m join floworks_user u
-    		on m.id = u.id
-    	where
-    		u.quit_yn = 'N'
-    		and m.id = #{id}
+		    member m 
+		        join floworks_user u
+		            on m.id = u.id
+		        join department d
+		            on m.department_code = d.department_code
+		where
+		    u.quit_yn = 'N'
+		    and m.id = #{id}
 	</select>
 
 	<select id="selectIdDuplicate"  resultType="int">
@@ -137,6 +166,27 @@
 		where
 			workspace_id = #{workspaceId}
 	</select>
+	
+	<select id="selectLeaveDay" resultType="int">
+		select
+		    leave_day
+		from
+		    leave_system
+		where
+		    position = #{position}
+		    and workspace_id = #{workspaceId}
+	</select>
+	
+	<select id="selectOneWorkspace" resultMap="workspaceMap">
+		select
+		    w.*
+		from
+		    floworks_user f 
+		        join workspace w
+		            on f.workspace_id = w.workspace_id
+		where
+		    f.id = #{id}
+	</select>
 		
 	<update id="updateUserWorkspaceId"> 
 		update
@@ -187,14 +237,30 @@
 			id = #{id}
 	</update>
 	
+	<update id="updateWorkspaceOwnerAdmin">
+		update
+			floworks_user
+		set
+			role = 'ADMIN'
+		where
+			id = #{userId}
+	</update>
+	
+	<delete id="deleteAddressBook">
+		delete
+			address_book
+		where
+			id = #{id}	
+	</delete>
+	
 	<resultMap type="member" id="memberMap" extends="userMap">	
 		<id column="id" property="id"/>
 		
 		<result column="hire_date" property="hireDate"/>
-		<result column="resign" property="resign"/>
 		<result column="position" property="position"/>
 		<result column="department_code" property="departmentCode"/>		
 		<result column="department_name" property="department"/>
+		<result column="leave" property="leave"/>
 	</resultMap>
 	
 	<resultMap type="user" id="userMap">	
@@ -214,6 +280,13 @@
 		<id column="DEPARTMENT_CODE" property="departmentCode"/>
 		
 		<result column="DEPARTMENT_NAME" property="departmentName"/>
+	</resultMap>
+	
+	<resultMap type="map" id="workspaceMap">
+		<id column="workspace_id" property="workspaceId"/>
+		
+		<result column="owner" property="owner"/>
+		<result column="name" property="name"/>
 	</resultMap>
 	
 

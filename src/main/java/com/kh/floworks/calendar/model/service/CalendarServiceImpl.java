@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.kh.floworks.calendar.model.dao.CalendarDao;
 import com.kh.floworks.calendar.model.vo.Calendar;
@@ -19,30 +16,23 @@ public class CalendarServiceImpl implements CalendarService{
 	private CalendarDao calendarDao;
 
 	@Override
-	public int insertCal(Map<String, Object> calendarDate) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Calendar> selectListCalendar(String id) {
+		return calendarDao.selectListCalendar(id);
+	}
+	
+	@Override
+	public int insertCalendar(Calendar cal) {
+		return calendarDao.insertCalendar(cal);
 	}
 
 	@Override
-	public int insertCal(String dateList) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateCalendar(Calendar cal) {
+		return calendarDao.updateCalendar(cal);
 	}
 
-//	@Override
-//	public int insertCal(Map<String, Object> calendarDate) {
-//		
-//		int result = 0;
-//		Map<String, Object>[] calendarDateArr = (Map<String, Object>)param.get("calendarDateArr");
-//		
-//		if(calendarDateArr != null) {
-//			for(Map<String, Object> calendarDate :calendarDateArr) {
-//				result = calendarDao.insertCal(calendarDate);				
-//			}
-//		}
-//		return result;
-//	}
+	@Override
+	public int deleteCalendar(int no) {
+		return calendarDao.deleteCalendar(no);
+	}
 
-	
 }
