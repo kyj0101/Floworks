@@ -42,8 +42,8 @@
 			<div class="collapse hide" id="sidebarCommu"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=1&dept=부" class="nav-link active"> 공지게시판 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=2&dept=부" class="nav-link "> 자유게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?workspaceId=<sec:authentication property="principal.workspaceId"/>&boardNo=1&dept=부" class="nav-link active"> 공지게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?workspaceId=<sec:authentication property="principal.workspaceId"/>&boardNo=2&dept=부" class="nav-link "> 자유게시판 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAtten"

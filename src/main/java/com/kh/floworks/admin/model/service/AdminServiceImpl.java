@@ -10,6 +10,7 @@ import com.kh.floworks.admin.model.dao.AdminDao;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+import com.kh.floworks.admin.model.vo.Workspace;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,8 +44,18 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.userUpdate(userDetail);
 	}
 
+	@Override
+	public int updateWsPw(Workspace workspace) {
+		return adminDao.updateWsPw(workspace);
+	}
+
+	@Override
+	public Workspace selectOneWorkspace(Workspace workspace) {
+		return adminDao.selectOneWorkspace(workspace);
+	}
 
 
+	
 
 
 

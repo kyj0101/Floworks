@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+import com.kh.floworks.admin.model.vo.Workspace;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,8 +54,17 @@ public class AdminDaoImpl implements AdminDao {
 				+ session.update("admin.memberUpdate", userDetail);
 	}
 
+	@Override
+	public int updateWsPw(Workspace workspace) {
+		return session.update("admin.updateWsPw", workspace);
+	}
 
-	
+	@Override
+	public Workspace selectOneWorkspace(Workspace workspace) {
+		return session.selectOne("admin.selectOneWorkspace", workspace);
+	}
+
+
 	
 	
 	
@@ -190,6 +200,7 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.getTotalAttendContents", workspaceId);
 	}
 
+	
 
 
 }
