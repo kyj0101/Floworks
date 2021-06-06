@@ -78,7 +78,6 @@
 
 
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active">
-
 							조직도 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
 				</ul>

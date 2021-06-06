@@ -9,6 +9,7 @@ import com.kh.floworks.alarm.model.service.AlarmService;
 import com.kh.floworks.alarm.model.vo.Alarm;
 import com.kh.floworks.alarm.model.vo.AlarmYN;
 import com.kh.floworks.email.model.vo.Email;
+import com.kh.floworks.websocket.config.SocketHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,11 +20,14 @@ public class Collector {
 	@Autowired
 	AlarmService alarmService;
 	
+	@Autowired
+	SocketHandler socketHandlerForAlarm;
+	
 	Alarm alarm = new Alarm();
 	AlarmYN alarmYN= new AlarmYN();
 	
 	
-	public void Emailtoss(Email email) {
+	public void Emailtoss(Email email) throws Exception {
 		String alarmLink = "email/detail?emailNo="+email.getEmailNo()+"&listType=sent&id="+email.getId();
 		
 		alarm.setFromId(email.getId());
@@ -42,7 +46,7 @@ public class Collector {
 		
 		System.out.println("\n\n\n\n-----------------Email insert complete!---------------\n\n\n\n");
 		
-		
+		socketHandlerForAlarm.afterInsertEmail(alarm.getToId());
 		
 		
 	}
