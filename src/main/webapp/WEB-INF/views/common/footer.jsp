@@ -31,8 +31,7 @@
 			</a>
 				<div class="collapse hide" id="sidebarCal" style="padding-left: 35px;">
 					<ul class="nav nav-sm flex-column">
-						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain" class="nav-link active">일정관리 </a></li>
-						<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+						<li class="nav-item"><a href="${pageContext.request.contextPath }/calendar/calendarMain?id=<sec:authentication property="principal.id"/>" class="nav-link active">일정관리 </a></li>
 					</ul>
 				</div>
 		</li>
@@ -43,8 +42,8 @@
 			<div class="collapse hide" id="sidebarCommu"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=1&dept=부" class="nav-link active"> 공지게시판 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?boardNo=2&dept=부" class="nav-link "> 자유게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?workspaceId=<sec:authentication property="principal.workspaceId"/>&boardNo=1&dept=부" class="nav-link active"> 공지게시판 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/board/boardList?workspaceId=<sec:authentication property="principal.workspaceId"/>&boardNo=2&dept=부" class="nav-link "> 자유게시판 </a></li>
 				</ul>
 			</div></li>
 		<li class="nav-item"><a class="nav-link" href="#sidebarAtten"
@@ -76,7 +75,10 @@
 			<div class="collapse hide" id="sidebarChart"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link active">
+
+
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active">
+
 							조직도 </a></li>
 					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
 				</ul>
@@ -109,6 +111,7 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직급별 연차 설정</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting/member?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직원 연차 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/workspacePw?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">워크스페이스 비번 변경</a></li>
 				</ul>
 			</div></li>
 		</sec:authorize>
@@ -117,5 +120,6 @@
 </aside>
 </div>
 </body>
+
 
 </html>

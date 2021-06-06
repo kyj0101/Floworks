@@ -89,8 +89,23 @@
 		 	id = #{id}
 	</update>
 	
-
-
+	<update id="updateWsPw" >
+		 update
+		 	workspace 
+		 set
+		 	password = #{password}
+		 where
+		 	workspace_id = #{workspaceId}
+	</update>
+	
+	<select id="selectOneWorkspace" resultType="workspace">
+		select
+			workspace_id, password
+		from
+			workspace
+		where
+		    workspace_id = #{workspaceId}
+	</select>
 	
 	
 	

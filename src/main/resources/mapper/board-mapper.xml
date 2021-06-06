@@ -21,7 +21,8 @@
 	    where 
 	    	board_no = #{boardNo} and
             post_del = 'N' and
-            department_name like '%' || #{dept}
+            department_name like '%' || #{dept} and
+            workspace_id = #{workspaceId}
 		order 
 			by post_no desc
 	</select>
@@ -49,13 +50,16 @@
 		from 
 			(select *
 	        from post p 
+	        	left join floworks_user f
+          			on p.id = f.id
 	            left join member m
-	                on p.id = m.id
+	                on f.id = m.id
 	            left join department d
 	                on m.department_code = d.department_code) 
 	    where board_no = #{boardNo}  and
      		  post_del = 'N' and
-              department_name like '%' || #{dept}
+              department_name like '%' || #{dept} and
+              workspace_id = #{workspaceId}
 	</select>
 	
 	<insert id="insertPost">
@@ -96,7 +100,7 @@
 		from (select (select count(*) from post_file where post_no = #{postNo}) file_count,
 		        (select count(*) from post_comment where post_no = #{postNo}  and comment_del = 'N') comment_count,
 		        k.*
-		from (select p.* ,d.department_name, f.name, m.profile_file_rename
+		from (select p.* ,d.department_name, f.name, m.profile_file_rename, f.workspace_id
 		        from post p 
 		            left join floworks_user f
 		                on p.id = f.id
@@ -136,6 +140,7 @@
 		<result column="file_count" property="fileCount"/>
 		<result column="comment_count" property="commentCount"/>	
 		<result column="profile_file_rename" property="profileFileRename"/>	
+		<result column="workspace_id" property="workspaceId"/>
 		
 		<collection property="postFileList" ofType="postFile">
 			<id column="post_file" property="postFileNo"/>
