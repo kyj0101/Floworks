@@ -88,8 +88,7 @@
 			
 		<li class="nav-item"><a class="nav-link" href="#sidebarAppr"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재<span
-				class="badge badge-pill badge-danger">2</span>
+			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재
 		</a>
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
@@ -99,6 +98,20 @@
 				</ul>
 			</div></li>
 
+		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
+			data-toggle="collapse" role="button" aria-expanded="true"
+			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅
+		</a>
+			<div class="collapse hide" id="sidebarCat"
+				style="padding-left: 35px;">
+				<ul class="nav nav-sm flex-column">
+					<li class="nav-item"><a href="#" class="nav-link active">
+							메뉴1 </a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
+					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
+				</ul>
+			</div></li>
+			
 		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
 			data-toggle="collapse" role="button" aria-expanded="true"
