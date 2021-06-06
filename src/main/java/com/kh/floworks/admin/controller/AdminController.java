@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import com.kh.floworks.admin.model.service.AdminService;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+import com.kh.floworks.admin.model.vo.Workspace;
 import com.kh.floworks.attendance.model.service.AttendanceService;
 import com.kh.floworks.common.utils.PageBarUtils;
 
@@ -41,27 +43,26 @@ public class AdminController {
 	@Autowired
 	private AttendanceService attendanceService;
 
-	// 직원 전체 목록
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
 	@GetMapping("/userList")
 	public void userList(@RequestParam(defaultValue = "1") int cPage, @RequestParam String workspace, Model model,
 			HttpServletRequest request) {
 
 		// 1. 사용자입력값
 		int numPerPage = 15;
-		log.info("cPage = {}", cPage);
+
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 
 		// 2. 업무로직
 		List<UserList> userList = adminService.selectUserList(param, workspace);
-		log.info("userList = {}", userList);
-
+		
 		// b. pagebar영역
 		int totalContents = adminService.getTotalContents(workspace);
 		String url = request.getRequestURI() + "?workspace=" + workspace;
-		log.info("totalContents = {}", totalContents);
-		log.info("url = {}", url);
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 
 
@@ -73,9 +74,9 @@ public class AdminController {
 	// 직원정보 상세보기
 	@GetMapping("/userDetail")
 	public void userDetail(@RequestParam String userId, Model model) {
+		
 		// 1. 업무로직
 		UserDetail userDetail = adminService.selectOneUserDetail(userId);
-		log.info("userDetail = {}", userDetail);
 
 		// 2. jsp처리 위임
 		model.addAttribute("userDetail", userDetail);
@@ -86,7 +87,7 @@ public class AdminController {
 	public String userUpdate(@ModelAttribute("userDetail") UserDetail userDetail, RedirectAttributes redirectAttr) {
 		// 1. 업무로직
 		int result = adminService.userUpdate(userDetail) + adminService.memberUpdate(userDetail);
-		log.info("userDetail = {}", userDetail);
+
 		// 2. 사용자피드백
 		String msg = result > 0 ? "해당 직원의 정보가 수정되었습니다" : "해당 직원의 정보 수정에 실패하였습니다";
 		redirectAttr.addFlashAttribute("msg", msg);
@@ -95,6 +96,38 @@ public class AdminController {
 
 	}
 
+   @GetMapping("/workspacePw")
+   public void workspacePw() {}	
+   
+   @PostMapping("/updateWsPw")
+   public String updateWsPw(Workspace workspace, 
+		   					@RequestParam String originalPassword,
+						    RedirectAttributes redirectAttr) {
+	   
+	   Workspace workspacePw = adminService.selectOneWorkspace(workspace);
+	   if(bcryptPasswordEncoder.matches(originalPassword, workspacePw.getPassword())) {
+			//0. 암호화처리
+			String rawPassword = workspace.getPassword();
+			String encodedPassword = bcryptPasswordEncoder.encode(rawPassword);
+			log.info("rawPassword = {}", rawPassword);
+			log.info("encodedPassword = {}", encodedPassword);
+			workspace.setPassword(encodedPassword);
+		   
+		   //1. 업무로직
+		   int result = adminService.updateWsPw(workspace); 
+	
+		   log.info("workspace = {}", workspace);
+		   //2. 사용자피드백
+		   String msg = result > 0 ? "비밀번호가 변경되었습니다" : "비밀번호 변경에 실패하였습니다";
+		   redirectAttr.addFlashAttribute("msg", msg);
+		   }else {
+		   //2. 사용자피드백
+		   redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다");
+	   }
+	   return "redirect:/admin/workspacePw";
+	
+	}	
+   
 	@GetMapping("/attendList")
 	public void attendanceList(@RequestParam(defaultValue = "1") int cPage, @RequestParam String workspaceId,
 			Model model, HttpServletRequest request) {
@@ -112,14 +145,14 @@ public class AdminController {
 		List<AttendList> attendList = adminService.selectAttendList(param, workspaceId);
 		List<String> yearList = adminService.selectAllMemberAttendanceYear(workspaceId);
 		List<String> monthList = adminService.selectAllMemberAttendanceMonth(workspaceId);
-		
+
 		// b. pagebar영역
 		int totalContents = adminService.getTotalAttendContents(workspaceId);
 		String url = request.getRequestURI() + "?workspaceId=" + workspaceId;
 		String pageBar = PageBarUtils.getPageBar(totalContents, cPage, numPerPage, url);
 
 		// 3. jsp처리 위임
-		model.addAttribute("yearList",yearList);
+		model.addAttribute("yearList", yearList);
 		model.addAttribute("monthList", monthList);
 		model.addAttribute("attendList", attendList);
 		model.addAttribute("pageBar", pageBar);

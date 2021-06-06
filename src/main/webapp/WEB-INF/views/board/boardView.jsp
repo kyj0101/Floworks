@@ -25,6 +25,7 @@
      <div>
      	 <h3>${postList.postTitle}</h3>
          <div class="postWriter" >
+         	 <input type="hidden" name="workspaceId" value="<sec:authentication property="principal.workspaceId"/>"/>
              <img src="${pageContext.request.contextPath }/resources/upload/profile/${postList.profileFileRename}" alt="프로필사진" class="img-circle d-inline-block" id="postProfile">
              <label id="postName">${postList.name} ( ${postList.departmentName} )</label>
              <br>
@@ -36,7 +37,7 @@
              </div>
              <hr>
          </div>
-
+		
          <div class="form-group" id="postText">
          <c:if test="${postList.commentCount == null}">
 			<p>내용 없음</p>
@@ -72,6 +73,7 @@
 		             <input id="postDelBtn" type="submit" class="btn btn-primary float-right" value="삭제" >
 		             <input type="hidden" name="postNo" value="${postList.postNo}" />
 		             <input type="hidden" name="boardNo" value="${postList.boardNo}" />
+		             <input type="hidden" name="workspaceId" value="<sec:authentication property="principal.workspaceId"/>"/>
 		             </form:form>		             
 		         </div>
 		 	</c:when>
@@ -88,6 +90,7 @@
 		             <input id="postDelBtn" type="submit" class="btn btn-primary float-right" value="삭제" >
 		             <input type="hidden" name="postNo" value="${postList.postNo}" />
 		             <input type="hidden" name="boardNo" value="${postList.boardNo}" />
+		             <input type="hidden" name="workspaceId" value="<sec:authentication property="principal.workspaceId"/>"/>
 		             </form:form>		             
 		         </div>
 		 		</sec:authorize>
@@ -100,7 +103,6 @@
              <table  class="table" id="tb-comment">  
              <c:forEach items="${postList.postCommentList}" var="cmt">
 	           	<c:if test="${cmt.commentNo != null && cmt.commentDel == false}">
-             	<c:if test="${cmt.commentLevel eq 1}">
 	                 <tr class=level1>
 	                     <td>
 	                         <label id="commentName">${cmt.cmtName}(${cmt.cmtDeptName})</label>
@@ -143,7 +145,6 @@
 	                     </td>
 	                 </tr>
                  </c:if>
-	             </c:if>
                </c:forEach>  
              </table>
             

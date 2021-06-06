@@ -7,6 +7,7 @@ import java.util.Map;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+import com.kh.floworks.admin.model.vo.Workspace;
 
 public interface AdminService {
 
@@ -14,11 +15,8 @@ public interface AdminService {
 	
 	UserDetail selectOneUserDetail(String userId);
 
-	//직원 정보수정
-	int userUpdate(UserDetail userDetail);
-
-	int memberUpdate(UserDetail userDetail);
-
+	Workspace selectOneWorkspace(Workspace workspace);
+	
 	List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId);
 
 	List<String> selectAllMemberAttendanceYear(String workspaceId);
@@ -31,6 +29,13 @@ public interface AdminService {
 
 	List<AttendList> selectSearchAttendList(Map<String, Object> param);
 
+	//직원 정보수정
+	int userUpdate(UserDetail userDetail);
+
+	int memberUpdate(UserDetail userDetail);
+
+	int updateWsPw(Workspace workspace);
+
 	int updateAttendanceSystem(Map<String, Object> param);
 
 	int updateLeaveSystem(Map<String, Object> param);
@@ -42,8 +47,5 @@ public interface AdminService {
 	int getTotalContents(String workspace);
 
 	int getTotalSearchAttendContents(Map<String, Object> param);
-
-
-
 
 }

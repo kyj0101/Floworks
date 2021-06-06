@@ -130,6 +130,15 @@
 		    workspace_id = #{workspace}
 	</select>
 	
+	<select id="selectOneWorkspace" resultType="workspace">
+		select
+			workspace_id, password
+		from
+			workspace
+		where
+		    workspace_id = #{workspaceId}
+	</select>
+	
 	<select id="getTotalAttendContents" resultType="_int">
 		select 
     		count(*) 
@@ -163,7 +172,15 @@
 			day desc
 	</select>
 	
+	<select id="getTotalAttendContents" resultType="_int">
+		select 
+    		count(*) 
+		from 
+    		attendance 
+		where id in(select id from floworks_user where workspace_id=#{workspaceId})
+	</select>
 	
+ 	
 	<update id="updateAttendanceSystem"> 
 		update
 			attendance_system
@@ -212,7 +229,16 @@
 		 where
 		 	id = #{id}
 	</update>
-		
+
+	<update id="updateWsPw" >
+		 update
+		 	workspace 
+		 set
+		 	password = #{password}
+		 where
+		 	workspace_id = #{workspaceId}
+	</update>
+
 	<update id="updateAttend">
 		update
 			attendance

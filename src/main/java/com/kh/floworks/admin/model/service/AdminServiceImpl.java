@@ -10,6 +10,7 @@ import com.kh.floworks.admin.model.dao.AdminDao;
 import com.kh.floworks.admin.model.vo.AttendList;
 import com.kh.floworks.admin.model.vo.UserDetail;
 import com.kh.floworks.admin.model.vo.UserList;
+import com.kh.floworks.admin.model.vo.Workspace;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,26 +47,36 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
-		return adminDao.selectLeaveSystem(workspaceId);
+	public Workspace selectOneWorkspace(Workspace workspace) {
+		return adminDao.selectOneWorkspace(workspace);
 	}
 	
 	//--강준혁 근태관리 리스트 뽑아오기
 	@Override
 	public List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId) {
-		return adminDao.selectAttendList(param,workspaceId);
+		return adminDao.selectAttendList(param, workspaceId);
 	}
-	
+
 	@Override
 	public Map<String, Object> selectOneAttend(Map<String, Object> param) {
 		return adminDao.selectOneAttend(param);
 	}
-	
+
 	@Override
 	public List<AttendList> selectSearchAttendList(Map<String, Object> param) {
 		return adminDao.selectSearchAttendList(param);
 	}
-		
+	
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return adminDao.selectLeaveSystem(workspaceId);
+	}
+
+	@Override
+	public int updateWsPw(Workspace workspace) {
+		return adminDao.updateWsPw(workspace);
+	}
+
 	@Override
 	public int userUpdate(UserDetail userDetail) {
 		return adminDao.userUpdate(userDetail);
@@ -92,7 +103,6 @@ public class AdminServiceImpl implements AdminService{
 	public int updateAttend(Map<String, Object> param) {
 		return adminDao.updateAttend(param);
 	}
-
 
 	@Override
 	public int getTotalAttendContents(String workspaceId) {
