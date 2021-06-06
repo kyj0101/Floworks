@@ -22,11 +22,6 @@
 		<li>
 			<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부">부서</a>
 			<ul>
-
-				<li>
-
-					<a href="organizationChart?dept=기획부">기획부</a>					
-
 				<li>
 					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=기획부">기획부</a>					
 				</li>

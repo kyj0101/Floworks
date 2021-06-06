@@ -3,7 +3,6 @@ package com.kh.floworks.leave.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.floworks.approval.model.vo.Approval;
-import com.kh.floworks.approval.model.vo.ApvlFile;
 import com.kh.floworks.common.utils.FileUtils;
 import com.kh.floworks.common.utils.PageBarUtils;
 import com.kh.floworks.leave.model.service.LeaveService;
@@ -124,7 +120,6 @@ public class LeaveController {
 		lvReq.setCategory(ctg);
 		
 		// 3. applicantName 처리
-		log.info("{}");
 		Member member = memberService.selectOneMember(lvReq.getApplicant());
 		lvReq.setApplicantName(member.getName());
 		
@@ -242,13 +237,13 @@ public class LeaveController {
 	    
 	    
 	    // 3. member 객체 연차 갯수 차감
-	    // TODO NPE - Member 발생
 	    Member member = memberService.selectOneMember(applicant.trim());
-
+	    
 	    double dayoffCnt = member.getLeave() - (duration * requestedDates); 
 	    log.info("dayoffCnt = {}", dayoffCnt);
-	    Leave lv = new Leave(applicant, dayoffCnt);
+	    Leave lv = new Leave();
 	    lv.setId(member.getId());
+	    lv.setDayoffCnt(dayoffCnt);
 	    
 	    if (result > 0 && dayoffCnt > 0) {
 			result = leaveService.updateMemberLeave(lv);
