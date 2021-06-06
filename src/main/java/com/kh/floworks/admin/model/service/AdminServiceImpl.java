@@ -28,20 +28,48 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Override
 	public int getTotalContents(String workspace) {
-		return adminDao.getTotalContents(workspace);
-		
+		return adminDao.getTotalContents(workspace);	
 	}
-	
 	
 	@Override
 	public UserDetail selectOneUserDetail(String userId) {
 		return adminDao.selectOneUserDetail(userId);
 	}
-
 	
 	@Override
-	public int userUpdate(UserDetail userDetail) {
-		return adminDao.userUpdate(userDetail);
+	public List<String> selectAllMemberAttendanceYear(String workspaceId) {
+		return adminDao.selectAllMemberAttendanceYear(workspaceId);
+	}
+
+	@Override
+	public List<String> selectAllMemberAttendanceMonth(String workspaceId) {
+		return adminDao.selectAllMemberAttendanceMonth(workspaceId);
+	}
+	
+	@Override
+	public Workspace selectOneWorkspace(Workspace workspace) {
+		return adminDao.selectOneWorkspace(workspace);
+	}
+	
+	//--강준혁 근태관리 리스트 뽑아오기
+	@Override
+	public List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId) {
+		return adminDao.selectAttendList(param, workspaceId);
+	}
+
+	@Override
+	public Map<String, Object> selectOneAttend(Map<String, Object> param) {
+		return adminDao.selectOneAttend(param);
+	}
+
+	@Override
+	public List<AttendList> selectSearchAttendList(Map<String, Object> param) {
+		return adminDao.selectSearchAttendList(param);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
+		return adminDao.selectLeaveSystem(workspaceId);
 	}
 
 	@Override
@@ -50,100 +78,31 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Workspace selectOneWorkspace(Workspace workspace) {
-		return adminDao.selectOneWorkspace(workspace);
+	public int userUpdate(UserDetail userDetail) {
+		return adminDao.userUpdate(userDetail);
 	}
 
-
 	
-
-
-
-
-	
-	
-	
-	
-
-	//--강준혁 근태관리 리스트 뽑아오기
 	@Override
-	public List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId) {
-		return adminDao.selectAttendList(param,workspaceId);
+	public int memberUpdate(UserDetail userDetail) {
+		return adminDao.memberUpdate(userDetail);
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//===================== 강유정 근태 설정 ========================
 	@Override
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return adminDao.updateAttendanceSystem(param);
 	}
 
 	@Override
-	public List<Map<String, Object>> selectLeaveSystem(String workspaceId) {
-		return adminDao.selectLeaveSystem(workspaceId);
-	}
-
-
-	@Override
 	public int updateLeaveSystem(Map<String, Object> param) {
 		return adminDao.updateLeaveSystem(param);
+	}
+	
+
+	@Override
+	public int updateAttend(Map<String, Object> param) {
+		return adminDao.updateAttend(param);
 	}
 
 	@Override
@@ -151,11 +110,9 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.getTotalAttendContents(workspaceId);
 	}
 
+	@Override
+	public int getTotalSearchAttendContents(Map<String, Object> param) {
+		return adminDao.getTotalSearchAttendContents(param);
+	}
 
-
-
-
-
-
-	
 }

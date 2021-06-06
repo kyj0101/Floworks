@@ -179,6 +179,7 @@ public class AttendanceController {
 	
 	@GetMapping("/list")
 	public String attendanceList(String id,
+			                     String workspaceId,
 			                     @RequestParam(defaultValue = "1") int cPage,	
 			                     HttpServletRequest request,
 			                     Model model) {

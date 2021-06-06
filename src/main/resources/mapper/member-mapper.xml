@@ -26,7 +26,6 @@
 		values(
 			    #{id},
 			    default,
-			    default,
 			    #{position},
 			    #{departmentCode},
 			    #{profileFileOrinalname},
@@ -80,7 +79,6 @@
 		select
 		    *
 		from
-
 		    member m 
 		        join floworks_user u
 		            on m.id = u.id
@@ -89,7 +87,6 @@
 		where
 		    u.quit_yn = 'N'
 		    and m.id = #{id}
-
 	</select>
 
 	<select id="selectIdDuplicate"  resultType="int">
@@ -262,6 +259,7 @@
 		<result column="position" property="position"/>
 		<result column="department_code" property="departmentCode"/>		
 		<result column="department_name" property="department"/>
+		<result column="leave" property="leave"/>
 	</resultMap>
 	
 	<resultMap type="user" id="userMap">	

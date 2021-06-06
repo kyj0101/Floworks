@@ -107,7 +107,7 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.info("closed함수 가동");
+		//log.info("closed함수 가동");
 		list.remove(session);
 		for(int i=0; i<connect.size(); i++) {
 			if(connect.get(i).get("web_id").equals(session.getId())) {

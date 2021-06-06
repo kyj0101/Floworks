@@ -122,7 +122,7 @@
 	    </div>
 	    
 	    <div class="modal fade ap-progress-modal" id="ap-progress-modal${vs.index}" tabindex="-1" aria-labelledby="ap-progress-modal-label" aria-hidden="true">
-	        <div class="modal-dialog modal-dialog-centered">
+	        <div class="modal-dialog modal-dialog-centered modal-lg">
 	            <div class="modal-content">
 	                <div class="modal-header">
 	          			
