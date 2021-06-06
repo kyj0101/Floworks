@@ -42,7 +42,7 @@
                 이용에 불편을 드려 죄송합니다.
             </p>
  
- 			<a href="">
+ 			<a href="mailto:example@gmail.com" target="_top">
 				문의 메일 작성하기
 			</a>
 			           

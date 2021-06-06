@@ -86,11 +86,6 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectOneUserDetail", userId);
 	}
 	
-	@Override
-	public Workspace selectOneWorkspace(Workspace workspace) {
-		return session.selectOne("admin.selectOneWorkspace", workspace);
-	}
-	
 
 	//직원 정보수정
 	@Override
@@ -98,16 +93,23 @@ public class AdminDaoImpl implements AdminDao {
 		return session.update("admin.userUpdate", userDetail)
 				+ session.update("admin.memberUpdate", userDetail);
 	}
-	
-	@Override
-	public int memberUpdate(UserDetail userDetail) {
-		return session.update("admin.memberUpdate", userDetail);
-	}
+
 
 	@Override
 	public int updateWsPw(Workspace workspace) {
 		return session.update("admin.updateWsPw", workspace);
 	}
+
+	@Override
+	public Workspace selectOneWorkspace(Workspace workspace) {
+		return session.selectOne("admin.selectOneWorkspace", workspace);
+	}
+
+	@Override
+	public int memberUpdate(UserDetail userDetail) {
+		return session.update("admin.memberUpdate", userDetail);
+	}
+
 
 	public int updateAttendanceSystem(Map<String, Object> param) {
 		return session.update("admin.updateAttendanceSystem", param);
@@ -137,5 +139,5 @@ public class AdminDaoImpl implements AdminDao {
 	public int getTotalSearchAttendContents(Map<String, Object> param) {
 		return session.selectOne("admin.getTotalSearchAttendContents", param);
 	}
-		
+
 }

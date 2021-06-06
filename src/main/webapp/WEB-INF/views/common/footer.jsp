@@ -19,7 +19,7 @@
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/compose" class="nav-link active"> 이메일 작성 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/inbox?id=<sec:authentication property="principal.id"/>" class="nav-link "> 받은 메일 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/inbox?id=<sec:authentication property="principal.id"/>" class="nav-link "> 받은 메일</span></a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/sent?id=<sec:authentication property="principal.id"/>" class="nav-link "> 보낸 이메일 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/email/drafts?id=<sec:authentication property="principal.id"/>" class="nav-link "> 임시 보관함 </a></li>
 				</ul>
@@ -88,7 +88,8 @@
 			
 		<li class="nav-item"><a class="nav-link" href="#sidebarAppr"
 			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재
+			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재<span id="badge_for_approval"
+				class="badge badge-pill badge-danger"></span>
 		</a>
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
@@ -98,19 +99,6 @@
 				</ul>
 			</div></li>
 
-		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
-			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅
-		</a>
-			<div class="collapse hide" id="sidebarCat"
-				style="padding-left: 35px;">
-				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴1 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
-				</ul>
-			</div></li>
 			
 		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
@@ -121,7 +109,7 @@
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList?workspace=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 직원 목록 조회 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 연차 설정</a></li>
 				</ul>

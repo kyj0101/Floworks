@@ -22,14 +22,6 @@
 		<li>
 			<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부">부서</a>
 			<ul>
-<<<<<<< HEAD
-
-				<li>
-
-					<a href="organizationChart?dept=기획부">기획부</a>					
-
-=======
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 				<li>
 					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=기획부">기획부</a>					
 				</li>
