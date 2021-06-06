@@ -106,14 +106,6 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 
-	
-	
-	
-
-
-	
-	//--강준혁 근태관리 리스트 쭉 뽑아오기
-
 	@Override
 	public int memberUpdate(UserDetail userDetail) {
 		return session.update("admin.memberUpdate", userDetail);
