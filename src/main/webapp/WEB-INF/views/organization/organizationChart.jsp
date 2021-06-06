@@ -20,7 +20,7 @@
 <div class="tree">
     <ul>
 		<li>
-			<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부">대표</a>
+			<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부">부서</a>
 			<ul>
 				<li>
 					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=기획부">기획부</a>					

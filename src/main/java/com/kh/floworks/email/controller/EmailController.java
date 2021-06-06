@@ -297,7 +297,12 @@ public class EmailController {
 			log.info("email={}", email);
 			log.info("InsertResult = {}", result);
 			
-			collector.Emailtoss(email);
+			try {
+				collector.Emailtoss(email);
+			} catch (Exception e) {
+			
+				e.printStackTrace();
+			}
 
 			return "redirect:/email/sent?id=" + email.getId();
 

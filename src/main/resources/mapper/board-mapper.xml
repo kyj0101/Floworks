@@ -96,7 +96,7 @@
 	
 	
 	<select id="selectOnePostCollection" resultMap="postCollectionMap">
-		select a.*, f.*,  pc.id cmid, pc.post_comment_no, pc.comment_no, pc.comment_level, pc.comment_content, pc.comment_date, pc.post_no, pc.comment_del, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
+		select a.*, f.*,  pc.id cmid, pc.comment_no, pc.comment_content, pc.comment_date, pc.post_no, pc.comment_del, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
 		from (select (select count(*) from post_file where post_no = #{postNo}) file_count,
 		        (select count(*) from post_comment where post_no = #{postNo}  and comment_del = 'N') comment_count,
 		        k.*
@@ -120,11 +120,7 @@
 		        on cm.department_code = cd.department_code
 		where
 		    a.post_no = #{postNo}
-		    <!-- 
-		start with comment_level = 1
-		connect by post_comment_no = prior comment_no
-		order siblings by comment_no
-		     -->
+
 	</select>
 	<resultMap type="postList" id="postCollectionMap">
 		<id column="post_no" property="postNo"/>
@@ -150,12 +146,10 @@
 		</collection>
 		<collection property="postCommentList" ofType="postComment">
 			<id column="comment_no" property="commentNo"/>
-			<result column="comment_level" property="commentLevel"/>
 			<result column="comment_content" property="commentContent"/>
 			<result column="comment_date" property="commentDate"/>
 			<result column="cmid" property="cmId"/>
 			<result column="post_no" property="postNo"/>
-			<result column="post_comment_no" property="postCommentNo"/>
 			<result column="comment_del" property="commentDel" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
 			<result column="cmt_name" property="cmtName"/>
 			<result column="cmt_dept_name" property="cmtDeptName"/>	

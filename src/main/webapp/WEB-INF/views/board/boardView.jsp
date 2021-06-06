@@ -103,7 +103,6 @@
              <table  class="table" id="tb-comment">  
              <c:forEach items="${postList.postCommentList}" var="cmt">
 	           	<c:if test="${cmt.commentNo != null && cmt.commentDel == false}">
-             	<c:if test="${cmt.commentLevel eq 1}">
 	                 <tr class=level1>
 	                     <td>
 	                         <label id="commentName">${cmt.cmtName}(${cmt.cmtDeptName})</label>
@@ -146,7 +145,6 @@
 	                     </td>
 	                 </tr>
                  </c:if>
-	             </c:if>
                </c:forEach>  
              </table>
             

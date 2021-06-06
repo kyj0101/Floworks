@@ -18,7 +18,7 @@
 		order
 			by apvl_request_date desc
 	</select>
-	
+			
 	<select id="selectOneApproval" resultMap="apvlMap">
 		select
 		    *
