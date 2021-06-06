@@ -63,12 +63,15 @@
 					</li>
 
 					<li class="nav-item">
-						<a href="${pageContext.request.contextPath}/leave/request" class="nav-link "> 휴가신청 </a>
+						<a href="${pageContext.request.contextPath}/leave/request?id=<sec:authentication property='principal.id'/>" class="nav-link "> 휴가신청 </a>
+					</li>
+					<li class="nav-item">
+						<a href="${pageContext.request.contextPath}/leave/list?workspaceId=<sec:authentication property='principal.workspaceId'/>" class="nav-link "> 휴가신청 보관함 </a>
 					</li>
 				</ul>
 			</div>
 		</li>			
-			
+
 		<li class="nav-item"><a class="nav-link" href="#sidebarChart"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarChart"> <i class="bi bi-diagram-3"></i>조직도
@@ -76,12 +79,13 @@
 			<div class="collapse hide" id="sidebarChart"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item">
-						<a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active">조직도 </a>
-					</li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴 </a></li>
+
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/organization/organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부" class="nav-link active"> 조직도 </a></li>
+
 				</ul>
-			</div></li>
+			</div>
+		</li>			
+			
 		<li class="nav-item"><a class="nav-link" href="#sidebarAppr"
 			data-toggle="collapse" role="button" aria-expanded="true"
 			aria-controls="sidebarAppr"> <i class="bi bi-vector-pen"></i>전자결재<span
@@ -90,28 +94,11 @@
 			<div class="collapse hide" id="sidebarAppr"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlWrite?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 문서 작성</a></li>
-
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
-					<%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlBox?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">결재 완료함</a></li> --%>
 				</ul>
 			</div></li>
-		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
-			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅<span
-				class="badge badge-pill badge-danger">36</span>
-		</a>
-			<div class="collapse hide" id="sidebarCat"
-				style="padding-left: 35px;">
-				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴1 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
-				</ul>
-			</div></li>
-			
+
 		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
 			data-toggle="collapse" role="button" aria-expanded="true"
@@ -120,10 +107,10 @@
 			<div class="collapse hide" id="sidebarAdmin"
 				style="padding-left: 35px;">
 				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList?workspace=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 직원 목록 조회 및 수정 </a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 목록 조회 및 수정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/userList?workspace=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 직원 목록 조회 </a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendList" class="nav-link "> 근태 목록 조회 </a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/attendance/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 근태 설정</a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link ">직급별 연차 설정</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/admin/leave/setting?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link "> 연차 설정</a></li>
 				</ul>
 			</div></li>
 		</sec:authorize>

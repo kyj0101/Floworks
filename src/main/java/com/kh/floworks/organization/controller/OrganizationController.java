@@ -45,6 +45,7 @@ public class OrganizationController {
 	      param.put("workspace", workspace);
 	      param.put("dept", dept);
 	      
+
 	      //2. 업무로직
 	      List<UserList> userList = organizationService.selectUserList(param);
 	      log.info("userList = {}", userList);

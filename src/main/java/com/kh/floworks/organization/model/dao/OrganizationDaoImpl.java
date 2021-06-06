@@ -22,19 +22,19 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
 	@Override
 	public List<UserList> selectUserList(Map<String, Object> param) {
-	
 		int cPage = (int)param.get("cPage");
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit; 
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
+		log.info("workspace = {}", param);
 
 		return session.selectList("organization.selecUserList", param, rowBounds);
 	}
 
 	@Override
-	public int getTotalContents(Map<String, Object> search) {
-		return session.selectOne("organization.getTotalContents", search);
+	public int getTotalContents(Map<String, Object> param) {
+		return session.selectOne("organization.getTotalContents", param);
 	}
 	
 	

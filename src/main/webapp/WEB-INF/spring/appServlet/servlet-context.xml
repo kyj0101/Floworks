@@ -63,7 +63,7 @@
 	<!-- 실시간 알림 -->
 	<beans:bean id="echoHandler" class="com.kh.floworks.common.socket.EchoHandler" />
 	<websocket:handlers>
-    	<websocket:mapping handler="echoHandler" path="/echo" />
+    	<websocket:mapping handler="echoHandler" path="/echo-ws" />
     	<websocket:handshake-interceptors>
         	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
     	</websocket:handshake-interceptors>	

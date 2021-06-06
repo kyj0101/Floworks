@@ -10,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.kh.floworks.alarm.model.vo.Alarm;
+
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @ToString
-public class Member extends User implements Serializable, UserDetails{
+public class MemberWithAlarm extends User implements Serializable, UserDetails{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,23 +30,15 @@ public class Member extends User implements Serializable, UserDetails{
 	private String department;
 	private String profileFileOrinalname;
 	private String profileFileRename;
-	private int leave;
+	private List<Alarm> memberAlarm;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
 		String userRole = super.getRole().trim();
-		String workspaceId = super.getWorkspaceId();
-		
-		if("".equals(workspaceId)) {
-			
-			authList.add(new SimpleGrantedAuthority("ROLE_GUEST"));
-			
-			return authList;
-		}
-		
-		if("ADMIN".equals(userRole)) {
+	
+		if(userRole.equals("ADMIN")) {
 			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));			
 		}
 		
@@ -132,6 +126,11 @@ public class Member extends User implements Serializable, UserDetails{
 		return super.getWorkspaceId();
 	}
 	
-	
+	public void setMemberAlarm(List<Alarm> memberAlarm) {
+		this.memberAlarm = memberAlarm; 
+	}
 
+	public List<Alarm> getMemberAlarm(){
+		return this.memberAlarm;
+	}
 }

@@ -25,7 +25,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public int getTotalContents(Map<String, Object> search) {
-		return organizationDao.getTotalContents(search);
+	public int getTotalContents(Map<String, Object> param) {
+		return organizationDao.getTotalContents(param);
 	}
 }
