@@ -79,7 +79,6 @@
 		select
 		    *
 		from
-
 		    member m 
 		        join floworks_user u
 		            on m.id = u.id
@@ -88,7 +87,6 @@
 		where
 		    u.quit_yn = 'N'
 		    and m.id = #{id}
-
 	</select>
 
 	<select id="selectIdDuplicate"  resultType="int">
