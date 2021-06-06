@@ -7,9 +7,9 @@ import com.kh.floworks.admin.model.vo.UserList;
 
 public interface OrganizationDao {
 
-	List<UserList> selectUserList(Map<String, Object> param, String workspace);
+	List<UserList> selectUserList(Map<String, Object> param);
 
-	int getTotalContents(String workspace);
+	int getTotalContents(Map<String, Object> search);
 
 	
 }

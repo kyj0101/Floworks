@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 <jsp:param value="내 정보 확인" name="title"/>
@@ -19,26 +20,30 @@
 <div class="tree">
     <ul>
 		<li>
-			<a href="#">대표</a>
+			<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=부">대표</a>
 			<ul>
+
 				<li>
 
 					<a href="organizationChart?dept=기획부">기획부</a>					
+
+				<li>
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=기획부">기획부</a>					
 				</li>
 				<li>
-					<a href="#">개발부</a>					
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=개발부">개발부</a>					
 				</li>
 				<li>
-					<a href="#">총무부</a>					
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=총무부">총무부</a>					
 				</li>
 				<li>
-					<a href="#">국내영업부</a>					
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=국내영업부">국내영업부</a>					
 				</li>
 				<li>
-					<a href="#">마케팅부</a>					
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=마케팅부">마케팅부</a>					
 				</li>
 				<li>
-					<a href="#">회계관리부</a>
+					<a href="organizationChart?workspace=<sec:authentication property='principal.workspaceId'/>&dept=회계관리부">회계관리부</a>
 				</li>
 			</ul>
 		</li>
@@ -58,14 +63,14 @@
            
         <tbody>
         <c:if test="${userList != null}">
-             <c:forEach items="${userList}" var="users">
-			<tr data-no="${users.id}">
+			<c:forEach items="${userList}" var="users">
+        	<tr data-no="${users.id}">
 				<td>${users.id}</td>
 				<td>${users.name}</td>
 				<td>${users.departmentName}</td>
 				<td>${users.position}</td>
 			</tr>
-		  </c:forEach>
+			</c:forEach>
 	    </c:if>
 	    
         </tbody>
