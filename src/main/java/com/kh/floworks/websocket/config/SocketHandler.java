@@ -39,9 +39,9 @@ public class SocketHandler extends TextWebSocketHandler {
 		
 		//session에 id값이 없어??
 		list.add(session);
-		log.info("헤더에 있는 session 모음 list = {}",list);
+		//log.info("헤더에 있는 session 모음 list = {}",list);
 		String id = session.getId();
-		log.info("session_id = {}\n\n",id);
+		//log.info("session_id = {}\n\n",id);
 		
 	}
 	
@@ -107,7 +107,7 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.info("closed함수 가동");
+		//log.info("closed함수 가동");
 		list.remove(session);
 		for(int i=0; i<connect.size(); i++) {
 			if(connect.get(i).get("web_id").equals(session.getId())) {
@@ -119,13 +119,13 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	public void afterInsertEmail(String toId) throws Exception{
 		
-		log.info("\n\n\n---------------------이곳에 당도하였는가요?--------------------\n\n\n");
+		//log.info("\n\n\n---------------------이곳에 당도하였는가요?--------------------\n\n\n");
 		
 		try {
-			log.info("session 모음 list = {}",list);
+			///=log.info("session 모음 list = {}",list);
 			for(int i=0; i<connect.size(); i++) {
 
-				System.out.println(i+1+"번째 : connect:{"+connect.get(i).get("web_id")+","+connect.get(i).get("real_id")+"}, session={"+list.get(i)+"}\n");
+			//	System.out.println(i+1+"번째 : connect:{"+connect.get(i).get("web_id")+","+connect.get(i).get("real_id")+"}, session={"+list.get(i)+"}\n");
 				if(connect.get(i).get("real_id").equals(toId) &&connect.get(i).get("web_id").equals(list.get(i).getId())){
 					message = plusAlarm(connect.get(i).get("web_id"), toId);
 					list.get(i).sendMessage(message);

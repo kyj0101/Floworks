@@ -13,8 +13,8 @@
 		     join position p
 		     	on m.position = p.position
 		where
-			workspace_id = #{workspace} and
-			d.department_name like '%' || #{dept} || '%'
+			workspace_id = #{workspace} 
+			and d.department_name like '%' || #{dept} || '%'
 		order by
 			REGEXP_REPLACE(POSITION_CODE,'[0-9]'), TO_NUMBER(REGEXP_REPLACE(position_code, '[^0-9]'))
 	</select>

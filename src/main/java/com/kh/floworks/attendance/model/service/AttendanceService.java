@@ -37,5 +37,4 @@ public interface AttendanceService {
 	int getTotalAttendance(String id);
 
 	int getTotalSearchAttendance(Map<String, Object> param);
-
 }

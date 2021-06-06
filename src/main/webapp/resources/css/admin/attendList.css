@@ -1,11 +1,41 @@
 @charset "UTF-8";
 
 section {
-	margin-top: 50px;
+	padding: 0;
+	padding-top: 50px;
+}
+
+#board-list{
+	margin: 0 auto;
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+	width: 95%;
+}
+
+form{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.attendance-search-div{
+ 	justify-content: flex-end;
 }
 
 .table {
-	width: 80%;
-	margin: 0 auto;
 	text-align: center;
+}
+
+.attendance-search-btn{
+    height: 39px;
+    width: 76px;
+    margin-left: 20px;
+}
+
+tr{
+	cursor: pointer;
+}
+
+tr:hover{
+	background: #d4d4d4 !important;
 }

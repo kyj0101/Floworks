@@ -124,6 +124,7 @@ public class LeaveController {
 		lvReq.setCategory(ctg);
 		
 		// 3. applicantName 처리
+		log.info("{}");
 		Member member = memberService.selectOneMember(lvReq.getApplicant());
 		lvReq.setApplicantName(member.getName());
 		
@@ -242,10 +243,12 @@ public class LeaveController {
 	    
 	    // 3. member 객체 연차 갯수 차감
 	    // TODO NPE - Member 발생
-	    Member member = memberService.selectOneMember(applicant);
+	    Member member = memberService.selectOneMember(applicant.trim());
+
 	    double dayoffCnt = member.getLeave() - (duration * requestedDates); 
 	    log.info("dayoffCnt = {}", dayoffCnt);
 	    Leave lv = new Leave(applicant, dayoffCnt);
+	    lv.setId(member.getId());
 	    
 	    if (result > 0 && dayoffCnt > 0) {
 			result = leaveService.updateMemberLeave(lv);

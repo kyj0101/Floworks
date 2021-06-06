@@ -28,7 +28,7 @@ public class OrganizationController {
 
 	@Autowired
 	private OrganizationService organizationService;
-	
+
 	@GetMapping("/organizationChart")
 	public void organiztionChart(@RequestParam(defaultValue = "1") int cPage,
 								@RequestParam String workspace,
@@ -45,7 +45,7 @@ public class OrganizationController {
 	      param.put("workspace", workspace);
 	      param.put("dept", dept);
 	      
-	     
+
 	      //2. 업무로직
 	      List<UserList> userList = organizationService.selectUserList(param);
 	      log.info("userList = {}", userList);

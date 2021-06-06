@@ -98,21 +98,7 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/approval/apvlProgress?workspaceId=<sec:authentication property="principal.workspaceId"/>" class="nav-link">결재 보관함</a></li>
 				</ul>
 			</div></li>
-		<li class="nav-item"><a class="nav-link" href="#sidebarCat"
-			data-toggle="collapse" role="button" aria-expanded="true"
-			aria-controls="sidebarCat"> <i class="bi bi-chat-dots"></i>채팅<span
-				class="badge badge-pill badge-danger">36</span>
-		</a>
-			<div class="collapse hide" id="sidebarCat"
-				style="padding-left: 35px;">
-				<ul class="nav nav-sm flex-column">
-					<li class="nav-item"><a href="#" class="nav-link active">
-							메뉴1 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴2 </a></li>
-					<li class="nav-item"><a href="#" class="nav-link "> 메뉴3 </a></li>
-				</ul>
-			</div></li>
-			
+
 		<sec:authorize access="hasRole('ADMIN')"> <!-- 관리자계정으로 로그인 해야 보임 -->
 		<li class="nav-item"><a class="nav-link" href="#sidebarAdmin"
 			data-toggle="collapse" role="button" aria-expanded="true"

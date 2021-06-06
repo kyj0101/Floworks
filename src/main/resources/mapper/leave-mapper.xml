@@ -96,7 +96,7 @@
 		SET
 			LEAVE = #{dayoffCnt}
 		WHERE
-			ID = #{userId}
+			ID = #{id}
 	</update>
 	
 	<update id="updateReject">

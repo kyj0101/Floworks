@@ -262,6 +262,7 @@
 		<result column="position" property="position"/>
 		<result column="department_code" property="departmentCode"/>		
 		<result column="department_name" property="department"/>
+		<result column="leave" property="leave"/>
 	</resultMap>
 	
 	<resultMap type="user" id="userMap">	
