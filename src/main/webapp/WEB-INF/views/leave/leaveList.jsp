@@ -25,6 +25,7 @@
 	        <div class="ap-doc">
 	            <div class="lv-info-head">
                     <h4 class="ap-info-title" id="ap-info-title"><b>${lv.applicantName} 휴가 신청</b></h4>
+                    <p class="ap-info-date" id="ap-info-date">${lv.applicant}</p>
 	            </div>
 	            <div class="ap-info-middle">
 	                <h4 class="ap-writer-name"><b><fmt:formatDate value="${lv.reqDate}" pattern="yyyy.MM.dd"/></b></h4>
@@ -139,8 +140,10 @@
                     	<sec:authentication property="principal" var="loginid"/>
 	                    <sec:authorize access="hasRole('ADMIN')">
 	                    	<c:if test="${fn:trim(lv.applicant) ne fn:trim(loginid.id)}">
-		                    	<button type="button" class="btn btn-info" onclick="approveLeave();">승인</button>
-		                    	<button type="button" class="btn btn-danger" onclick="rejectLeave();">반려</button>
+	                    		<c:if test="${lv.apvlYn eq null}">
+			                    	<button type="button" class="btn btn-info" onclick="approveLeave();">승인</button>
+			                    	<button type="button" class="btn btn-danger" onclick="rejectLeave();">반려</button>
+		                    	</c:if>
 	                    	</c:if>
 	                    </sec:authorize>
 	                    <c:if test="${fn:trim(lv.applicant) eq fn:trim(loginid.id)}">
