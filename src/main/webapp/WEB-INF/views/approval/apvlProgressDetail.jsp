@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
@@ -35,6 +36,23 @@
 				</td>
             </tr>
             <tr>
+                <th>결재선 코멘트</th>
+                <td>
+                	<c:if test="${approval.approver1 ne null}">
+                		<span>결재선1 - ${approval.comment1}</span><br />
+                	</c:if>
+                	<c:if test="${approval.approver2 ne null}">
+                		<span>결재선2 - ${approval.comment2}</span><br />
+                	</c:if>
+                	<c:if test="${approval.approver3 ne null}">
+                		<span>결재선3 - ${approval.comment3}</span><br />
+                	</c:if>
+                	<c:if test="${approval.approver4 ne null}">
+                		<span>결재선4 - ${approval.comment4}</span>
+                	</c:if>
+                </td>
+            </tr>
+            <tr>
             	<th>기안일자</th>
             	<td><fmt:formatDate value="${approval.reqDate}" pattern="yyyy-MM-dd  HH:mm:ss"/></td>
             </tr>
@@ -47,7 +65,7 @@
             <tr>
                 <th>내용</th>
                 <td>
-                    ${approval.content}
+                	${fn:replace(approval.content, replaceChar, "<br/>")}
                 </td>
             </tr>
             <tr>
