@@ -23,7 +23,6 @@
 
 	<form:form method="POST" 
 				action="${pageContext.request.contextPath }/admin/updateWsPw"
-				enctype="multipart/form-data"
 				name="updateWsPw"  >
 		<input type="hidden" name="workspaceId" value="<sec:authentication property="principal.workspaceId"/>"/>
         

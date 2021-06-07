@@ -120,6 +120,7 @@
 		        on cm.department_code = cd.department_code
 		where
 		    a.post_no = #{postNo}
+		order by pc.comment_no
 
 	</select>
 	<resultMap type="postList" id="postCollectionMap">
