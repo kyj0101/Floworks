@@ -17,8 +17,37 @@
 * 주진홍
 
   
-
-## 개발기간
+## 🗓 개발기간
 
 + 2021/05/10 ~ 2021/06/07
 
+
+
+## ⚙기술 스택 
+
++ Front End
+  + JSP
+  + CSS
+  + JavaScript
+  + Jquery
++ Back
+  + Java
+  + WAS
+  + Oracle 11g X
+
++ Framework
+  + Spring Framework
+  + Spring Security
+  + MyBatis
++ Library
+  + Bootstrap
+  + Bootstrap DatePicker
+  + Ckeditor
+  + FullCalendar
+  + Gson
+  + Lombok
+  + Common-fileupload
++ API
+  + JavaMail
++ Server
+  + Google SMTP
