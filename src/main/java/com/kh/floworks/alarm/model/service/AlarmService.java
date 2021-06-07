@@ -14,4 +14,6 @@ public interface AlarmService {
 
 	int changeView(AlarmYN alarmYN);
 
+	String selectimgLoad(String payload);
+
 }

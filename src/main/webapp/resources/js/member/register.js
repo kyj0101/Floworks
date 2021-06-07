@@ -118,12 +118,12 @@ $(() => {
 		
 		const $input = $("input[name=createWorkspace]");
 		
-		console.log($input.prop("checked"));
-		console.log($("input[name=workspaceId]"));
-		
 		if($input.prop("checked")){
+			
 			$("input[name=workspaceId]").attr("readOnly", true);
-		
+			
+			hideWarning($(".workspace-id-warning"));
+			
 		}else{
 			$("input[name=workspaceId]").attr("readOnly", false);
 		}

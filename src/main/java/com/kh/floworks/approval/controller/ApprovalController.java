@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.floworks.alarm.controller.Collector;
 import com.kh.floworks.approval.model.service.ApprovalService;
 import com.kh.floworks.approval.model.vo.Approval;
 import com.kh.floworks.approval.model.vo.Approver;
@@ -48,6 +49,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ApprovalController {
 	
 	private int numPerPage = 4;
+	
+	@Autowired
+	private Collector collector;
 	
 	@Autowired
 	private ApprovalService apvlService;
@@ -70,7 +74,7 @@ public class ApprovalController {
 					  @RequestParam String category,
 					  @RequestParam int year,
 					  HttpServletRequest request,
-					  RedirectAttributes redirectAttr) {
+					  RedirectAttributes redirectAttr) throws Exception {
 		log.info("apvlEnroll - {}", apvlDoc);
 		log.info("upFiles - {}", upFiles);
 		log.info("year = {}", year);
@@ -123,7 +127,9 @@ public class ApprovalController {
 			
 			apvlDoc.setAfList(afList);
 			int result = apvlService.insertApproval(apvlDoc);
-			
+			if(result>0) {
+				collector.apvlDoctoss(apvlDoc);
+			}
 			String msg = result > 0 ? "결재문서 기안 완료" : "결재문서 기안 실패";
 			redirectAttr.addFlashAttribute("msg", msg);
 			
@@ -237,7 +243,7 @@ public class ApprovalController {
 			@RequestParam String status,
 			@RequestParam String comment,
 			@RequestParam String approver,
-			RedirectAttributes redirectAttr) {
+			RedirectAttributes redirectAttr) throws Exception {
 		/*
 			RedirectAttributes redirectAttr,
 			HttpServletRequest request
@@ -257,25 +263,28 @@ public class ApprovalController {
 			approval.setStatus1(stVal);
 			
 			result = apvlService.updateApvlStatus1(approval);
+			collector.approvalResult(approval.getApprover1(),approval.getComment1(),approval.getStatus1(),apvlId);
 			
 		} else if ((approval.getApprover2() != null) && (approval.getApprover2().equals(approver))) {
 			approval.setComment2(comment);
 			approval.setStatus2(stVal);
 			
 			result = apvlService.updateApvlStatus2(approval);
+			collector.approvalResult(approval.getApprover2(),approval.getComment2(),approval.getStatus2(),apvlId);
 			
 		} else if ((approval.getApprover3() != null) && (approval.getApprover3().equals(approver))) {
 			approval.setComment3(comment);
 			approval.setStatus3(stVal);
 			
 			result = apvlService.updateApvlStatus3(approval);
+			collector.approvalResult(approval.getApprover3(),approval.getComment3(),approval.getStatus3(),apvlId);
 			
 		} else if ((approval.getApprover4() != null) && (approval.getApprover4().equals(approver))) {
 			approval.setComment4(comment);
 			approval.setStatus4(stVal);
 			
 			result = apvlService.updateApvlStatus4(approval);
-			
+			collector.approvalResult(approval.getApprover4(),approval.getComment4(),approval.getStatus4(),apvlId);
 		}
 		
 		String msg = result > 0 ? "결재 처리 완료" : "결재 처리 실패";

@@ -20,7 +20,7 @@
 	<sec:authentication property="principal" var="loginId"/>
 	<div class="list-group">
 	<c:if test="${mainPostList != null}">
-	<c:forEach items="${mainPostList}"  begin="1" end="3" var="mPost">
+	<c:forEach items="${mainPostList}"  begin="0" end="4" var="mPost">
 		<c:if test="${loginId.workspaceId eq mPost.workspaceId}">
 		<a href="${pageContext.request.contextPath}/board/boardView?postNo=${mPost.postNo}" class="list-group-item list-group-item-action">
 			<div class="d-flex w-100 justify-content-between">
