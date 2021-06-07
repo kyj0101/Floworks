@@ -20,30 +20,30 @@
 	<div class="register-div">
 		<div class="card-body">
 			<h4 class="card-title text-center">회원가입</h4>
-			<form class="form-signin" action="${pageContext.request.contextPath }/register/user" method="post">
+			<form class="form-signin" action="${pageContext.request.contextPath }/register/user" method="post" >
 				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 				
 				<div class="form-label-group">
-					<input type="text" name="id" id="inputUserame" class="form-control register-form-control" placeholder="Username">
+					<input type="text" name="id" id="inputUserame" class="form-control register-form-control" placeholder="Username"  autocomplete='off'>
 					<label for="inputUserame">아이디</label>
 					<p class="input-warning">중복된 아이디 입니다.</p>
 				</div>
 				
 				<div class="form-label-group">
-					<input type="text" name="name" id="inputname" class="form-control register-form-control" placeholder="Username">
+					<input type="text" name="name" id="inputname" class="form-control register-form-control" placeholder="Username"  autocomplete='off'>
 					<label for="inputname">이름</label>
 					<p class="input-warning">올바른 이름이 아닙니다.</p>
 				</div>
 
 				<div class="form-label-group">
-					<input type="email" name="email" id="inputEmail" class="form-control register-form-control" placeholder="Email address"> 
+					<input type="email" name="email" id="inputEmail" class="form-control register-form-control" placeholder="Email address"  autocomplete='off'> 
 					<label for="inputEmail">이메일</label>
 					<p class="input-warning">이메일 형식이 올바르지 않습니다.</p>
 					<p class="email-p">이메일 인증이 완료되었습니다.</p>
 				</div>
 				
-				<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" id="email-btn">
+				<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" id="email-btn" >
 					인증 메일 발송
 				</button>
 				
@@ -64,7 +64,7 @@
 				<hr>
 
 				<div class="form-label-group">
-					<input type="tel" name="phone" id="inputuserame" class="form-control register-form-control" placeholder="Username"> 
+					<input type="tel" name="phone" id="inputuserame" class="form-control register-form-control" placeholder="Username"  autocomplete='off'> 
 					<label for="inputuserame">전화 번호 ('-'를 빼고 입력해주세요.)</label>
 					<p class="input-warning">잘못된 전화번호 입니다.</p>
 				</div>
@@ -72,7 +72,7 @@
 				<hr />
 
 				<div class="form-label-group">
-					<input type="text" name="address" id="inputAddress" class="form-control register-form-control" placeholder="address">
+					<input type="text" name="address" id="inputAddress" class="form-control register-form-control" placeholder="address"  autocomplete='off'>
 					<label for="inputAddress">주소</label>
 					<p class="input-warning">잘못된 주소 입니다.</p>
 				</div>

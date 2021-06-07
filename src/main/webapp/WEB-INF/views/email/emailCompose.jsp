@@ -90,7 +90,7 @@
 					<p class="input-group-text">외부 이메일</p>
 					<input type="text" class="form-control required-recipient-input"
 						aria-label="Username" name="externalRecipient"
-						aria-describedby="addon-wrapping">
+						aria-describedby="addon-wrapping" autocomplete='off'>
 				</div>
 
 				<div class="input-group">
