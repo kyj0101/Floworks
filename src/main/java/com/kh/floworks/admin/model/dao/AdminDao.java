@@ -15,7 +15,16 @@ public interface AdminDao {
 	
 	UserDetail selectOneUserDetail(String userId);
 	
+	//직원 정보수정
+	int userUpdate(UserDetail userDetail);	
+	
+	int updateWsPw(Workspace workspace);
+
 	Workspace selectOneWorkspace(Workspace workspace);
+	
+	
+	
+
 
 	//--강준혁 관리자 근태관리 리스트 뽑아오기
 	List<AttendList> selectAttendList(Map<String, Object> param, String workspaceId);
@@ -30,10 +39,7 @@ public interface AdminDao {
 	
 	List<AttendList> selectSearchAttendList(Map<String, Object> param);
 	
-	//직원 정보수정
-	int userUpdate(UserDetail userDetail);	
-	
-	int updateWsPw(Workspace workspace);
+
 	
 	int updateAttendanceSystem(Map<String, Object> param);
 
@@ -47,5 +53,7 @@ public interface AdminDao {
 	
 	int getTotalContents(String workspace);
 
+
 	int getTotalSearchAttendContents(Map<String, Object> param);
+
 }

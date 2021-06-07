@@ -146,7 +146,7 @@ public class RegisterController {
 			memberService.insertUser(user);
 			
 			if(createWorkspace) {
-				return "redirect:/register/createWorkspace?id=" + user.getId();
+				return "redirect:/register/workspace/create?id=" + user.getId();
 			}
 			
 			return "redirect:/register/workspace/member?id=" 

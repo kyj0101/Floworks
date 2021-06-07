@@ -67,7 +67,6 @@
 				   		name="postdelete"
 				 		action="${pageContext.request.contextPath}/board/postDelete" 
 						method="post"
-						enctype="multipart/form-data" 
 						onsubmit="return postDelete(${postList.postNo},${postList.boardNo});"
 						id="postdel">  
 		             <input id="postDelBtn" type="submit" class="btn btn-primary float-right" value="삭제" >
@@ -84,7 +83,6 @@
 				   		name="postdelete"
 				 		action="${pageContext.request.contextPath}/board/postDelete" 
 						method="post"
-						enctype="multipart/form-data" 
 						onsubmit="return postDelete(${postList.postNo},${postList.boardNo});"
 						id="postdel">  
 		             <input id="postDelBtn" type="submit" class="btn btn-primary float-right" value="삭제" >
@@ -102,7 +100,7 @@
          <div id="comment-list">
              <table  class="table" id="tb-comment">  
              <c:forEach items="${postList.postCommentList}" var="cmt">
-	           	<c:if test="${cmt.commentNo != null && cmt.commentDel == false}">
+	           	<c:if test="${cmt.commentNo != 0 && cmt.commentDel == false}">
 	                 <tr class=level1>
 	                     <td>
 	                         <label id="commentName">${cmt.cmtName}(${cmt.cmtDeptName})</label>
@@ -118,7 +116,6 @@
 								   		name="commentDelete"
 								 		action="${pageContext.request.contextPath}/board/commentDelete" 
 										method="post"
-										enctype="multipart/form-data" 
 										onsubmit="return cmtDelete(${cmt.postNo},${cmt.commentNo});"
 										id="cmtdel"> 
 			                         <input id="cmtDelBtn" type="submit" class="btn btn-primary float-right" value="삭제" >
@@ -132,7 +129,6 @@
 									   		name="commentDelete"
 									 		action="${pageContext.request.contextPath}/board/commentDelete" 
 											method="post"
-											enctype="multipart/form-data" 
 											onsubmit="return cmtDelete(${cmt.postNo},${cmt.commentNo});"
 											id="cmtdel"> 
 				                         <input id="cmtDelBtn" type="submit" class="btn btn-primary float-right" value="삭제" >
@@ -152,7 +148,6 @@
 		   		name="postCm"
 		 		action="${pageContext.request.contextPath}/board/commentInsert" 
 				method="post"
-				enctype="multipart/form-data" 
 				onsubmit="return commentValidate();"
 				id="postCm">  
 				 <div class="input-group mb-3">
@@ -172,6 +167,9 @@
 		 	</form:form>
 
          </div>
+         <br>
+         <br>
+         <br>
      </div>      
          
 

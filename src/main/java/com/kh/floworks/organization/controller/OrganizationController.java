@@ -49,6 +49,7 @@ public class OrganizationController {
 	      List<UserList> userList = organizationService.selectUserList(param);
 	      log.info("userList = {}", userList);
 	      
+
 	      //b. pagebar영역
 	      int totalContents = organizationService.getTotalContents(param);
 	      String url = request.getRequestURI() + "?workspace=" + workspace + "&dept=" + dept;

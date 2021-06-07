@@ -14,4 +14,6 @@ public interface AlarmDao {
 
 	int changeView(AlarmYN alarmYN);
 
+	String selectimgLoad(String payload);
+
 }

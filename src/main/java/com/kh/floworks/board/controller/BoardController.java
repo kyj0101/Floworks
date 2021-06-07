@@ -170,7 +170,7 @@ public class BoardController {
 			throw e;
 		}
 
-		return "redirect:/board/boardList?boardNo=" + boardNo + "&dept=" + "&workspaceId=" + workspaceId;
+		return "redirect:/board/boardList?boardNo=" + boardNo  + "&workspaceId=" + workspaceId + "&dept=";
 	}
 	
 	

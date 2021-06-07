@@ -120,6 +120,7 @@
 		        on cm.department_code = cd.department_code
 		where
 		    a.post_no = #{postNo}
+		order by pc.comment_no
 
 	</select>
 	<resultMap type="postList" id="postCollectionMap">
@@ -216,12 +217,10 @@
 			post_comment 
 		values(
 			seq_post_comment_comment_no.nextval, 
-			#{commentLevel}, 
 			#{commentContent}, 
 			default, 
 			#{cmId}, 
 			#{postNo}, 
-			#{postCommentNo}, 
 			default)
 	</insert>
 	

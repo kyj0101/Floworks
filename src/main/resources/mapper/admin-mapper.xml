@@ -36,25 +36,8 @@
 		    workspace_id = #{workspaceId}
 	</select>
 	
-	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
-	<select id="selectAttendanceList" resultType="attendList">
-		select 
-    		id,
-    		day,
-    		office_In,
-    		office_off,
-    		lateness_yn
-		from 
-    		attendance 
-		where id in(
-			select 
-				id 
-			from 
-				floworks_user 
-			where workspace_id=#{workspaceId}
-			)
-		order by office_in desc
-	</select>  
+
+ 
 	
 	<select id="selectAllMemberAttendanceYear" resultType="string">
 		select distinct 
@@ -96,30 +79,7 @@
 		    and a.id = #{id}
 	</select>
 	
-	<select id="selectSearchAttendList" resultType="attendList">
-		select
-			*
-		from
-			attendance a
-				join floworks_user f
-					on a.id = f.id
-		where
-			workspace_id = #{workspaceId}
-			<if test="id != null "> 
-				and a.id like '%' || #{id} || '%'
-			</if>
-			<if test="year != null and year != '' "> 
-				and extract(year from day) = #{year}
-			</if>
-			<if test="month != null and month != '' "> 
-				and extract(month from day) = #{month}
-			</if> 
-			<if test="day != null and day != '' "> 
-				and extract(day from day) = #{day}
-			</if>
-		order by
-			day desc
-	</select>
+	
 		
 	<select id="selectOneWorkspace" resultType="workspace">
 		select
@@ -138,14 +98,7 @@
 		where
 		    workspace_id = #{workspace}
 	</select>
-	
-	<select id="getTotalAttendContents" resultType="_int">
-		select 
-    		count(*) 
-		from 
-    		attendance 
-		where id in(select id from floworks_user where workspace_id=#{workspaceId})
-	</select>
+
 	
 	<select id="getTotalSearchAttendContents" resultType="int">
 		select
@@ -216,11 +169,13 @@
 		 	member 
 		 set
 		 	department_code = #{departmentName},
-		 	position = #{position}
+		 	position = #{position},
+		 	leave = #{leave}
 		 where
 		 	id = #{id}
 	</update>
 
+	
 	<update id="updateWsPw" >
 		 update
 		 	workspace 
@@ -229,18 +184,76 @@
 		 where
 		 	workspace_id = #{workspaceId}
 	</update>
+	
 
-	<update id="updateAttend">
-		update
-			attendance
-		set
-			office_in = #{officeIn},
-			office_off = #{officeOff},
-			lateness_yn = #{latenessYn}
-		where
-			id = #{id}
-			and to_char(day, 'yy/mm/dd') = #{day}
-	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--  강준혁 관리자 근태관리 출석 리스트 쭉 뽑아오기 -->
+	<select id="selectAttendanceList" resultType="attendList">
+		select 
+    		* 
+		from 
+    		attendance 
+		where id in(
+			select 
+				id 
+			from 
+				floworks_user 
+			where workspace_id=#{workspaceId}
+			)
+		order by office_in desc
+	</select>  
+
+
+	<select id="getTotalAttendContents" resultType="_int">
+		select 
+    		count(*) 
+		from 
+    		attendance 
+		where id in(select id from floworks_user where workspace_id=#{workspaceId})
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- ===================== 강유정 근태 설정 ========================  -->
+
 	
 	<resultMap type="hashmap" id="userList">
 		<id column="id" property="id"/>

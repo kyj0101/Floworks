@@ -14,6 +14,15 @@
 			is_checked='N'
 	</select>
 	
+	<select id="selectimgLoad" resultType="string">
+		select
+			member.profile_file_rename
+		from
+			member
+		where 
+			id=#{paylodad}
+	</select>
+	
 	<insert id="insertAlarm">
 		insert into 
 			alarm

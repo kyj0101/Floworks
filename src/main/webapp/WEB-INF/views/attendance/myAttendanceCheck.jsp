@@ -185,9 +185,9 @@
 			</c:if>
 		</form:form>
 		
-		<button class="btn btn-success attendance-btn" type="button" onclick="location.href='${pageContext.request.contextPath}/leave/request'">
+		<a class="btn btn-success attendance-btn leave-btn" type="button" href='${pageContext.request.contextPath}/leave/request?id=<sec:authentication property='principal.id'/>'>
 			휴가신청
-		</button>
+		</a>
 		
 	</div>
 </section>

@@ -77,7 +77,7 @@
 
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="tel" class="form-control register-form-control" name="phone" id="phone" placeholder="전화번호" maxlength="12" value="${member.phone}" required/>
+							<input type="tel" class="form-control register-form-control" name="phone" id="phone" placeholder="전화번호" maxlength="12" value="0${member.phone}" required/>
 							<label for="inputuserame">전화 번호 ('-'를 빼고 입력해주세요.)</label>
 							<p class="input-warning">잘못된 전화번호 입니다.</p>
 						</div>
