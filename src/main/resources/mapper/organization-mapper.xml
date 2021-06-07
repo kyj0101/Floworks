@@ -32,10 +32,16 @@
 	
 	<select id="getTotalContents" resultType="_int">
 		select
-			count(*)
+		    count(*)
 		from
-			floworks_user
+		    (select *
+		    from floworks_user f
+		        left join member m
+		            on f.id = m.id
+		        left join department d
+		            on m.department_code = d.department_code)
 		where
-		    workspace_id = #{workspace}
+		    workspace_id = #{workspace} and
+		    department_name like '%' || #{dept}
 	</select>
 </mapper>
