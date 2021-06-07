@@ -47,6 +47,7 @@
   + Gson
   + Lombok
   + Common-fileupload
+  + JSTL (JSP Standard Tag Library)
 + API
   + JavaMail
 + Server
