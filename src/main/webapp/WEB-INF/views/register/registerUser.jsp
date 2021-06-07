@@ -82,7 +82,7 @@
 				<div class="form-label-group">
 					<input type="text" name="workspaceId" id="inputWorkspace" class="form-control workspace register-form-control" placeholder="workspace">
 					<label for="inputWorkspace">워크스페이스 ID</label>
-					<p class="input-warning">잘못된 아이디 입니다.</p>
+					<p class="input-warning workspace-id-warning">잘못된 아이디 입니다.</p>
 				</div>
 				
 				<div class="form-check">
