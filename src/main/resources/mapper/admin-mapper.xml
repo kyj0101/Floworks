@@ -169,7 +169,8 @@
 		 	member 
 		 set
 		 	department_code = #{departmentName},
-		 	position = #{position}
+		 	position = #{position},
+		 	leave = #{leave}
 		 where
 		 	id = #{id}
 	</update>

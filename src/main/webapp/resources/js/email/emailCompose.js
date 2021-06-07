@@ -28,10 +28,6 @@ function fileNumberComparison(className, file){
 		file3 = file;
 
 	}
-	
-	console.log(file1);
-	console.log(file2);
-	console.log(file3);
 }
 
 function isItFive(recipientInput){

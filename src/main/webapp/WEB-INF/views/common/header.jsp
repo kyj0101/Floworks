@@ -6,11 +6,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <!--tablib-->
-
-<%	
-
-	session.setAttribute("id","dog");
-%>
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -131,21 +126,15 @@
                                         
                                         <div class="d-grid gap-2 d-md-block col-md-4">
                                             <div class="row">
-                                                <i class="fas fa-clipboard-list col-md-3" style="color: #000;"></i>
-                                               
-                                                <button class="btn btn-outline-secondary col-md-3" type="button">
-                                                    공지
-                                                </button>
-                                                
-                                                <i class="fas fa-mail-bulk col-md-3" style="color: #000;"></i>
-                                               
-                                                <button class="btn btn-outline-secondary col-md-3" type="button">                                                
+                                            	<i class="fas fa-mail-bulk col-md-3" style="color: #000;"></i>
+                                               	<button class="btn btn-outline-secondary col-md-3" type="button" onclick="sortMail()">                                                
                                                     메일
-                                                </button>
-                                                
-                                                
-                                            </div>
-											
+                                                </button>                                             
+                                               	<i class="fas fa-clipboard-list col-md-3" style="color: #000;"></i>
+                                               	<button class="btn btn-outline-secondary col-md-3" type="button" onclick="sortApprove()">
+                                                    결재
+                                                </button>                                               
+                                            </div>									
                                         </div>
                                         <button type="button" class="close col-md-1" data-dismiss="modal" aria-label="Close">
 	                                    	<span aria-hidden="true">&times;</span>
@@ -260,122 +249,168 @@ $(function(){
 
 
 <script>
-var login_id = null;
+	var login_id = null;
 
-<sec:authorize access="isAuthenticated()">
-	login_id = '<sec:authentication property="Principal.id"/>';
-</sec:authorize>
+	<sec:authorize access="isAuthenticated()">
+		login_id = '<sec:authentication property="Principal.id"/>';
+	</sec:authorize>
 
-//WebsocketConfiguration 함수랑 연결
-//알람 업로드
-const ws = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_member");
-var payload;
-var alarmList;
-var alarm_count=0;
-var email_count=0;
+	//WebsocketConfiguration 함수랑 연결
+	const ws = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_member");
 
-var id;
-//헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
-ws.onopen = e => {
-	console.log("onopen : ", e);
-			
-	console.log("접속 id :", login_id);	
-	ws.send(login_id);
-	
-}
+	var payload;
+	var alarmList;
+	var alarm_count=0;
 
-ws.onmessage = e => {
-	email_count=0;
-	console.log("onmessage : ", e);
-	const obj = JSON.parse(e.data);
-	console.log(obj);
-	alarmList=obj.alarmList;
-	payload=obj.payload;
-	alarm_count =obj.count;
-	id=obj.id
+	var email_count=0;
+	var approval_count=0;
+
+	var id;
+	var imgLink;
+	//헤더에 있기 때문에 페이지 이동시 마다 업로드 됨 -> 여기서 서버에 있는 알람 가져올 예정
+	ws.onopen = e => {
+		console.log("onopen : ", e);	
+		console.log("접속 id :", login_id);	
+		ws.send(login_id);
+	}
 	
-	console.log("payload:",payload," count:",alarm_count," alarmList: ",alarmList," id:",id);
 	
-	const $badge =$("#alarm_badge");
-	const $ebadge =$("#badge_for_email");
-	$ebadge.text(0);
-	var $modal_for_alarm = $("#modal_body_for_alarm");
+	ws.onmessage = e => {
+		console.log("onmessage : ", e);
+		const obj = JSON.parse(e.data);
+		//console.log(obj);
+		alarmList=obj.alarmList;
+		payload=obj.payload;
+		alarm_count =obj.count;
+		id=obj.id
+		imgLink=obj.imglinkList;
 	
-	$badge.text(alarm_count);
+		//console.log("real-access-id:",payload," count:",alarm_count," alarmList: ",alarmList," id:",id," imgLink = ",imgLink);
 	
-	if(alarm_count ==0){
+		const $badge =$("#alarm_badge");
+		const $ebadge =$("#badge_for_email");
+		const $approvalbadge=$("#badge_for_approval");
+	
+		$ebadge.text(0);
+		$approvalbadge.text(0);
+		
+		var $modal_for_alarm = $("#modal_body_for_alarm");
+	
+		$badge.text(alarm_count);
+		
 		$badge.css("visibility","hidden");
 		$ebadge.css("visibility","hidden");
+		$approvalbadge.css("visibility","hidden");
 		$modal_for_alarm.html("");
-	}
-	else{
-		$badge.css("visibility","visible");
-		$ebadge.css("visibility","visible");
 		
-		for(var i=0; i < alarm_count;i++){
-			
-			if(alarmList[i].category=="e-mail"){
-				email_count+=1;
+		if(alarm_count ==0){
+			$badge.css("visibility","hidden");
+			$ebadge.css("visibility","hidden");
+			$approvalbadge.css("visibility","hidden");
+			$modal_for_alarm.html("");
+		}
+		else{
+			$badge.css("visibility","visible");
+			approval_count=0;
+			email_count=0;
+			for(var i=alarm_count-1; i >=0 ;i--){
+				
+				if(alarmList[i].category=="e-mail" || alarmList[i].category=="mail"){
+					email_count+=1;
+					$ebadge.css("visibility","visible");
+					$ebadge.text(email_count);
+				}
+				else if(alarmList[i].category=="approval" || alarmList[i].category=="approval_progress"){
+					approval_count+=1;
+					$approvalbadge.css("visibility","visible");
+					$approvalbadge.text(approval_count);
+				}
+				
+				var a_tag='<a id=alarm_message_'+i+' class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase('
+				imgLink[i]=imgLink[i]+" ";
+				var tmp="";
+				tmp = tmp+a_tag+"'"+alarmList[i].alarmLink+"'"+');">'
+				tmp+='<div class="row">';
+				tmp+='<div class="col-md-1">';
+				tmp+='<img src="${pageContext.request.contextPath}/resources/upload/profile/'+imgLink[i]+'" alt="${pageContext.request.contextPath}/resources/upload/profile/default.png"  class="img-circle"  style="width: 45px; height: 45px; margin: 5px auto; border-radius: 50%;">';
+				tmp+='</div>';
+				tmp+='<div class="col-md-11">';
+				tmp+='<div class="d-flex w-100 align-items-center justify-content-between">';
+				tmp+='<strong class="mb-1">'+'From : '+alarmList[i].fromId+'</strong>';
+				tmp+='<small>'+alarmList[i].alarmTime+'</small>';
+				tmp+='</div>';
+				tmp+='<div class="col-10 mb-1 small">'+alarmList[i].title+'</div>';
+				tmp+='</div>';
+				tmp+='</div>';
+				tmp+='</a>';
+				$modal_for_alarm.append(tmp);
 			}
 			
-			var a_tag='<a class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true" onclick="AlarmErase('
+					
+		}
+	}
+
+
+	ws.onerror = e => {
+	
+		console.log("onerror : ", e);
+	}
+
+	ws.onclose = e => {
+		console.log("onclose : ", e);
+	}
+
+	function AlarmErase(link){
+		const ws_change = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_changeView");
+	
+		ws_change.onopen = e => {
+			var login_id = null;
+		
+			<sec:authorize access="isAuthenticated()">
+				login_id = '<sec:authentication property="Principal.id"/>';
+			</sec:authorize>
 			
-			var tmp="";
-			tmp = tmp+a_tag+"'"+alarmList[i].alarmLink+"'"+');">'
-			tmp+='<div class="row">';
-			tmp+='<div class="col-md-1">';
-			tmp+='<i class="fas fa-user-circle" style="color: pink;"></i>';
-			tmp+='</div>';
-			tmp+='<div class="col-md-11">';
-			tmp+='<div class="d-flex w-100 align-items-center justify-content-between">';
-			tmp+='<strong class="mb-1">'+'From : '+alarmList[i].fromId+'</strong>';
-			tmp+='<small>'+alarmList[i].alarmTime+'</small>';
-			tmp+='</div>';
-			tmp+='<div class="col-10 mb-1 small">'+alarmList[i].title+'</div>';
-			tmp+='</div>';
-			tmp+='</div>';
-			tmp+='</a>';
-			$modal_for_alarm.append(tmp);
+			sessionStorage.setItem('id',login_id);
+			
+			console.log("접속 id :", login_id);	
+			ws_change.send(login_id+"$"+link);
+			
 		}
 		
-		$ebadge.text(email_count);
+		location.href="${pageContext.request.contextPath}/"+link;
 		
-	}
+	};
 	
-}
-
-
-ws.onerror = e => {
-	
-	console.log("onerror : ", e);
-}
-
-ws.onclose = e => {
-	console.log("onclose : ", e);
-}
-
-function AlarmErase(link){
-	
-	
-	const ws_change = new SockJS("http://" + location.host + "${pageContext.request.contextPath}/alarm_for_changeView");
-	
-	ws_change.onopen = e => {
-		var login_id = null;
+	function sortMail(){
+		var reverse=0;
+		for(var i=alarm_count-1; i >=0 ;i--){
+			var another_alarm = document.getElementsByClassName("list-group-item list-group-item-action py-3 lh-tight");
+			
+			if(alarmList[reverse].category =="mail" || alarmList[reverse].category =="e-mail"){
+				another_alarm[i].style.display = "inline";
+			}
+			else{
+				another_alarm[i].style.display = "none";
+			}
+			reverse+=1;
+		}
 		
-		<sec:authorize access="isAuthenticated()">
-			login_id = '<sec:authentication property="Principal.id"/>';
-		</sec:authorize>
-		
-		sessionStorage.setItem('id',login_id);
-		
-		console.log("접속 id :", login_id);	
-		ws_change.send(login_id+"$"+link);
-		
-	}
+	};
 	
-	location.href="${pageContext.request.contextPath}/"+link;
-		
-};
-
+	
+	function sortApprove(){
+		var reverse=0;
+		for(var i=alarm_count-1; i >=0 ;i--){
+			var another_alarm = document.getElementsByClassName("list-group-item list-group-item-action py-3 lh-tight");
+			
+			if(alarmList[reverse].category =="approval" || alarmList[reverse].category =="approval-progress"){
+				another_alarm[i].style.display = "inline";
+			}
+			else{
+				another_alarm[i].style.display = "none";
+			}
+			reverse+=1;
+		}
+	};
 
 </script>
