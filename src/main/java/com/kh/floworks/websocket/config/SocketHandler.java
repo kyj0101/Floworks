@@ -71,13 +71,21 @@ public class SocketHandler extends TextWebSocketHandler {
 		System.out.println("id ="+id+", payload"+payload);
 		List<Alarm> alarmList;
 		Map<String, Object> map = new HashMap<>();
+		List<String> imglinkList = new ArrayList<>();
 		
 		if(payload != null) {
 			alarmList = alarmService.selectAlarmList(payload);
 			map.put("alarmList", alarmList);
+			
+			for(int i=0;i<alarmList.size();i++) {
+				String imgLink=alarmService.selectimgLoad(alarmList.get(i).getFromId());
+				imglinkList.add(imgLink);
+			}
+			
 			map.put("id", id);
 			map.put("payload",payload);
 			map.put("count", alarmList.size());
+			map.put("imglinkList", imglinkList);
 			log.info("\n\nmessageToJson함수");
 			log.info("message ={}\n\n",map);
 		}
@@ -91,13 +99,21 @@ public class SocketHandler extends TextWebSocketHandler {
 		System.out.println("id ="+id+", payload"+payload);
 		List<Alarm> alarmList;
 		Map<String, Object> map = new HashMap<>();
+		List<String> imglinkList = new ArrayList<>();
 		
 		if(payload != null) {
 			alarmList = alarmService.selectAlarmList(payload);
 			map.put("alarmList", alarmList);
+			
+			for(int i=0;i<alarmList.size();i++) {
+				String imgLink=alarmService.selectimgLoad(alarmList.get(i).getFromId());
+				imglinkList.add(imgLink);
+			}
+			
 			map.put("id", id);
 			map.put("payload",payload);
 			map.put("count", alarmList.size());
+			map.put("imglinkList", imglinkList);
 			log.info("\n\nmessageToJson함수");
 			log.info("message ={}\n\n",map);
 		}
@@ -117,7 +133,7 @@ public class SocketHandler extends TextWebSocketHandler {
 		}
 	}
 
-	public void afterInsertEmail(String toId) throws Exception{
+	public void afterInsertAlarm(String toId) throws Exception{
 		
 		log.info("\n\n\n---------------------이곳에 당도하였는가요?--------------------\n\n\n");
 		

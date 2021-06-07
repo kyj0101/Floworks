@@ -36,6 +36,11 @@ public class AlarmDaoImpl implements AlarmDao{
 		return session.update("alarm.updateAlarm",alarmYN);
 	}
 
+	@Override
+	public String selectimgLoad(String payload) {
+		return session.selectOne("alarm.selectimgLoad",payload);
+	}
+
 
 
 }
