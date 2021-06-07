@@ -33,6 +33,11 @@ public class AlarmServiceImpl implements AlarmService{
 		return alarmDao.changeView(alarmYN);
 	}
 
+	@Override
+	public String selectimgLoad(String payload) {
+		return alarmDao.selectimgLoad(payload);
+	}
+
 	
 	
 
