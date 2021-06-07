@@ -27,8 +27,8 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		int offset = (cPage - 1) * limit; 
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		log.info("workspace = {}", param);
 
+		log.info("workspace = {}", param);
 		return session.selectList("organization.selecUserList", param, rowBounds);
 	}
 

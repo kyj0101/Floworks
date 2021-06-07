@@ -45,10 +45,12 @@ public class OrganizationController {
 	      param.put("workspace", workspace);
 	      param.put("dept", dept);
 	      
+	     
 	      //2. 업무로직
 	      List<UserList> userList = organizationService.selectUserList(param);
 	      log.info("userList = {}", userList);
 	      
+
 	      //b. pagebar영역
 	      int totalContents = organizationService.getTotalContents(param);
 	      String url = request.getRequestURI() + "?workspace=" + workspace + "&dept=" + dept;
