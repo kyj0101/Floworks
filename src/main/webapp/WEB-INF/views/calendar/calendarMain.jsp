@@ -36,12 +36,18 @@ document.addEventListener('DOMContentLoaded', function() {
       locale : "ko",				//언어설정
       navLinks: true, 				//can click day/week names to navigate views
       editable: false, 
+      eventLimit: true,
       selectable: true,
       dayMaxEvents: true, 			// allow "more" link when too many events
       businessHours: true, 			// display business hours
       dayHeaderContent: function (date) {
           let weekList = ["일", "월", "화", "수", "목", "금", "토"];
               return weekList[date.dow];
+      },
+      select : function(info){
+    	$("#eventModal").modal("show");
+    	$("#eventModal").find("#startDate").val(info.startStr);
+    	$("#eventModal").find("#endDate").val(info.endStr);
       },
       //백그라운드 클릭시
       dateClick: function(info) {
@@ -75,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    
+
     <c:forEach items="${calendarList}" var="cal">
 	    calendar.addEvent({
 	    	id : ${cal.calNo},
@@ -159,6 +165,7 @@ $.datepicker.setDefaults({
 	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
 
 });
+
 $("#startDate").datepicker();
 $("#endDate").datepicker();
 $("#updateStartDate").datepicker();
@@ -181,14 +188,14 @@ body {
 
 #calendar {
 	max-width: 1100px;
-	margin: 0 auto;
+	margin: 40px auto;
 }
 
 </style>
 </head>
 <body>
 	<section>
-		<div style="height: 30px; font-size: 32px; font-weight: bold; margin-bottom: 20px;">일정관리</div>
+		<div style="height: 30px; font-size: 35px; font-weight: bold; margin-bottom: 20px;">일정관리</div>
 		<div id='calendar' style="position: relative;"></div>
 		<form:form
 			action="${pageContext.request.contextPath}/calendar/calendarInsert"
