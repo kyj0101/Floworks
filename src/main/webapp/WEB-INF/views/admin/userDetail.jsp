@@ -75,7 +75,7 @@
                        <td />
                        <td class="nametag">잔여연차</td>
                        <td>
-                           <input type="text" name="leaveDay" class="form-control" value="${userDetail.leave}">
+                           <input type="text" name="leave" class="form-control" value="${userDetail.leave}">
                        </td>
                    </tr>  
                    <tr>
