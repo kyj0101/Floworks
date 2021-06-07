@@ -42,10 +42,6 @@
 </div>
 </body>
 </html>
-
-
-
-
 <script>
 $(function(){
 	
