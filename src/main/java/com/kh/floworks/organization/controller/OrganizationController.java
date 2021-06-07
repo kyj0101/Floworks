@@ -36,7 +36,7 @@ public class OrganizationController {
 								Model model,
 								HttpServletRequest request) {
 		
-		//1. 사용자입력값
+		  //1. 사용자입력값
 	      int numPerPage = 10;
 	      log.info("cPage = {}", cPage);
 	      Map<String, Object> param = new HashMap<>();
@@ -50,6 +50,7 @@ public class OrganizationController {
 	      List<UserList> userList = organizationService.selectUserList(param);
 	      log.info("userList = {}", userList);
 	      
+
 	      //b. pagebar영역
 	      int totalContents = organizationService.getTotalContents(param);
 	      String url = request.getRequestURI() + "?workspace=" + workspace + "&dept=" + dept;

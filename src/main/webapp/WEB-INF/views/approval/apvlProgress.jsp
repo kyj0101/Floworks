@@ -122,7 +122,7 @@
 	    </div>
 	    
 	    <div class="modal fade ap-progress-modal" id="ap-progress-modal${vs.index}" tabindex="-1" aria-labelledby="ap-progress-modal-label" aria-hidden="true">
-	        <div class="modal-dialog modal-dialog-centered">
+	        <div class="modal-dialog modal-dialog-centered modal-lg">
 	            <div class="modal-content">
 	                <div class="modal-header">
 	          			
@@ -155,7 +155,6 @@
 										<td>${approver.position}</td>
 										<c:choose>
 											<c:when test="${apr.count eq 1}">
-<<<<<<< HEAD
 		                                    	<td><fmt:formatDate value="${apvl.timelog1}" pattern="yyyy-MM-dd  HH:mm:ss"/></td>
 		                                 	</c:when>
 		                                 	<c:when test="${apr.count eq 2}">
@@ -166,18 +165,6 @@
 		                                 	</c:when>
 		                                 	<c:when test="${apr.count eq 4}">
 		                                    	<td><fmt:formatDate value="${apvl.timelog4}" pattern="yyyy-MM-dd  HH:mm:ss"/></td> 
-=======
-		                                    	<td>${apvl.timelog1}</td>
-		                                 	</c:when>
-		                                 	<c:when test="${apr.count eq 2}">
-		                                    	<td>${apvl.timelog2}</td>
-		                                 	</c:when>
-		                                 	<c:when test="${apr.count eq 3}">
-		                                    	<td>${apvl.timelog3}</td>
-		                                 	</c:when>
-		                                 	<c:when test="${apr.count eq 4}">
-		                                    	<td>${apvl.timelog4}</td> 
->>>>>>> branch 'master' of https://github.com/kyj0101/Floworks.git
 		                                 	</c:when>
 		                                 	<c:otherwise>
 		                                    	<td>Timelog Error</td>

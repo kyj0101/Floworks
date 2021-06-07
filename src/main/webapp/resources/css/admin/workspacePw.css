@@ -1,0 +1,26 @@
+
+.mb-4, .my-4 {
+    text-align: center;
+}
+
+#updateWsPwfom {
+	display: inline-block;
+	width: 60%;
+	margin-top: 150px;
+    margin-left: 150px;
+}
+
+#updateWsPwBtn{
+	margin-top : 10px;
+}
+
+#password{
+	margin : 10px 10px;
+}
+
+#passwordCheck{
+	margin : 10px 10px;
+}
+#originalPassword{
+	margin : 10px 10px;
+}

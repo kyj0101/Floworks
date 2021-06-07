@@ -21,7 +21,8 @@
 	    where 
 	    	board_no = #{boardNo} and
             post_del = 'N' and
-            department_name like '%' || #{dept}
+            department_name like '%' || #{dept} and
+            workspace_id = #{workspaceId}
 		order 
 			by post_no desc
 	</select>
@@ -49,13 +50,16 @@
 		from 
 			(select *
 	        from post p 
+	        	left join floworks_user f
+          			on p.id = f.id
 	            left join member m
-	                on p.id = m.id
+	                on f.id = m.id
 	            left join department d
 	                on m.department_code = d.department_code) 
 	    where board_no = #{boardNo}  and
      		  post_del = 'N' and
-              department_name like '%' || #{dept}
+              department_name like '%' || #{dept} and
+              workspace_id = #{workspaceId}
 	</select>
 	
 	<insert id="insertPost">
@@ -92,11 +96,11 @@
 	
 	
 	<select id="selectOnePostCollection" resultMap="postCollectionMap">
-		select a.*, f.*,  pc.id cmid, pc.post_comment_no, pc.comment_no, pc.comment_level, pc.comment_content, pc.comment_date, pc.post_no, pc.comment_del, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
+		select a.*, f.*,  pc.id cmid, pc.comment_no, pc.comment_content, pc.comment_date, pc.post_no, pc.comment_del, fu.name cmt_name, cd.department_name cmt_dept_name, file_count, comment_count
 		from (select (select count(*) from post_file where post_no = #{postNo}) file_count,
 		        (select count(*) from post_comment where post_no = #{postNo}  and comment_del = 'N') comment_count,
 		        k.*
-		from (select p.* ,d.department_name, f.name, m.profile_file_rename
+		from (select p.* ,d.department_name, f.name, m.profile_file_rename, f.workspace_id
 		        from post p 
 		            left join floworks_user f
 		                on p.id = f.id
@@ -116,11 +120,7 @@
 		        on cm.department_code = cd.department_code
 		where
 		    a.post_no = #{postNo}
-		    <!-- 
-		start with comment_level = 1
-		connect by post_comment_no = prior comment_no
-		order siblings by comment_no
-		     -->
+
 	</select>
 	<resultMap type="postList" id="postCollectionMap">
 		<id column="post_no" property="postNo"/>
@@ -136,6 +136,7 @@
 		<result column="file_count" property="fileCount"/>
 		<result column="comment_count" property="commentCount"/>	
 		<result column="profile_file_rename" property="profileFileRename"/>	
+		<result column="workspace_id" property="workspaceId"/>
 		
 		<collection property="postFileList" ofType="postFile">
 			<id column="post_file" property="postFileNo"/>
@@ -145,12 +146,10 @@
 		</collection>
 		<collection property="postCommentList" ofType="postComment">
 			<id column="comment_no" property="commentNo"/>
-			<result column="comment_level" property="commentLevel"/>
 			<result column="comment_content" property="commentContent"/>
 			<result column="comment_date" property="commentDate"/>
 			<result column="cmid" property="cmId"/>
 			<result column="post_no" property="postNo"/>
-			<result column="post_comment_no" property="postCommentNo"/>
 			<result column="comment_del" property="commentDel" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
 			<result column="cmt_name" property="cmtName"/>
 			<result column="cmt_dept_name" property="cmtDeptName"/>	
@@ -217,12 +216,10 @@
 			post_comment 
 		values(
 			seq_post_comment_comment_no.nextval, 
-			#{commentLevel}, 
 			#{commentContent}, 
 			default, 
 			#{cmId}, 
 			#{postNo}, 
-			#{postCommentNo}, 
 			default)
 	</insert>
 	

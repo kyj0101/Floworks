@@ -71,7 +71,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public int selectMemberLeave(String id) {
 		return attendanceDao.selectMemberLeave(id);
 	}
-
+	
 	@Override
 	public int updateAttendanceOfficeOff(Map<String, Object> param) {
 		return attendanceDao.updateAttendanceOfficeOff(param);
@@ -86,4 +86,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public int getTotalSearchAttendance(Map<String, Object> param) {
 		return attendanceDao.getTotalSearchAttendance(param);
 	}
+
+	
 }

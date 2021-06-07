@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="leave">
+	
+	<insert id="insertLeaveReq">
+		INSERT INTO 
+			LEAVE_REQUEST
+		VALUES (
+		    #{leaveId},
+		    #{category},
+		    #{lvDuration},
+		    #{lvDates},
+		    #{reason},
+		    #{applicant},
+		    default,
+		    null,
+		    null,
+		    default,
+		    #{workspaceId},
+		    #{applicantName}
+		)
+	</insert>
+	
+	<insert id="insertAttachment">
+		INSERT INTO
+			LEAVE_FILES
+		VALUES (
+			seq_leave_file_idx.nextval,
+			#{leaveId},
+			#{originalFileName},
+			#{renamedFileName},
+			default,
+			default
+		)
+	</insert>
+	
+	<select id="selectLeaveList" resultMap="leaveReqMap">
+		select
+			R.*,
+			F.leave_file_no, 
+			F.lv_original_filename, 
+			F.lv_renamed_filename, 
+			F.lv_fileupload_date, 
+			F.lv_file_status 
+		from 
+			leave_request R 
+		left outer join 
+			leave_files F 
+		on 
+			R.leave_id = F.leave_id
+		where
+			workspace_id = #{workspaceId}
+		and 
+			del_yn = 'N'
+		order by
+			lv_req_date desc
+	</select>
+	
+	<resultMap type="leaverequest" id="leaveReqMap">
+		<id column="leave_id" property="leaveId"/>
+		<result column="lv_category" property="category"/>
+		<result column="leave_duration" property="lvDuration"/>
+		<result column="lv_dates" property="lvDates"/>
+		<result column="lv_reason" property="reason"/>
+		<result column="lv_applicant" property="applicant"/>
+		<result column="lv_req_date" property="reqDate"/>
+		<result column="lv_approver" property="approver"/>
+		<result column="lv_approval_yn" property="apvlYn"/>
+		<result column="del_yn" property="delYn"/>
+		<result column="workspace_id" property="workspaceId"/>
+		<result column="applicant_name" property="applicantName"/>
+		<association property="attach" javaType="leavefile">
+			<id column="LEAVE_FILE_NO" property="no"/>
+			<result column="LEAVE_ID" property="leaveId"/>
+			<result column="LV_ORIGINAL_FILENAME" property="originalFileName"/>
+			<result column="LV_RENAMED_FILENAME" property="renamedFileName"/>
+			<result column="LV_FILEUPLOAD_DATE" property="uploadDate"/>
+			<result column="LV_FILE_STATUS" property="status" typeHandler="ynBooleanTypeHandler"/>
+		</association>
+	</resultMap>
+	
+	<update id="updateApprove">
+		UPDATE
+			LEAVE_REQUEST
+		SET
+			LV_APPROVAL_YN = 'Y'
+		WHERE
+			LEAVE_ID = #{leaveId}
+	</update>
+	
+	<update id="updateMemberLeave">
+		UPDATE
+			MEMBER
+		SET
+			LEAVE = #{dayoffCnt}
+		WHERE
+			ID = #{id}
+	</update>
+	
+	<update id="updateReject">
+		UPDATE
+			LEAVE_REQUEST
+		SET
+			LV_APPROVAL_YN = 'N'
+		WHERE
+			LEAVE_ID = #{leaveId}
+	</update>
+	
+	<update id="deleteLeave">
+		UPDATE
+			LEAVE_REQUEST
+		SET
+			DEL_YN = 'Y'
+		WHERE
+			LEAVE_ID = #{leaveId}
+	</update>
+	
+	<select id="selectOneAttachment" resultMap="leaveFileMap">
+		select
+			*
+		from
+			leave_files
+		where
+			leave_file_no = #{no}
+	</select>
+	
+	<resultMap type="leavefile" id="leaveFileMap">
+		<id column="LEAVE_FILE_NO" property="no"/>
+		<result column="LEAVE_ID" property="leaveId"/>
+		<result column="LV_ORIGINAL_FILENAME" property="originalFileName"/>
+		<result column="LV_RENAMED_FILENAME" property="renamedFileName"/>
+		<result column="LV_FILEUPLOAD_DATE" property="uploadDate"/>
+		<result column="LV_FILE_STATUS" property="status" jdbcType="CHAR" javaType="_boolean" typeHandler="ynBooleanTypeHandler"/>
+	</resultMap>
+	
+	
+</mapper>

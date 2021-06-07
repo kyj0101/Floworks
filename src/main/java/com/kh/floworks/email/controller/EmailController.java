@@ -224,7 +224,7 @@ public class EmailController {
 	}
 
 	@PostMapping("/draft/send")
-	public String draftEmailSend(Email email, RedirectAttributes redirectAttr) throws MessagingException {
+	public String draftEmailSend(Email email, RedirectAttributes redirectAttr) throws Exception {
 
 		try {
 
@@ -233,6 +233,9 @@ public class EmailController {
 			return sendEmail(email, redirectAttr);
 
 		} catch (MessagingException e) {
+			throw e;
+			
+		} catch (Exception e) {
 			throw e;
 		}
 
@@ -275,7 +278,7 @@ public class EmailController {
 	}
 
 	@PostMapping("/send")
-	public String sendEmail(Email email, RedirectAttributes redirectAttr) throws MessagingException{
+	public String sendEmail(Email email, RedirectAttributes redirectAttr) throws Exception{
 
 		try {
 
@@ -314,6 +317,9 @@ public class EmailController {
 			saveDraft(email);
 
 			return "redirect:/email/drafts?id=" + email.getId();
+			
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 

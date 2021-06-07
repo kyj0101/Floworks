@@ -23,7 +23,6 @@ public class OrganizationDaoImpl implements OrganizationDao {
 	@Override
 	public List<UserList> selectUserList(Map<String, Object> param) {
 		int cPage = (int)param.get("cPage");
-		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit; 
 		
