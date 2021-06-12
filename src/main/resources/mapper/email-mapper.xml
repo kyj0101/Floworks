@@ -349,7 +349,7 @@
 			del_yn = 'Y'
 		where 
 			email_no in		
-			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+			<foreach collection="deleteCheck" item="item" index="idx" separator=","  open="(" close=")">
 				#{item}
 			</foreach>
 	</update>
@@ -361,7 +361,7 @@
 			del_yn = 'Y'
 		where 
 			email_no in		
-			<foreach collection="deleteCheck" item="item" index="idx" separator="or"  open="(" close=")">
+			<foreach collection="deleteCheck" item="item" index="idx" separator=","  open="(" close=")">
 				#{item}
 			</foreach>
 	</update>
